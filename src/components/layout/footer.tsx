@@ -14,7 +14,7 @@ const socialLinks = [
   { href: siteConfig.socials.instagram, label: "Instagram", Icon: InstagramIcon },
   { href: siteConfig.socials.twitter, label: "Twitter", Icon: TwitterIcon },
   { href: siteConfig.socials.github, label: "GitHub", Icon: GithubIcon },
-];
+].filter((s) => s.href);
 
 export function Footer() {
   return (

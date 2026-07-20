@@ -8,11 +8,12 @@ export const siteConfig = {
   url: "https://itsa-usa.org",
   contactEmail: "itsa@usa.edu.ph",
   location: "General Luna St., Iloilo City, Philippines",
+  // Only list channels ITSA actually maintains — empty entries are hidden.
   socials: {
-    facebook: "https://facebook.com/",
-    instagram: "https://instagram.com/",
-    twitter: "https://twitter.com/",
-    github: "https://github.com/",
+    facebook: "https://www.facebook.com/profile.php?id=61592045333438",
+    instagram: "",
+    twitter: "",
+    github: "",
   },
 } as const;
 
