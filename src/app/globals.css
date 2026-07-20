@@ -231,71 +231,57 @@
 }
 
 /* ── Organizational chart ───────────────────────────────────────────────────
-   Pure-CSS connector tree (nested <ul>/<li>). Connector color is mixed from the
-   foreground so lines stay visible in both light and dark themes.
-   Wrapped in @layer components so Tailwind v4 emits it (unlayered top-level
-   rules are dropped from the build output). */
+   Vertical indented tree (nested <ul>/<li>): reads top-to-bottom and fits any
+   width, so it never scrolls horizontally. Each level indents under its parent
+   with an L-shaped connector. Connector color is mixed from the foreground so
+   lines stay visible in both light and dark themes. Wrapped in @layer
+   components so Tailwind v4 emits it (unlayered top-level rules are dropped
+   from the build output). */
 @layer components {
 .org-tree {
-  --org-line: color-mix(in oklch, var(--foreground) 22%, transparent);
+  --org-line: color-mix(in oklch, var(--foreground) 24%, transparent);
+  --org-gutter: 1.5rem; /* indent + connector width per level */
+  --org-tick: 1.75rem;  /* vertical offset of the tick = node center */
 }
 .org-tree ul {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  padding-top: 22px;
+  list-style: none;
+  margin: 0;
+  padding-left: var(--org-gutter);
+}
+.org-tree > ul {
+  padding-left: 0; /* root level has no connector gutter */
 }
 .org-tree li {
   position: relative;
-  list-style: none;
-  padding: 22px 12px 0;
-  text-align: center;
+  padding: 0.3rem 0;
 }
-/* the two halves of the horizontal connector above each node */
-.org-tree li::before,
-.org-tree li::after {
+/* vertical trunk running through the parent's gutter */
+.org-tree li::before {
   content: "";
   position: absolute;
   top: 0;
-  right: 50%;
-  width: 50%;
-  height: 22px;
+  bottom: 0;
+  left: calc(var(--org-gutter) / -2);
+  border-left: 2px solid var(--org-line);
+}
+/* horizontal tick from the trunk to the node, at the node's vertical center */
+.org-tree li::after {
+  content: "";
+  position: absolute;
+  top: var(--org-tick);
+  left: calc(var(--org-gutter) / -2);
+  width: calc(var(--org-gutter) / 2);
   border-top: 2px solid var(--org-line);
 }
-.org-tree li::after {
-  right: auto;
-  left: 50%;
-  border-left: 2px solid var(--org-line);
-}
-/* a lone child needs no horizontal bar — only the vertical drop */
-.org-tree li:only-child::before,
-.org-tree li:only-child::after {
-  display: none;
-}
-.org-tree li:only-child {
-  padding-top: 22px;
-}
-/* trim the connector at the row's outer edges */
-.org-tree li:first-child::before,
-.org-tree li:last-child::after {
-  border: 0 none;
-}
+/* the last child stops the trunk at its own tick (clean elbow) */
 .org-tree li:last-child::before {
-  border-right: 2px solid var(--org-line);
-  border-radius: 0 6px 0 0;
+  bottom: auto;
+  height: var(--org-tick);
 }
-.org-tree li:first-child::after {
-  border-radius: 6px 0 0 0;
-}
-/* vertical drop from a parent into its group of children */
-.org-tree ul ul::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 0;
-  height: 22px;
-  border-left: 2px solid var(--org-line);
+/* the root node has no parent, so no connectors */
+.org-tree > ul > li::before,
+.org-tree > ul > li::after {
+  display: none;
 }
 }
 
