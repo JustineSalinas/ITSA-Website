@@ -40,7 +40,6 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader
-        eyebrow="About us"
         title="Building the future of tech, together"
         description={`The ${siteConfig.fullName} is the official student organization for IT students at the ${siteConfig.school}.`}
       />
@@ -62,15 +61,15 @@ export default function AboutPage() {
           </p>
         </div>
 
-        {/* Mission & Vision */}
+        {/* Mission & Vision — flat cards, differentiated by icon tint (no stripes) */}
         <div className="mt-14 grid gap-6 md:grid-cols-2">
-          <Card className="border-l-4 border-l-primary">
+          <Card className="transition-shadow hover:shadow-md">
             <CardContent className="pt-6">
               <div className="flex items-center gap-3">
                 <div className="grid size-10 place-items-center rounded-lg bg-primary/10 text-primary">
                   <Target className="size-5" />
                 </div>
-                <h2 className="text-xl font-bold">Our Mission</h2>
+                <h2 className="text-xl font-bold">Our mission</h2>
               </div>
               <p className="mt-4 text-muted-foreground">
                 To empower Information Technology students by fostering technical
@@ -80,13 +79,13 @@ export default function AboutPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-gold">
+          <Card className="transition-shadow hover:shadow-md">
             <CardContent className="pt-6">
               <div className="flex items-center gap-3">
-                <div className="grid size-10 place-items-center rounded-lg bg-gold/20 text-gold-foreground">
+                <div className="grid size-10 place-items-center rounded-lg bg-accent text-accent-foreground">
                   <Eye className="size-5" />
                 </div>
-                <h2 className="text-xl font-bold">Our Vision</h2>
+                <h2 className="text-xl font-bold">Our vision</h2>
               </div>
               <p className="mt-4 text-muted-foreground">
                 To be the leading student organization that shapes competent,
@@ -97,19 +96,28 @@ export default function AboutPage() {
           </Card>
         </div>
 
-        {/* Values */}
+        {/* Values — one unified panel with hairline dividers, not four floating icon-cards */}
         <div className="mt-16">
-          <h2 className="text-2xl font-bold tracking-tight">Our Values</h2>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map(({ Icon, title, description }) => (
-              <div key={title} className="rounded-xl border border-border bg-card p-6">
-                <div className="grid size-11 place-items-center rounded-lg bg-primary/10 text-primary">
-                  <Icon className="size-5" />
+          <h2 className="text-2xl font-bold tracking-tight">What we value</h2>
+          <div className="mt-8 overflow-hidden rounded-2xl border border-border">
+            <div className="grid sm:grid-cols-2">
+              {values.map(({ Icon, title, description }) => (
+                <div
+                  key={title}
+                  className="flex gap-4 border-b border-border p-6 last:border-b-0 sm:border-b-0 sm:[&:nth-child(-n+2)]:border-b sm:[&:nth-child(odd)]:border-r"
+                >
+                  <span className="grid size-11 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary">
+                    <Icon className="size-5" />
+                  </span>
+                  <div>
+                    <h3 className="font-semibold">{title}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                      {description}
+                    </p>
+                  </div>
                 </div>
-                <h3 className="mt-4 font-semibold">{title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{description}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>

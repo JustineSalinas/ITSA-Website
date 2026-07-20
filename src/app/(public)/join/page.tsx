@@ -20,7 +20,6 @@ export default function JoinPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Get involved"
         title="Join ITSA"
         description="Ready to be part of the community? Fill out the form and we'll reach out with next steps."
       />

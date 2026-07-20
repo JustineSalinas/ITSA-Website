@@ -16,7 +16,6 @@ export default async function OfficersPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Our team"
         title="Meet the officers"
         description="The dedicated student leaders steering ITSA this academic year."
       />

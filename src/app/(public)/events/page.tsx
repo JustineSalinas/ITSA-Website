@@ -15,7 +15,6 @@ export default async function EventsPage() {
   return (
     <>
       <PageHeader
-        eyebrow="What's happening"
         title="Events & activities"
         description="From beginner workshops to campus-wide competitions — here's everything ITSA has planned and hosted."
       />

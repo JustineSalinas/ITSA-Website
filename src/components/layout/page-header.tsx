@@ -1,12 +1,10 @@
 import { cn } from "@/lib/utils";
 
 export function PageHeader({
-  eyebrow,
   title,
   description,
   className,
 }: {
-  eyebrow?: string;
   title: string;
   description?: string;
   className?: string;
@@ -19,11 +17,7 @@ export function PageHeader({
       )}
     >
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-20">
-        {eyebrow && (
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-primary">
-            {eyebrow}
-          </p>
-        )}
+        {/* Lead with the headline — no uppercase eyebrow (One-Kicker Rule). */}
         <h1 className="max-w-3xl text-4xl font-extrabold tracking-tight text-balance sm:text-5xl">
           {title}
         </h1>
