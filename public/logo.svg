@@ -1,0 +1,27 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ITSA">
+  <defs>
+    <linearGradient id="itsa-blue" x1="6" y1="6" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34a9e0"/>
+      <stop offset="1" stop-color="#2f56d6"/>
+    </linearGradient>
+    <linearGradient id="itsa-deep" x1="14" y1="14" x2="28" y2="30" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2f56d6"/>
+      <stop offset="1" stop-color="#223fa8"/>
+    </linearGradient>
+    <linearGradient id="itsa-orange" x1="24" y1="8" x2="34" y2="34" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f7a81e"/>
+      <stop offset="1" stop-color="#e0451f"/>
+    </linearGradient>
+  </defs>
+  <g stroke-linecap="round">
+    <path d="M21 21 L20 9" stroke="url(#itsa-blue)" stroke-width="3.6"/>
+    <path d="M21 21 L10 27" stroke="url(#itsa-blue)" stroke-width="3.6"/>
+    <path d="M21 21 L31 13" stroke="url(#itsa-orange)" stroke-width="3.6"/>
+    <path d="M21 21 L29 31" stroke="url(#itsa-orange)" stroke-width="3.6"/>
+  </g>
+  <circle cx="20" cy="9" r="5" fill="url(#itsa-blue)"/>
+  <circle cx="10" cy="27" r="5" fill="url(#itsa-blue)"/>
+  <circle cx="31" cy="13" r="4.5" fill="url(#itsa-orange)"/>
+  <circle cx="29" cy="31" r="4" fill="url(#itsa-orange)"/>
+  <circle cx="21" cy="21" r="6" fill="url(#itsa-deep)"/>
+</svg>

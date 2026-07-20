@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-20T00:00:00.000Z",
+  "title": "Design System: ITSA",
+  "extensions": {
+    "colorMeta": {
+      "brand-blue": {
+        "role": "primary",
+        "displayName": "Brand Blue",
+        "canonical": "oklch(0.49 0.19 254)",
+        "tonalRamp": [
+          "oklch(0.24 0.10 256)",
+          "oklch(0.32 0.14 255)",
+          "oklch(0.40 0.17 255)",
+          "oklch(0.49 0.19 254)",
+          "oklch(0.60 0.17 253)",
+          "oklch(0.72 0.15 254)",
+          "oklch(0.84 0.09 250)",
+          "oklch(0.95 0.03 248)"
+        ]
+      },
+      "brand-cyan": {
+        "role": "secondary",
+        "displayName": "Brand Cyan",
+        "canonical": "oklch(0.70 0.13 232)",
+        "tonalRamp": [
+          "oklch(0.30 0.07 234)",
+          "oklch(0.40 0.09 233)",
+          "oklch(0.50 0.11 233)",
+          "oklch(0.60 0.12 232)",
+          "oklch(0.70 0.13 232)",
+          "oklch(0.80 0.10 231)",
+          "oklch(0.88 0.07 230)",
+          "oklch(0.95 0.03 229)"
+        ]
+      },
+      "brand-orange": {
+        "role": "tertiary",
+        "displayName": "Brand Orange (the spark)",
+        "canonical": "oklch(0.70 0.18 52)",
+        "tonalRamp": [
+          "oklch(0.34 0.10 44)",
+          "oklch(0.44 0.13 46)",
+          "oklch(0.54 0.16 48)",
+          "oklch(0.62 0.18 50)",
+          "oklch(0.70 0.18 52)",
+          "oklch(0.80 0.14 58)",
+          "oklch(0.88 0.10 64)",
+          "oklch(0.95 0.05 70)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink (blue-slate)",
+        "canonical": "oklch(0.22 0.035 258)",
+        "tonalRamp": [
+          "oklch(0.18 0.025 258)",
+          "oklch(0.22 0.035 258)",
+          "oklch(0.34 0.035 258)",
+          "oklch(0.44 0.035 256)",
+          "oklch(0.60 0.03 254)",
+          "oklch(0.75 0.02 252)",
+          "oklch(0.90 0.014 250)",
+          "oklch(0.99 0.006 240)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headline only — Bricolage Grotesque 800." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles (h2)." },
+      "body": { "displayName": "Body", "purpose": "Geist, 1.6 line-height, ~65-75ch measure." },
+      "label": { "displayName": "Mono Label", "purpose": "Kickers, metadata, 01/02 markers — Geist Mono. Earned, not costume." }
+    },
+    "shadows": [
+      { "name": "hover-lift", "value": "0 6px 16px rgba(20,30,60,0.10)", "purpose": "Cards lift on hover only; flat at rest." },
+      { "name": "brand-glow", "value": "0 20px 40px rgba(47,86,214,0.18)", "purpose": "Soft blue shadow under the hero network visual — atmosphere, not UI." }
+    ],
+    "motion": [
+      { "name": "ease-out-quart", "value": "cubic-bezier(0.25, 1, 0.5, 1)", "purpose": "Node pulses and general state transitions." },
+      { "name": "ease-out-expo", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Hero copy rise-in on load." },
+      { "name": "node-pulse", "value": "itsa-pulse 3.6s infinite", "purpose": "Staggered glow behind each network node." },
+      { "name": "float", "value": "itsa-float 7s ease-in-out infinite", "purpose": "Whole-network gentle drift." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The only text-bearing brand-colored action. Solid blue, near-white text.",
+      "html": "<button class=\"ds-btn-primary\">Become a member <svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></button>",
+      "css": ".ds-btn-primary { display:inline-flex; align-items:center; gap:0.5rem; height:2.25rem; padding:0 1rem; border:none; border-radius:0.75rem; background:oklch(0.49 0.19 254); color:oklch(0.99 0.01 240); font-family:Geist,system-ui,sans-serif; font-size:0.875rem; font-weight:500; cursor:pointer; transition:background 0.2s, transform 0.1s; } .ds-btn-primary:hover { background:oklch(0.49 0.19 254 / 0.85); } .ds-btn-primary:active { transform:translateY(1px); } .ds-btn-primary:focus-visible { outline:3px solid oklch(0.49 0.19 254 / 0.5); outline-offset:2px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Secondary navigation — white surface, ink text, hairline border.",
+      "html": "<button class=\"ds-btn-outline\">Explore events</button>",
+      "css": ".ds-btn-outline { display:inline-flex; align-items:center; height:2.25rem; padding:0 1rem; border:1px solid oklch(0.90 0.014 250); border-radius:0.75rem; background:oklch(1 0 0); color:oklch(0.22 0.035 258); font-family:Geist,system-ui,sans-serif; font-size:0.875rem; font-weight:500; cursor:pointer; transition:background 0.2s; } .ds-btn-outline:hover { background:oklch(0.965 0.012 250); }"
+    },
+    {
+      "name": "Focus-Area Tag",
+      "kind": "chip",
+      "refersTo": "chip-focus",
+      "description": "Quiet inventory pill from the hero — what ITSA covers.",
+      "html": "<span class=\"ds-tag\">Cybersecurity</span>",
+      "css": ".ds-tag { display:inline-flex; align-items:center; padding:0.25rem 0.75rem; border:1px solid oklch(0.90 0.014 250); border-radius:9999px; background:oklch(0.95 0.02 250 / 0.5); color:oklch(0.35 0.09 254); font-family:Geist,system-ui,sans-serif; font-size:0.75rem; font-weight:500; }"
+    },
+    {
+      "name": "Feature Row",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "The de-slopped 'Why join' row — icon tile + mono index + title + copy, hairline divided (not a card).",
+      "html": "<div class=\"ds-feature\"><span class=\"ds-feature-ic\"><svg viewBox=\"0 0 24 24\" width=\"20\" height=\"20\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 18l6-6-6-6M8 6l-6 6 6 6\"/></svg></span><div><div class=\"ds-feature-head\"><span class=\"ds-feature-idx\">02</span><h3>Hands-on workshops</h3></div><p>Web development, cybersecurity, cloud, and more — practical, beginner-friendly sessions.</p></div></div>",
+      "css": ".ds-feature { display:flex; gap:1.25rem; padding:1.5rem 0; border-top:1px solid oklch(0.90 0.014 250); } .ds-feature-ic { flex:none; display:grid; place-items:center; width:3rem; height:3rem; border-radius:0.75rem; background:oklch(0.49 0.19 254 / 0.10); color:oklch(0.49 0.19 254); transition:background 0.3s, color 0.3s; } .ds-feature:hover .ds-feature-ic { background:oklch(0.49 0.19 254); color:oklch(0.99 0.01 240); } .ds-feature-head { display:flex; align-items:baseline; gap:0.75rem; } .ds-feature-idx { font-family:'Geist Mono',ui-monospace,monospace; font-size:0.75rem; color:oklch(0.44 0.035 256); } .ds-feature h3 { font-family:'Bricolage Grotesque',sans-serif; font-size:1.125rem; font-weight:700; letter-spacing:-0.025em; margin:0; color:oklch(0.22 0.035 258); } .ds-feature p { margin:0.375rem 0 0; font-family:Geist,system-ui,sans-serif; font-size:0.875rem; line-height:1.6; color:oklch(0.44 0.035 256); }"
+    },
+    {
+      "name": "Sticky Header",
+      "kind": "nav",
+      "refersTo": "card",
+      "description": "Translucent blurred sticky bar; active link gets a short blue underline bar.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link is-active\">Home<span class=\"ds-nav-bar\"></span></a><a class=\"ds-nav-link\">Events</a><a class=\"ds-nav-link\">Join</a></nav>",
+      "css": ".ds-nav { display:inline-flex; gap:0.25rem; padding:0.5rem; border-radius:0.75rem; background:oklch(0.99 0.006 240 / 0.7); backdrop-filter:blur(8px); } .ds-nav-link { position:relative; padding:0.5rem 0.75rem; border-radius:0.375rem; font-family:Geist,system-ui,sans-serif; font-size:0.875rem; font-weight:500; color:oklch(0.44 0.035 256); text-decoration:none; transition:color 0.2s; } .ds-nav-link:hover { color:oklch(0.22 0.035 258); } .ds-nav-link.is-active { color:oklch(0.22 0.035 258); } .ds-nav-bar { position:absolute; left:0.75rem; right:0.75rem; bottom:-1px; height:2px; border-radius:9999px; background:oklch(0.49 0.19 254); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Connected Network",
+    "overview": "ITSA's identity descends from its molecular logo — vivid blue and cyan nodes wired to warm orange ones. Nodes are students and skills; links are the community. Blue carries the promise (legit, organized); orange is the human spark. A committed brand register that is confident and credible without ever becoming a stiff corporate intranet, a generic SaaS/AI template, or an amateur club page.",
+    "keyCharacteristics": [
+      "Committed blue identity, orange as the intentional spark — straight from the logo.",
+      "Light by default (a phone glance in daylight), with a real dark mode.",
+      "Expressive grotesque headings (Bricolage) over a neutral, readable body (Geist).",
+      "The network motif (nodes + links + soft dot field) recurs as the signature texture.",
+      "Warm, direct, peer-to-peer voice. Confident, never bureaucratic."
+    ],
+    "rules": [
+      { "name": "The Orange-Is-A-Spark Rule", "body": "Orange never carries body text or a text button. It is nodes, glows, gradient tips, hover energy — a minority voice (≤15% of a screen) for warmth, not information.", "section": "colors" },
+      { "name": "The No-Cream Rule", "body": "The background is cool-white or a saturated brand fill. Warm/cream/sand backgrounds are forbidden — the 2026 AI default that fights the logo's cool blues.", "section": "colors" },
+      { "name": "The One-Kicker Rule", "body": "A mono kicker appears once, in the hero. Repeating a tiny uppercase eyebrow above every section is forbidden AI scaffolding.", "section": "typography" },
+      { "name": "The Flat-At-Rest Rule", "body": "Surfaces are flat by default; depth is tonal. Shadows appear only as a response to state (hover, focus).", "section": "elevation" }
+    ],
+    "dos": [
+      "Do treat the logo as the source of truth: blue nodes, orange spark, links between them.",
+      "Do keep Brand Blue as the single action color and orange as decoration/energy only.",
+      "Do lead sections with the headline; use the mono kicker exactly once (hero).",
+      "Do keep body text at Muted Ink or darker — verify 4.5:1.",
+      "Do ship the network SVG (or real student photography) as hero imagery.",
+      "Do render h1–h4 in Bricolage Grotesque; keep body/UI in Geist."
+    ],
+    "donts": [
+      "Don't build a stiff corporate intranet — no grey enterprise chrome or bureaucratic layouts.",
+      "Don't ship the generic SaaS/AI template: no cream bg, per-section uppercase eyebrows, four identical icon-cards, or gradient-clipped headings.",
+      "Don't drift toward an amateur club page — no clip art, clashing colors, mismatched fonts.",
+      "Don't put white text on orange or use orange for a primary button (contrast fails).",
+      "Don't use colored border-left/right stripes or arbitrary z-index values.",
+      "Don't reintroduce dark-only — light is the default, dark is a maintained mode."
+    ]
+  }
+}
