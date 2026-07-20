@@ -230,6 +230,75 @@
   }
 }
 
+/* ── Organizational chart ───────────────────────────────────────────────────
+   Pure-CSS connector tree (nested <ul>/<li>). Connector color is mixed from the
+   foreground so lines stay visible in both light and dark themes.
+   Wrapped in @layer components so Tailwind v4 emits it (unlayered top-level
+   rules are dropped from the build output). */
+@layer components {
+.org-tree {
+  --org-line: color-mix(in oklch, var(--foreground) 22%, transparent);
+}
+.org-tree ul {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-top: 22px;
+}
+.org-tree li {
+  position: relative;
+  list-style: none;
+  padding: 22px 12px 0;
+  text-align: center;
+}
+/* the two halves of the horizontal connector above each node */
+.org-tree li::before,
+.org-tree li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 50%;
+  width: 50%;
+  height: 22px;
+  border-top: 2px solid var(--org-line);
+}
+.org-tree li::after {
+  right: auto;
+  left: 50%;
+  border-left: 2px solid var(--org-line);
+}
+/* a lone child needs no horizontal bar — only the vertical drop */
+.org-tree li:only-child::before,
+.org-tree li:only-child::after {
+  display: none;
+}
+.org-tree li:only-child {
+  padding-top: 22px;
+}
+/* trim the connector at the row's outer edges */
+.org-tree li:first-child::before,
+.org-tree li:last-child::after {
+  border: 0 none;
+}
+.org-tree li:last-child::before {
+  border-right: 2px solid var(--org-line);
+  border-radius: 0 6px 0 0;
+}
+.org-tree li:first-child::after {
+  border-radius: 6px 0 0 0;
+}
+/* vertical drop from a parent into its group of children */
+.org-tree ul ul::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 22px;
+  border-left: 2px solid var(--org-line);
+}
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -15,6 +15,13 @@ export type Officer = {
   sortOrder: number;
 };
 
+/** A node in the officer hierarchy (organizational chart). */
+export type OrgNode = {
+  name: string;
+  position: string;
+  children?: OrgNode[];
+};
+
 export type EventItem = {
   id: string;
   title: string;

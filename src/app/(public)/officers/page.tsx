@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { getOfficers } from "@/lib/data";
+import { orgChart } from "@/data/officers";
 import { PageHeader } from "@/components/layout/page-header";
 import { OfficerCard } from "@/components/officers/officer-card";
+import { OrgChart } from "@/components/officers/org-chart";
 
 export const metadata: Metadata = {
   title: "Officers",
@@ -20,6 +22,22 @@ export default async function OfficersPage() {
       />
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+        <div className="mb-4 text-center">
+          <h2 className="text-2xl font-bold">Organizational chart</h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            How the association is structured, from adviser to department leads.
+          </p>
+        </div>
+        <OrgChart root={orgChart} />
+      </section>
+
+      <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+        <div className="mb-8 text-center">
+          <h2 className="text-2xl font-bold">The people</h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Get to know the officers behind ITSA.
+          </p>
+        </div>
         {officers.length === 0 ? (
           <p className="text-center text-muted-foreground">
             Officer profiles will be published soon.

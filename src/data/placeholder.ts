@@ -1,64 +1,7 @@
-import type { EventItem, Officer } from "@/lib/types";
+import type { EventItem } from "@/lib/types";
 
-// NOTE: Placeholder content shown until real data exists in Firestore.
-// Replace with actual ITSA officers, events, photos, and copy.
-
-export const placeholderOfficers: Officer[] = [
-  {
-    id: "ph-1",
-    name: "Juan Dela Cruz",
-    position: "President",
-    bio: "Fourth-year IT student passionate about software engineering and building an inclusive tech community on campus.",
-    photoUrl: "",
-    socials: { facebook: "#", linkedin: "#", github: "#" },
-    sortOrder: 1,
-  },
-  {
-    id: "ph-2",
-    name: "Maria Santos",
-    position: "Vice President",
-    bio: "Leads internal affairs and mentorship programs. Interested in UX design and data analytics.",
-    photoUrl: "",
-    socials: { facebook: "#", instagram: "#" },
-    sortOrder: 2,
-  },
-  {
-    id: "ph-3",
-    name: "Angelo Reyes",
-    position: "Secretary",
-    bio: "Keeps the org running smoothly. Enjoys competitive programming and open-source contribution.",
-    photoUrl: "",
-    socials: { github: "#", linkedin: "#" },
-    sortOrder: 3,
-  },
-  {
-    id: "ph-4",
-    name: "Bea Villanueva",
-    position: "Treasurer",
-    bio: "Handles finances and sponsorships. Aspiring fintech developer.",
-    photoUrl: "",
-    socials: { facebook: "#", instagram: "#" },
-    sortOrder: 4,
-  },
-  {
-    id: "ph-5",
-    name: "Carlo Mendoza",
-    position: "Public Relations Officer",
-    bio: "Tells the ITSA story across social media and partners with student groups campus-wide.",
-    photoUrl: "",
-    socials: { facebook: "#", instagram: "#", linkedin: "#" },
-    sortOrder: 5,
-  },
-  {
-    id: "ph-6",
-    name: "Nicole Garcia",
-    position: "Technical Head",
-    bio: "Organizes workshops on web dev, cybersecurity, and cloud. Full-stack enthusiast.",
-    photoUrl: "",
-    socials: { github: "#", linkedin: "#" },
-    sortOrder: 6,
-  },
-];
+// NOTE: Placeholder events shown until real data exists in Firestore.
+// Officers use the real org chart in `@/data/officers`, not placeholders.
 
 const now = new Date();
 function daysFromNow(days: number): string {

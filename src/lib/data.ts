@@ -1,6 +1,7 @@
 import "server-only";
 import { getAdminDb, isAdminConfigured } from "@/lib/firebase/admin";
-import { placeholderEvents, placeholderOfficers } from "@/data/placeholder";
+import { placeholderEvents } from "@/data/placeholder";
+import { realOfficers } from "@/data/officers";
 import type { EventItem, Officer, SocialLinks } from "@/lib/types";
 
 // The public pages read through these helpers. When Firebase Admin credentials
@@ -39,17 +40,17 @@ function toOfficer(id: string, data: FirebaseFirestore.DocumentData): Officer {
 }
 
 export async function getOfficers(): Promise<Officer[]> {
-  if (!isAdminConfigured) return placeholderOfficers;
+  if (!isAdminConfigured) return realOfficers;
   try {
     const snap = await getAdminDb()
       .collection("officers")
       .orderBy("sortOrder", "asc")
       .get();
-    if (snap.empty) return placeholderOfficers;
+    if (snap.empty) return realOfficers;
     return snap.docs.map((d) => toOfficer(d.id, d.data()));
   } catch (err) {
-    console.error("getOfficers failed, using placeholders:", err);
-    return placeholderOfficers;
+    console.error("getOfficers failed, using fallback officers:", err);
+    return realOfficers;
   }
 }
 
