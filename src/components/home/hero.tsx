@@ -36,8 +36,8 @@ export function Hero() {
         {/* Copy */}
         <div className="animate-rise">
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card/70 py-1.5 pl-1.5 pr-3.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur">
-            <span className="grid size-5 place-items-center rounded-full bg-brand/10">
-              <span className="size-2 rounded-full bg-brand" />
+            <span className="grid size-5 place-items-center rounded-full bg-red-500/10">
+              <span className="size-2 rounded-full bg-red-500" />
             </span>
             <span className="font-mono tracking-tight">{siteConfig.school}</span>
           </span>
