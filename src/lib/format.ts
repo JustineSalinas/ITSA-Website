@@ -28,3 +28,14 @@ export function initials(name: string): string {
 export function isUpcoming(iso: string): boolean {
   return new Date(iso).getTime() >= Date.now();
 }
+
+export function splitEvents<T extends { eventDate: string }>(events: T[]) {
+  const now = Date.now();
+  const upcoming = events
+    .filter((e) => new Date(e.eventDate).getTime() >= now)
+    .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime());
+  const past = events
+    .filter((e) => new Date(e.eventDate).getTime() < now)
+    .sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime());
+  return { upcoming, past };
+}

@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils";
 import { navLinks } from "@/data/site";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/layout/logo";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
 import {
   Sheet,
   SheetContent,
@@ -48,12 +47,10 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-1.5 md:flex">
-          <ThemeToggle />
           <Button render={<Link href="/join" />}>Join ITSA</Button>
         </div>
 
         <div className="flex items-center gap-1 md:hidden">
-          <ThemeToggle />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
               render={

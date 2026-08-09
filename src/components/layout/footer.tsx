@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, Building2, Shield, ArrowUp, Sparkles, CheckCircle2 } from "lucide-react";
 import { navLinks, siteConfig } from "@/data/site";
 import { Logo } from "@/components/layout/logo";
 import {
@@ -18,15 +18,20 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-border/60 bg-muted/30">
-      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-        <div className="grid gap-10 md:grid-cols-3">
+    <footer className="mt-auto border-t border-border/80 bg-slate-950 text-slate-100">
+
+      {/* Main 4-Column Corporate Footer */}
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Col 1: Brand & Mission */}
           <div className="space-y-4">
-            <Logo />
-            <p className="max-w-xs text-sm text-muted-foreground">
-              {siteConfig.description}
+            <div className="brightness-200">
+              <Logo />
+            </div>
+            <p className="text-xs leading-relaxed text-slate-400">
+              {siteConfig.fullName} — empowering Information Technology students through technical excellence, leadership, and community support.
             </p>
-            <div className="flex gap-2">
+            <div className="flex gap-2 pt-2">
               {socialLinks.map(({ href, label, Icon }) => (
                 <a
                   key={label}
@@ -34,7 +39,7 @@ export function Footer() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={label}
-                  className="grid size-9 place-items-center rounded-md border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                  className="grid size-9 place-items-center rounded-lg border border-white/10 bg-slate-900/80 text-slate-400 transition-colors hover:border-primary hover:bg-primary hover:text-white"
                 >
                   <Icon className="size-4" />
                 </a>
@@ -42,14 +47,17 @@ export function Footer() {
             </div>
           </div>
 
+          {/* Col 2: Association Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold">Explore</h3>
-            <ul className="mt-4 space-y-2.5">
+            <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-slate-300">
+              Navigation
+            </h3>
+            <ul className="mt-4 space-y-2.5 text-xs">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                    className="text-slate-400 transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -58,37 +66,73 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* Col 3: Student Resources */}
           <div>
-            <h3 className="text-sm font-semibold">Get in touch</h3>
-            <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
+            <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-slate-300">
+              Student Resources
+            </h3>
+            <ul className="mt-4 space-y-2.5 text-xs text-slate-400">
+              <li>
+                <Link href="/events" className="transition-colors hover:text-white">
+                  Technical Workshops & CTFs
+                </Link>
+              </li>
+              <li>
+                <Link href="/officers" className="transition-colors hover:text-white">
+                  Executive Hierarchy & Org Chart
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="transition-colors hover:text-white">
+                  Mission, Vision & Values
+                </Link>
+              </li>
+              <li>
+                <Link href="/admin" className="transition-colors hover:text-white">
+                  Executive Officer Portal
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 4: Official Headquarters */}
+          <div>
+            <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-slate-300">
+              Headquarters & Contact
+            </h3>
+            <ul className="mt-4 space-y-3 text-xs text-slate-400">
               <li className="flex items-start gap-2.5">
-                <Mail className="mt-0.5 size-4 shrink-0 text-primary" />
+                <Building2 className="mt-0.5 size-4 shrink-0 text-primary" />
+                <span>{siteConfig.location}</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <Mail className="mt-0.5 size-4 shrink-0 text-amber-400" />
                 <a
                   href={`mailto:${siteConfig.contactEmail}`}
-                  className="transition-colors hover:text-primary"
+                  className="transition-colors hover:text-white"
                 >
                   {siteConfig.contactEmail}
                 </a>
               </li>
-              <li className="flex items-start gap-2.5">
-                <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />
-                <span>{siteConfig.location}</span>
+              <li className="mt-2 inline-block rounded-md border border-white/10 bg-slate-900 px-2.5 py-1 font-mono text-[10px] text-slate-400">
+                OFFICE HOURS: MON - FRI, 8:00 AM - 5:00 PM
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-border/60 pt-6 text-xs text-muted-foreground sm:flex-row">
+        {/* Bottom Bar */}
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-slate-400 sm:flex-row">
           <p>
-            &copy; {new Date().getFullYear()} {siteConfig.fullName}. All rights
-            reserved.
+            &copy; {new Date().getFullYear()} {siteConfig.fullName} ({siteConfig.name}). All rights reserved.
           </p>
-          <p>
-            {siteConfig.school} &middot;{" "}
-            <Link href="/admin" className="transition-colors hover:text-primary">
-              Officer login
+          <div className="flex items-center gap-4">
+            <span className="font-mono text-[11px] text-slate-500">{siteConfig.school}</span>
+            <span>&middot;</span>
+            <Link href="/admin" className="flex items-center gap-1 font-mono text-[11px] text-slate-400 hover:text-white">
+              <Shield className="size-3 text-primary" /> Officer Login
             </Link>
-          </p>
+          </div>
         </div>
       </div>
     </footer>
