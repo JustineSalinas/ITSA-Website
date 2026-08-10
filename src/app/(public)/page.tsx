@@ -6,6 +6,8 @@ import { Highlights } from "@/components/home/highlights";
 import { EventCard } from "@/components/events/event-card";
 import { OfficerCard } from "@/components/officers/officer-card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { LogoMark } from "@/components/layout/logo";
 import { siteConfig } from "@/data/site";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 
@@ -25,9 +27,12 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 font-mono text-xs font-semibold text-primary">
-                <Sparkles className="size-3.5" /> WHAT&apos;S NEXT
-              </div>
+              <Badge
+                variant="outline"
+                className="inline-flex items-center gap-2 rounded-full border-primary/20 bg-primary/10 px-3 py-1 font-mono text-xs font-semibold text-primary"
+              >
+                <LogoMark className="size-3.5 shrink-0" /> WHAT&apos;S NEXT
+              </Badge>
               <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-balance sm:text-4xl lg:text-5xl">
                 Upcoming Events & Labs
               </h2>
@@ -145,7 +150,7 @@ export default async function HomePage() {
                   className="group font-bold text-primary shadow-lg transition-transform active:scale-95 bg-white hover:bg-slate-100"
                   render={<Link href="/join" />}
                 >
-                  Join ITSA Today
+                  Register Now
                   <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button

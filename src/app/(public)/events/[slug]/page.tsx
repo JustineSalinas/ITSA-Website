@@ -5,6 +5,8 @@ import { ArrowLeft, CalendarDays, Clock, MapPin, Sparkles, CheckCircle2, Ticket,
 import { getEventBySlug, getEvents } from "@/lib/data";
 import { formatEventDate, formatEventTime, isUpcoming } from "@/lib/format";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { LogoMark } from "@/components/layout/logo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -63,10 +65,13 @@ export default async function EventDetailPage({ params }: Props) {
 
           <div className="relative z-10 max-w-3xl">
             <div className="flex items-center gap-3">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 font-mono text-xs font-bold text-white backdrop-blur-md">
-                <Sparkles className="size-3 text-amber-400" />
+              <Badge
+                variant="outline"
+                className="inline-flex items-center gap-1.5 rounded-full border-white/20 bg-white/10 px-3 py-1 font-mono text-xs font-bold text-white backdrop-blur-md"
+              >
+                <LogoMark className="size-3.5 shrink-0" />
                 {upcoming ? "UPCOMING EVENT" : "PAST EVENT"}
-              </span>
+              </Badge>
               <span className="font-mono text-xs text-white/70">ITSA OFFICIAL ACTIVITY</span>
             </div>
 

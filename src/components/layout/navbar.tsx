@@ -47,7 +47,7 @@ export function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-1.5 md:flex">
-          <Button render={<Link href="/join" />}>Join ITSA</Button>
+          <Button render={<Link href="/join" />}>Register Now</Button>
         </div>
 
         <div className="flex items-center gap-1 md:hidden">
@@ -87,7 +87,7 @@ export function Navbar() {
                   <Link href="/join" onClick={() => setOpen(false)} />
                 }
               >
-                Join ITSA
+                Register Now
               </Button>
             </nav>
           </SheetContent>

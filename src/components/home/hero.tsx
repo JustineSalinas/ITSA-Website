@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles, Code2, GraduationCap, Briefcase, ShieldCheck } from "lucide-react";
+import { ArrowRight, Code2, GraduationCap, Briefcase, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { LogoMark } from "@/components/layout/logo";
 import { siteConfig } from "@/data/site";
 import { ExecutiveHeroWidget } from "./executive-widget";
 
@@ -48,18 +50,22 @@ export function Hero() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2.5 rounded-full border border-primary/20 bg-card px-3.5 py-1.5 text-xs font-medium shadow-sm"
             >
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-primary" />
-              </span>
-              <span className="font-mono text-muted-foreground">{siteConfig.school}</span>
-              <span className="h-3 w-px bg-border" />
-              <span className="inline-flex items-center gap-1 font-semibold text-foreground">
-                <Sparkles className="size-3 text-primary" />
-                Official Student Association
-              </span>
+              <Badge
+                variant="outline"
+                className="inline-flex items-center gap-2.5 rounded-full border-primary/20 bg-card px-3.5 py-1.5 text-xs font-medium shadow-xs"
+              >
+                <span className="relative flex size-2">
+                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex size-2 rounded-full bg-primary" />
+                </span>
+                <span className="font-mono text-muted-foreground">{siteConfig.school}</span>
+                <span className="h-3 w-px bg-border" />
+                <span className="inline-flex items-center gap-1.5 font-semibold text-foreground">
+                  <LogoMark className="size-3.5 shrink-0" />
+                  Official Student Association
+                </span>
+              </Badge>
             </motion.div>
 
             {/* Headline */}
