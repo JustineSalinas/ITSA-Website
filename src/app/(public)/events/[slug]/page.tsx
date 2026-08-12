@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CalendarDays, Clock, MapPin, Sparkles, CheckCircle2, Ticket, Share2, Building2 } from "lucide-react";
 import { getEventBySlug, getEvents } from "@/lib/data";
@@ -103,9 +104,15 @@ export default async function EventDetailPage({ params }: Props) {
           <div className="space-y-8 lg:col-span-8">
             {/* Event Poster / Feature Image */}
             {event.imageUrl && (
-              <div className="overflow-hidden rounded-2xl border border-border/80 bg-card shadow-md aspect-[16/9]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={event.imageUrl} alt={event.title} className="size-full object-cover" />
+              <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-card shadow-md aspect-[16/9]">
+                <Image
+                  src={event.imageUrl}
+                  alt={event.title}
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 66vw, 100vw"
+                  className="object-cover"
+                />
               </div>
             )}
 

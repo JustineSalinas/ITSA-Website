@@ -3,24 +3,74 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    function isSignedIn() {
-      return request.auth != null;
+    // ── Admin identity ────────────────────────────────────────────────────
+    // Two independent gates, both of which must pass:
+    //   1. A custom claim (`admin: true`) minted by the Admin SDK. Claims live
+    //      in the ID token, so they cannot be forged by the client.
+    //   2. An /admins/{uid} document. This gives officers a revocation switch
+    //      that takes effect immediately, without waiting for a token refresh.
+    // Being merely signed in is NOT sufficient anywhere in this database.
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.admin == true
+        && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
 
-    // Public content: anyone can read, only authenticated officers can write.
+    // Officers may not edit their own admin grants; only the Admin SDK
+    // (which bypasses these rules) may write this collection.
+    match /admins/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    // ── Public content ────────────────────────────────────────────────────
+    // Readable by anyone; writable only by verified admins.
+
+    function hasValidOfficer() {
+      let d = request.resource.data;
+      return d.name is string && d.name.size() > 1 && d.name.size() <= 120
+        && d.position is string && d.position.size() > 1 && d.position.size() <= 120
+        && d.sortOrder is int && d.sortOrder >= 0;
+    }
+
+    function hasValidEvent() {
+      let d = request.resource.data;
+      return d.title is string && d.title.size() > 1 && d.title.size() <= 160
+        && d.slug is string && d.slug.matches('^[a-z0-9]+(-[a-z0-9]+)*$')
+        && d.description is string && d.description.size() <= 4000
+        && d.location is string && d.location.size() <= 200;
+    }
+
     match /officers/{officerId} {
       allow read: if true;
-      allow write: if isSignedIn();
+      allow create, update: if isAdmin() && hasValidOfficer();
+      // Records are retired with a `deletedAt` stamp (see update) rather than
+      // destroyed, so a mistaken removal is recoverable.
+      allow delete: if false;
     }
 
     match /events/{eventId} {
       allow read: if true;
-      allow write: if isSignedIn();
+      allow create, update: if isAdmin() && hasValidEvent();
+      allow delete: if false;
     }
 
+    // ── Server-only collections ───────────────────────────────────────────
+    // Written exclusively by the Admin SDK, which bypasses these rules.
+
     // Outgoing mail queue for the Trigger Email extension.
-    // Written only by the server (Admin SDK bypasses rules); no client access.
     match /mail/{docId} {
+      allow read, write: if false;
+    }
+
+    // Join/contact submissions, so recruitment survives the inbox.
+    match /applications/{docId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    // Per-IP counters backing the contact-form rate limit.
+    match /rate_limits/{docId} {
       allow read, write: if false;
     }
 

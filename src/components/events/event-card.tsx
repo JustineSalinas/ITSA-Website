@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import type { EventItem } from "@/lib/types";
@@ -20,11 +21,12 @@ export function EventCard({ event }: { event: EventItem }) {
       <Card className="group flex h-full flex-col overflow-hidden pt-0 border-border/80 bg-card/70 backdrop-blur-md transition-all duration-300 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5">
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-gradient-to-br from-primary/80 to-primary">
           {event.imageUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={event.imageUrl}
               alt={event.title}
-              className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
           ) : (
             <div className="grid size-full place-items-center bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30">

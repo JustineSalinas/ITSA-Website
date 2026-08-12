@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { signOut } from "firebase/auth";
+import { toast } from "sonner";
 import {
   CalendarDays,
   LayoutDashboard,
@@ -30,11 +31,28 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
 
+  // Access is enforced server-side (proxy + the (protected) layout); this
+  // only keeps the UI honest if the client session drops mid-visit.
   useEffect(() => {
     if (configured && !loading && !user) {
       router.replace("/admin/login");
     }
   }, [configured, loading, user, router]);
+
+  async function handleSignOut() {
+    // Clear the server cookie first — that is the credential that matters.
+    // If this fails the officer stays signed in rather than appearing to be
+    // signed out while the session is still live.
+    try {
+      await fetch("/api/admin/session", { method: "DELETE" });
+    } catch {
+      toast.error("Couldn't sign out", { description: "Check your connection and try again." });
+      return;
+    }
+    await signOut(getFirebaseAuth()).catch(() => {});
+    router.replace("/admin/login");
+    router.refresh();
+  }
 
   if (!configured) {
     return (
@@ -90,7 +108,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
               View site
             </Link>
             <button
-              onClick={() => signOut(getFirebaseAuth())}
+              onClick={handleSignOut}
               className="flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent"
             >
               <LogOut className="size-4" />

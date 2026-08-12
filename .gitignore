@@ -30,14 +30,21 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files — real values never committed, but the template is tracked so the
+# list of required variables lives in version control.
 .env*
+!.env.example
 
 # vercel
 .vercel
 
 # tooling artifacts
 .playwright-mcp
+
+# firebase emulator artifacts
+firestore-debug.log
+firebase-debug.log
+*-debug.log
 
 # typescript
 *.tsbuildinfo
