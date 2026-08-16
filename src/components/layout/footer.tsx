@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MapPin, Building2, Shield, ArrowUp, Sparkles, CheckCircle2 } from "lucide-react";
+import { Mail, MapPin, Building2, Shield, Clock, ArrowUp, Sparkles, CheckCircle2 } from "lucide-react";
 import { navLinks, siteConfig } from "@/data/site";
 import { Logo } from "@/components/layout/logo";
 import {
@@ -49,10 +49,10 @@ export function Footer() {
 
           {/* Col 2: Association Quick Links */}
           <div>
-            <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-slate-300">
+            <h3 className="font-mono text-xs font-bold uppercase tracking-widest text-white">
               Navigation
             </h3>
-            <ul className="mt-4 space-y-2.5 text-xs">
+            <ul className="mt-4.5 space-y-2.5 text-xs">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -68,10 +68,10 @@ export function Footer() {
 
           {/* Col 3: Student Resources */}
           <div>
-            <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-slate-300">
+            <h3 className="font-mono text-xs font-bold uppercase tracking-widest text-white">
               Student Resources
             </h3>
-            <ul className="mt-4 space-y-2.5 text-xs text-slate-400">
+            <ul className="mt-4.5 space-y-2.5 text-xs text-slate-400">
               <li>
                 <Link href="/events" className="transition-colors hover:text-white">
                   Technical Workshops & CTFs
@@ -97,16 +97,16 @@ export function Footer() {
 
           {/* Col 4: Official Headquarters */}
           <div>
-            <h3 className="font-mono text-xs font-bold uppercase tracking-wider text-slate-300">
+            <h3 className="font-mono text-xs font-bold uppercase tracking-widest text-white">
               Headquarters & Contact
             </h3>
-            <ul className="mt-4 space-y-3 text-xs text-slate-400">
+            <ul className="mt-4.5 space-y-3 text-xs text-slate-400">
               <li className="flex items-start gap-2.5">
-                <Building2 className="mt-0.5 size-4 shrink-0 text-primary" />
+                <Building2 className="mt-0.5 size-4 shrink-0 text-white" />
                 <span>{siteConfig.location}</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <Mail className="mt-0.5 size-4 shrink-0 text-amber-400" />
+                <Mail className="mt-0.5 size-4 shrink-0 text-white" />
                 <a
                   href={`mailto:${siteConfig.contactEmail}`}
                   className="transition-colors hover:text-white"
@@ -114,8 +114,9 @@ export function Footer() {
                   {siteConfig.contactEmail}
                 </a>
               </li>
-              <li className="mt-2 inline-block rounded-md border border-white/10 bg-slate-900 px-2.5 py-1 font-mono text-[10px] text-slate-400">
-                OFFICE HOURS: MON - FRI, 8:00 AM - 5:00 PM
+              <li className="flex items-start gap-2.5">
+                <Clock className="mt-0.5 size-4 shrink-0 text-white" />
+                <span>Mon – Fri, 8:00 AM – 5:00 PM</span>
               </li>
             </ul>
           </div>
@@ -130,7 +131,7 @@ export function Footer() {
             <span className="font-mono text-[11px] text-slate-500">{siteConfig.school}</span>
             <span>&middot;</span>
             <Link href="/admin" className="flex items-center gap-1 font-mono text-[11px] text-slate-400 hover:text-white">
-              <Shield className="size-3 text-primary" /> Officer Login
+              <Shield className="size-3 text-white" /> Officer Login
             </Link>
           </div>
         </div>
