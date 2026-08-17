@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Eye, Target, Heart, GraduationCap, Handshake, Lightbulb, Sparkles, Rocket, Code2, ShieldCheck } from "lucide-react";
+import { Eye, Target, Heart, GraduationCap, Handshake, Lightbulb } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { siteConfig } from "@/data/site";
@@ -10,32 +10,24 @@ const values = [
   {
     Icon: Lightbulb,
     title: "Innovation",
-    color: "from-amber-500 to-orange-500",
-    bg: "bg-amber-500/10 text-amber-500",
     description:
       "We embrace curiosity and creativity, encouraging every member to explore cutting-edge tools, frameworks, and AI advancements.",
   },
   {
     Icon: Handshake,
     title: "Collaboration",
-    color: "from-blue-500 to-cyan-500",
-    bg: "bg-blue-500/10 text-blue-500",
     description:
       "We grow together — sharing code reviews, mentoring junior students, and co-building projects in a open peer ecosystem.",
   },
   {
     Icon: GraduationCap,
     title: "Excellence",
-    color: "from-purple-500 to-indigo-500",
-    bg: "bg-purple-500/10 text-purple-500",
     description:
       "We strive for high standards in our hackathons, practical workshops, and student-led software solutions.",
   },
   {
     Icon: Heart,
     title: "Community",
-    color: "from-rose-500 to-pink-500",
-    bg: "bg-rose-500/10 text-rose-500",
     description:
       "We foster an inclusive, welcoming space where every IT student finds belonging, encouragement, and lifelong tech peers.",
   },
@@ -77,10 +69,7 @@ export default function AboutPage() {
           transition={{ duration: 0.5 }}
           className="mx-auto max-w-3xl text-center"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 font-mono text-xs font-semibold text-primary">
-            <Sparkles className="size-3.5" /> OUR ORIGINS
-          </div>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">
+          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
             Bridging the gap between classroom theory and production engineering.
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground text-pretty">
@@ -137,7 +126,7 @@ export default function AboutPage() {
           </div>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map(({ Icon, title, description, bg }, idx) => (
+            {values.map(({ Icon, title, description }, idx) => (
               <motion.div
                 key={title}
                 initial={{ opacity: 0, y: 20 }}
@@ -146,7 +135,7 @@ export default function AboutPage() {
                 transition={{ duration: 0.4, delay: idx * 0.1 }}
               >
                 <SpotlightCard className="h-full p-6">
-                  <span className={`grid size-12 place-items-center rounded-xl ${bg}`}>
+                  <span className="grid size-12 place-items-center rounded-xl bg-brand/10 text-brand">
                     <Icon className="size-6" />
                   </span>
                   <h3 className="mt-5 text-xl font-bold">{title}</h3>
@@ -166,9 +155,9 @@ export default function AboutPage() {
             <p className="mt-2 text-sm text-muted-foreground">How we continuously elevate the student IT experience at {siteConfig.school}.</p>
           </div>
 
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
-            {milestones.map((m, idx) => (
-              <div key={m.year} className="relative flex flex-col border-l-2 border-primary/30 pl-6">
+          <div className="mt-12 grid gap-x-8 sm:grid-cols-3">
+            {milestones.map((m) => (
+              <div key={m.year} className="flex flex-col border-t border-border/80 pt-6">
                 <span className="font-mono text-xs font-bold text-primary">{m.year}</span>
                 <h3 className="mt-2 text-lg font-bold">{m.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{m.description}</p>
