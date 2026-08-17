@@ -1,17 +1,21 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type DOMMotionComponents } from "framer-motion";
 import { ReactNode } from "react";
+
+// The elements framer-motion actually provides a motion component for, so
+// `motion[Component]` is a checked lookup rather than an `any` cast.
+type MotionTag = keyof DOMMotionComponents;
 
 interface FadeInProps {
   children: ReactNode;
   delay?: number;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: MotionTag;
 }
 
 export function FadeIn({ children, delay = 0, className, as: Component = "div" }: FadeInProps) {
-  const MotionComponent = motion[Component as keyof typeof motion] as any;
+  const MotionComponent = motion[Component];
 
   return (
     <MotionComponent

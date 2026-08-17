@@ -29,7 +29,11 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
   icons: {
-    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
+    icon: [
+      { url: "/logo.png", type: "image/png" },
+      { url: "/logo.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/logo.png" }],
   },
   openGraph: {
     title: `${siteConfig.name} — ${siteConfig.fullName}`,

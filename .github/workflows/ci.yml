@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      # Java is required by the Firestore emulator used in the rules tests.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build (includes typecheck)
+        run: npm run build
+        env:
+          # Build-time only: the real values live in the hosting provider's
+          # environment. Present so next.config.ts can resolve the image
+          # allowlist without a live project.
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: itsa-ci.appspot.com
+
+      # The rules are the only thing standing between a signed-in account and
+      # every officer and event record. A regression here is a site defacement,
+      # so it gates every merge.
+      # Uses the same npm script developers run locally, so the two cannot
+      # drift. firebase-tools is a devDependency rather than a global install,
+      # which is what `npm ci` provides here.
+      - name: Firestore security rules
+        run: npm run test:rules
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high

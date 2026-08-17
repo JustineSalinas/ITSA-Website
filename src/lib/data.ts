@@ -8,6 +8,27 @@ import type { EventItem, Officer, SocialLinks } from "@/lib/types";
 // are absent (e.g. before the project is wired up) they serve placeholder
 // content so the site is fully browsable during development.
 
+const isProduction = process.env.NODE_ENV === "production";
+
+/**
+ * A Firestore read failed.
+ *
+ * In development, fall back to bundled content so the site stays browsable.
+ * In production, rethrow: an outage, an expired service account, or a botched
+ * rules deploy must surface as an error page that monitoring can see, not as a
+ * normal-looking site quietly serving months-old content.
+ */
+function onReadFailure(operation: string, err: unknown): never | void {
+  console.error(`[data] ${operation} failed:`, err);
+  if (isProduction) throw err;
+  console.warn(`[data] ${operation}: serving bundled fallback content (dev only)`);
+}
+
+/** Soft-deleted records never reach the public site. */
+function isLive(data: FirebaseFirestore.DocumentData): boolean {
+  return data.deletedAt == null;
+}
+
 function toEvent(id: string, data: FirebaseFirestore.DocumentData): EventItem {
   const date = data.eventDate;
   const iso =
@@ -46,10 +67,13 @@ export async function getOfficers(): Promise<Officer[]> {
       .collection("officers")
       .orderBy("sortOrder", "asc")
       .get();
-    if (snap.empty) return realOfficers;
-    return snap.docs.map((d) => toOfficer(d.id, d.data()));
+    const officers = snap.docs
+      .filter((d) => isLive(d.data()))
+      .map((d) => toOfficer(d.id, d.data()));
+    // An empty collection means "not seeded yet", not "no officers exist".
+    return officers.length ? officers : realOfficers;
   } catch (err) {
-    console.error("getOfficers failed, using fallback officers:", err);
+    onReadFailure("getOfficers", err);
     return realOfficers;
   }
 }
@@ -61,10 +85,12 @@ export async function getEvents(): Promise<EventItem[]> {
       .collection("events")
       .orderBy("eventDate", "desc")
       .get();
-    if (snap.empty) return placeholderEvents;
-    return snap.docs.map((d) => toEvent(d.id, d.data()));
+    const events = snap.docs
+      .filter((d) => isLive(d.data()))
+      .map((d) => toEvent(d.id, d.data()));
+    return events.length ? events : placeholderEvents;
   } catch (err) {
-    console.error("getEvents failed, using placeholders:", err);
+    onReadFailure("getEvents", err);
     return placeholderEvents;
   }
 }

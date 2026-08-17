@@ -57,7 +57,7 @@ export function JoinForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
+    <form onSubmit={handleSubmit(onSubmit)} className="relative space-y-5" noValidate>
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="name">Full name</Label>
@@ -111,6 +111,22 @@ export function JoinForm() {
         {errors.interest && (
           <p className="text-xs text-destructive">{errors.interest.message}</p>
         )}
+      </div>
+
+      {/*
+        Honeypot. Hidden from sighted users and from screen readers, and taken
+        out of the tab order, so no real person can fill it in — but plenty of
+        spam bots fill every field they find. Checked server-side.
+      */}
+      <div aria-hidden="true" className="absolute h-0 w-0 overflow-hidden opacity-0">
+        <label htmlFor="website">Website</label>
+        <input
+          id="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          {...register("website")}
+        />
       </div>
 
       <div className="space-y-2">

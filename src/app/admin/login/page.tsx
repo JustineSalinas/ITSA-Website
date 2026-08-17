@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { Loader2, Lock } from "lucide-react";
 import { getFirebaseAuth } from "@/lib/firebase/client";
 import { useAuth } from "@/components/admin/auth-provider";
@@ -14,24 +14,46 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default function AdminLoginPage() {
-  const { user, loading, configured } = useAuth();
+  const { loading, configured } = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    if (user) router.replace("/admin");
-  }, [user, router]);
+  // Deliberately no "already signed in, bounce to /admin" effect. A Firebase
+  // client session persists in the browser and can easily outlive the server
+  // session cookie; redirecting on it alone would ping-pong against the proxy redirect.
+  // Reaching this page always means: present the form.
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setSubmitting(true);
     try {
-      await signInWithEmailAndPassword(getFirebaseAuth(), email, password);
+      const auth = getFirebaseAuth();
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+
+      // Signing in is only half of it: exchange the ID token for an httpOnly
+      // session cookie, which is what the server actually trusts. The server
+      // decides whether this account holds officer access.
+      const idToken = await cred.user.getIdToken();
+      const res = await fetch("/api/admin/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idToken }),
+      });
+
+      if (!res.ok) {
+        const data = (await res.json().catch(() => null)) as { error?: string } | null;
+        await signOut(auth);
+        setError(data?.error ?? "Could not start your session. Please try again.");
+        return;
+      }
+
+      // Full navigation so the server layout re-reads the new cookie.
       router.replace("/admin");
+      router.refresh();
     } catch {
       setError("Invalid email or password.");
     } finally {
