@@ -117,7 +117,7 @@ export function Hero() {
               </Button>
             </motion.div>
 
-            {/* Strategic Pillars Bar (replacing old focus pills) */}
+            {/* Strategic Pillars Bar */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -127,17 +127,23 @@ export function Hero() {
               <p className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 Association Strategic Pillars
               </p>
-              <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
                 {pillars.map((item) => {
                   const Icon = item.icon;
                   return (
                     <div
                       key={item.title}
-                      className="rounded-xl border border-border/80 bg-card p-3 shadow-xs transition-colors hover:border-primary/40"
+                      className="group flex cursor-default items-start gap-2.5 rounded-lg bg-muted/25 p-2.5 transition-colors duration-200 select-none"
                     >
-                      <Icon className="size-4 text-primary" />
-                      <div className="mt-2 text-xs font-bold text-foreground leading-tight">{item.title}</div>
-                      <div className="mt-0.5 text-[10px] text-muted-foreground">{item.desc}</div>
+                      <Icon className="mt-0.5 size-4 shrink-0 text-primary transition-colors duration-200 group-hover:text-sky-500" />
+                      <div className="min-w-0 flex-1">
+                        <div className="text-xs font-bold text-foreground leading-tight transition-colors duration-200 group-hover:text-primary">
+                          {item.title}
+                        </div>
+                        <div className="mt-0.5 text-[11px] leading-tight text-muted-foreground">
+                          {item.desc}
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
