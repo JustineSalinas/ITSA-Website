@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/data/site";
+import { SmoothScroll } from "@/components/providers/smooth-scroll";
 
 const geistSans = Geist({
   variable: "--font-sans",
@@ -47,9 +48,9 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${display.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${display.variable} antialiased`}
     >
-      <body className="min-h-full">
+      <body className="overflow-x-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -57,7 +58,9 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          {children}
+          <SmoothScroll>
+            {children}
+          </SmoothScroll>
           <Toaster richColors position="top-center" />
         </ThemeProvider>
       </body>
