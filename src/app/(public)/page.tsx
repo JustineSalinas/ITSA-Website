@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Sparkles, CheckCircle2, Ticket, ShieldCheck, Users } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { getEvents, getOfficers, splitEvents } from "@/lib/data";
 import { Hero } from "@/components/home/hero";
 import { Highlights } from "@/components/home/highlights";
@@ -8,7 +8,6 @@ import { OfficerCard } from "@/components/officers/officer-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LogoMark } from "@/components/layout/logo";
-import { siteConfig } from "@/data/site";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 
 export default async function HomePage() {
@@ -112,96 +111,52 @@ export default async function HomePage() {
             }}
           />
 
-          <div className="grid gap-10 items-center lg:grid-cols-12">
-            {/* Left Content Column (7 cols) */}
-            <div className="lg:col-span-7">
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1 font-mono text-xs font-bold text-white backdrop-blur-md">
-                <Sparkles className="size-3.5 text-amber-400" /> MEMBERSHIP REGISTRATION AY 2026
-              </span>
+          <div className="mx-auto flex max-w-sm flex-col items-center gap-8">
+            <div className="w-full rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-xl text-white shadow-xl">
+              <div className="flex items-center justify-between border-b border-white/15 pb-4">
+                <span className="font-mono text-xs font-bold uppercase text-white/90">
+                  MEMBERSHIP PASSPORT
+                </span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-300 border border-emerald-500/30">
+                  <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" /> REGISTRATION OPEN
+                </span>
+              </div>
 
-              <h2 className="mt-5 text-3xl font-black tracking-tight text-white sm:text-5xl sm:leading-[1.08]">
-                Ready to lead & shape your IT career?
-              </h2>
-
-              <p className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg">
-                Join over 240+ IT students at {siteConfig.school}. Access exclusive technical workshops, CTF hackathons, peer mentorship, and industry partner networks.
-              </p>
-
-              {/* Benefit Proof Bullets */}
-              <div className="mt-6 grid gap-3 sm:grid-cols-3 font-mono text-xs text-white/90">
-                <div className="flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 backdrop-blur-md">
-                  <CheckCircle2 className="size-4 text-emerald-400 shrink-0" />
-                  <span>Priority Labs</span>
+              <div className="mt-5 space-y-3 font-mono text-xs text-white/80">
+                <div className="flex items-center justify-between rounded-lg bg-black/20 p-3">
+                  <span className="text-white/60">Target Program:</span>
+                  <span className="font-bold text-white">BS Information Technology</span>
                 </div>
-                <div className="flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 backdrop-blur-md">
-                  <CheckCircle2 className="size-4 text-emerald-400 shrink-0" />
-                  <span>Peer Mentorship</span>
+                <div className="flex items-center justify-between rounded-lg bg-black/20 p-3">
+                  <span className="text-white/60">Institution:</span>
+                  <span className="font-bold text-white">Univ. of San Agustin</span>
                 </div>
-                <div className="flex items-center gap-2 rounded-lg bg-white/10 px-3 py-2 backdrop-blur-md">
-                  <CheckCircle2 className="size-4 text-emerald-400 shrink-0" />
-                  <span>Certificates</span>
+                <div className="flex items-center justify-between rounded-lg bg-black/20 p-3">
+                  <span className="text-white/60">Membership Status:</span>
+                  <span className="font-bold text-amber-300">Official Student Member</span>
                 </div>
               </div>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button
-                  size="lg"
-                  variant="secondary"
-                  className="group font-bold text-primary shadow-lg transition-transform active:scale-95 bg-white hover:bg-slate-100"
-                  render={<Link href="/join" />}
+              <div className="mt-6 border-t border-white/15 pt-4">
+                <Link
+                  href="/join"
+                  className="flex items-center justify-between text-xs font-bold text-white hover:underline"
                 >
-                  Register Now
-                  <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-                <Button
-                  size="lg"
-                  variant="ghost"
-                  className="text-white hover:bg-white/10 hover:text-white border border-white/20"
-                  render={<Link href="/about" />}
-                >
-                  Learn about our mission
-                </Button>
+                  <span>Complete membership form</span>
+                  <ArrowRight className="size-4" />
+                </Link>
               </div>
             </div>
 
-            {/* Right Passport Preview Card (5 cols) */}
-            <div className="lg:col-span-5">
-              <div className="rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-xl text-white shadow-xl">
-                <div className="flex items-center justify-between border-b border-white/15 pb-4">
-                  <span className="font-mono text-xs font-bold uppercase text-white/90">
-                    MEMBERSHIP PASSPORT
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-300 border border-emerald-500/30">
-                    <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" /> REGISTRATION OPEN
-                  </span>
-                </div>
-
-                <div className="mt-5 space-y-3 font-mono text-xs text-white/80">
-                  <div className="flex items-center justify-between rounded-lg bg-black/20 p-3">
-                    <span className="text-white/60">Target Program:</span>
-                    <span className="font-bold text-white">BS Information Technology</span>
-                  </div>
-                  <div className="flex items-center justify-between rounded-lg bg-black/20 p-3">
-                    <span className="text-white/60">Institution:</span>
-                    <span className="font-bold text-white">Univ. of San Agustin</span>
-                  </div>
-                  <div className="flex items-center justify-between rounded-lg bg-black/20 p-3">
-                    <span className="text-white/60">Membership Status:</span>
-                    <span className="font-bold text-amber-300">Official Student Member</span>
-                  </div>
-                </div>
-
-                <div className="mt-6 border-t border-white/15 pt-4">
-                  <Link
-                    href="/join"
-                    className="flex items-center justify-between text-xs font-bold text-white hover:underline"
-                  >
-                    <span>Complete membership form</span>
-                    <ArrowRight className="size-4" />
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <Button
+              size="lg"
+              variant="secondary"
+              className="group font-bold text-primary shadow-lg transition-transform active:scale-95 bg-white hover:bg-slate-100"
+              render={<Link href="/join" />}
+            >
+              Register Now
+              <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
+            </Button>
           </div>
         </div>
       </section>
