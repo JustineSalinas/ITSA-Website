@@ -88,6 +88,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/projects" className="transition-colors hover:text-white">
+                  Student Projects & Portfolios
+                </Link>
+              </li>
+              <li>
                 <Link href="/admin" className="transition-colors hover:text-white">
                   Executive Officer Portal
                 </Link>
