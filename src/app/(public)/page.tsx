@@ -99,65 +99,53 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Corporate Join Portal CTA section */}
+      {/* Join CTA section */}
       <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 sm:pb-32 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-950 via-primary to-blue-950 p-8 sm:p-14 text-white shadow-2xl">
-          {/* Subtle Grid Pattern Overlay */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-15"
-            style={{
-              backgroundImage: `linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)`,
-              backgroundSize: "32px 32px",
-            }}
-          />
+        <div className="mx-auto flex max-w-sm flex-col items-center gap-8">
+          <div className="w-full rounded-2xl border border-border bg-card p-6 shadow-sm">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <span className="font-mono text-xs font-bold uppercase text-foreground">
+                MEMBERSHIP PASSPORT
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-600">
+                <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" /> REGISTRATION OPEN
+              </span>
+            </div>
 
-          <div className="mx-auto flex max-w-sm flex-col items-center gap-8">
-            <div className="w-full rounded-2xl border border-white/20 bg-white/10 p-6 backdrop-blur-xl text-white shadow-xl">
-              <div className="flex items-center justify-between border-b border-white/15 pb-4">
-                <span className="font-mono text-xs font-bold uppercase text-white/90">
-                  MEMBERSHIP PASSPORT
-                </span>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/20 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-300 border border-emerald-500/30">
-                  <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" /> REGISTRATION OPEN
-                </span>
+            <div className="mt-5 space-y-3 font-mono text-xs">
+              <div className="flex items-center justify-between rounded-lg bg-muted/50 p-3">
+                <span className="text-muted-foreground">Target Program:</span>
+                <span className="font-bold text-foreground">BS Information Technology</span>
               </div>
-
-              <div className="mt-5 space-y-3 font-mono text-xs text-white/80">
-                <div className="flex items-center justify-between rounded-lg bg-black/20 p-3">
-                  <span className="text-white/60">Target Program:</span>
-                  <span className="font-bold text-white">BS Information Technology</span>
-                </div>
-                <div className="flex items-center justify-between rounded-lg bg-black/20 p-3">
-                  <span className="text-white/60">Institution:</span>
-                  <span className="font-bold text-white">Univ. of San Agustin</span>
-                </div>
-                <div className="flex items-center justify-between rounded-lg bg-black/20 p-3">
-                  <span className="text-white/60">Membership Status:</span>
-                  <span className="font-bold text-amber-300">Official Student Member</span>
-                </div>
+              <div className="flex items-center justify-between rounded-lg bg-muted/50 p-3">
+                <span className="text-muted-foreground">Institution:</span>
+                <span className="font-bold text-foreground">Univ. of San Agustin</span>
               </div>
-
-              <div className="mt-6 border-t border-white/15 pt-4">
-                <Link
-                  href="/join"
-                  className="flex items-center justify-between text-xs font-bold text-white hover:underline"
-                >
-                  <span>Complete membership form</span>
-                  <ArrowRight className="size-4" />
-                </Link>
+              <div className="flex items-center justify-between rounded-lg bg-muted/50 p-3">
+                <span className="text-muted-foreground">Membership Status:</span>
+                <span className="font-bold text-brand-orange">Official Student Member</span>
               </div>
             </div>
 
-            <Button
-              size="lg"
-              variant="secondary"
-              className="group font-bold text-primary shadow-lg transition-transform active:scale-95 bg-white hover:bg-slate-100"
-              render={<Link href="/join" />}
-            >
-              Register Now
-              <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
-            </Button>
+            <div className="mt-6 border-t border-border pt-4">
+              <Link
+                href="/join"
+                className="flex items-center justify-between text-xs font-bold text-foreground hover:text-primary hover:underline"
+              >
+                <span>Complete membership form</span>
+                <ArrowRight className="size-4" />
+              </Link>
+            </div>
           </div>
+
+          <Button
+            size="lg"
+            className="group font-bold shadow-md transition-transform active:scale-95"
+            render={<Link href="/join" />}
+          >
+            Register Now
+            <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
+          </Button>
         </div>
       </section>
     </>
