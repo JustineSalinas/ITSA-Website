@@ -38,8 +38,11 @@ jobs:
       # The rules are the only thing standing between a signed-in account and
       # every officer and event record. A regression here is a site defacement,
       # so it gates every merge.
+      # Uses the same npm script developers run locally, so the two cannot
+      # drift. firebase-tools is a devDependency rather than a global install,
+      # which is what `npm ci` provides here.
       - name: Firestore security rules
-        run: npx firebase emulators:exec --only firestore --project itsa-rules-test "node --test tests/*.test.mjs"
+        run: npm run test:rules
 
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
