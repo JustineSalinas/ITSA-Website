@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getProjects } from "@/data/projects";
 import { PageHeader } from "@/components/layout/page-header";
-import { ProjectCard } from "@/components/projects/project-card";
+import { ProjectsClient } from "@/components/projects/projects-client";
 import { siteConfig } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -21,11 +21,7 @@ export default async function ProjectsPage() {
       />
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </div>
+        <ProjectsClient projects={projects} />
       </section>
     </>
   );

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, User, Code2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, User, Code2 } from "lucide-react";
 import { GithubIcon } from "@/components/icons/social";
 import { getProjectBySlug, getProjects } from "@/data/projects";
 import { Badge } from "@/components/ui/badge";
@@ -34,8 +34,13 @@ export default async function ProjectDetailPage({
 }) {
   const slug = (await params).slug;
   const project = await getProjectBySlug(slug);
+  const allProjects = await getProjects();
 
   if (!project) notFound();
+
+  const currentIndex = allProjects.findIndex(p => p.slug === slug);
+  const prevProject = allProjects[(currentIndex - 1 + allProjects.length) % allProjects.length];
+  const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
 
   return (
     <FadeIn as="article" className="pb-16 md:pb-24 lg:pb-32 pt-12 md:pt-20">
@@ -111,7 +116,21 @@ export default async function ProjectDetailPage({
         <p className="text-xl md:text-2xl font-light leading-relaxed text-muted-foreground mb-16 text-balance text-center">
           {project.content}
         </p>
-        
+        {project.techStack && project.techStack.length > 0 && (
+          <div className="flex flex-col gap-6 mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground break-words text-center md:text-left">
+              Tech Stack
+            </h2>
+            <div className="flex flex-wrap justify-center md:justify-start gap-2">
+              {project.techStack.map(tech => (
+                <Badge key={tech} variant="outline" className="px-4 py-1.5 text-xs font-semibold uppercase tracking-widest bg-transparent border-primary/20 text-foreground/70 hover:bg-primary/5 hover:border-primary/40 transition-colors">
+                  {tech}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="flex flex-col gap-6 text-lg leading-relaxed text-foreground/80">
           {project.sections.map((section, index) => (
             <div key={index} className="flex flex-col gap-6">
@@ -163,6 +182,21 @@ export default async function ProjectDetailPage({
               )}
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Navigation Section */}
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 mt-16 md:mt-24 pt-12 border-t border-border/40">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <Button variant="outline" className="gap-2 rounded-full font-mono text-xs font-semibold uppercase transition-colors hover:bg-primary/5 w-full sm:w-auto justify-start" render={<Link href={`/projects/${prevProject.slug}`} />}>
+            <ArrowLeft className="size-3.5" />
+            <span className="truncate max-w-[200px]">{prevProject.title}</span>
+          </Button>
+
+          <Button variant="outline" className="gap-2 rounded-full font-mono text-xs font-semibold uppercase transition-colors hover:bg-primary/5 w-full sm:w-auto justify-end" render={<Link href={`/projects/${nextProject.slug}`} />}>
+            <span className="truncate max-w-[200px]">{nextProject.title}</span>
+            <ArrowRight className="size-3.5" />
+          </Button>
         </div>
       </div>
     </FadeIn>

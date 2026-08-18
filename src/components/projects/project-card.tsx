@@ -59,20 +59,20 @@ export function ProjectCard({ project }: { project: ProjectItem }) {
             ))}
           </div>
 
-          <div className="mt-6 flex items-center justify-between border-t border-border/40 pt-4 pointer-events-auto">
+          <div className="mt-6 flex items-center justify-between border-t border-border/40 pt-4">
             <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-all group-hover:gap-2">
               View project
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
             </span>
             
-            <div className="flex gap-2">
+            <div className="flex gap-2 relative z-20">
               {project.githubUrl && (
-                <a href={project.githubUrl} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors relative z-20">
+                <a href={project.githubUrl} target="_blank" rel="noreferrer" className="pointer-events-auto text-muted-foreground hover:text-foreground transition-colors p-1">
                   <GithubIcon className="size-4" />
                 </a>
               )}
               {project.liveUrl && (
-                <a href={project.liveUrl} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground transition-colors relative z-20">
+                <a href={project.liveUrl} target="_blank" rel="noreferrer" className="pointer-events-auto text-muted-foreground hover:text-foreground transition-colors p-1">
                   <ExternalLink className="size-4" />
                 </a>
               )}

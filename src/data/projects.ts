@@ -11,6 +11,7 @@ export interface ProjectItem {
   description: string;
   author: string;
   tags: string[];
+  techStack?: string[];
   githubUrl?: string;
   liveUrl?: string;
   imageUrl?: string;
@@ -26,6 +27,7 @@ export const projects: ProjectItem[] = [
     description: "A game inspired by spider fighting in the Philippines. Winner of the AI Fest: Game On alongside other special awards.",
     author: "Kilala kuno ni jan",
     tags: ["Game Dev", "AI Fest Winner"],
+    techStack: ["Unity", "C#", "Blender", "FMOD"],
     githubUrl: "#",
     liveUrl: "#",
     content: "Gagambattle is a unique digital experience inspired by the traditional Philippine pastime of spider fighting. It stood out in competition, winning at the AI Fest: Game On and picking up additional special awards for its creativity and execution.",
@@ -50,6 +52,7 @@ export const projects: ProjectItem[] = [
     description: "A mobile malware invented to secretly track the phones of pharmacy students.",
     author: "Lexzhunder",
     tags: ["Weird", "Creepy", "Stalker"],
+    techStack: ["Kotlin", "Android SDK", "Firebase", "Java"],
     githubUrl: "#",
     content: "Pharmatrack is a specialized mobile malware developed by Lexzhunder. Designed with the incredibly unsettling goal of keeping tabs on pharmacy students, it secretly uses their own phones against them for surveillance.",
     sections: [
@@ -80,6 +83,7 @@ export const projects: ProjectItem[] = [
     description: "A specialized lost and found platform dedicated entirely to tracking down misplaced gym equipment, from dumbbells and barbells to protein powder.",
     author: "Namikaze",
     tags: ["Fitness", "Lost & Found", "System"],
+    techStack: ["Next.js", "Tailwind CSS", "TypeScript", "PostgreSQL"],
     liveUrl: "#",
     content: "Foundit is a streamlined lost and found solution designed specifically for the fitness community. Whether someone left behind their lifting gear, misplaced a tub of protein powder, or lost track of gym accessories, this system makes it easy to report and recover missing fitness essentials.",
     sections: [
