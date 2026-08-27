@@ -25,9 +25,11 @@ export function LogoMark({
 export function Logo({
   className,
   showText = true,
+  subtitleClassName,
 }: {
   className?: string;
   showText?: boolean;
+  subtitleClassName?: string;
 }) {
   return (
     <Link
@@ -46,7 +48,12 @@ export function Logo({
           <span className="font-heading text-base font-extrabold tracking-tight">
             {siteConfig.name}
           </span>
-          <span className="mt-0.5 text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
+          <span
+            className={cn(
+              "mt-0.5 text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground",
+              subtitleClassName,
+            )}
+          >
             {siteConfig.school}
           </span>
         </span>
