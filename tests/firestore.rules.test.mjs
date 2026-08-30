@@ -186,6 +186,17 @@ describe("server-only collections are sealed", () => {
     await assertFails(setDoc(doc(asAdmin(), "admins/officer-uid"), { email: "me" }));
   });
 
+  test("nobody may write the Ask ITSA tally, and only admins may read it", async () => {
+    // Written exclusively by the server via the Admin SDK, so a visitor can
+    // neither inflate the counts nor invent a question id.
+    for (const ctx of [asAdmin, asSignedIn, asAnon]) {
+      await assertFails(setDoc(doc(ctx(), "ask_log/who-can-join"), { count: 999 }));
+    }
+    await assertSucceeds(getDoc(doc(asAdmin(), "ask_log/who-can-join")));
+    await assertFails(getDoc(doc(asSignedIn(), "ask_log/who-can-join")));
+    await assertFails(getDoc(doc(asAnon(), "ask_log/who-can-join")));
+  });
+
   test("only verified admins may read applications", async () => {
     await assertSucceeds(getDoc(doc(asAdmin(), "applications/anything")));
     await assertFails(getDoc(doc(asSignedIn(), "applications/anything")));

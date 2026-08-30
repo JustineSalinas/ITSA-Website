@@ -4,6 +4,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { JoinForm } from "@/components/forms/join-form";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { siteConfig } from "@/data/site";
+import { joinPageFaqs } from "@/data/faq";
 
 export const metadata: Metadata = {
   title: "Join",
@@ -29,20 +30,6 @@ const perks = [
   },
 ];
 
-const faqs = [
-  {
-    q: "Who can join ITSA?",
-    a: `All Information Technology students enrolled at ${siteConfig.school} are eligible and warmly invited to join.`,
-  },
-  {
-    q: "What if I'm a complete beginner in programming?",
-    a: "Zero experience required! Our workshops start from absolute fundamentals up to advanced production topics.",
-  },
-  {
-    q: "How do I get involved after signing up?",
-    a: "Once you submit your application, you will be invited to our official Discord server and upcoming onboarding orientation.",
-  },
-];
 
 export default function JoinPage() {
   return (
@@ -126,7 +113,7 @@ export default function JoinPage() {
           </h2>
 
           <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {faqs.map((faq) => (
+            {joinPageFaqs.map((faq) => (
               <div key={faq.q} className="rounded-2xl border border-border/60 bg-card/60 p-6 backdrop-blur-sm">
                 <h3 className="font-bold text-base">{faq.q}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{faq.a}</p>

@@ -74,6 +74,13 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
+    // Tally of which "Ask ITSA" questions get tapped. Written only by the
+    // server; readable by officers so the team can act on what visitors ask.
+    match /ask_log/{questionId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
     // Deny everything else by default.
     match /{document=**} {
       allow read, write: if false;
