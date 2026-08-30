@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ExternalLink, User, Code2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, User, Users, Code2, Trophy } from "lucide-react";
 import { GithubIcon } from "@/components/icons/social";
 import { getProjectBySlug, getProjects } from "@/data/projects";
 import { Badge } from "@/components/ui/badge";
@@ -65,11 +65,43 @@ export default async function ProjectDetailPage({
           {project.title}
         </h1>
         
-        <div className="flex items-center justify-center gap-3 mb-10">
-          <div className="size-8 rounded-full bg-brand/10 text-brand grid place-items-center">
-            <User className="size-4" />
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 mb-10">
+          <div className="flex items-center justify-center gap-3">
+            <div className="size-8 rounded-full bg-brand/10 text-brand grid place-items-center shrink-0">
+              {project.teamSize && project.teamSize > 1 ? <Users className="size-4" /> : <User className="size-4" />}
+            </div>
+            <div className="flex flex-col items-start text-left">
+              <span className="font-semibold text-lg text-foreground/80 leading-tight">
+                {project.teamSize && project.teamSize > 1 ? (project.teamName || `Team of ${project.teamSize}`) : project.author}
+              </span>
+              {(project.role || project.teamSize) && (
+                <span className="text-sm text-muted-foreground leading-tight">
+                  {project.teamSize && project.teamSize > 1
+                    ? `${project.teamSize} Developers`
+                    : [project.role, project.teamSize && `Team of ${project.teamSize}`].filter(Boolean).join(' · ')
+                  }
+                </span>
+              )}
+            </div>
           </div>
-          <span className="font-semibold text-lg text-foreground/80">{project.author}</span>
+
+          {project.awardName && (
+            <div className="flex items-center justify-center gap-3">
+              <div className="size-8 rounded-full bg-amber-500/10 text-amber-500 grid place-items-center shrink-0">
+                <Trophy className="size-4" />
+              </div>
+              <div className="flex flex-col items-start text-left">
+                <span className="font-semibold text-lg text-foreground/80 leading-tight">
+                  {project.awardName}
+                </span>
+                {(project.awardDate || project.awardHost) && (
+                  <span className="text-sm text-muted-foreground leading-tight">
+                    {[project.awardDate, project.awardHost].filter(Boolean).join(' · ')}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-4 w-full sm:w-auto">
@@ -126,6 +158,27 @@ export default async function ProjectDetailPage({
                 <Badge key={tech} variant="outline" className="px-4 py-1.5 text-xs font-semibold uppercase tracking-widest bg-transparent border-primary/20 text-foreground/70 hover:bg-primary/5 hover:border-primary/40 transition-colors">
                   {tech}
                 </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {project.teamMembers && project.teamMembers.length > 0 && (
+          <div className="flex flex-col gap-6 mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground break-words text-center md:text-left">
+              Team Members
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {project.teamMembers.map((member, index) => (
+                <div key={index} className="flex items-center gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/10 transition-colors hover:bg-primary/10">
+                  <div className="size-10 rounded-full bg-brand/10 text-brand grid place-items-center shrink-0">
+                    <User className="size-5" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-semibold text-foreground/90 leading-tight">{member.name}</span>
+                    <span className="text-sm text-muted-foreground leading-tight mt-1">{member.role}</span>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
