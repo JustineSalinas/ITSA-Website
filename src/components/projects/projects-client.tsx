@@ -73,7 +73,7 @@ export function ProjectsClient({ projects, hideAwardsButton }: { projects: Proje
           <Terminal className="mx-auto size-10 text-muted-foreground/60" />
           <h3 className="mt-4 font-heading text-lg font-semibold">No projects found</h3>
           <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
-            We couldn't find any projects matching your current filters and search query.
+            We couldn&apos;t find any projects matching your current filters and search query.
           </p>
           <button
             onClick={() => setSearchQuery("")}
