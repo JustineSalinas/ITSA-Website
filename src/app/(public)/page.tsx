@@ -1,17 +1,21 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { getEvents, getOfficers, splitEvents } from "@/lib/data";
+import { getEvents, getOfficers, getNews, splitEvents } from "@/lib/data";
 import { Hero } from "@/components/home/hero";
+import { LatestNews } from "@/components/home/latest-news";
 import { Highlights } from "@/components/home/highlights";
 import { EventCard } from "@/components/events/event-card";
 import { OfficerCard } from "@/components/officers/officer-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LogoMark } from "@/components/layout/logo";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
 
 export default async function HomePage() {
-  const [events, officers] = await Promise.all([getEvents(), getOfficers()]);
+  const [events, officers, news] = await Promise.all([
+    getEvents(),
+    getOfficers(),
+    getNews(),
+  ]);
   const { upcoming } = splitEvents(events);
   const featuredEvents = (upcoming.length ? upcoming : events).slice(0, 3);
   const featuredOfficers = officers.slice(0, 4);
@@ -19,7 +23,9 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
+      <LatestNews news={news} />
       <Highlights />
+
 
       {/* Upcoming events section */}
       <section className="relative border-t border-border/60 bg-muted/20 py-20 sm:py-28">

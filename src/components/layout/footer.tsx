@@ -71,10 +71,16 @@ export function Footer() {
             </h3>
             <ul className="mt-4.5 space-y-2.5 text-xs text-slate-400">
               <li>
+                <Link href="/news" className="transition-colors hover:text-white">
+                  Latest News & Dispatches
+                </Link>
+              </li>
+              <li>
                 <Link href="/events" className="transition-colors hover:text-white">
                   Technical Workshops & CTFs
                 </Link>
               </li>
+
               <li>
                 <Link href="/officers" className="transition-colors hover:text-white">
                   Executive Hierarchy & Org Chart

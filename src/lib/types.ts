@@ -32,3 +32,23 @@ export type EventItem = {
   location: string;
   imageUrl: string;
 };
+
+export type NewsItem = {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  /** ISO 8601 string */
+  date: string;
+  images?: string[];
+  imageUrl?: string;
+  category?: string;
+  author?: {
+    name: string;
+    role: string;
+  };
+  tags?: string[];
+};
+
+
