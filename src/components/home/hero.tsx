@@ -75,10 +75,12 @@ export function Hero() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="mt-6 text-[clamp(2.5rem,5.5vw,4.5rem)] font-black leading-[1.04] tracking-tight text-balance text-foreground"
             >
-              Empowering IT students to{" "}
-              <span className="bg-gradient-to-r from-primary via-blue-900 to-amber-700 bg-clip-text text-transparent">
-                lead & innovate.
-              </span>
+              Empowering IT students to lead &amp; innovate.
+              {/* Orange is the logo's spark — a graphic accent, never a text effect */}
+              <span
+                aria-hidden="true"
+                className="ml-2 inline-block size-2.5 rounded-full bg-brand-orange align-middle sm:size-3"
+              />
             </motion.h1>
 
             {/* Subtitle */}

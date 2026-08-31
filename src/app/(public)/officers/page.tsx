@@ -5,7 +5,6 @@ import { PageHeader } from "@/components/layout/page-header";
 import { OfficerCard } from "@/components/officers/officer-card";
 import { OrgChart } from "@/components/officers/org-chart";
 import { siteConfig } from "@/data/site";
-import { Sparkles } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Officers",
@@ -18,7 +17,7 @@ export default async function OfficersPage() {
   return (
     <>
       <PageHeader
-        badge="LEADERSHIP TEAM"
+        kicker={`${officers.length} student ${officers.length === 1 ? "lead" : "leads"}`}
         title="Meet the people driving ITSA."
         description="Dedicated student leaders, mentors, and department chairs guiding our association this academic year."
       />
@@ -43,10 +42,7 @@ export default async function OfficersPage() {
       <section className="border-t border-border/60 bg-muted/20 py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center mb-12">
-            <div className="inline-flex items-center gap-2 rounded-full border border-brand/20 bg-brand/10 px-3 py-1 font-mono text-xs font-semibold text-brand">
-              <Sparkles className="size-3.5" /> STRUCTURE & GOVERNANCE
-            </div>
-            <h2 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
               Organizational Hierarchy
             </h2>
             <p className="mt-2 text-muted-foreground">

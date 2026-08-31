@@ -33,7 +33,7 @@ export default async function AwardsPage() {
       </div>
 
       <PageHeader
-        badge="TOP PROJECTS"
+        kicker={`${awardProjects.length} awarded ${awardProjects.length === 1 ? "project" : "projects"}`}
         title="Award-Winning Projects."
         description={`Celebrating the most exceptional and recognized work by IT students at ${siteConfig.school}.`}
       />

@@ -55,7 +55,6 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader
-        badge="ABOUT ITSA"
         title="Building the future of tech, together."
         description={`The ${siteConfig.fullName} is the official student organization for IT builders at ${siteConfig.school}.`}
       />

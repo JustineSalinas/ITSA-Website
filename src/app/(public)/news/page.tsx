@@ -23,7 +23,7 @@ export default async function NewsPage() {
   return (
     <>
       <PageHeader
-        badge="LATEST UPDATES & ANNOUNCEMENTS"
+        kicker={`${news.length} ${news.length === 1 ? "article" : "articles"} published`}
         title="Official News & Dispatches"
         description="Stay informed with all official announcements, workshop registrations, student milestones, and community news from ITSA."
       />
