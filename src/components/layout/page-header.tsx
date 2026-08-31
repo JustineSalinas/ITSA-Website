@@ -6,14 +6,19 @@ import { cn } from "@/lib/utils";
 interface PageHeaderProps {
   title: string;
   description?: string;
-  badge?: string;
+  /**
+   * A short fact about the page — a count, a term. Not a restatement of the
+   * title: "18 student leads", not "LEADERSHIP TEAM". Pages with nothing
+   * factual to say get a plain accent rule instead.
+   */
+  kicker?: string;
   className?: string;
 }
 
 export function PageHeader({
   title,
   description,
-  badge,
+  kicker,
   className,
 }: PageHeaderProps) {
   return (
@@ -44,10 +49,12 @@ export function PageHeader({
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="max-w-3xl"
         >
-          {badge && (
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1 font-mono text-xs font-semibold text-primary">
-              {badge}
-            </div>
+          {kicker ? (
+            <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              {kicker}
+            </p>
+          ) : (
+            <div className="mb-5 h-0.5 w-8 rounded-full bg-brand-orange" />
           )}
 
           <h1 className="text-4xl font-black tracking-tight text-balance sm:text-5xl lg:text-6xl">

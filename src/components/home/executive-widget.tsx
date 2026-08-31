@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ShieldCheck, ArrowRight, Users, Award, TrendingUp, Sparkles, Building2 } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { AnimatedCounter } from "@/components/ui/animated-counter";
 
@@ -12,65 +12,45 @@ export function ExecutiveHeroWidget() {
       <SpotlightCard className="p-6 sm:p-8 bg-card border-border/90 shadow-xl">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border/80 pb-4">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="size-5 text-primary" />
-            <span className="font-mono text-xs font-bold uppercase tracking-wider text-foreground">
-              EXECUTIVE BULLETIN & METRICS
-            </span>
-          </div>
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
-            <span className="relative flex size-1.5">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-              <span className="relative inline-flex size-1.5 rounded-full bg-emerald-600" />
-            </span>
-            AY 2026 ACTIVE
+          <span className="font-mono text-xs font-bold uppercase tracking-wider text-foreground">
+            ITSA this year
           </span>
+          <span className="font-mono text-[10px] text-muted-foreground">AY 2026</span>
         </div>
 
-        {/* Corporate Metrics 4-Grid with Animated Counters */}
-        <div className="mt-6 grid grid-cols-2 gap-4">
-          <div className="rounded-xl border border-border/80 bg-muted/40 p-4 transition-transform duration-300 hover:scale-[1.02]">
-            <div className="flex items-center gap-2 text-primary">
-              <Users className="size-4" />
-              <span className="font-mono text-xs font-semibold text-muted-foreground uppercase">Members</span>
-            </div>
-            <div className="mt-2 font-mono text-2xl font-black text-foreground">
+        {/* Three facts about the org, in one brand colour — not a status dashboard */}
+        <div className="mt-6 flex divide-x divide-border/80 border-y border-border/80">
+          <div className="flex-1 px-3 py-4 text-center">
+            <div className="font-mono text-2xl font-black tabular-nums text-primary">
               <AnimatedCounter value={240} suffix="+" />
             </div>
-            <div className="text-[11px] text-muted-foreground">Active IT Students</div>
+            <div className="mt-1 text-[11px] leading-tight text-muted-foreground">
+              Active
+              <br />
+              members
+            </div>
           </div>
 
-          <div className="rounded-xl border border-border/80 bg-muted/40 p-4 transition-transform duration-300 hover:scale-[1.02]">
-            <div className="flex items-center gap-2 text-amber-700">
-              <Award className="size-4" />
-              <span className="font-mono text-xs font-semibold text-muted-foreground uppercase">Workshops</span>
-            </div>
-            <div className="mt-2 font-mono text-2xl font-black text-foreground">
+          <div className="flex-1 px-3 py-4 text-center">
+            <div className="font-mono text-2xl font-black tabular-nums text-primary">
               <AnimatedCounter value={15} suffix="+" />
             </div>
-            <div className="text-[11px] text-muted-foreground">Annual Technical Labs</div>
+            <div className="mt-1 text-[11px] leading-tight text-muted-foreground">
+              Workshops
+              <br />
+              a year
+            </div>
           </div>
 
-          <div className="rounded-xl border border-border/80 bg-muted/40 p-4 transition-transform duration-300 hover:scale-[1.02]">
-            <div className="flex items-center gap-2 text-blue-700">
-              <Building2 className="size-4" />
-              <span className="font-mono text-xs font-semibold text-muted-foreground uppercase">Directorates</span>
-            </div>
-            <div className="mt-2 font-mono text-2xl font-black text-foreground">
+          <div className="flex-1 px-3 py-4 text-center">
+            <div className="font-mono text-2xl font-black tabular-nums text-primary">
               <AnimatedCounter value={5} />
             </div>
-            <div className="text-[11px] text-muted-foreground">Executive Departments</div>
-          </div>
-
-          <div className="rounded-xl border border-border/80 bg-muted/40 p-4 transition-transform duration-300 hover:scale-[1.02]">
-            <div className="flex items-center gap-2 text-emerald-700">
-              <TrendingUp className="size-4" />
-              <span className="font-mono text-xs font-semibold text-muted-foreground uppercase">Mentorship</span>
+            <div className="mt-1 text-[11px] leading-tight text-muted-foreground">
+              Student
+              <br />
+              departments
             </div>
-            <div className="mt-2 font-mono text-2xl font-black text-foreground">
-              <AnimatedCounter value={100} suffix="%" />
-            </div>
-            <div className="text-[11px] text-muted-foreground">Peer & Alumni Support</div>
           </div>
         </div>
 

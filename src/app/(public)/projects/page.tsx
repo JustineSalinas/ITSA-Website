@@ -15,7 +15,7 @@ export default async function ProjectsPage() {
   return (
     <>
       <PageHeader
-        badge="STUDENT SHOWCASE"
+        kicker={`${projects.length} student ${projects.length === 1 ? "project" : "projects"}`}
         title="Built by our community."
         description={`A page to showcase the projects of IT students at ${siteConfig.school}.`}
       />

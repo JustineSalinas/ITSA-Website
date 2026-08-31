@@ -15,7 +15,6 @@ export default function JoinPage() {
   return (
     <>
       <PageHeader
-        badge="MEMBERSHIP APPLICATION"
         title="Become an ITSA member."
         description="Ready to level up your technical skills, build real projects, and join a passionate student dev community?"
       />

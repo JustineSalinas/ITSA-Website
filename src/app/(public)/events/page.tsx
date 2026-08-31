@@ -15,7 +15,7 @@ export default async function EventsPage() {
   return (
     <>
       <PageHeader
-        badge="CALENDAR & ACTIVITIES"
+        kicker={`${events.length} ${events.length === 1 ? "event" : "events"} · AY 2026`}
         title="Workshops, CTFs, and tech summits."
         description="From beginner-friendly coding labs to campus-wide hackathons — explore everything ITSA is planning and hosting."
       />

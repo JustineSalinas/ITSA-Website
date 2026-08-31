@@ -45,13 +45,16 @@ export function OfficerCard({ officer }: { officer: Officer }) {
             </Avatar>
           </div>
 
-          {/* Reserve two lines so the position pill sits at the same height on every card */}
+          {/* Name and role each reserve two lines so every card in a row lines up,
+              whether or not the text wraps ("Adviser" vs "Vice Chairman for Internal Affairs") */}
           <h3 className="mt-4 flex min-h-[3.5rem] items-center text-xl font-bold tracking-tight text-balance">
             {officer.name}
           </h3>
-          <span className="inline-block rounded-full bg-primary/10 px-3 py-0.5 font-mono text-xs font-semibold text-primary">
-            {officer.position}
-          </span>
+          <div className="flex min-h-[2.25rem] w-full items-start justify-center">
+            <span className="inline-block rounded-full bg-primary/10 px-3 py-0.5 font-mono text-xs font-semibold text-primary text-balance">
+              {officer.position}
+            </span>
+          </div>
 
           {officer.bio && (
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground line-clamp-3">

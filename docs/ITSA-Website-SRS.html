@@ -1,0 +1,593 @@
+<title>ITSA Website SRS</title>
+<style>
+  /* Committed to a single light "paper" theme on purpose: this document is
+     meant to be copied into Word and Google Docs, and a dark-theme viewer
+     copying text would paste near-white type onto a white page. Every colour
+     is painted explicitly so the page holds on any host background. */
+  :root {
+    --paper: #FFFFFF;
+    --ground: #F1F4F8;
+    --panel: #F7F9FC;
+    --line: #D2DAE5;
+    --line-soft: #E5EAF1;
+    --ink: #0D1524;
+    --ink-2: #3B4759;
+    --ink-3: #6C788A;
+    --accent: #0A5FA0;
+    --accent-soft: #E4EEF8;
+    --crit: #A81F26;
+    --crit-soft: #F9E6E6;
+    --warn: #8A5207;
+    --warn-soft: #FBEFDB;
+    --ok: #11603F;
+    --ok-soft: #DEEFE5;
+
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.62;
+    margin: 0;
+    padding: 28px 18px 90px;
+  }
+
+  .sheet {
+    max-width: 880px;
+    margin: 0 auto;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 56px 60px 72px;
+  }
+
+  /* Title block */
+  .doc-kind {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    margin: 0 0 10px;
+    color: var(--ink);
+  }
+  .subtitle { font-size: 1.05rem; color: var(--ink-2); margin: 0 0 26px; }
+
+  table.meta { border-collapse: collapse; width: 100%; margin-bottom: 42px; }
+  table.meta td {
+    border: 1px solid var(--line);
+    padding: 8px 12px;
+    font-size: 0.88rem;
+    color: var(--ink-2);
+    background: var(--panel);
+  }
+  table.meta td:first-child {
+    width: 150px;
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1.25;
+    margin: 46px 0 4px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ink);
+    color: var(--ink);
+  }
+  h3 {
+    font-family: var(--sans);
+    font-size: 1.03rem;
+    font-weight: 700;
+    margin: 30px 0 8px;
+    color: var(--ink);
+  }
+  h4 {
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin: 22px 0 6px;
+    color: var(--accent);
+  }
+  p { margin: 0 0 14px; color: var(--ink-2); }
+  strong, b { color: var(--ink); }
+  ul, ol { margin: 0 0 16px; padding-left: 24px; color: var(--ink-2); }
+  li { margin-bottom: 7px; }
+  li::marker { color: var(--ink-3); }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    padding: 0.06em 0.34em;
+    color: var(--ink-2);
+  }
+
+  .tablewrap { overflow-x: auto; margin-bottom: 22px; }
+  table.grid {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.9rem;
+    min-width: 560px;
+  }
+  table.grid th {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.74rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    font-weight: 700;
+    border: 1px solid var(--ink);
+  }
+  table.grid td {
+    border: 1px solid var(--line);
+    padding: 10px 12px;
+    color: var(--ink-2);
+    vertical-align: top;
+  }
+  table.grid tr:nth-child(even) td { background: var(--panel); }
+  table.grid td.id {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    white-space: nowrap;
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .pill {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .pill.must { color: var(--crit); background: var(--crit-soft); border-color: var(--crit); }
+  .pill.should { color: var(--warn); background: var(--warn-soft); border-color: var(--warn); }
+  .pill.could { color: var(--ink-2); background: var(--panel); border-color: var(--line); }
+  .pill.done { color: var(--ok); background: var(--ok-soft); border-color: var(--ok); }
+  .pill.open { color: var(--ink-2); background: var(--paper); border-color: var(--ink-3); }
+
+  /* Flow steps — plain numbered blocks so they survive a paste into Docs. */
+  .flow { border-left: 3px solid var(--accent); padding-left: 20px; margin: 0 0 26px; }
+  .flow ol { padding-left: 20px; }
+  .flow ol > li { margin-bottom: 11px; }
+  .flow .sees { color: var(--ink); font-weight: 600; }
+  .branch {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 12px 16px;
+    margin: 10px 0 14px;
+    font-size: 0.9rem;
+  }
+  .branch b { display: block; margin-bottom: 4px; color: var(--accent); font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  .callout {
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-left-width: 4px;
+    padding: 16px 20px;
+    margin: 0 0 24px;
+  }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout.warn { background: var(--warn-soft); border-color: var(--warn); }
+
+  .note { font-size: 0.88rem; color: var(--ink-3); }
+
+  @media (max-width: 700px) {
+    .sheet { padding: 34px 22px 48px; }
+    h1 { font-size: 1.85rem; }
+    table.meta td:first-child { width: 108px; }
+  }
+</style>
+
+<div class="sheet">
+
+  <p class="doc-kind">Software Requirements Specification</p>
+  <h1>ITSA Website</h1>
+  <p class="subtitle">
+    What the ITSA website must do, who it is for, and how a person moves through it.
+    Written in plain language so every officer can review it, not just the developers.
+  </p>
+
+  <table class="meta">
+    <tr><td>Project</td><td>ITSA Website — Information Technology Student Association, University of San Agustin</td></tr>
+    <tr><td>Repository</td><td>JustineSalinas/ITSA-Website</td></tr>
+    <tr><td>Document</td><td>Software Requirements Specification (SRS), version 1.0</td></tr>
+    <tr><td>Date</td><td>17 August 2026</td></tr>
+    <tr><td>Prepared by</td><td>AJ Salinas, with the ITSA web team</td></tr>
+    <tr><td>Companion</td><td>Software Project Management Plan (SPMP) — who does what, and when</td></tr>
+  </table>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>1. Why this website exists</h2>
+
+  <p>
+    The ITSA website is the organisation's official public face. It has three jobs,
+    in order of importance:
+  </p>
+
+  <ol>
+    <li><strong>Recruit.</strong> Turn an interested IT student into a member.</li>
+    <li><strong>Inform.</strong> Tell members what is happening and when.</li>
+    <li><strong>Prove we are real.</strong> Show a live, organised group run by actual people.</li>
+  </ol>
+
+  <p>
+    The third job is quiet but decisive. A prospective student decides in under a
+    minute whether ITSA looks like a serious organisation. Empty pages, stale event
+    lists, or a site that feels sloppy work against us — so does a site that loads
+    slowly on a cheap phone using campus wifi.
+  </p>
+
+  <div class="callout">
+    <p>
+      <strong>One sentence to keep in mind:</strong> because this is an IT students'
+      organisation, the website itself is the portfolio. If it is well made, that is
+      the argument. Nothing else on the page will convince anyone otherwise.
+    </p>
+  </div>
+
+  <h3>1.1 A few terms, explained simply</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Term</th><th>What it means here</th></tr>
+      <tr><td><strong>Visitor</strong></td><td>Anyone browsing the site. Not signed in. Most of our traffic.</td></tr>
+      <tr><td><strong>Member</strong></td><td>A student who has joined ITSA. Uses the site to check events. Does not sign in — there is no member login.</td></tr>
+      <tr><td><strong>Officer</strong></td><td>An ITSA officer with permission to add or edit content. Signs in to the admin area.</td></tr>
+      <tr><td><strong>Admin area</strong></td><td>The private section at <code>/admin</code> where officers manage events and officer profiles.</td></tr>
+      <tr><td><strong>Firebase</strong></td><td>The Google service that stores our data (events, officers) and handles officer sign-in.</td></tr>
+      <tr><td><strong>Vercel</strong></td><td>The service that hosts the website and publishes it whenever we update the code.</td></tr>
+      <tr><td><strong>Security rules</strong></td><td>Settings on our database that decide who is allowed to change what. Our main protection against someone editing the site.</td></tr>
+    </table>
+  </div>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>2. Who uses the site</h2>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Audience</th><th>What they want</th><th>What they need from us</th></tr>
+      <tr>
+        <td><strong>Prospective students</strong><br><span class="note">First-years, shiftees. Our main audience.</span></td>
+        <td>To decide whether ITSA is worth joining — usually on a phone, often during enrolment or an org fair.</td>
+        <td>Fast loading, obvious "Register Now" path, visible proof the org is active (real events, real officers, real projects).</td>
+      </tr>
+      <tr>
+        <td><strong>Current members</strong></td>
+        <td>Event dates, deadlines, venues. Quick answers, not marketing.</td>
+        <td>An events page that is always current, and event details that are easy to scan.</td>
+      </tr>
+      <tr>
+        <td><strong>Officers</strong></td>
+        <td>To post an event or update the officer list without asking a developer.</td>
+        <td>A simple admin area, and confidence that only officers can change things.</td>
+      </tr>
+      <tr>
+        <td><strong>Partners and sponsors</strong><br><span class="note">Smaller, but high value.</span></td>
+        <td>To judge whether ITSA is credible enough to support.</td>
+        <td>A professional look, a working contact route, and evidence of past activity.</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>3. User flows</h2>
+
+  <p>
+    Three journeys matter. Each is written as the steps a real person takes, with the
+    points where things can go wrong called out — those are where we lose people.
+  </p>
+
+  <h3>3.1 Flow A — A prospective student joins (the most important flow)</h3>
+
+  <div class="flow">
+    <ol>
+      <li><span class="sees">Arrives on the Home page</span> — usually from an Instagram or Facebook link, or by typing the address at an org fair. On a phone.</li>
+      <li><span class="sees">Scans the hero section</span> and learns in a few seconds what ITSA is.</li>
+      <li><span class="sees">Looks for proof.</span> Scrolls past highlights, upcoming events, and the officers preview. This is the credibility check.</li>
+      <li><span class="sees">Optionally explores</span> — taps Events, Officers, or Projects to see whether anything is actually happening.</li>
+      <li><span class="sees">Taps "Register Now"</span> and lands on the Join page.</li>
+      <li><span class="sees">Fills in the form</span> — name, email, and a message. Student ID and year level are optional so the form never feels like paperwork.</li>
+      <li><span class="sees">Submits</span> and immediately sees a confirmation that the message was sent.</li>
+      <li><strong>Behind the scenes:</strong> the message is emailed to the ITSA inbox, and an officer follows up.</li>
+    </ol>
+  </div>
+
+  <div class="branch">
+    <b>Where this flow breaks today</b>
+    <ul style="margin-bottom:0">
+      <li><strong>The site is slow to load.</strong> Large images cost us visitors on campus wifi before they see anything.</li>
+      <li><strong>Events look empty or out of date.</strong> A stale events page actively damages the credibility we are trying to build.</li>
+      <li><strong>The follow-up never happens.</strong> Submissions only become an email. If nobody checks the inbox, the student hears nothing and we lose them. See <code>FR-24</code>.</li>
+    </ul>
+  </div>
+
+  <h3>3.2 Flow B — A member checks an event</h3>
+
+  <div class="flow">
+    <ol>
+      <li><span class="sees">Opens the site</span> and goes straight to Events.</li>
+      <li><span class="sees">Sees upcoming events first</span>, separated from past ones, newest first.</li>
+      <li><span class="sees">Taps an event</span> for the full details — date, time, venue, and description.</li>
+      <li><span class="sees">Gets the answer and leaves.</span> Success here is speed, not time on site.</li>
+    </ol>
+  </div>
+
+  <div class="branch">
+    <b>Design note</b>
+    <p style="margin-bottom:0">
+      Members are repeat visitors who want one fact. Every extra tap between the home
+      page and an event date is a small failure. Nothing on this path should require
+      signing in.
+    </p>
+  </div>
+
+  <h3>3.3 Flow C — An officer publishes an event</h3>
+
+  <div class="flow">
+    <ol>
+      <li><span class="sees">Goes to <code>/admin</code></span> and is sent to the sign-in page.</li>
+      <li><span class="sees">Signs in</span> with the email and password issued to them.</li>
+      <li><strong>The system checks two things:</strong> that the password is correct, <em>and</em> that this account has been approved as an officer. Both must pass — a correct password alone is not enough.</li>
+      <li><span class="sees">Lands on the dashboard</span> showing how many events and officers exist.</li>
+      <li><span class="sees">Opens Events and fills in the form</span> — title, date and time, venue, description, and an optional image.</li>
+      <li><span class="sees">Saves.</span> The event appears on the public site immediately.</li>
+      <li><strong>Behind the scenes:</strong> the change records who made it and when.</li>
+      <li><span class="sees">Signs out</span>, which fully ends the session — important on shared campus computers.</li>
+    </ol>
+  </div>
+
+  <div class="branch">
+    <b>Two deliberate rules</b>
+    <ul style="margin-bottom:0">
+      <li><strong>Nothing is ever truly deleted.</strong> Removing an event hides it rather than destroying it, so a mistake can be undone.</li>
+      <li><strong>Sessions expire</strong> after about eight hours, so a forgotten sign-in on a lab computer does not stay open.</li>
+    </ul>
+  </div>
+
+  <h3>3.4 Site map</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Page</th><th>Who it is for</th><th>Purpose</th><th>Status</th></tr>
+      <tr><td>Home <code>/</code></td><td>Visitors</td><td>Explain ITSA and push toward Register Now</td><td><span class="pill done">Live</span></td></tr>
+      <tr><td>About <code>/about</code></td><td>Visitors</td><td>The organisation's story and purpose</td><td><span class="pill done">Live</span></td></tr>
+      <tr><td>Officers <code>/officers</code></td><td>Visitors, partners</td><td>Real people, real structure — credibility</td><td><span class="pill done">Live</span></td></tr>
+      <tr><td>Events <code>/events</code></td><td>Members, visitors</td><td>Upcoming and past activity</td><td><span class="pill done">Live</span></td></tr>
+      <tr><td>Event detail <code>/events/[name]</code></td><td>Members</td><td>Full details for one event</td><td><span class="pill done">Live</span></td></tr>
+      <tr><td>Projects <code>/projects</code></td><td>Visitors, partners</td><td>Student work on display</td><td><span class="pill done">Live</span></td></tr>
+      <tr><td>Project detail <code>/projects/[name]</code></td><td>Visitors</td><td>One project in depth</td><td><span class="pill done">Live</span></td></tr>
+      <tr><td>Join <code>/join</code></td><td>Prospective students</td><td>The recruitment form</td><td><span class="pill done">Live</span></td></tr>
+      <tr><td>Admin <code>/admin</code></td><td>Officers only</td><td>Manage events and officers</td><td><span class="pill done">Live</span></td></tr>
+      <tr><td>News feed</td><td>Members</td><td>Announcements — scope not yet agreed</td><td><span class="pill open">Proposed</span></td></tr>
+      <tr><td>Metrics page</td><td>Undecided</td><td>Not yet defined</td><td><span class="pill open">Proposed</span></td></tr>
+    </table>
+  </div>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>4. What the site must do</h2>
+
+  <p>
+    Each requirement has an ID so we can refer to it in discussion.
+    <span class="pill must">Must</span> means we cannot launch without it.
+    <span class="pill should">Should</span> means important but not blocking.
+    <span class="pill could">Could</span> means nice to have.
+  </p>
+
+  <h3>4.1 Public pages</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Requirement</th><th>Priority</th><th>Status</th></tr>
+      <tr><td class="id">FR-1</td><td>Anyone can view all public pages without signing in.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-2</td><td>Every page works on a phone screen first, then scales up.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-3</td><td>The home page shows upcoming events, so the site never looks abandoned.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-4</td><td>A "Register Now" action is reachable from any page in one tap.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-5</td><td>Officers are listed with name, position, photo, and optional social links.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-6</td><td>Events are split into upcoming and past, each in a sensible order.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-7</td><td>Each event has its own page with a shareable link.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-8</td><td>Students' projects are listed, each with its own detail page.</td><td><span class="pill should">Should</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-9</td><td>Search engines can find and index the public pages properly.</td><td><span class="pill should">Should</span></td><td><span class="pill open">Open</span></td></tr>
+      <tr><td class="id">FR-10</td><td>Sharing a link on social media shows a proper title, description, and image.</td><td><span class="pill should">Should</span></td><td><span class="pill open">Partial</span></td></tr>
+    </table>
+  </div>
+
+  <h3>4.2 Joining</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Requirement</th><th>Priority</th><th>Status</th></tr>
+      <tr><td class="id">FR-20</td><td>A visitor can send a join enquiry with name, email, topic, and message.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-21</td><td>Student ID and year level are optional, so the form stays short.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-22</td><td>Mistakes are explained clearly and immediately, next to the field.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-23</td><td>The submission reaches the ITSA inbox, and replies go to the student.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-24</td><td>Every enquiry is also saved as a record officers can review and mark as followed up — so recruitment does not depend on one person's inbox.</td><td><span class="pill must">Must</span></td><td><span class="pill open">Open</span></td></tr>
+      <tr><td class="id">FR-25</td><td>Automated spam is blocked without making real students solve a puzzle.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+    </table>
+  </div>
+
+  <h3>4.3 The admin area</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Requirement</th><th>Priority</th><th>Status</th></tr>
+      <tr><td class="id">FR-30</td><td>Officers sign in with an email and password.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-31</td><td>Only accounts the team has explicitly approved may enter the admin area, even with a valid password.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-32</td><td>Officers can add, edit, and remove events.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-33</td><td>Officers can add, edit, and remove officer profiles, and control their order.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-34</td><td>Removing something hides it rather than destroying it, so mistakes are recoverable.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-35</td><td>Every change records who made it and when.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-36</td><td>Signing out ends the session completely, including on shared computers.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-37</td><td>Access can be removed the moment an officer leaves, without changing a shared password.</td><td><span class="pill must">Must</span></td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">FR-38</td><td>Officers can upload photos and event images directly, instead of pasting links.</td><td><span class="pill should">Should</span></td><td><span class="pill open">Open</span></td></tr>
+      <tr><td class="id">FR-39</td><td>Different officer roles have different permissions (e.g. only the President can add officers).</td><td><span class="pill could">Could</span></td><td><span class="pill open">Open</span></td></tr>
+    </table>
+  </div>
+
+  <h3>4.4 Ideas not yet agreed</h3>
+  <p>
+    These appear on the progress tracker without an agreed scope. Each needs a
+    decision before any work starts — see the SPMP for who decides and by when.
+  </p>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Idea</th><th>The question to answer</th><th>Recommendation</th></tr>
+      <tr>
+        <td><strong>News feed</strong></td>
+        <td>How is this different from Events? Who writes the posts, and how often?</td>
+        <td>Only build it if someone commits to posting weekly. An empty feed is worse than no feed.</td>
+      </tr>
+      <tr>
+        <td><strong>Metrics landing page</strong></td>
+        <td>Which numbers, and who is the audience — officers, or the public?</td>
+        <td>Define the numbers first. If it is for officers, it belongs in the admin area, not the public site.</td>
+      </tr>
+      <tr>
+        <td><strong>Chatbot</strong></td>
+        <td>What questions must it answer that a good FAQ page could not?</td>
+        <td>Try a short FAQ first. It is far cheaper and answers the same questions.</td>
+      </tr>
+      <tr>
+        <td><strong>Push notifications</strong></td>
+        <td>Marked "not applicable / unsure" on the tracker.</td>
+        <td><strong>Drop it.</strong> Notifications need visitors to opt in and an app-like setup; almost nobody accepts. Announce through Facebook and email instead.</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>5. Quality requirements</h2>
+
+  <p>These are not features, but the site fails without them.</p>
+
+  <h3>5.1 Speed</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Requirement</th><th>Status</th></tr>
+      <tr><td class="id">NFR-1</td><td>The home page is usable within about 3 seconds on a mid-range phone over campus wifi.</td><td><span class="pill open">Needs testing</span></td></tr>
+      <tr><td class="id">NFR-2</td><td>No single image is larger than it needs to be for how it is displayed.</td><td><span class="pill open">Open</span></td></tr>
+      <tr><td class="id">NFR-3</td><td>Pages do not shift around while loading.</td><td><span class="pill open">Needs testing</span></td></tr>
+    </table>
+  </div>
+  <div class="callout warn">
+    <p style="margin-bottom:0">
+      <strong>Live issue against NFR-2.</strong> The logo files currently add up to
+      roughly 936 KB, replacing a version that was 1.4 KB — and one of the three
+      files is not used anywhere. Because browser tab icons are not automatically
+      optimised, visitors download the full file. This is the single easiest speed
+      win available to us.
+    </p>
+  </div>
+
+  <h3>5.2 Accessibility</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Requirement</th><th>Status</th></tr>
+      <tr><td class="id">NFR-10</td><td>Text has enough contrast against its background to be readable in sunlight.</td><td><span class="pill open">Needs review</span></td></tr>
+      <tr><td class="id">NFR-11</td><td>Everything works with a keyboard alone, and the focused item is always visible.</td><td><span class="pill open">Needs review</span></td></tr>
+      <tr><td class="id">NFR-12</td><td>Visitors who ask their device to reduce motion get a still version of the site.</td><td><span class="pill open">Open</span></td></tr>
+      <tr><td class="id">NFR-13</td><td>Meaning is never carried by colour alone.</td><td><span class="pill open">Needs review</span></td></tr>
+      <tr><td class="id">NFR-14</td><td>Images have text descriptions for screen readers.</td><td><span class="pill done">Done</span></td></tr>
+    </table>
+  </div>
+  <p class="note">
+    Target: WCAG 2.1 Level AA — the standard most schools and public institutions
+    expect. NFR-12 is currently failing: the smooth-scrolling effect applies to
+    everyone, including visitors who have asked their device not to animate.
+  </p>
+
+  <h3>5.3 Security and safety</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Requirement</th><th>Status</th></tr>
+      <tr><td class="id">NFR-20</td><td>Only approved officers can change any content. Being signed in is not enough on its own.</td><td><span class="pill done">Done in code</span></td></tr>
+      <tr><td class="id">NFR-21</td><td>The rules protecting the database are actually deployed, not just written.</td><td><span class="pill must">Blocking</span></td></tr>
+      <tr><td class="id">NFR-22</td><td>The join form cannot be used to flood our inbox or run up costs.</td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">NFR-23</td><td>The site cannot be embedded inside another site to trick officers into clicking.</td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">NFR-24</td><td>Passwords and secret keys never appear in the code or in the public repository.</td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">NFR-25</td><td>Only our own image storage can supply pictures, so pages cannot quietly report visitors to outside servers.</td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">NFR-26</td><td>Data is backed up on a schedule, so a mistake or an accident is recoverable.</td><td><span class="pill open">Open</span></td></tr>
+      <tr><td class="id">NFR-27</td><td>Only our own website can talk to our database — not a script someone writes.</td><td><span class="pill open">Open</span></td></tr>
+    </table>
+  </div>
+
+  <div class="callout warn">
+    <p>
+      <strong>NFR-21 is the one urgent item in this document.</strong> The protective
+      rules exist in the code and have been tested, but they are a separate switch
+      that must be turned on for the live database. Until someone does that, the live
+      site still accepts changes from any signed-in account.
+    </p>
+    <p style="margin-bottom:0">
+      Because the repository is public, the current weak rule is readable by anyone.
+      The SPMP lists this as the first task, and the order matters: approve an officer
+      account <em>before</em> switching the rules on, or everyone is locked out — including us.
+    </p>
+  </div>
+
+  <h3>5.4 Reliability and upkeep</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Requirement</th><th>Status</th></tr>
+      <tr><td class="id">NFR-30</td><td>If the database is unreachable, the problem is visible to us rather than hidden behind stale content.</td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">NFR-31</td><td>Content changes do not require a developer or a code change.</td><td><span class="pill open">Partial</span></td></tr>
+      <tr><td class="id">NFR-32</td><td>Automated checks run before any change reaches the live site.</td><td><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">NFR-33</td><td>The site keeps working when this year's officers graduate.</td><td><span class="pill open">Open</span></td></tr>
+    </table>
+  </div>
+  <p class="note">
+    NFR-31 is only partly met: the 19 officer profiles are still written into the
+    code, so updating the roster each year currently needs a developer. It should be
+    a form. NFR-33 is the long-term risk the SPMP addresses directly.
+  </p>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>6. Assumptions and limits</h2>
+  <ul>
+    <li>Members do <strong>not</strong> get accounts. Only officers sign in. This is a deliberate simplification — member accounts would roughly double the work and the risk.</li>
+    <li>The site is in English only.</li>
+    <li>We rely on Firebase and Vercel. Both have free tiers that suit our size, but both are outside our control.</li>
+    <li>Payments, dues collection, and voting are out of scope for this version.</li>
+    <li>Event attendance and RSVP are out of scope for this version, but the design should not make them harder later.</li>
+  </ul>
+
+  <h2>7. How we will know it is finished</h2>
+  <p>This version is complete when all of the following are true:</p>
+  <ol>
+    <li>Every <span class="pill must">Must</span> requirement above is done and checked.</li>
+    <li>The protective rules are live on the real database, and at least two officers can sign in.</li>
+    <li>An officer who is not a developer can publish an event without help.</li>
+    <li>The home page loads acceptably on a mid-range phone on campus wifi.</li>
+    <li>Someone other than the author has reviewed the site with a keyboard only, and for colour contrast.</li>
+    <li>A written handover note exists, explaining who holds which account.</li>
+  </ol>
+
+  <p class="note" style="margin-top:36px; border-top:1px solid var(--line); padding-top:16px">
+    Companion document: <strong>Software Project Management Plan (SPMP)</strong> — the
+    organised progress tracker, the task list, owners, and schedule.
+  </p>
+
+</div>

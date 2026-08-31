@@ -69,10 +69,6 @@ export function Hero() {
               variant="outline"
               className="inline-flex items-center gap-2.5 rounded-full border-primary/20 bg-card px-3.5 py-1.5 text-xs font-medium shadow-xs"
             >
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex size-2 rounded-full bg-primary" />
-              </span>
               <span className="font-mono text-muted-foreground">{siteConfig.school}</span>
               <span className="h-3 w-px bg-border" />
               <span className="inline-flex items-center gap-1.5 font-semibold text-foreground">
@@ -82,17 +78,20 @@ export function Hero() {
             </Badge>
           </motion.div>
 
-          {/* Headline */}
+          {/* Headline. Solid colour with the orange mark as a graphic accent —
+              keeping the design review's call that orange is the logo's spark,
+              never a gradient text effect. */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="mt-6 text-[clamp(2.5rem,5.5vw,4.5rem)] font-black leading-[1.04] tracking-tight text-balance text-foreground"
           >
-            Empowering IT students to{" "}
-            <span className="bg-gradient-to-r from-primary via-blue-900 to-amber-700 bg-clip-text text-transparent">
-              lead &amp; innovate.
-            </span>
+            Empowering IT students to lead &amp; innovate.
+            <span
+              aria-hidden="true"
+              className="ml-2 inline-block size-2.5 rounded-full bg-brand-orange align-middle sm:size-3"
+            />
           </motion.h1>
 
           {/* Subtitle */}

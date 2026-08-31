@@ -24,9 +24,9 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
+      <PartnersCarousel />
       <AboutItsa />
       <LatestNews news={news} />
-      <PartnersCarousel />
 
       {/* Upcoming events section */}
       <section className="relative border-t border-border/60 bg-muted/20 py-20 sm:py-28">
