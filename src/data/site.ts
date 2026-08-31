@@ -20,10 +20,10 @@ export const siteConfig = {
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/news", label: "News" },
-  { href: "/events", label: "Events" },
   { href: "/projects", label: "Projects" },
   { href: "/officers", label: "Officers" },
-  { href: "/about", label: "About" },
-  { href: "/join", label: "Join" },
+  // The Join page carries both the membership form and the direct-contact
+  // card, so "Contact" is the honest label for what a visitor finds there.
+  { href: "/join", label: "Contact" },
 ] as const;
 

@@ -258,4 +258,18 @@
 .lenis-debug,
 [data-lenis-debug] {
   display: none !important;
-}
+}
+
+/* Partner logo marquee.
+   The track renders the logo list twice, so translating by exactly -50% lands
+   on an identical frame and the loop is seamless. Paused on hover and on
+   keyboard focus by utilities in the component; the global
+   prefers-reduced-motion block above also neutralises it. */
+@keyframes itsa-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: itsa-marquee 40s linear infinite;
+}
