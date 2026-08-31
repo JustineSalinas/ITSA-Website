@@ -2,7 +2,11 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getEvents, getOfficers, getNews, splitEvents } from "@/lib/data";
 import { Hero } from "@/components/home/hero";
+import { AboutItsa } from "@/components/home/about-itsa";
+import { HomeFaq } from "@/components/home/home-faq";
+import { JoinCta } from "@/components/home/join-cta";
 import { LatestNews } from "@/components/home/latest-news";
+import { PartnersCarousel } from "@/components/home/partners-carousel";
 import { EventCard } from "@/components/events/event-card";
 import { OfficerCard } from "@/components/officers/officer-card";
 import { Button } from "@/components/ui/button";
@@ -22,6 +26,8 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
+      <PartnersCarousel />
+      <AboutItsa />
       <LatestNews news={news} />
 
       {/* Upcoming events section */}
@@ -102,55 +108,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Join CTA section */}
-      <section className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 sm:pb-32 lg:px-8">
-        <div className="mx-auto flex max-w-sm flex-col items-center gap-8">
-          <div className="w-full rounded-2xl border border-border bg-card p-6 shadow-sm">
-            <div className="flex items-center justify-between border-b border-border pb-4">
-              <span className="font-mono text-xs font-bold uppercase text-foreground">
-                MEMBERSHIP PASSPORT
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-600">
-                <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" /> REGISTRATION OPEN
-              </span>
-            </div>
-
-            <div className="mt-5 space-y-3 font-mono text-xs">
-              <div className="flex items-center justify-between rounded-lg bg-muted/50 p-3">
-                <span className="text-muted-foreground">Target Program:</span>
-                <span className="font-bold text-foreground">BS Information Technology</span>
-              </div>
-              <div className="flex items-center justify-between rounded-lg bg-muted/50 p-3">
-                <span className="text-muted-foreground">Institution:</span>
-                <span className="font-bold text-foreground">Univ. of San Agustin</span>
-              </div>
-              <div className="flex items-center justify-between rounded-lg bg-muted/50 p-3">
-                <span className="text-muted-foreground">Membership Status:</span>
-                <span className="font-bold text-brand-orange">Official Student Member</span>
-              </div>
-            </div>
-
-            <div className="mt-6 border-t border-border pt-4">
-              <Link
-                href="/join"
-                className="flex items-center justify-between text-xs font-bold text-foreground hover:text-primary hover:underline"
-              >
-                <span>Complete membership form</span>
-                <ArrowRight className="size-4" />
-              </Link>
-            </div>
-          </div>
-
-          <Button
-            size="lg"
-            className="group font-bold shadow-md transition-transform active:scale-95"
-            render={<Link href="/join" />}
-          >
-            Register Now
-            <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
-          </Button>
-        </div>
-      </section>
+      <HomeFaq />
+      <JoinCta />
     </>
   );
 }

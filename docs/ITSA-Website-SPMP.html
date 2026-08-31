@@ -1,0 +1,613 @@
+<title>ITSA Website SPMP</title>
+<style>
+  /* Single light "paper" theme on purpose — this document is copied into Word
+     and Google Docs, where a dark-theme copy would paste white text onto a
+     white page. Every colour is painted explicitly. */
+  :root {
+    --paper: #FFFFFF;
+    --ground: #F1F4F8;
+    --panel: #F7F9FC;
+    --line: #D2DAE5;
+    --line-soft: #E5EAF1;
+    --ink: #0D1524;
+    --ink-2: #3B4759;
+    --ink-3: #6C788A;
+    --accent: #0A5FA0;
+    --accent-soft: #E4EEF8;
+    --crit: #A81F26;
+    --crit-soft: #F9E6E6;
+    --warn: #8A5207;
+    --warn-soft: #FBEFDB;
+    --ok: #11603F;
+    --ok-soft: #DEEFE5;
+
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.62;
+    margin: 0;
+    padding: 28px 18px 90px;
+  }
+
+  .sheet {
+    max-width: 920px;
+    margin: 0 auto;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 56px 60px 72px;
+  }
+
+  .doc-kind {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    margin: 0 0 10px;
+  }
+  .subtitle { font-size: 1.05rem; color: var(--ink-2); margin: 0 0 26px; }
+
+  table.meta { border-collapse: collapse; width: 100%; margin-bottom: 42px; }
+  table.meta td {
+    border: 1px solid var(--line);
+    padding: 8px 12px;
+    font-size: 0.88rem;
+    color: var(--ink-2);
+    background: var(--panel);
+  }
+  table.meta td:first-child {
+    width: 150px;
+    font-weight: 700;
+    color: var(--ink);
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 1.25;
+    margin: 46px 0 4px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ink);
+  }
+  h3 {
+    font-family: var(--sans);
+    font-size: 1.03rem;
+    font-weight: 700;
+    margin: 30px 0 8px;
+  }
+  p { margin: 0 0 14px; color: var(--ink-2); }
+  strong, b { color: var(--ink); }
+  ul, ol { margin: 0 0 16px; padding-left: 24px; color: var(--ink-2); }
+  li { margin-bottom: 7px; }
+  li::marker { color: var(--ink-3); }
+
+  code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--panel);
+    border: 1px solid var(--line-soft);
+    padding: 0.06em 0.34em;
+    color: var(--ink-2);
+  }
+
+  .tablewrap { overflow-x: auto; margin-bottom: 22px; }
+  table.grid {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.89rem;
+    min-width: 620px;
+  }
+  table.grid th {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: left;
+    padding: 10px 12px;
+    font-size: 0.73rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    font-weight: 700;
+    border: 1px solid var(--ink);
+  }
+  table.grid td {
+    border: 1px solid var(--line);
+    padding: 10px 12px;
+    color: var(--ink-2);
+    vertical-align: top;
+  }
+  table.grid tr:nth-child(even) td { background: var(--panel); }
+  table.grid td.id {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    white-space: nowrap;
+    color: var(--ink);
+    font-weight: 700;
+  }
+  table.grid td.who { white-space: nowrap; font-weight: 600; color: var(--ink); }
+
+  .pill {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .pill.done { color: var(--ok); background: var(--ok-soft); border-color: var(--ok); }
+  .pill.prog { color: var(--warn); background: var(--warn-soft); border-color: var(--warn); }
+  .pill.todo { color: var(--ink-2); background: var(--paper); border-color: var(--ink-3); }
+  .pill.block { color: var(--crit); background: var(--crit-soft); border-color: var(--crit); }
+  .pill.p1 { color: var(--crit); background: var(--crit-soft); border-color: var(--crit); }
+  .pill.p2 { color: var(--warn); background: var(--warn-soft); border-color: var(--warn); }
+  .pill.p3 { color: var(--ink-2); background: var(--panel); border-color: var(--line); }
+
+  .callout {
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-left-width: 4px;
+    padding: 16px 20px;
+    margin: 0 0 24px;
+  }
+  .callout.warn { background: var(--warn-soft); border-color: var(--warn); }
+  .callout.crit { background: var(--crit-soft); border-color: var(--crit); }
+  .callout p:last-child { margin-bottom: 0; }
+
+  .note { font-size: 0.88rem; color: var(--ink-3); }
+
+  .milestone {
+    border-left: 3px solid var(--accent);
+    padding-left: 20px;
+    margin-bottom: 28px;
+  }
+  .milestone h3 { margin-top: 0; }
+  .mdate {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  @media (max-width: 700px) {
+    .sheet { padding: 34px 22px 48px; }
+    h1 { font-size: 1.85rem; }
+    table.meta td:first-child { width: 108px; }
+  }
+</style>
+
+<div class="sheet">
+
+  <p class="doc-kind">Software Project Management Plan</p>
+  <h1>ITSA Website</h1>
+  <p class="subtitle">
+    Who is doing what, in what order, and how we know it is finished. Includes the
+    progress tracker corrected against what is actually built.
+  </p>
+
+  <table class="meta">
+    <tr><td>Project</td><td>ITSA Website — Information Technology Student Association, University of San Agustin</td></tr>
+    <tr><td>Repository</td><td>JustineSalinas/ITSA-Website</td></tr>
+    <tr><td>Document</td><td>Software Project Management Plan (SPMP), version 1.0</td></tr>
+    <tr><td>Date</td><td>17 August 2026</td></tr>
+    <tr><td>Prepared by</td><td>AJ Salinas, with the ITSA web team</td></tr>
+    <tr><td>Companion</td><td>Software Requirements Specification (SRS) — what the site must do</td></tr>
+  </table>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>1. Where the project actually stands</h2>
+
+  <p>
+    Most of the website is <strong>already built and live</strong>. Nine pages work,
+    officers can sign in and publish events, and the security work has been merged.
+    The remaining work is smaller than the tracker suggests — but two things need
+    attention before anything else.
+  </p>
+
+  <div class="callout crit">
+    <p><strong>One task is urgent and blocks everything else.</strong></p>
+    <p style="margin-bottom:0">
+      The rules that protect our database were written, tested, and merged — but they
+      are a <em>separate switch</em> that has not been turned on for the live database.
+      Right now the live site still accepts changes from any signed-in Google account,
+      and because the repository is public, that weakness is readable by anyone.
+      Turning it on takes about five minutes. See task <code>A1</code>.
+    </p>
+  </div>
+
+  <div class="callout warn">
+    <p style="margin-bottom:0">
+      <strong>The tracker is out of date in one important way.</strong> "Add Projects
+      for ITSA" is marked <em>Not Started</em>, but it is finished and live — the
+      Projects page is published with three projects on it (Gagambattle, Pharmatrack,
+      and Foundit). Corrected below. Worth checking with Deghne whether anything is
+      still outstanding there.
+    </p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>2. The team</h2>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Person</th><th>Role on this project</th><th>Currently owns</th></tr>
+      <tr><td class="who">AJ Salinas</td><td>Project lead and repository owner. Approves changes, holds the Firebase and hosting accounts.</td><td>Security rollout, chatbot decision</td></tr>
+      <tr><td class="who">Deghne</td><td>Feature developer</td><td>Projects showcase, smooth-scrolling behaviour</td></tr>
+      <tr><td class="who">Alex</td><td>UI developer</td><td>Logo, footer, visual polish</td></tr>
+      <tr><td class="who">Aziel</td><td>Designer</td><td>Design corrections across the site</td></tr>
+      <tr><td class="who">Unassigned</td><td>—</td><td>News feed, metrics page, accessibility review</td></tr>
+    </table>
+  </div>
+
+  <p class="note">
+    Everyone reviews. The rule below (§3) is that no one merges their own work
+    without a second pair of eyes.
+  </p>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>3. How we work</h2>
+
+  <p>
+    We had one incident worth learning from: a large change went straight onto the
+    live branch without review, and it contained a mistake that stopped the website
+    from building. Nobody noticed for a day, and no new version could be published in
+    the meantime. The process below exists to prevent a repeat — it is not
+    bureaucracy, it is the cheapest possible insurance.
+  </p>
+
+  <h3>3.1 The rules</h3>
+  <ol>
+    <li><strong>Never work directly on <code>main</code>.</strong> <code>main</code> is what the public sees. Create a branch for your work.</li>
+    <li><strong>Open a pull request.</strong> This is how you propose your change and how others see it.</li>
+    <li><strong>Wait for the automatic checks.</strong> They run in about 90 seconds and catch broken builds, broken security rules, and known-vulnerable packages.</li>
+    <li><strong>Get one review.</strong> Any teammate. A quick look is enough — the goal is that two people have seen it.</li>
+    <li><strong>Merge, then check the live site.</strong> Publishing happens automatically after merging.</li>
+  </ol>
+
+  <h3>3.2 What the automatic checks cover</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Check</th><th>What it catches</th></tr>
+      <tr><td>Code style</td><td>Obvious mistakes and unused code</td></tr>
+      <tr><td>Build</td><td>Anything that would stop the site publishing — the exact failure we hit</td></tr>
+      <tr><td>Security rules (21 tests)</td><td>Any change that would let a non-officer edit the site</td></tr>
+      <tr><td>Package safety</td><td>Known security holes in the code we depend on</td></tr>
+      <tr><td>Preview deployment</td><td>Gives every pull request its own working link to click through before merging</td></tr>
+    </table>
+  </div>
+
+  <div class="callout">
+    <p style="margin-bottom:0">
+      <strong>Recommended setting change (task A4).</strong> These rules currently rely
+      on everyone remembering. Turning on "branch protection" for <code>main</code> in
+      the repository settings makes the pull request and passing checks
+      <em>required</em> — the mistake above becomes impossible rather than merely
+      discouraged. It takes two minutes and needs no code.
+    </p>
+  </div>
+
+  <h3>3.3 When is something "done"?</h3>
+  <p>A task is done when all of these are true — not when the code is written:</p>
+  <ul>
+    <li>It works on a phone as well as a laptop.</li>
+    <li>The automatic checks pass.</li>
+    <li>Someone else has looked at it.</li>
+    <li>It has been clicked through on the live site after merging.</li>
+    <li>The tracker row has been updated with the date.</li>
+  </ul>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>4. Progress tracker, corrected</h2>
+
+  <p>
+    Your original tracker with statuses checked against what is actually in the code,
+    plus the security work, which was missing entirely.
+  </p>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Feature</th><th>Status was</th><th>Status now</th><th>Owner</th><th>Note</th></tr>
+      <tr>
+        <td><strong>Add Projects for ITSA</strong></td>
+        <td>Not Started</td>
+        <td><span class="pill done">Done</span></td>
+        <td class="who">Deghne</td>
+        <td><strong>Already live</strong> with three projects. Two follow-ups in task list (C3, C5).</td>
+      </tr>
+      <tr>
+        <td><strong>Logo</strong></td>
+        <td>Started</td>
+        <td><span class="pill done">Merged</span></td>
+        <td class="who">Alex</td>
+        <td>Live. But file size and footer colours still open — see C1 and C2.</td>
+      </tr>
+      <tr>
+        <td><strong>Footer revisions</strong></td>
+        <td>Started</td>
+        <td><span class="pill done">Merged</span></td>
+        <td class="who">Alex</td>
+        <td>Icons, spacing, and fonts are live.</td>
+      </tr>
+      <tr>
+        <td><strong>Logo colours in footer</strong></td>
+        <td>(blank)</td>
+        <td><span class="pill todo">To do</span></td>
+        <td class="who">Alex</td>
+        <td>Your note: colours don't match the original logo. Confirmed still open.</td>
+      </tr>
+      <tr>
+        <td><strong>Design changes</strong></td>
+        <td>Not Started</td>
+        <td><span class="pill todo">To do</span></td>
+        <td class="who">Aziel</td>
+        <td>Needs a written list of which elements — see C4.</td>
+      </tr>
+      <tr>
+        <td><strong>News feed</strong></td>
+        <td>(blank)</td>
+        <td><span class="pill block">Decide first</span></td>
+        <td class="who">Unassigned</td>
+        <td>Scope not agreed. Decision needed before any work.</td>
+      </tr>
+      <tr>
+        <td><strong>Metrics landing page</strong></td>
+        <td>Not Started</td>
+        <td><span class="pill block">Decide first</span></td>
+        <td class="who">Unassigned</td>
+        <td>Which numbers, and for whom? Undefined.</td>
+      </tr>
+      <tr>
+        <td><strong>Chatbot</strong></td>
+        <td>(blank)</td>
+        <td><span class="pill block">Decide first</span></td>
+        <td class="who">AJ</td>
+        <td>Recommend trying an FAQ page first.</td>
+      </tr>
+      <tr>
+        <td><strong>Push notifications</strong></td>
+        <td>Not Started</td>
+        <td><span class="pill todo">Recommend drop</span></td>
+        <td class="who">—</td>
+        <td>Your note said "unsure". Low value for the effort; use Facebook and email.</td>
+      </tr>
+      <tr>
+        <td><strong>Security hardening</strong></td>
+        <td><em>missing</em></td>
+        <td><span class="pill prog">Merged, not switched on</span></td>
+        <td class="who">AJ</td>
+        <td><strong>Was not on the tracker.</strong> Code is live; the database switch is not. Task A1.</td>
+      </tr>
+      <tr>
+        <td><strong>Website build repair</strong></td>
+        <td><em>missing</em></td>
+        <td><span class="pill done">Done</span></td>
+        <td class="who">AJ</td>
+        <td>The site could not publish at all for about a day. Fixed.</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>5. Task list to finish the website</h2>
+
+  <p>
+    Grouped by type. <span class="pill p1">P1</span> means do it now,
+    <span class="pill p2">P2</span> means this term,
+    <span class="pill p3">P3</span> means before the officers change over.
+  </p>
+
+  <h3>5.1 Group A — Turn on the protection (this week)</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Task</th><th>Owner</th><th>Priority</th></tr>
+      <tr><td class="id">A1</td><td><strong>Approve an officer account, then switch on the database rules.</strong> The order matters — approving first keeps you able to sign in. Doing it the other way locks everyone out, including you.</td><td class="who">AJ</td><td><span class="pill p1">P1</span></td></tr>
+      <tr><td class="id">A2</td><td>Approve the rest of the officers who need admin access, and confirm each can sign in.</td><td class="who">AJ</td><td><span class="pill p1">P1</span></td></tr>
+      <tr><td class="id">A3</td><td>Add the two remaining settings on the hosting and database side (a secret value for spam protection, and automatic cleanup of old records).</td><td class="who">AJ</td><td><span class="pill p1">P1</span></td></tr>
+      <tr><td class="id">A4</td><td>Turn on branch protection for <code>main</code> so a pull request and passing checks are required, not optional.</td><td class="who">AJ</td><td><span class="pill p1">P1</span></td></tr>
+      <tr><td class="id">A5</td><td>Confirm the live site published successfully and click through every page.</td><td class="who">Anyone</td><td><span class="pill p1">P1</span></td></tr>
+    </table>
+  </div>
+
+  <h3>5.2 Group B — Remaining security work</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Task</th><th>Owner</th><th>Priority</th></tr>
+      <tr><td class="id">B1</td><td>Save join-form enquiries as reviewable records, not just email, so recruitment does not depend on one inbox. <em>(SRS FR-24)</em></td><td class="who">Deghne</td><td><span class="pill p2">P2</span></td></tr>
+      <tr><td class="id">B2</td><td>Switch the content-protection policy from "watch and report" to "enforce", after a week of clean reports.</td><td class="who">AJ</td><td><span class="pill p2">P2</span></td></tr>
+      <tr><td class="id">B3</td><td>Turn on App Check so only our own website can talk to our database, not a script. <em>(NFR-27)</em></td><td class="who">AJ</td><td><span class="pill p2">P2</span></td></tr>
+      <tr><td class="id">B4</td><td>Set up automatic backups of the database on a schedule. <em>(NFR-26)</em></td><td class="who">AJ</td><td><span class="pill p2">P2</span></td></tr>
+      <tr><td class="id">B5</td><td>Add error and uptime monitoring, so a broken site tells us instead of waiting to be noticed.</td><td class="who">Unassigned</td><td><span class="pill p3">P3</span></td></tr>
+      <tr><td class="id">B6</td><td>Give officer roles different permissions — e.g. only the President can add or remove officers. <em>(FR-39)</em></td><td class="who">Unassigned</td><td><span class="pill p3">P3</span></td></tr>
+    </table>
+  </div>
+
+  <h3>5.3 Group C — UI and design</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Task</th><th>Owner</th><th>Priority</th></tr>
+      <tr><td class="id">C1</td><td><strong>Fix the ITSA logo colours in the footer</strong> so they match the original logo. From your tracker.</td><td class="who">Alex</td><td><span class="pill p2">P2</span></td></tr>
+      <tr><td class="id">C2</td><td><strong>Shrink the logo files.</strong> They currently total about 936 KB, replacing a 1.4 KB version, and one of the three files isn't used at all. Delete the unused one and use a properly sized image. Biggest speed win available. <em>(NFR-2)</em></td><td class="who">Alex</td><td><span class="pill p1">P1</span></td></tr>
+      <tr><td class="id">C3</td><td>Make the smooth-scrolling effect respect the "reduce motion" setting, so visitors who ask for less animation get a still page. <em>(NFR-12)</em></td><td class="who">Deghne</td><td><span class="pill p2">P2</span></td></tr>
+      <tr><td class="id">C4</td><td><strong>Write down which design elements need changing</strong>, with a screenshot each, then work through them. The tracker note is too vague to act on.</td><td class="who">Aziel</td><td><span class="pill p2">P2</span></td></tr>
+      <tr><td class="id">C5</td><td>Add real images to the Projects page and load them the optimised way, as the rest of the site does.</td><td class="who">Deghne</td><td><span class="pill p2">P2</span></td></tr>
+      <tr><td class="id">C6</td><td><strong>Accessibility pass:</strong> check text contrast, make sure everything works with the keyboard alone, and that the focused item is always visible. <em>(NFR-10, 11, 13)</em></td><td class="who">Aziel</td><td><span class="pill p2">P2</span></td></tr>
+      <tr><td class="id">C7</td><td><strong>Test on a real, mid-range phone on campus wifi</strong> — not just a laptop browser. Note anything slow or awkward. <em>(NFR-1)</em></td><td class="who">Anyone</td><td><span class="pill p2">P2</span></td></tr>
+      <tr><td class="id">C8</td><td>Add photos and short bios for all 19 officers.</td><td class="who">Alex + Aziel</td><td><span class="pill p2">P2</span></td></tr>
+      <tr><td class="id">C9</td><td>Add the ability to upload images from the admin area, instead of pasting links. <em>(FR-38)</em></td><td class="who">Deghne</td><td><span class="pill p3">P3</span></td></tr>
+      <tr><td class="id">C10</td><td>Add proper search-engine and social-sharing details, so a shared link shows a real preview. <em>(FR-9, FR-10)</em></td><td class="who">Unassigned</td><td><span class="pill p2">P2</span></td></tr>
+    </table>
+  </div>
+
+  <h3>5.4 Group D — Decisions needed before work starts</h3>
+  <p>
+    These four are on the tracker but cannot be estimated or assigned yet. Each needs
+    a yes/no and a scope. <strong>Suggested: decide all four in one 30-minute meeting.</strong>
+  </p>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Decision</th><th>Who decides</th><th>Recommendation</th></tr>
+      <tr><td class="id">D1</td><td><strong>News feed</strong> — build it or not?</td><td class="who">Team</td><td>Only if someone commits to posting weekly. An empty feed looks worse than none.</td></tr>
+      <tr><td class="id">D2</td><td><strong>Metrics page</strong> — which numbers, for whom?</td><td class="who">AJ</td><td>Define the numbers first. If it's for officers, put it in the admin area.</td></tr>
+      <tr><td class="id">D3</td><td><strong>Chatbot</strong> — worth it?</td><td class="who">AJ</td><td>Write an FAQ page first. Much cheaper, answers the same questions, and tells you whether a bot is even needed.</td></tr>
+      <tr><td class="id">D4</td><td><strong>Push notifications</strong> — your note says "unsure".</td><td class="who">Team</td><td><strong>Drop it.</strong> Most people decline notification prompts, and it's a lot of work for little reach.</td></tr>
+    </table>
+  </div>
+
+  <h3>5.5 Group E — Content</h3>
+  <p class="note">
+    Not code, but the site fails without it. An accurate, active site is the entire
+    credibility argument.
+  </p>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Task</th><th>Owner</th><th>Priority</th></tr>
+      <tr><td class="id">E1</td><td>Publish this term's real events, and keep them current.</td><td class="who">Officers</td><td><span class="pill p1">P1</span></td></tr>
+      <tr><td class="id">E2</td><td>Collect officer photos and one-line bios.</td><td class="who">Officers</td><td><span class="pill p2">P2</span></td></tr>
+      <tr><td class="id">E3</td><td>Invite students to submit projects for the Projects page.</td><td class="who">Deghne</td><td><span class="pill p2">P2</span></td></tr>
+      <tr><td class="id">E4</td><td>Move the officer list out of the code so it can be updated through the admin area. Right now the annual handover needs a developer. <em>(NFR-31)</em></td><td class="who">Deghne</td><td><span class="pill p3">P3</span></td></tr>
+      <tr><td class="id">E5</td><td><strong>Write the handover note:</strong> who holds the Firebase, hosting, and domain accounts, and how to add a new officer. <em>(NFR-33)</em></td><td class="who">AJ</td><td><span class="pill p3">P3</span></td></tr>
+    </table>
+  </div>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>6. Schedule</h2>
+
+  <div class="milestone">
+    <span class="mdate">Milestone 1 · by 24 August 2026</span>
+    <h3>Make the live site safe</h3>
+    <p>
+      Group A in full. Nothing else should start before A1 is done — it is five
+      minutes of work standing between a public repository and a database anyone
+      signed in can edit.
+    </p>
+    <p class="note" style="margin-bottom:0"><strong>Done when:</strong> the rules are live, at least two officers can sign in, and the site publishes cleanly.</p>
+  </div>
+
+  <div class="milestone">
+    <span class="mdate">Milestone 2 · by 7 September 2026</span>
+    <h3>Polish and decide</h3>
+    <p>
+      C1, C2, C3, C4, C6, C7 — the visible quality work. Plus the Group D meeting, so
+      the four undecided features stop sitting on the tracker as open questions.
+    </p>
+    <p class="note" style="margin-bottom:0"><strong>Done when:</strong> the site is fast on a real phone, the logo is correct everywhere, and every tracker row has either an owner or a decision to drop it.</p>
+  </div>
+
+  <div class="milestone">
+    <span class="mdate">Milestone 3 · by 30 September 2026</span>
+    <h3>Complete the recruitment loop</h3>
+    <p>
+      B1 (enquiries become reviewable records), B2, B3, C5, C8, C10, and the Group E
+      content. This is when the site stops being a brochure and starts being a working
+      recruitment tool.
+    </p>
+    <p class="note" style="margin-bottom:0"><strong>Done when:</strong> an officer can see every join enquiry and mark it followed up, and no enquiry can be lost.</p>
+  </div>
+
+  <div class="milestone">
+    <span class="mdate">Milestone 4 · before the next officer handover</span>
+    <h3>Make it survive us</h3>
+    <p>
+      B4, B5, B6, C9, E4, E5. The goal is that next year's officers can run the site
+      without any of us.
+    </p>
+    <p class="note" style="margin-bottom:0"><strong>Done when:</strong> an officer who has never seen the code can add an event, update the roster, and knows who to contact.</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>7. Risks</h2>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Risk</th><th>How likely</th><th>What happens</th><th>What we do about it</th></tr>
+      <tr>
+        <td><strong>The database rules never get switched on</strong></td>
+        <td>Medium</td>
+        <td>Anyone with an account could deface the site. The weakness is publicly readable.</td>
+        <td>Task A1, this week, owned by AJ. Nothing else starts first.</td>
+      </tr>
+      <tr>
+        <td><strong>Officers graduate and nobody knows the passwords</strong></td>
+        <td><strong>High</strong></td>
+        <td>The site slowly dies — nobody can post events or fix anything.</td>
+        <td>E5 handover note, E4 roster out of code, B6 roles instead of shared logins.</td>
+      </tr>
+      <tr>
+        <td><strong>Events go stale</strong></td>
+        <td><strong>High</strong></td>
+        <td>Directly undermines the credibility the whole site is built to establish.</td>
+        <td>E1, and make posting an event part of the routine for every activity.</td>
+      </tr>
+      <tr>
+        <td><strong>Another unreviewed change breaks the site</strong></td>
+        <td>Medium</td>
+        <td>The site cannot publish — it already happened once, for about a day.</td>
+        <td>A4 branch protection turns the process rule into an enforced one.</td>
+      </tr>
+      <tr>
+        <td><strong>Everyone gets busy with exams</strong></td>
+        <td><strong>High</strong></td>
+        <td>Work stops mid-way and context is lost.</td>
+        <td>Keep tasks small and finishable. Milestone 1 is deliberately tiny.</td>
+      </tr>
+      <tr>
+        <td><strong>Free hosting limits are exceeded</strong></td>
+        <td>Low</td>
+        <td>The site slows or stops.</td>
+        <td>Spam protection is already in place; A3 adds automatic cleanup. Set a budget alert.</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ─────────────────────────────────────────────── -->
+  <h2>8. Staying in sync</h2>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>What</th><th>How often</th><th>Purpose</th></tr>
+      <tr><td>Update your tracker row</td><td>When you finish something</td><td>So nobody has to ask. The tracker being wrong is what caused most of the confusion here.</td></tr>
+      <tr><td>Quick check-in</td><td>Weekly, 15 minutes</td><td>What's done, what's stuck, what's next.</td></tr>
+      <tr><td>Pull request review</td><td>Within 2 days of being asked</td><td>Waiting on review is the most common reason work stalls.</td></tr>
+      <tr><td>Decision meeting</td><td>Once, ~30 minutes</td><td>Settle Group D so those rows stop being open questions.</td></tr>
+    </table>
+  </div>
+
+  <div class="callout">
+    <p><strong>One habit worth adopting.</strong> Keep this document and the tracker as the single source of truth, and update the tracker the moment something ships.</p>
+    <p style="margin-bottom:0">
+      A finished feature marked "Not Started" cost this project real confusion — the
+      Projects page was live while the tracker said work hadn't begun. Thirty seconds
+      of updating saves an hour of asking.
+    </p>
+  </div>
+
+  <p class="note" style="margin-top:36px; border-top:1px solid var(--line); padding-top:16px">
+    Companion document: <strong>Software Requirements Specification (SRS)</strong> —
+    what the site must do, who uses it, and the user flows.
+  </p>
+
+</div>
