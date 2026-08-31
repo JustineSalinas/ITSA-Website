@@ -3,6 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { getEvents, getOfficers, getNews, splitEvents } from "@/lib/data";
 import { Hero } from "@/components/home/hero";
 import { AboutItsa } from "@/components/home/about-itsa";
+import { HomeFaq } from "@/components/home/home-faq";
+import { JoinCta } from "@/components/home/join-cta";
 import { LatestNews } from "@/components/home/latest-news";
 import { PartnersCarousel } from "@/components/home/partners-carousel";
 import { EventCard } from "@/components/events/event-card";
@@ -106,6 +108,8 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <HomeFaq />
+      <JoinCta />
     </>
   );
 }
