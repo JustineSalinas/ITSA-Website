@@ -80,7 +80,8 @@ export function ExecutiveHeroWidget() {
             <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase text-primary">
               <Sparkles className="size-3" /> OFFICIAL ANNOUNCEMENT
             </span>
-            <span className="font-mono text-[10px] text-muted-foreground">MARCH 2026</span>
+            <span className="font-mono text-[10px] text-muted-foreground">ACTIVE BULLETIN</span>
+
           </div>
           <h4 className="mt-2 text-sm font-bold tracking-tight text-foreground">
             ITSA Annual Tech Summit & Hackathon Registration Open

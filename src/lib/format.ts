@@ -39,3 +39,33 @@ export function splitEvents<T extends { eventDate: string }>(events: T[]) {
     .sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime());
   return { upcoming, past };
 }
+
+export function formatNewsDate(iso: string): string {
+  const d = new Date(iso);
+  return d.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+export function formatRelativeTime(iso: string): string {
+  const d = new Date(iso);
+  const now = new Date();
+  const diffMs = now.getTime() - d.getTime();
+  const diffSecs = Math.floor(diffMs / 1000);
+  const diffMins = Math.floor(diffSecs / 60);
+  const diffHours = Math.floor(diffMins / 60);
+  const diffDays = Math.floor(diffHours / 24);
+
+  if (diffDays <= 0) {
+    if (diffHours <= 0) return "Today";
+    return `${diffHours}h ago`;
+  }
+  if (diffDays === 1) return "Yesterday";
+  if (diffDays < 7) return `${diffDays} days ago`;
+  if (diffDays < 14) return "1 week ago";
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+  return formatNewsDate(iso);
+}
+

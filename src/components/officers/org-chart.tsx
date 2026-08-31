@@ -4,10 +4,11 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { OrgNode } from "@/lib/types";
 import { initials } from "@/lib/format";
-import { ShieldCheck, Award, Briefcase, Layers, LayoutGrid, Network, ChevronDown } from "lucide-react";
+import { ShieldCheck, Award, Briefcase, LayoutGrid, Network, ChevronDown } from "lucide-react";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 
 export function OrgChart({ root }: { root: OrgNode }) {
+
   const [viewMode, setViewMode] = useState<"flowchart" | "matrix">("flowchart");
 
   // Extract key executive nodes from root

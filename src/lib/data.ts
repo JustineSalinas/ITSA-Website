@@ -2,7 +2,8 @@ import "server-only";
 import { getAdminDb, isAdminConfigured } from "@/lib/firebase/admin";
 import { placeholderEvents } from "@/data/placeholder";
 import { realOfficers } from "@/data/officers";
-import type { EventItem, Officer, SocialLinks } from "@/lib/types";
+import { newsData } from "@/data/news";
+import type { EventItem, Officer, SocialLinks, NewsItem } from "@/lib/types";
 
 // The public pages read through these helpers. When Firebase Admin credentials
 // are absent (e.g. before the project is wired up) they serve placeholder
@@ -28,6 +29,31 @@ function onReadFailure(operation: string, err: unknown): never | void {
 function isLive(data: FirebaseFirestore.DocumentData): boolean {
   return data.deletedAt == null;
 }
+
+function toNewsItem(id: string, data: FirebaseFirestore.DocumentData): NewsItem {
+  const d = data.date ?? data.publishedAt;
+  const iso =
+    typeof d?.toDate === "function"
+      ? d.toDate().toISOString()
+      : typeof d === "string"
+        ? d
+        : new Date().toISOString();
+  const rawImages = Array.isArray(data.images) ? data.images : data.imageUrl ? [data.imageUrl] : [];
+  return {
+    id,
+    title: data.title ?? "",
+    slug: data.slug ?? id,
+    excerpt: data.excerpt ?? data.summary ?? "",
+    content: data.content ?? "",
+    date: iso,
+    images: rawImages,
+    imageUrl: data.imageUrl ?? (rawImages.length > 0 ? rawImages[0] : ""),
+    category: data.category ?? "Announcement",
+    author: data.author ?? { name: "ITSA Secretariat", role: "Official Dispatch" },
+    tags: Array.isArray(data.tags) ? data.tags : [],
+  };
+}
+
 
 function toEvent(id: string, data: FirebaseFirestore.DocumentData): EventItem {
   const date = data.eventDate;
@@ -110,3 +136,25 @@ export function splitEvents(events: EventItem[]) {
     .sort((a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime());
   return { upcoming, past };
 }
+
+export async function getNews(): Promise<NewsItem[]> {
+  if (!isAdminConfigured) {
+    return [...newsData].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+  }
+  try {
+    const snap = await getAdminDb()
+      .collection("news")
+      .orderBy("date", "desc")
+      .get();
+    const items = snap.docs
+      .filter((d) => isLive(d.data()))
+      .map((d) => toNewsItem(d.id, d.data()));
+    return items.length ? items : newsData;
+  } catch (err) {
+    onReadFailure("getNews", err);
+    return newsData;
+  }
+}
+

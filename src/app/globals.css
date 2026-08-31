@@ -253,3 +253,9 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Hide the Lenis smooth-scroll debug watermark */
+.lenis-debug,
+[data-lenis-debug] {
+  display: none !important;
+}
