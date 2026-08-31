@@ -3,7 +3,6 @@ import { ArrowRight } from "lucide-react";
 import { getEvents, getOfficers, getNews, splitEvents } from "@/lib/data";
 import { Hero } from "@/components/home/hero";
 import { LatestNews } from "@/components/home/latest-news";
-import { Highlights } from "@/components/home/highlights";
 import { EventCard } from "@/components/events/event-card";
 import { OfficerCard } from "@/components/officers/officer-card";
 import { Button } from "@/components/ui/button";
@@ -24,8 +23,6 @@ export default async function HomePage() {
     <>
       <Hero />
       <LatestNews news={news} />
-      <Highlights />
-
 
       {/* Upcoming events section */}
       <section className="relative border-t border-border/60 bg-muted/20 py-20 sm:py-28">
