@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ITSA — Information Technology Student Association
 
-## Getting Started
+The official student organization of Information Technology students at the
+**University of San Agustin**, Iloilo City, Philippines.
 
-First, run the development server:
+This repository holds the source of the ITSA website.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## About ITSA
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ITSA is the official academic association for IT students at the University of
+San Agustin. We exist to build community, skills, and opportunities in tech —
+turning coursework into practice, and students into professionals.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**What we do**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Workshops and hands-on labs** covering web development, cybersecurity,
+  cloud, and AI — from absolute fundamentals to production topics.
+- **Hackathons and competition squads** representing the department in regional
+  and national tech competitions.
+- **Peer and alumni mentorship**, connecting members with senior students and
+  working graduates for project guidance and career advice.
+- **Leadership and project opportunities** through event committees, development
+  projects, and departmental initiatives.
 
-## Learn More
+**Our mission**
 
-To learn more about Next.js, take a look at the following resources:
+To empower Information Technology students by fostering technical mastery,
+leadership skills, and a collaborative community — creating direct pathways into
+high-impact tech careers.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Our vision**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To be the premier student technology hub that cultivates innovative, resilient,
+and socially responsible IT leaders who shape the digital landscape of tomorrow.
 
-## Deploy on Vercel
+## What the website does
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The site is ITSA's public face and serves three purposes:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Recruit** — help prospective students decide to join, and give them a
+   short, clear way to apply.
+2. **Inform** — publish events, news, and deadlines so members can find what
+   they need quickly.
+3. **Show the work** — feature the officers who run the organization and the
+   projects our students build.
+
+Officers manage events, news, and officer profiles through a private admin area,
+so keeping the site current does not require a developer.
+
+## Membership
+
+All Information Technology students enrolled at the University of San Agustin
+are eligible and warmly invited to join. No prior programming experience is
+required — our workshops start from the fundamentals.
+
+## Contact
+
+- **Email:** itsa@usa.edu.ph
+- **Location:** General Luna St., Iloilo City, Philippines
+- **Facebook:** https://www.facebook.com/profile.php?id=61592045333438
