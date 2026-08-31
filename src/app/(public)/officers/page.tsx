@@ -5,7 +5,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { OfficerCard } from "@/components/officers/officer-card";
 import { OrgChart } from "@/components/officers/org-chart";
 import { siteConfig } from "@/data/site";
-import { Sparkles, Users, Layers } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Officers",

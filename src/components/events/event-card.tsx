@@ -42,7 +42,9 @@ export function EventCard({ event }: { event: EventItem }) {
         </div>
 
         <CardContent className="flex flex-1 flex-col p-6">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-xs text-muted-foreground">
+          {/* Reserves two lines so a long venue wrapping doesn't push this card's
+              title below its neighbours' */}
+          <div className="flex min-h-[2.25rem] flex-wrap content-start items-center gap-x-4 gap-y-1 font-mono text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">
               <CalendarDays className="size-3.5 text-brand" />
               {formatEventDate(event.eventDate)} · {formatEventTime(event.eventDate)}

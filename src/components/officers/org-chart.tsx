@@ -101,21 +101,21 @@ export function OrgChart({ root }: { root: OrgNode }) {
             {viceChairInternal && (
               <div className="rounded-xl border border-border/60 bg-card/70 p-5">
                 <span className="font-mono text-xs font-bold text-primary uppercase">INTERNAL AFFAIRS</span>
-                <h4 className="mt-1.5 text-base font-bold">{viceChairInternal.name}</h4>
+                <h4 className="mt-1.5 min-h-[3rem] text-base font-bold">{viceChairInternal.name}</h4>
                 <p className="text-sm text-muted-foreground">{viceChairInternal.position}</p>
               </div>
             )}
             {viceChairExternal && (
               <div className="rounded-xl border border-border/60 bg-card/70 p-5">
                 <span className="font-mono text-xs font-bold text-primary uppercase">EXTERNAL AFFAIRS</span>
-                <h4 className="mt-1.5 text-base font-bold">{viceChairExternal.name}</h4>
+                <h4 className="mt-1.5 min-h-[3rem] text-base font-bold">{viceChairExternal.name}</h4>
                 <p className="text-sm text-muted-foreground">{viceChairExternal.position}</p>
               </div>
             )}
             {secretaryNode && (
               <div className="rounded-xl border border-border/60 bg-card/70 p-5">
                 <span className="font-mono text-xs font-bold text-primary uppercase">SECRETARIAT</span>
-                <h4 className="mt-1.5 text-base font-bold">{secretaryNode.name}</h4>
+                <h4 className="mt-1.5 min-h-[3rem] text-base font-bold">{secretaryNode.name}</h4>
                 <p className="text-sm text-muted-foreground">{secretaryNode.position}</p>
               </div>
             )}
@@ -143,7 +143,11 @@ export function OrgChart({ root }: { root: OrgNode }) {
                         {dept.code} DIRECTORATE
                       </span>
                       <h4 className="mt-1.5 text-lg font-extrabold tracking-tight">{dept.vp.name}</h4>
-                      <p className="text-sm font-medium text-muted-foreground">{dept.vp.position}</p>
+                      {/* Two reserved lines keep each card's divider at the same height,
+                          even when a longer VP title wraps */}
+                      <p className="min-h-[2.5rem] text-sm font-medium text-muted-foreground">
+                        {dept.vp.position}
+                      </p>
                     </div>
 
                     {/* Department Leads */}
