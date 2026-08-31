@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ExternalLink, User, Code2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, User, Users, Code2, Trophy } from "lucide-react";
 import { GithubIcon } from "@/components/icons/social";
 import { getProjectBySlug, getProjects } from "@/data/projects";
 import { Badge } from "@/components/ui/badge";
@@ -34,8 +34,13 @@ export default async function ProjectDetailPage({
 }) {
   const slug = (await params).slug;
   const project = await getProjectBySlug(slug);
+  const allProjects = await getProjects();
 
   if (!project) notFound();
+
+  const currentIndex = allProjects.findIndex(p => p.slug === slug);
+  const prevProject = allProjects[(currentIndex - 1 + allProjects.length) % allProjects.length];
+  const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
 
   return (
     <FadeIn as="article" className="pb-16 md:pb-24 lg:pb-32 pt-12 md:pt-20">
@@ -60,11 +65,43 @@ export default async function ProjectDetailPage({
           {project.title}
         </h1>
         
-        <div className="flex items-center justify-center gap-3 mb-10">
-          <div className="size-8 rounded-full bg-brand/10 text-brand grid place-items-center">
-            <User className="size-4" />
+        <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 mb-10">
+          <div className="flex items-center justify-center gap-3">
+            <div className="size-8 rounded-full bg-brand/10 text-brand grid place-items-center shrink-0">
+              {project.teamSize && project.teamSize > 1 ? <Users className="size-4" /> : <User className="size-4" />}
+            </div>
+            <div className="flex flex-col items-start text-left">
+              <span className="font-semibold text-lg text-foreground/80 leading-tight">
+                {project.teamSize && project.teamSize > 1 ? (project.teamName || `Team of ${project.teamSize}`) : project.author}
+              </span>
+              {(project.role || project.teamSize) && (
+                <span className="text-sm text-muted-foreground leading-tight">
+                  {project.teamSize && project.teamSize > 1
+                    ? `${project.teamSize} Developers`
+                    : [project.role, project.teamSize && `Team of ${project.teamSize}`].filter(Boolean).join(' · ')
+                  }
+                </span>
+              )}
+            </div>
           </div>
-          <span className="font-semibold text-lg text-foreground/80">{project.author}</span>
+
+          {project.awardName && (
+            <div className="flex items-center justify-center gap-3">
+              <div className="size-8 rounded-full bg-amber-500/10 text-amber-500 grid place-items-center shrink-0">
+                <Trophy className="size-4" />
+              </div>
+              <div className="flex flex-col items-start text-left">
+                <span className="font-semibold text-lg text-foreground/80 leading-tight">
+                  {project.awardName}
+                </span>
+                {(project.awardDate || project.awardHost) && (
+                  <span className="text-sm text-muted-foreground leading-tight">
+                    {[project.awardDate, project.awardHost].filter(Boolean).join(' · ')}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-4 w-full sm:w-auto">
@@ -111,7 +148,42 @@ export default async function ProjectDetailPage({
         <p className="text-xl md:text-2xl font-light leading-relaxed text-muted-foreground mb-16 text-balance text-center">
           {project.content}
         </p>
-        
+        {project.techStack && project.techStack.length > 0 && (
+          <div className="flex flex-col gap-6 mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground break-words text-center md:text-left">
+              Tech Stack
+            </h2>
+            <div className="flex flex-wrap justify-center md:justify-start gap-2">
+              {project.techStack.map(tech => (
+                <Badge key={tech} variant="outline" className="px-4 py-1.5 text-xs font-semibold uppercase tracking-widest bg-transparent border-primary/20 text-foreground/70 hover:bg-primary/5 hover:border-primary/40 transition-colors">
+                  {tech}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {project.teamMembers && project.teamMembers.length > 0 && (
+          <div className="flex flex-col gap-6 mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground break-words text-center md:text-left">
+              Team Members
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {project.teamMembers.map((member, index) => (
+                <div key={index} className="flex items-center gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/10 transition-colors hover:bg-primary/10">
+                  <div className="size-10 rounded-full bg-brand/10 text-brand grid place-items-center shrink-0">
+                    <User className="size-5" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="font-semibold text-foreground/90 leading-tight">{member.name}</span>
+                    <span className="text-sm text-muted-foreground leading-tight mt-1">{member.role}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="flex flex-col gap-6 text-lg leading-relaxed text-foreground/80">
           {project.sections.map((section, index) => (
             <div key={index} className="flex flex-col gap-6">
@@ -163,6 +235,21 @@ export default async function ProjectDetailPage({
               )}
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Navigation Section */}
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 mt-16 md:mt-24 pt-12 border-t border-border/40">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <Button variant="outline" className="gap-2 rounded-full font-mono text-xs font-semibold uppercase transition-colors hover:bg-primary/5 w-full sm:w-auto justify-start" render={<Link href={`/projects/${prevProject.slug}`} />}>
+            <ArrowLeft className="size-3.5" />
+            <span className="truncate max-w-[200px]">{prevProject.title}</span>
+          </Button>
+
+          <Button variant="outline" className="gap-2 rounded-full font-mono text-xs font-semibold uppercase transition-colors hover:bg-primary/5 w-full sm:w-auto justify-end" render={<Link href={`/projects/${nextProject.slug}`} />}>
+            <span className="truncate max-w-[200px]">{nextProject.title}</span>
+            <ArrowRight className="size-3.5" />
+          </Button>
         </div>
       </div>
     </FadeIn>
