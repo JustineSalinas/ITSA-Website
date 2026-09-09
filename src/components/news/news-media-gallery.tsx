@@ -117,6 +117,12 @@ export function NewsMediaGallery({
 
       {/* Photo count, and the pause control when the slideshow can run */}
       <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1.5">
+        {/*
+          The label names the action the button performs, the way native media
+          controls do. Deliberately no aria-pressed alongside it: a changing
+          label plus a pressed state announces as "Play slideshow, pressed",
+          which reads as the opposite of what is true.
+        */}
         {!prefersReducedMotion && (
           <button
             type="button"
@@ -126,13 +132,12 @@ export function NewsMediaGallery({
               setIsPaused((prev) => !prev);
             }}
             aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
-            aria-pressed={isPaused}
             className="grid size-6 place-items-center rounded-full bg-black/60 text-white/90 backdrop-blur-md transition-all duration-200 hover:bg-black/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             {isPaused ? (
-              <Play className="size-3" />
+              <Play className="size-3" aria-hidden="true" />
             ) : (
-              <Pause className="size-3" />
+              <Pause className="size-3" aria-hidden="true" />
             )}
           </button>
         )}
@@ -155,7 +160,7 @@ export function NewsMediaGallery({
         aria-label="Previous photo"
         className={`absolute left-2 top-1/2 z-10 -translate-y-1/2 grid size-7 place-items-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/80 hover:scale-110 ${controlVisibility}`}
       >
-        <ChevronLeft className="size-4" />
+        <ChevronLeft className="size-4" aria-hidden="true" />
       </button>
 
       <button
@@ -168,7 +173,7 @@ export function NewsMediaGallery({
         aria-label="Next photo"
         className={`absolute right-2 top-1/2 z-10 -translate-y-1/2 grid size-7 place-items-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/80 hover:scale-110 ${controlVisibility}`}
       >
-        <ChevronRight className="size-4" />
+        <ChevronRight className="size-4" aria-hidden="true" />
       </button>
 
       {/* Slide Indicator Dots */}
