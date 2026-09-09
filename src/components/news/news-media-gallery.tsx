@@ -3,7 +3,8 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 
 interface NewsMediaGalleryProps {
@@ -24,7 +25,9 @@ export function NewsMediaGallery({
   const validImages = images && images.length > 0 ? images : [];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [direction, setDirection] = useState(1); // 1 = right, -1 = left
+  const prefersReducedMotion = useReducedMotion();
 
   const total = validImages.length;
 
@@ -38,14 +41,20 @@ export function NewsMediaGallery({
     setCurrentIndex((prev) => (prev - 1 + total) % total);
   }, [total]);
 
-  // Automatic slideshow transition when there are multiple photos and not hovered
+  // Hover only pauses on devices that have a pointer, so the explicit pause
+  // control below is the mechanism touch and keyboard visitors rely on.
+  // Reduced motion stops the slideshow outright -- a setInterval is not a CSS
+  // animation, so the global prefers-reduced-motion rules cannot reach it.
+  const isPlaying =
+    total > 1 && !isHovered && !isPaused && !prefersReducedMotion;
+
   useEffect(() => {
-    if (total <= 1 || isHovered) return;
+    if (!isPlaying) return;
     const timer = setInterval(() => {
       nextSlide();
     }, autoPlayInterval);
     return () => clearInterval(timer);
-  }, [total, isHovered, autoPlayInterval, nextSlide]);
+  }, [isPlaying, autoPlayInterval, nextSlide]);
 
   if (total === 0) return null;
 
@@ -67,6 +76,11 @@ export function NewsMediaGallery({
     );
   }
 
+  // Controls stay visible by default and only fade behind hover on pointer
+  // screens, so nothing is unreachable on a phone.
+  const controlVisibility =
+    "opacity-100 sm:opacity-0 sm:group-hover/slider:opacity-100 focus-visible:opacity-100";
+
   // Slideshow with simple smooth slide animation
   return (
     <div
@@ -82,7 +96,10 @@ export function NewsMediaGallery({
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.98 }}
-          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          transition={{
+            duration: prefersReducedMotion ? 0 : 0.45,
+            ease: [0.16, 1, 0.3, 1],
+          }}
           className="absolute inset-0 size-full"
         >
           <Image
@@ -98,15 +115,36 @@ export function NewsMediaGallery({
       {/* Subtle overlay gradient */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
 
-      {/* Multiple Photos Count Badge */}
-      <div className="absolute top-2.5 right-2.5 z-10 flex items-center rounded-full bg-black/60 px-2 py-0.5 font-mono text-[10px] font-semibold text-white/90 backdrop-blur-md">
-        <span>
-          {currentIndex + 1} / {total}
-        </span>
+      {/* Photo count, and the pause control when the slideshow can run */}
+      <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1.5">
+        {!prefersReducedMotion && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setIsPaused((prev) => !prev);
+            }}
+            aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
+            aria-pressed={isPaused}
+            className="grid size-6 place-items-center rounded-full bg-black/60 text-white/90 backdrop-blur-md transition-all duration-200 hover:bg-black/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            {isPaused ? (
+              <Play className="size-3" />
+            ) : (
+              <Pause className="size-3" />
+            )}
+          </button>
+        )}
+        <div className="flex items-center rounded-full bg-black/60 px-2 py-0.5 font-mono text-[10px] font-semibold text-white/90 backdrop-blur-md">
+          <span>
+            {currentIndex + 1} / {total}
+          </span>
+        </div>
       </div>
 
 
-      {/* Navigation Arrows (visible on hover) */}
+      {/* Navigation Arrows */}
       <button
         type="button"
         onClick={(e) => {
@@ -115,7 +153,7 @@ export function NewsMediaGallery({
           prevSlide();
         }}
         aria-label="Previous photo"
-        className="absolute left-2 top-1/2 z-10 -translate-y-1/2 grid size-7 place-items-center rounded-full bg-black/50 text-white opacity-0 backdrop-blur-md transition-all duration-200 hover:bg-black/80 hover:scale-110 group-hover/slider:opacity-100"
+        className={`absolute left-2 top-1/2 z-10 -translate-y-1/2 grid size-7 place-items-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/80 hover:scale-110 ${controlVisibility}`}
       >
         <ChevronLeft className="size-4" />
       </button>
@@ -128,7 +166,7 @@ export function NewsMediaGallery({
           nextSlide();
         }}
         aria-label="Next photo"
-        className="absolute right-2 top-1/2 z-10 -translate-y-1/2 grid size-7 place-items-center rounded-full bg-black/50 text-white opacity-0 backdrop-blur-md transition-all duration-200 hover:bg-black/80 hover:scale-110 group-hover/slider:opacity-100"
+        className={`absolute right-2 top-1/2 z-10 -translate-y-1/2 grid size-7 place-items-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/80 hover:scale-110 ${controlVisibility}`}
       >
         <ChevronRight className="size-4" />
       </button>
