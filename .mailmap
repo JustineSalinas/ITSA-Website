@@ -1,0 +1,39 @@
+# Canonical contributor identities for the ITSA website.
+#
+# Git counts authors by the exact name+email string on each commit, so one
+# person who changes their git config, or commits from a second machine,
+# splits into several rows in `git shortlog` and every other author report.
+# This file maps those variants back to one identity.
+#
+# Format:  Proper Name <proper@email>  Commit Name <commit@email>
+#
+# Nothing is rewritten in history -- .mailmap is a display-time lookup, so it
+# is safe to edit at any time and changes no commit hashes.
+#
+# Adding yourself: if you appear twice below or under a wrong name, add a line
+# rather than rewriting history.
+
+# AJ Salinas -- Project Manager. Commits from both a local git config and the
+# GitHub web UI, which uses a noreply address.
+Adrian Salinas <ajsalinas005@gmail.com> <98269999+JustineSalinas@users.noreply.github.com>
+
+# Aziel Misola (GitHub: Yaki-Soba). Three addresses: the handle as a display
+# name locally, the GitHub noreply address from the web UI, and the university
+# address GitHub stamps on squash-merge commits because it is his primary.
+Aziel Misola <azi18misola@gmail.com> AzielMisola <azi18misola@gmail.com>
+Aziel Misola <azi18misola@gmail.com> <181728117+Yaki-Soba@users.noreply.github.com>
+Aziel Misola <azi18misola@gmail.com> <amisola@usa.edu.ph>
+
+# Deghne Agana (GitHub: DeghneG) -- git user.name was never set on this
+# machine, so git recorded the literal string "unknown".
+Deghne Agana <deghneagana@gmail.com> unknown <deghneagana@gmail.com>
+
+# Alexander Tolosa -- same address, differing only in capitalisation, which
+# git treats as two distinct authors.
+Alexander Tolosa <Alexandertolosa45@gmail.com> <alexandertolosa45@gmail.com>
+
+# Matthew (GitHub: mattnotfound11) -- handle used as the display name.
+Matthew <matttabat@gmail.com> mattnotfound11 <matttabat@gmail.com>
+
+# Twice Navarro (GitHub: Tways-study) -- single consistent identity, no
+# mapping needed. Listed for completeness of the roster.
