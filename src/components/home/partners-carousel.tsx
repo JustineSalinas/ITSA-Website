@@ -5,11 +5,14 @@ import Link from "next/link";
 import { partners } from "@/data/partners";
 
 /**
- * Technical blueprint grid partner and sponsor carousel.
+ * Technical blueprint grid partner and sponsor carousel with a
+ * neo-brutalist kicker chip straddling the top border line.
  *
- * Features a continuous, seamless CSS marquee track framed by 2px ink borders,
- * subtle graph paper grid background, and a centered "Partners and Sponsors"
- * boundary badge.
+ * Features:
+ * - Neo-brutalist blue-ish chip with hard 2px black border and 3px offset drop shadow
+ * - Continuous smooth CSS marquee track with monochrome logos
+ * - Hover reveal to 100% full vibrant color and pause on hover
+ * - Balanced vertical padding and subtle 24px blueprint grid texture
  *
  * Pauses on hover and keyboard focus; respects prefers-reduced-motion.
  */
@@ -24,19 +27,21 @@ export function PartnersCarousel() {
       className="partner-strip"
       aria-label="Partners and Sponsors"
     >
+      {/* Neo-brutalist kicker chip centered directly on the top border line */}
       <div className="partner-strip-label">
-        <span className="partner-eyebrow">
-          Partners and Sponsors
+        <span className="neo-kicker">
+          PARTNERS &amp; SPONSORS
         </span>
       </div>
 
+      {/* Edge-fade marquee container with balanced vertical spacing */}
       <div
-        className="group relative overflow-hidden py-1"
+        className="group relative overflow-hidden py-7 sm:py-8"
         style={{
           maskImage:
-            "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+            "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
           WebkitMaskImage:
-            "linear-gradient(to right, transparent, black 6%, black 94%, transparent)",
+            "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
         }}
       >
         <ul className="flex w-max animate-marquee items-center gap-12 sm:gap-16 group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused] motion-reduce:animate-none motion-reduce:flex-wrap motion-reduce:justify-center">
@@ -47,13 +52,13 @@ export function PartnersCarousel() {
                 alt={partner.name}
                 width={partner.width || 210}
                 height={partner.height || 60}
-                className="h-9 sm:h-11 w-auto max-w-[170px] sm:max-w-[210px] object-contain transition-transform duration-300 hover:scale-105"
+                className="h-8 w-auto max-w-[150px] object-contain opacity-60 grayscale contrast-75 transition-all duration-300 hover:scale-105 hover:opacity-100 hover:grayscale-0 hover:contrast-100 select-none sm:h-9 sm:max-w-[180px]"
               />
             );
             return (
               <li
                 key={`${partner.name}-${i}`}
-                className="shrink-0 flex items-center justify-center px-2"
+                className="flex shrink-0 items-center justify-center px-2"
                 aria-hidden={i >= partners.length ? "true" : undefined}
               >
                 {partner.href ? (
