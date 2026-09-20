@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { LogoMark } from "@/components/layout/logo";
 import { partners } from "@/data/partners";
 
 /**
@@ -27,10 +28,11 @@ export function PartnersCarousel() {
       className="partner-strip"
       aria-label="Partners and Sponsors"
     >
-      {/* Neo-brutalist kicker chip centered directly on the top border line */}
+      {/* Pill kicker badge centered directly on the top border line */}
       <div className="partner-strip-label">
-        <span className="neo-kicker">
-          PARTNERS &amp; SPONSORS
+        <span className="inline-flex items-center gap-2 rounded-full border border-neutral-300 bg-white px-4 py-1.5 text-xs font-medium uppercase tracking-[0.1em] text-neutral-700 select-none pointer-events-auto shadow-xs dark:border-neutral-700 dark:bg-zinc-900 dark:text-neutral-300">
+          <LogoMark className="size-4 shrink-0" aria-hidden="true" />
+          Partner &amp; Sponsor
         </span>
       </div>
 
