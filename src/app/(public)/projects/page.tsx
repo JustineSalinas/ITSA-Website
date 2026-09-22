@@ -5,8 +5,23 @@ import { ProjectsClient } from "@/components/projects/projects-client";
 import { siteConfig } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Projects",
-  description: `Student projects and portfolios by ${siteConfig.name} members.`,
+  title: "Student Projects & Portfolios",
+  description: `Explore student projects, games, web applications, and innovations built by ${siteConfig.fullName} (${siteConfig.name}) members at ${siteConfig.school}.`,
+  alternates: {
+    canonical: "/projects",
+  },
+  openGraph: {
+    title: `Student Projects — ${siteConfig.name}`,
+    description: `Software, games, and web apps built by IT students at ${siteConfig.school}.`,
+    url: "/projects",
+    siteName: siteConfig.name,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Student Projects — ${siteConfig.name}`,
+    description: `Software, games, and web apps built by IT students at ${siteConfig.school}.`,
+  },
 };
 
 export default async function ProjectsPage() {

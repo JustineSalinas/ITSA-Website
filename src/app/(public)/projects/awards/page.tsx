@@ -8,16 +8,31 @@ import { ArrowLeft } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Award-Winning Projects",
-  description: `Exceptional, award-winning student projects from ${siteConfig.name}.`,
+  description: `Exceptional, award-winning student projects from ${siteConfig.name} at ${siteConfig.school}.`,
+  alternates: {
+    canonical: "/projects/awards",
+  },
+  openGraph: {
+    title: `Award-Winning Projects — ${siteConfig.name}`,
+    description: `Award-winning engineering, game development, and open-source projects built by ITSA members.`,
+    url: "/projects/awards",
+    siteName: siteConfig.name,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Award-Winning Projects — ${siteConfig.name}`,
+    description: `Award-winning engineering and games built by ITSA members.`,
+  },
 };
 
 export default async function AwardsPage() {
   const projects = await getProjects();
-  
+
   // Filter for award winners
-  const awardProjects = projects.filter(project => 
-    project.tags.some(tag => 
-      tag.toLowerCase().includes('winner') || 
+  const awardProjects = projects.filter(project =>
+    project.tags.some(tag =>
+      tag.toLowerCase().includes('winner') ||
       tag.toLowerCase().includes('award') ||
       tag.toLowerCase().includes('prize')
     )

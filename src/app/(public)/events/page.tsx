@@ -6,8 +6,23 @@ import { EventsClient } from "@/components/events/events-client";
 import { siteConfig } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Events",
-  description: `Upcoming and past events hosted by ${siteConfig.name} — workshops, competitions, hackathons, and community gatherings.`,
+  title: "Events & Workshops",
+  description: `Upcoming and past events hosted by ${siteConfig.name} — workshops, competitions, hackathons, and tech summits at ${siteConfig.school}.`,
+  alternates: {
+    canonical: "/events",
+  },
+  openGraph: {
+    title: `Events & Workshops — ${siteConfig.name}`,
+    description: `Workshops, competitions, hackathons, and tech summits hosted by ${siteConfig.fullName} at ${siteConfig.school}.`,
+    url: "/events",
+    siteName: siteConfig.name,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Events & Workshops — ${siteConfig.name}`,
+    description: `Upcoming and past events hosted by ${siteConfig.name} at ${siteConfig.school}.`,
+  },
 };
 
 export default async function EventsPage() {

@@ -7,8 +7,23 @@ import { siteConfig } from "@/data/site";
 import { joinPageFaqs } from "@/data/faq";
 
 export const metadata: Metadata = {
-  title: "Join",
-  description: `Become a member of ${siteConfig.name} or get in touch with the ${siteConfig.fullName}.`,
+  title: "Join & Contact",
+  description: `Become a member of ${siteConfig.name} or get in touch with the ${siteConfig.fullName} at ${siteConfig.school}.`,
+  alternates: {
+    canonical: "/join",
+  },
+  openGraph: {
+    title: `Join & Contact — ${siteConfig.name}`,
+    description: `Join ${siteConfig.fullName} or get in touch with our team at ${siteConfig.school}.`,
+    url: "/join",
+    siteName: siteConfig.name,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Join & Contact — ${siteConfig.name}`,
+    description: `Join ${siteConfig.fullName} or reach out to our executive directorate.`,
+  },
 };
 
 export default function JoinPage() {
