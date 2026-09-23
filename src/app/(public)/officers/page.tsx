@@ -7,8 +7,23 @@ import { OrgChart } from "@/components/officers/org-chart";
 import { siteConfig } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: "Officers",
-  description: `Meet the student leaders who guide ${siteConfig.name} this academic year.`,
+  title: "Executive Officers & Leadership",
+  description: `Meet the student leaders, developers, and designers guiding ${siteConfig.fullName} (${siteConfig.name}) at ${siteConfig.school}.`,
+  alternates: {
+    canonical: "/officers",
+  },
+  openGraph: {
+    title: `Executive Officers — ${siteConfig.name}`,
+    description: `Meet the student leaders guiding ${siteConfig.fullName} at ${siteConfig.school}.`,
+    url: "/officers",
+    siteName: siteConfig.name,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Executive Officers — ${siteConfig.name}`,
+    description: `Meet the student leaders guiding ${siteConfig.fullName} at ${siteConfig.school}.`,
+  },
 };
 
 export default async function OfficersPage() {

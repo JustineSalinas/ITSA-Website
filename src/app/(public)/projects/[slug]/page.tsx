@@ -24,7 +24,27 @@ export async function generateMetadata({
   const project = await getProjectBySlug(slug);
 
   if (!project) return { title: "Not Found" };
-  return { title: project.title, description: project.description };
+  const ogImages = project.imageUrl ? [{ url: project.imageUrl }] : undefined;
+  return {
+    title: project.title,
+    description: project.description.slice(0, 160),
+    alternates: {
+      canonical: `/projects/${slug}`,
+    },
+    openGraph: {
+      title: `${project.title} — ITSA Project Showcase`,
+      description: project.description.slice(0, 160),
+      url: `/projects/${slug}`,
+      type: "article",
+      images: ogImages,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} — ITSA Project Showcase`,
+      description: project.description.slice(0, 160),
+      images: project.imageUrl ? [project.imageUrl] : undefined,
+    },
+  };
 }
 
 export default async function ProjectDetailPage({
@@ -46,7 +66,7 @@ export default async function ProjectDetailPage({
     <FadeIn as="article" className="pb-16 md:pb-24 lg:pb-32 pt-12 md:pt-20">
       {/* Premium Centered Header */}
       <header className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center mb-16 md:mb-24">
-        
+
         <div className="mb-10">
           <Button variant="outline" className="gap-2 rounded-full font-mono text-xs font-semibold transition-colors hover:bg-primary/5" render={<Link href="/projects" />}>
             <ArrowLeft className="size-3.5" /> BACK TO PROJECTS
@@ -64,7 +84,7 @@ export default async function ProjectDetailPage({
         <h1 className="text-4xl font-black tracking-tighter sm:text-5xl md:text-6xl lg:text-[5.5rem] text-foreground text-balance mb-8">
           {project.title}
         </h1>
-        
+
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 mb-10">
           <div className="flex items-center justify-center gap-3">
             <div className="size-8 rounded-full bg-brand/10 text-brand grid place-items-center shrink-0">
@@ -106,9 +126,9 @@ export default async function ProjectDetailPage({
 
         <div className="flex flex-wrap items-center justify-center gap-4 w-full sm:w-auto">
           {project.liveUrl && (
-            <Button 
+            <Button
               size="lg"
-              className="gap-2 group rounded-full px-8 w-full sm:w-auto text-base h-12" 
+              className="gap-2 group rounded-full px-8 w-full sm:w-auto text-base h-12"
               render={<a href={project.liveUrl} target="_blank" rel="noreferrer" />}
             >
               Live Preview
@@ -116,10 +136,10 @@ export default async function ProjectDetailPage({
             </Button>
           )}
           {project.githubUrl && (
-            <Button 
+            <Button
               size="lg"
-              variant="outline" 
-              className="gap-2 group bg-card rounded-full px-8 w-full sm:w-auto border-border/80 shadow-sm text-base h-12" 
+              variant="outline"
+              className="gap-2 group bg-card rounded-full px-8 w-full sm:w-auto border-border/80 shadow-sm text-base h-12"
               render={<a href={project.githubUrl} target="_blank" rel="noreferrer" />}
             >
               Source Code
@@ -192,7 +212,7 @@ export default async function ProjectDetailPage({
                   {section.title}
                 </h2>
               )}
-              
+
               {section.content && (
                 <div className="flex flex-col gap-4">
                   {section.content.split('\n\n').map((paragraph, pIndex) => (

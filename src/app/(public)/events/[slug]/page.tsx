@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CalendarDays, Clock, MapPin, Sparkles, CheckCircle2, Ticket, Share2, Building2 } from "lucide-react";
+import { ArrowLeft, CalendarDays, Clock, MapPin, CheckCircle2, Ticket, Building2 } from "lucide-react";
 import { getEventBySlug, getEvents } from "@/lib/data";
 import { formatEventDate, formatEventTime, isUpcoming } from "@/lib/format";
 import { Button } from "@/components/ui/button";
@@ -15,9 +15,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const event = await getEventBySlug(slug);
   if (!event) return { title: "Event not found" };
+  const ogImages = event.imageUrl ? [{ url: event.imageUrl }] : undefined;
   return {
     title: event.title,
     description: event.description.slice(0, 160),
+    alternates: {
+      canonical: `/events/${slug}`,
+    },
+    openGraph: {
+      title: `${event.title} — ITSA`,
+      description: event.description.slice(0, 160),
+      url: `/events/${slug}`,
+      type: "article",
+      images: ogImages,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${event.title} — ITSA`,
+      description: event.description.slice(0, 160),
+      images: event.imageUrl ? [event.imageUrl] : undefined,
+    },
   };
 }
 

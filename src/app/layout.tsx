@@ -28,6 +28,27 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
+  applicationName: siteConfig.name,
+  authors: [{ name: `${siteConfig.name} Executive Directorate`, url: siteConfig.url }],
+  creator: siteConfig.fullName,
+  publisher: siteConfig.fullName,
+  keywords: [
+    "ITSA",
+    "Information Technology Student Association",
+    "University of San Agustin",
+    "USA Iloilo",
+    "ITSA USA",
+    "Information Technology",
+    "Computer Science",
+    "Tech Student Organization",
+    "Software Engineering",
+    "Iloilo Tech Community",
+    "Student Developers",
+    "Hackathons Philippines",
+  ],
+  alternates: {
+    canonical: "/",
+  },
   icons: {
     icon: [
       { url: "/logo.png", type: "image/png" },
@@ -38,9 +59,63 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${siteConfig.name} — ${siteConfig.fullName}`,
     description: siteConfig.description,
-    siteName: siteConfig.name,
+    url: siteConfig.url,
+    siteName: `${siteConfig.name} — ${siteConfig.school}`,
+    locale: "en_PH",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${siteConfig.name} — ${siteConfig.fullName} at ${siteConfig.school}`,
+      },
+    ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} — ${siteConfig.fullName}`,
+    description: siteConfig.description,
+    images: ["/og-image.png"],
+    creator: "@itsa_usa",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: siteConfig.fullName,
+  alternateName: siteConfig.name,
+  url: siteConfig.url,
+  logo: `${siteConfig.url}/logo.png`,
+  description: siteConfig.description,
+  parentOrganization: {
+    "@type": "CollegeOrUniversity",
+    name: siteConfig.school,
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: siteConfig.location,
+    addressCountry: "PH",
+  },
+  email: siteConfig.contactEmail,
+  sameAs: [
+    siteConfig.socials.facebook,
+    siteConfig.socials.github,
+    siteConfig.socials.instagram,
+    siteConfig.socials.twitter,
+  ].filter(Boolean),
 };
 
 export default function RootLayout({
@@ -54,6 +129,12 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${display.variable} antialiased`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+      </head>
       <body className="overflow-x-hidden">
         <ThemeProvider
           attribute="class"

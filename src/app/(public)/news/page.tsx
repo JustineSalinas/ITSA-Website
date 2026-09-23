@@ -13,8 +13,23 @@ import { siteConfig } from "@/data/site";
 import { NewsMediaGallery } from "@/components/news/news-media-gallery";
 
 export const metadata: Metadata = {
-  title: "Latest News",
-  description: `Official news, workshop updates, and announcements from ${siteConfig.fullName} (${siteConfig.name}).`,
+  title: "Official News & Dispatches",
+  description: `Stay informed with official announcements, workshop registrations, student milestones, and community news from ${siteConfig.fullName} (${siteConfig.name}) at ${siteConfig.school}.`,
+  alternates: {
+    canonical: "/news",
+  },
+  openGraph: {
+    title: `Official News & Dispatches — ${siteConfig.name}`,
+    description: `Official announcements, hackathon recaps, and student milestones from ${siteConfig.fullName}.`,
+    url: "/news",
+    siteName: siteConfig.name,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `Official News & Dispatches — ${siteConfig.name}`,
+    description: `Official announcements, hackathon recaps, and student milestones from ${siteConfig.fullName} at ${siteConfig.school}.`,
+  },
 };
 
 export default async function NewsPage() {
