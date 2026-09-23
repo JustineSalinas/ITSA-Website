@@ -1,12 +1,12 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { getNews } from "@/lib/data";
+
 import { PageHeader } from "@/components/layout/page-header";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/data/site";
-import { NewsClient } from "@/components/news/news-client";
+import { NewsTimeline } from "@/components/news/news-timeline";
 
 export const metadata: Metadata = {
   title: "Official News & Dispatches",
@@ -57,10 +57,7 @@ export default async function NewsPage() {
           </span>
         </div>
 
-        {/* Search Engine & News List */}
-        <Suspense fallback={<div className="h-64 animate-pulse rounded-2xl bg-muted/30" />}>
-          <NewsClient news={news} />
-        </Suspense>
+        <NewsTimeline news={news} />
       </section>
     </>
   );

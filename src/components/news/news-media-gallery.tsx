@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { ChevronLeft, ChevronRight, Expand, Pause, Play } from "lucide-react";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { PhotoLightbox } from "./photo-lightbox";
 
 
 interface NewsMediaGalleryProps {
@@ -27,6 +28,8 @@ export function NewsMediaGallery({
   const [isHovered, setIsHovered] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [direction, setDirection] = useState(1); // 1 = right, -1 = left
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const openerRef = useRef<HTMLButtonElement | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
   const total = validImages.length;
@@ -45,8 +48,10 @@ export function NewsMediaGallery({
   // control below is the mechanism touch and keyboard visitors rely on.
   // Reduced motion stops the slideshow outright -- a setInterval is not a CSS
   // animation, so the global prefers-reduced-motion rules cannot reach it.
+  // The lightbox pauses it too: advancing behind an open viewer would move the
+  // visitor's place out from under them.
   const isPlaying =
-    total > 1 && !isHovered && !isPaused && !prefersReducedMotion;
+    total > 1 && !isHovered && !isPaused && !lightboxOpen && !prefersReducedMotion;
 
   useEffect(() => {
     if (!isPlaying) return;
@@ -61,18 +66,39 @@ export function NewsMediaGallery({
   // Single Image Display
   if (total === 1) {
     return (
-      <div
-        className={`relative overflow-hidden rounded-xl bg-muted/40 ${aspectRatio} ${className}`}
-      >
-        <Image
-          src={validImages[0]}
+      <>
+        <button
+          type="button"
+          ref={openerRef}
+          onClick={() => setLightboxOpen(true)}
+          aria-label={`View photo larger: ${alt}`}
+          className={`group/photo relative block w-full cursor-zoom-in overflow-hidden rounded-xl bg-muted/40 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 ${aspectRatio} ${className}`}
+        >
+          <Image
+            src={validImages[0]}
+            alt={alt}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute bottom-2.5 right-2.5 grid size-7 place-items-center rounded-full bg-black/60 text-white/90 opacity-0 backdrop-blur-md transition-opacity duration-200 group-hover/photo:opacity-100 group-focus-visible/photo:opacity-100"
+          >
+            <Expand className="size-3.5" />
+          </span>
+        </button>
+
+        <PhotoLightbox
+          images={validImages}
           alt={alt}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          open={lightboxOpen}
+          onOpenChange={setLightboxOpen}
+          startIndex={0}
+          finalFocus={openerRef}
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      </div>
+      </>
     );
   }
 
@@ -114,6 +140,27 @@ export function NewsMediaGallery({
 
       {/* Subtle overlay gradient */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
+
+      {/*
+        The photo itself opens the lightbox. It is a sibling of the arrows and
+        dots rather than a wrapper around them -- a button cannot legally
+        contain other buttons -- and sits below their z-10 so those controls
+        keep their own clicks.
+      */}
+      <button
+        type="button"
+        ref={openerRef}
+        onClick={() => setLightboxOpen(true)}
+        aria-label={`View photo ${currentIndex + 1} of ${total} larger: ${alt}`}
+        className="absolute inset-0 z-0 cursor-zoom-in outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-white/70"
+      >
+        <span
+          aria-hidden="true"
+          className={`absolute bottom-2.5 right-2.5 grid size-7 place-items-center rounded-full bg-black/60 text-white/90 backdrop-blur-md transition-opacity duration-200 ${controlVisibility}`}
+        >
+          <Expand className="size-3.5" />
+        </span>
+      </button>
 
       {/* Photo count, and the pause control when the slideshow can run */}
       <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1.5">
@@ -197,6 +244,15 @@ export function NewsMediaGallery({
           />
         ))}
       </div>
+
+      <PhotoLightbox
+        images={validImages}
+        alt={alt}
+        open={lightboxOpen}
+        onOpenChange={setLightboxOpen}
+        startIndex={currentIndex}
+        finalFocus={openerRef}
+      />
     </div>
   );
 }
