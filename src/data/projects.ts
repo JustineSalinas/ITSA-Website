@@ -246,7 +246,15 @@ export const projects: ProjectItem[] = [
 ];
 
 export async function getProjects(): Promise<ProjectItem[]> {
-  // Simulate network delay
+  // Sanity is the intended long-term home for projects (ITSA-WEB-PMP-001,
+  // S2) -- checked first. This array was never backed by a real database at
+  // all (no Firestore path existed here, just this hardcoded list with a
+  // fake delay), so it stays as the last-resort fallback rather than being
+  // deleted outright.
+  const { getSanityProjects } = await import("@/sanity/lib/projects");
+  const sanityProjects = await getSanityProjects();
+  if (sanityProjects && sanityProjects.length) return sanityProjects;
+
   return new Promise((resolve) => {
     setTimeout(() => resolve(projects), 100);
   });
