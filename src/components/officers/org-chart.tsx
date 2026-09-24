@@ -277,7 +277,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
                                   node={lead}
                                   group={dept.name}
                                   onSelect={setSelected}
-                                  className="rounded-md"
+                                  className="flex min-h-11 flex-col justify-center rounded-md"
                                 >
                                   <span className="block text-sm font-bold hover:text-primary">
                                     {lead.name}
@@ -295,7 +295,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
                                           node={sub}
                                           group={dept.name}
                                           onSelect={setSelected}
-                                          className="rounded-md text-xs"
+                                          className="flex min-h-11 flex-col justify-center rounded-md text-xs"
                                         >
                                           <span className="font-semibold text-foreground hover:text-primary">
                                             {sub.name}
