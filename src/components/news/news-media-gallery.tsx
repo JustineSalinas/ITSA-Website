@@ -179,13 +179,17 @@ export function NewsMediaGallery({
               setIsPaused((prev) => !prev);
             }}
             aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
-            className="grid size-6 place-items-center rounded-full bg-black/60 text-white/90 backdrop-blur-md transition-all duration-200 hover:bg-black/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            /* 44px hit area, small visible circle: the button stays thumb-sized
+               without putting a heavy black disc over the photo. */
+            className="grid size-11 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
-            {isPaused ? (
-              <Play className="size-3" aria-hidden="true" />
-            ) : (
-              <Pause className="size-3" aria-hidden="true" />
-            )}
+            <span className="grid size-7 place-items-center rounded-full bg-black/60 text-white/90 backdrop-blur-md transition-colors duration-200 group-hover/slider:bg-black/70">
+              {isPaused ? (
+                <Play className="size-3.5" aria-hidden="true" />
+              ) : (
+                <Pause className="size-3.5" aria-hidden="true" />
+              )}
+            </span>
           </button>
         )}
         <div className="flex items-center rounded-full bg-black/60 px-2 py-0.5 font-mono text-[10px] font-semibold text-white/90 backdrop-blur-md">
@@ -205,9 +209,11 @@ export function NewsMediaGallery({
           prevSlide();
         }}
         aria-label="Previous photo"
-        className={`absolute left-2 top-1/2 z-10 -translate-y-1/2 grid size-7 place-items-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/80 hover:scale-110 ${controlVisibility}`}
+        className={`absolute left-0 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full ${controlVisibility}`}
       >
-        <ChevronLeft className="size-4" aria-hidden="true" />
+        <span className="grid size-8 place-items-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-200 group-hover/slider:bg-black/70">
+          <ChevronLeft className="size-4" aria-hidden="true" />
+        </span>
       </button>
 
       <button
@@ -218,13 +224,20 @@ export function NewsMediaGallery({
           nextSlide();
         }}
         aria-label="Next photo"
-        className={`absolute right-2 top-1/2 z-10 -translate-y-1/2 grid size-7 place-items-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-200 hover:bg-black/80 hover:scale-110 ${controlVisibility}`}
+        className={`absolute right-0 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full ${controlVisibility}`}
       >
-        <ChevronRight className="size-4" aria-hidden="true" />
+        <span className="grid size-8 place-items-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-200 group-hover/slider:bg-black/70">
+          <ChevronRight className="size-4" aria-hidden="true" />
+        </span>
       </button>
 
-      {/* Slide Indicator Dots */}
-      <div className="absolute bottom-2.5 inset-x-0 z-10 flex items-center justify-center gap-1.5">
+      {/*
+        Slide Indicator Dots. The dot itself stays small, but each button is a
+        44px-tall strip so a thumb can land on it; the strip is 28px wide
+        rather than 44 so a gallery of ten photos still fits a 360px screen
+        (that width still clears the 24px WCAG target-size floor).
+      */}
+      <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-center">
         {validImages.map((_, dotIdx) => (
           <button
             key={dotIdx}
@@ -236,12 +249,17 @@ export function NewsMediaGallery({
               setCurrentIndex(dotIdx);
             }}
             aria-label={`Go to slide ${dotIdx + 1}`}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              dotIdx === currentIndex
-                ? "w-5 bg-white shadow-xs"
-                : "w-1.5 bg-white/40 hover:bg-white/70"
-            }`}
-          />
+            className="grid h-11 w-7 place-items-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+          >
+            <span
+              aria-hidden="true"
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                dotIdx === currentIndex
+                  ? "w-5 bg-white shadow-xs"
+                  : "w-1.5 bg-white/40 group-hover/slider:bg-white/70"
+              }`}
+            />
+          </button>
         ))}
       </div>
 
