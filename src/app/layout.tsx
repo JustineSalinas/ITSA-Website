@@ -50,11 +50,12 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   icons: {
-    icon: [
-      { url: "/logo.png", type: "image/png" },
-      { url: "/logo.svg", type: "image/svg+xml" },
-    ],
-    apple: [{ url: "/logo.png" }],
+    // Browsers fetch these directly, never through next/image, so they need
+    // to already be the right size -- unlike the on-page <Logo> component,
+    // which already renders efficiently through next/image regardless of
+    // the source file's size.
+    icon: [{ url: "/favicon-32.png", type: "image/png", sizes: "32x32" }],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
   },
   openGraph: {
     title: `${siteConfig.name} — ${siteConfig.fullName}`,
