@@ -2,8 +2,15 @@ import "server-only";
 import { NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/auth/session";
 import { getAdminDb } from "@/lib/firebase/admin";
+import { checkRateLimit } from "@/lib/rate-limit";
 
 const VALID_STATUSES = new Set(["new", "contacted", "accepted"]);
+
+// Generous -- this exists to cap a compromised session, not to slow down
+// normal review work. Keyed on the admin's uid rather than IP: multiple
+// admins on one office network should not rate-limit each other, and a
+// stolen session should stay capped even if the attacker's IP changes.
+const LIMIT = { limit: 60, windowSeconds: 5 * 60 };
 
 /**
  * Updates an application's review status.
@@ -19,6 +26,24 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
   const session = await getAdminSession();
   if (!session) {
     return NextResponse.json({ error: "Not signed in." }, { status: 401 });
+  }
+
+  try {
+    const limit = await checkRateLimit({
+      ip: session.uid,
+      bucket: "admin-applications-patch",
+      ...LIMIT,
+    });
+    if (!limit.allowed) {
+      return NextResponse.json(
+        { error: "Too many updates. Please slow down." },
+        { status: 429, headers: { "Retry-After": String(limit.retryAfterSeconds) } },
+      );
+    }
+  } catch (err) {
+    // Fail closed, same policy as the public contact form's limiter.
+    console.error("[admin/applications] rate limit check failed:", err);
+    return NextResponse.json({ error: "Failed to update." }, { status: 503 });
   }
 
   const { id } = await params;
