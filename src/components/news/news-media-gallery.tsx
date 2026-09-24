@@ -163,7 +163,7 @@ export function NewsMediaGallery({
       </button>
 
       {/* Photo count, and the pause control when the slideshow can run */}
-      <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1.5">
+      <div className="pointer-events-none absolute top-2.5 right-2.5 z-10 flex items-center gap-1.5">
         {/*
           The label names the action the button performs, the way native media
           controls do. Deliberately no aria-pressed alongside it: a changing
@@ -181,7 +181,7 @@ export function NewsMediaGallery({
             aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
             /* 44px hit area, small visible circle: the button stays thumb-sized
                without putting a heavy black disc over the photo. */
-            className="grid size-11 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="pointer-events-auto grid size-11 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             <span className="grid size-7 place-items-center rounded-full bg-black/60 text-white/90 backdrop-blur-md transition-colors duration-200 group-hover/slider:bg-black/70">
               {isPaused ? (
@@ -237,7 +237,7 @@ export function NewsMediaGallery({
         rather than 44 so a gallery of ten photos still fits a 360px screen
         (that width still clears the 24px WCAG target-size floor).
       */}
-      <div className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-center">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-center justify-center">
         {validImages.map((_, dotIdx) => (
           <button
             key={dotIdx}
@@ -249,7 +249,7 @@ export function NewsMediaGallery({
               setCurrentIndex(dotIdx);
             }}
             aria-label={`Go to slide ${dotIdx + 1}`}
-            className="grid h-11 w-7 place-items-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="pointer-events-auto grid h-11 w-7 place-items-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             <span
               aria-hidden="true"
