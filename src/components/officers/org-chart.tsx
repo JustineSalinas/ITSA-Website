@@ -108,20 +108,22 @@ export function OrgChart({ root }: { root: OrgNode }) {
               onSelect={setSelected}
               className="block rounded-2xl"
             >
-              <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-card p-7 shadow-sm backdrop-blur-md transition-colors hover:border-primary/40">
-                <div className="flex items-center gap-5">
-                  <span className="grid size-16 shrink-0 place-items-center rounded-xl bg-secondary text-base font-bold text-foreground">
-                    {initials(adviser.name)}
+              {/* Only spans inside: a button may not legally contain block
+                  elements such as div, h3 or p. */}
+              <span className="relative flex items-center gap-5 overflow-hidden rounded-2xl border border-border/80 bg-card p-7 shadow-sm backdrop-blur-md transition-colors hover:border-primary/40">
+                <span className="grid size-16 shrink-0 place-items-center rounded-xl bg-secondary text-base font-bold text-foreground">
+                  {initials(adviser.name)}
+                </span>
+                <span className="min-w-0">
+                  <span className="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 font-mono text-xs font-bold uppercase tracking-wider text-primary">
+                    Faculty Adviser
                   </span>
-                  <div className="min-w-0">
-                    <span className="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 font-mono text-xs font-bold uppercase tracking-wider text-primary">
-                      Faculty Adviser
-                    </span>
-                    <h3 className="mt-1.5 text-xl font-extrabold tracking-tight">{adviser.name}</h3>
-                    <p className="text-sm text-muted-foreground">IT Department Adviser</p>
-                  </div>
-                </div>
-              </div>
+                  <span className="mt-1.5 block text-xl font-extrabold tracking-tight">
+                    {adviser.name}
+                  </span>
+                  <span className="block text-sm text-muted-foreground">IT Department Adviser</span>
+                </span>
+              </span>
             </PersonButton>
           </li>
 
@@ -133,20 +135,20 @@ export function OrgChart({ root }: { root: OrgNode }) {
                 onSelect={setSelected}
                 className="block rounded-2xl"
               >
-                <div className="relative overflow-hidden rounded-2xl border border-primary/40 bg-gradient-to-br from-primary/10 via-card/90 to-card p-7 shadow-sm backdrop-blur-md transition-colors hover:border-primary/60">
-                  <div className="flex items-center gap-5">
-                    <span className="grid size-16 shrink-0 place-items-center rounded-xl bg-primary text-base font-bold text-primary-foreground shadow-sm">
-                      {initials(chairman.name)}
+                <span className="relative flex items-center gap-5 overflow-hidden rounded-2xl border border-primary/40 bg-gradient-to-br from-primary/10 via-card/90 to-card p-7 shadow-sm backdrop-blur-md transition-colors hover:border-primary/60">
+                  <span className="grid size-16 shrink-0 place-items-center rounded-xl bg-primary text-base font-bold text-primary-foreground shadow-sm">
+                    {initials(chairman.name)}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="inline-block rounded-full bg-primary/15 px-2.5 py-0.5 font-mono text-xs font-bold uppercase tracking-wider text-primary">
+                      Executive Chairman
                     </span>
-                    <div className="min-w-0">
-                      <span className="inline-block rounded-full bg-primary/15 px-2.5 py-0.5 font-mono text-xs font-bold uppercase tracking-wider text-primary">
-                        Executive Chairman
-                      </span>
-                      <h3 className="mt-1.5 text-xl font-extrabold tracking-tight">{chairman.name}</h3>
-                      <p className="text-sm text-muted-foreground">Head of Association</p>
-                    </div>
-                  </div>
-                </div>
+                    <span className="mt-1.5 block text-xl font-extrabold tracking-tight">
+                      {chairman.name}
+                    </span>
+                    <span className="block text-sm text-muted-foreground">Head of Association</span>
+                  </span>
+                </span>
               </PersonButton>
             </li>
           )}
