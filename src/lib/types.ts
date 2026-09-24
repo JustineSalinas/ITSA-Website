@@ -33,6 +33,22 @@ export type EventItem = {
   imageUrl: string;
 };
 
+/** Status D5's review queue moves an application through. */
+export type ApplicationStatus = "new" | "contacted" | "accepted";
+
+export type Application = {
+  id: string;
+  name: string;
+  email: string;
+  studentId?: string | null;
+  yearLevel?: string | null;
+  interest: string;
+  message: string;
+  status: ApplicationStatus;
+  /** ISO 8601 string */
+  createdAt: string;
+};
+
 export type NewsItem = {
   id: string;
   title: string;
