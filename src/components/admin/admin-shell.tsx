@@ -9,6 +9,7 @@ import {
   CalendarDays,
   LayoutDashboard,
   LogOut,
+  Mail,
   Users,
   Loader2,
   ExternalLink,
@@ -23,6 +24,7 @@ const adminNav = [
   { href: "/admin", label: "Dashboard", Icon: LayoutDashboard },
   { href: "/admin/events", label: "Events", Icon: CalendarDays },
   { href: "/admin/officers", label: "Officers", Icon: Users },
+  { href: "/admin/applications", label: "Enquiries", Icon: Mail },
 ];
 
 /** Wraps admin dashboard pages: enforces auth and renders the nav shell. */
