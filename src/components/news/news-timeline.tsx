@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { Calendar, ChevronDown, Newspaper, User } from "lucide-react";
 import type { NewsItem } from "@/lib/types";
@@ -44,20 +44,25 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
   );
 
   // An article linked from elsewhere (/news#slug) has to be on screen and
-  // already open, however deep in the list it sits. Done during render so the
-  // browser can reach the anchor on the first paint.
-  const [hashHandled, setHashHandled] = useState(false);
-  if (!hashHandled && typeof window !== "undefined") {
-    setHashHandled(true);
+  // already open, however deep in the list it sits.
+  //
+  // This runs after mount, not during render: location.hash exists only in the
+  // browser, so opening the entry while hydrating would make the client's first
+  // render disagree with the server HTML. The eslint rule below guards against
+  // cascading renders, which is not what this is -- it fires once, from a value
+  // that cannot be read on the server.
+  useEffect(() => {
     const slug = window.location.hash.slice(1);
-    if (slug) {
-      const position = sorted.findIndex((item) => item.slug === slug);
-      if (position >= 0) {
-        setOpenIds(new Set([sorted[position].id]));
-        if (position >= visibleCount) setVisibleCount(position + 1);
-      }
-    }
-  }
+    if (!slug) return;
+    const position = sorted.findIndex((item) => item.slug === slug);
+    if (position < 0) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setOpenIds(new Set([sorted[position].id]));
+    if (position >= PAGE_SIZE) setVisibleCount(position + 1);
+    // The browser jumps to the anchor before the entry exists, so re-aim once
+    // it is on screen.
+    document.getElementById(slug)?.scrollIntoView({ block: "start" });
+  }, [sorted]);
 
   const filtered = category === "all" ? sorted : sorted.filter((i) => i.category === category);
   const visible = filtered.slice(0, visibleCount);

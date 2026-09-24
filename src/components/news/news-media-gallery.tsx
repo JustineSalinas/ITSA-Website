@@ -152,11 +152,11 @@ export function NewsMediaGallery({
         ref={openerRef}
         onClick={() => setLightboxOpen(true)}
         aria-label={`View photo ${currentIndex + 1} of ${total} larger: ${alt}`}
-        className="absolute inset-0 z-0 cursor-zoom-in outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-white/70"
+        className="group/photo absolute inset-0 z-0 cursor-zoom-in outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-white/70"
       >
         <span
           aria-hidden="true"
-          className={`absolute bottom-2.5 right-2.5 grid size-7 place-items-center rounded-full bg-black/60 text-white/90 backdrop-blur-md transition-opacity duration-200 ${controlVisibility}`}
+          className={`absolute bottom-2.5 right-2.5 grid size-7 place-items-center rounded-full bg-black/60 text-white/90 backdrop-blur-md transition-opacity duration-200 group-focus-visible/photo:opacity-100 ${controlVisibility}`}
         >
           <Expand className="size-3.5" />
         </span>
@@ -181,9 +181,9 @@ export function NewsMediaGallery({
             aria-label={isPaused ? "Play slideshow" : "Pause slideshow"}
             /* 44px hit area, small visible circle: the button stays thumb-sized
                without putting a heavy black disc over the photo. */
-            className="pointer-events-auto grid size-11 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="group/pause pointer-events-auto grid size-11 place-items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
-            <span className="grid size-7 place-items-center rounded-full bg-black/60 text-white/90 backdrop-blur-md transition-colors duration-200 group-hover/slider:bg-black/70">
+            <span className="grid size-7 place-items-center rounded-full bg-black/60 text-white/90 backdrop-blur-md transition-colors duration-200 group-hover/pause:bg-black/80">
               {isPaused ? (
                 <Play className="size-3.5" aria-hidden="true" />
               ) : (
@@ -209,9 +209,9 @@ export function NewsMediaGallery({
           prevSlide();
         }}
         aria-label="Previous photo"
-        className={`absolute left-0 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full ${controlVisibility}`}
+        className={`group/arrow absolute left-0 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full ${controlVisibility}`}
       >
-        <span className="grid size-8 place-items-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-200 group-hover/slider:bg-black/70">
+        <span className="grid size-8 place-items-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-200 group-hover/arrow:bg-black/80 group-focus-visible/arrow:bg-black/80">
           <ChevronLeft className="size-4" aria-hidden="true" />
         </span>
       </button>
@@ -224,9 +224,9 @@ export function NewsMediaGallery({
           nextSlide();
         }}
         aria-label="Next photo"
-        className={`absolute right-0 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full ${controlVisibility}`}
+        className={`group/arrow absolute right-0 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full ${controlVisibility}`}
       >
-        <span className="grid size-8 place-items-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-200 group-hover/slider:bg-black/70">
+        <span className="grid size-8 place-items-center rounded-full bg-black/50 text-white backdrop-blur-md transition-all duration-200 group-hover/arrow:bg-black/80 group-focus-visible/arrow:bg-black/80">
           <ChevronRight className="size-4" aria-hidden="true" />
         </span>
       </button>
@@ -249,14 +249,14 @@ export function NewsMediaGallery({
               setCurrentIndex(dotIdx);
             }}
             aria-label={`Go to slide ${dotIdx + 1}`}
-            className="pointer-events-auto grid h-11 w-7 place-items-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            className="group/dot pointer-events-auto grid h-11 w-7 place-items-center rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
             <span
               aria-hidden="true"
               className={`h-1.5 rounded-full transition-all duration-300 ${
                 dotIdx === currentIndex
                   ? "w-5 bg-white shadow-xs"
-                  : "w-1.5 bg-white/40 group-hover/slider:bg-white/70"
+                  : "w-1.5 bg-white/40 group-hover/dot:bg-white/70 group-focus-visible/dot:bg-white/70"
               }`}
             />
           </button>
