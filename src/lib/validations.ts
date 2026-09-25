@@ -51,6 +51,17 @@ const imageUrl = z
     { message: "Upload the image to ITSA storage and use that link." },
   );
 
+/**
+ * Sub-folders of `media/` an upload may target. An allowlist rather than a free
+ * string: the folder becomes part of the storage path, so it must never be able
+ * to carry `..` or an arbitrary prefix.
+ */
+export const UPLOAD_FOLDERS = ["officers", "events", "news", "projects", "misc"] as const;
+
+export const uploadFolderSchema = z.enum(UPLOAD_FOLDERS).default("misc");
+
+export type UploadFolder = z.infer<typeof uploadFolderSchema>;
+
 export const contactSchema = z.object({
   name: z
     .string()
