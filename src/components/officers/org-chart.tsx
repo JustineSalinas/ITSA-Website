@@ -100,8 +100,8 @@ export function OrgChart({ root }: { root: OrgNode }) {
 
   const departments = [
     { name: "Department of Technology", code: "TECH", vp: execMembers.find((m) => m.position.includes("Technology")) },
-    { name: "Department of Communications", code: "COMMS", vp: execMembers.find((m) => m.position.includes("Communications")) },
-    { name: "Department of Operations", code: "OPS", vp: execMembers.find((m) => m.position.includes("Operations")) },
+    { name: "Department of Communications", code: "COMMS", vp: execMembers.find((m) => m.position.includes("Communication")) },
+    { name: "Department of Operations", code: "OPS", vp: execMembers.find((m) => m.position.includes("Operation")) },
     { name: "Department of Finance", code: "FINANCE", vp: execMembers.find((m) => m.position.includes("Finance")) },
   ];
 
