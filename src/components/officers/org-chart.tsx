@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import type { OrgNode } from "@/lib/types";
 import { initials } from "@/lib/format";
@@ -15,7 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
-type Selected = { name: string; position: string; group: string };
+type Selected = { name: string; position: string; group: string; photoUrl?: string };
 
 /** A person card that opens the detail panel. */
 function PersonButton({
@@ -34,12 +35,40 @@ function PersonButton({
   return (
     <button
       type="button"
-      onClick={() => onSelect({ name: node.name, position: node.position, group })}
+      onClick={() => onSelect({ name: node.name, position: node.position, group, photoUrl: node.photoUrl })}
       aria-label={`${node.name}, ${node.position}. View details`}
       className={`w-full text-left outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50 ${className}`}
     >
       {children}
     </button>
+  );
+}
+
+/** Photo when the node has one, initials fallback otherwise -- same rule as the /officers cards. */
+function PersonAvatar({
+  node,
+  className,
+  textClassName = "text-sm font-bold",
+  fallbackClassName = "bg-secondary text-foreground",
+}: {
+  node: OrgNode;
+  className: string;
+  textClassName?: string;
+  fallbackClassName?: string;
+}) {
+  if (node.photoUrl) {
+    return (
+      <span className={`relative shrink-0 overflow-hidden rounded-xl ${className}`}>
+        <Image src={node.photoUrl} alt={node.name} fill sizes="64px" className="object-cover" />
+      </span>
+    );
+  }
+  return (
+    <span
+      className={`grid shrink-0 place-items-center rounded-xl ${fallbackClassName} ${textClassName} ${className}`}
+    >
+      {initials(node.name)}
+    </span>
   );
 }
 
@@ -111,9 +140,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
               {/* Only spans inside: a button may not legally contain block
                   elements such as div, h3 or p. */}
               <span className="relative flex items-center gap-5 overflow-hidden rounded-2xl border border-border/80 bg-card p-7 shadow-sm backdrop-blur-md transition-colors hover:border-primary/40">
-                <span className="grid size-16 shrink-0 place-items-center rounded-xl bg-secondary text-base font-bold text-foreground">
-                  {initials(adviser.name)}
-                </span>
+                <PersonAvatar node={adviser} className="size-16" textClassName="text-base font-bold" />
                 <span className="min-w-0">
                   <span className="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 font-mono text-xs font-bold uppercase tracking-wider text-primary">
                     Faculty Adviser
@@ -136,9 +163,12 @@ export function OrgChart({ root }: { root: OrgNode }) {
                 className="block rounded-2xl"
               >
                 <span className="relative flex items-center gap-5 overflow-hidden rounded-2xl border border-primary/40 bg-gradient-to-br from-primary/10 via-card/90 to-card p-7 shadow-sm backdrop-blur-md transition-colors hover:border-primary/60">
-                  <span className="grid size-16 shrink-0 place-items-center rounded-xl bg-primary text-base font-bold text-primary-foreground shadow-sm">
-                    {initials(chairman.name)}
-                  </span>
+                  <PersonAvatar
+                    node={chairman}
+                    className="size-16 shadow-sm"
+                    textClassName="text-base font-bold"
+                    fallbackClassName="bg-primary text-primary-foreground"
+                  />
                   <span className="min-w-0">
                     <span className="inline-block rounded-full bg-primary/15 px-2.5 py-0.5 font-mono text-xs font-bold uppercase tracking-wider text-primary">
                       Executive Chairman
@@ -169,11 +199,14 @@ export function OrgChart({ root }: { root: OrgNode }) {
                     node={node}
                     group={label}
                     onSelect={setSelected}
-                    className="block rounded-xl border border-border/60 bg-card/70 p-5 hover:border-primary/40"
+                    className="flex items-center gap-4 rounded-xl border border-border/60 bg-card/70 p-5 hover:border-primary/40"
                   >
-                    <span className="font-mono text-xs font-bold uppercase text-primary">{label}</span>
-                    <span className="mt-1.5 block min-h-[3rem] text-base font-bold">{node.name}</span>
-                    <span className="block text-sm text-muted-foreground">{node.position}</span>
+                    <PersonAvatar node={node} className="size-11" textClassName="text-xs font-bold" />
+                    <span className="min-w-0">
+                      <span className="font-mono text-xs font-bold uppercase text-primary">{label}</span>
+                      <span className="mt-1.5 block min-h-[3rem] text-base font-bold">{node.name}</span>
+                      <span className="block text-sm text-muted-foreground">{node.position}</span>
+                    </span>
                   </PersonButton>
                 ) : (
                   <VacantCard label={label} />
@@ -245,13 +278,16 @@ export function OrgChart({ root }: { root: OrgNode }) {
                           node={dept.vp}
                           group={dept.name}
                           onSelect={setSelected}
-                          className="mt-1.5 rounded-lg"
+                          className="mt-1.5 flex items-center gap-3 rounded-lg"
                         >
-                          <span className="block text-lg font-extrabold tracking-tight hover:text-primary">
-                            {dept.vp.name}
-                          </span>
-                          <span className="block min-h-[2.5rem] text-sm font-medium text-muted-foreground">
-                            {dept.vp.position}
+                          <PersonAvatar node={dept.vp} className="size-11" textClassName="text-xs font-bold" />
+                          <span className="min-w-0">
+                            <span className="block text-lg font-extrabold tracking-tight hover:text-primary">
+                              {dept.vp.name}
+                            </span>
+                            <span className="block min-h-[2.5rem] text-sm font-medium text-muted-foreground">
+                              {dept.vp.position}
+                            </span>
                           </span>
                         </PersonButton>
                       </div>
@@ -277,13 +313,16 @@ export function OrgChart({ root }: { root: OrgNode }) {
                                   node={lead}
                                   group={dept.name}
                                   onSelect={setSelected}
-                                  className="flex min-h-11 flex-col justify-center rounded-md"
+                                  className="flex min-h-11 items-center gap-3 rounded-md"
                                 >
-                                  <span className="block text-sm font-bold hover:text-primary">
-                                    {lead.name}
-                                  </span>
-                                  <span className="block text-xs text-muted-foreground">
-                                    {lead.position}
+                                  <PersonAvatar node={lead} className="size-9" textClassName="text-[10px] font-bold" />
+                                  <span className="min-w-0">
+                                    <span className="block text-sm font-bold hover:text-primary">
+                                      {lead.name}
+                                    </span>
+                                    <span className="block text-xs text-muted-foreground">
+                                      {lead.position}
+                                    </span>
                                   </span>
                                 </PersonButton>
 
@@ -326,9 +365,12 @@ export function OrgChart({ root }: { root: OrgNode }) {
             <>
               <DialogHeader>
                 <div className="flex items-center gap-4">
-                  <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-primary text-sm font-bold text-primary-foreground">
-                    {initials(selected.name)}
-                  </span>
+                  <PersonAvatar
+                    node={selected}
+                    className="size-12"
+                    textClassName="text-sm font-bold"
+                    fallbackClassName="bg-primary text-primary-foreground"
+                  />
                   <div className="min-w-0">
                     <DialogTitle className="text-lg">{selected.name}</DialogTitle>
                     <DialogDescription>{selected.position}</DialogDescription>

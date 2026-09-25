@@ -16,6 +16,7 @@ export const orgChart: OrgNode = {
     {
       name: "Gabriel Ferrera",
       position: "Chairman",
+      photoUrl: "/officers/gabriel-ferrera.jpg",
       children: [
         {
           name: "Charles Janryl Jemina",
@@ -24,17 +25,24 @@ export const orgChart: OrgNode = {
         {
           name: "Theodore Samuel Navarro",
           position: "Vice Chairman for External Affairs",
+          photoUrl: "/officers/theodore-samuel-navarro.jpg",
         },
         {
           name: "Samantha Quinn D. Bretana",
           position: "Secretary",
+          photoUrl: "/officers/samantha-quinn-d-bretana.jpg",
           children: [
-            { name: "Jhon Michael Mercado", position: "Assistant Secretary" },
+            {
+              name: "Jhon Michael Mercado",
+              position: "Assistant Secretary",
+              photoUrl: "/officers/jhon-michael-mercado.jpg",
+            },
           ],
         },
         {
           name: "Mhike Aleen Gacusan",
           position: "Vice President for Communications",
+          photoUrl: "/officers/mhike-aleen-gacusan.jpg",
           children: [
             {
               name: "Cholo Rosales",
@@ -48,9 +56,14 @@ export const orgChart: OrgNode = {
         {
           name: "John Kyle Amarante",
           position: "Vice President for Technology",
+          photoUrl: "/officers/john-kyle-amarante.jpg",
           children: [
             { name: "Adrian Justin J. Salinas", position: "Web Development Lead" },
-            { name: "Ralph Danielle Delacruz", position: "Mobile Application Lead" },
+            {
+              name: "Ralph Danielle Delacruz",
+              position: "Mobile Application Lead",
+              photoUrl: "/officers/ralph-danielle-delacruz.jpg",
+            },
             { name: "James Melliza", position: "IoT Hardware Lead" },
           ],
         },
@@ -88,7 +101,7 @@ function flatten(node: OrgNode, acc: Officer[] = []): Officer[] {
     name: node.name,
     position: node.position,
     bio: "",
-    photoUrl: "",
+    photoUrl: node.photoUrl ?? "",
     socials: {},
     sortOrder: acc.length + 1,
   });
