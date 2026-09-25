@@ -224,7 +224,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
             Departmental Directorates & Technical Committees
           </h3>
 
-          <ul className="grid list-none items-start gap-7 md:grid-cols-2 lg:grid-cols-4">
+          <ul className="grid list-none items-start gap-7 md:grid-cols-2 xl:grid-cols-4">
             {departments.map((dept) => {
               const isOpen = openDepts.has(dept.code);
               const panelId = `dept-${dept.code}`;
@@ -301,7 +301,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
                           <span className="font-mono text-xs font-semibold uppercase text-muted-foreground">
                             Committee Leads
                           </span>
-                          <ul className="list-none space-y-4">
+                          <ul className="list-none space-y-5">
                             {dept.vp.children.map((lead) => (
                               <li key={lead.name} className="relative pl-3.5">
                                 {/* Decorative connector, not a colour accent */}
@@ -327,19 +327,21 @@ export function OrgChart({ root }: { root: OrgNode }) {
                                 </PersonButton>
 
                                 {lead.children && lead.children.length > 0 && (
-                                  <ul className="ml-11 mt-2 list-none space-y-1 border-l-2 border-primary/20 pl-3">
+                                  <ul className="ml-11 mt-3 list-none space-y-3 border-l-2 border-primary/20 pl-4">
                                     {lead.children.map((sub) => (
                                       <li key={sub.name}>
                                         <PersonButton
                                           node={sub}
                                           group={dept.name}
                                           onSelect={setSelected}
-                                          className="flex min-h-11 flex-col justify-center rounded-md text-xs"
+                                          className="flex min-h-11 flex-col justify-center gap-0.5 rounded-md"
                                         >
-                                          <span className="font-semibold text-foreground hover:text-primary">
+                                          <span className="block text-sm font-semibold leading-snug text-foreground hover:text-primary">
                                             {sub.name}
-                                          </span>{" "}
-                                          <span className="text-muted-foreground">{sub.position}</span>
+                                          </span>
+                                          <span className="block text-xs leading-snug text-muted-foreground">
+                                            {sub.position}
+                                          </span>
                                         </PersonButton>
                                       </li>
                                     ))}
