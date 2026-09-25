@@ -61,11 +61,16 @@ export const orgChart: OrgNode = {
           position: "Technology Officer",
           photoUrl: "/officers/john-kyle-amarante.jpg",
           children: [
-            { name: "Adrian Justin J. Salinas", position: "Web Development Lead" },
-            { name: "Matthew Tabat", position: "Web Development Lead - Backend" },
-            { name: "Alexander Michael Tolosa", position: "Web Development Lead - Backend" },
-            { name: "Aziel Guerrero Misola", position: "Web Development Lead - Backend" },
-            { name: "Deghne Gabriel Agana", position: "Web Development Lead - Frontend" },
+            {
+              name: "Adrian Justin J. Salinas",
+              position: "Web Development Lead",
+              children: [
+                { name: "Matthew Tabat", position: "Web Development - Backend" },
+                { name: "Alexander Michael Tolosa", position: "Web Development - Backend" },
+                { name: "Aziel Guerrero Misola", position: "Web Development - Backend" },
+                { name: "Deghne Gabriel Agana", position: "Web Development - Frontend" },
+              ],
+            },
             {
               name: "Ralph Danielle Dela Cruz",
               position: "Mobile Application Lead",

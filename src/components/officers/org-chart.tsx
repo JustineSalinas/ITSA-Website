@@ -327,9 +327,9 @@ export function OrgChart({ root }: { root: OrgNode }) {
                                 </PersonButton>
 
                                 {lead.children && lead.children.length > 0 && (
-                                  <ul className="list-none">
+                                  <ul className="ml-11 mt-2 list-none space-y-1 border-l-2 border-primary/20 pl-3">
                                     {lead.children.map((sub) => (
-                                      <li key={sub.name} className="mt-2 border-l border-border pl-2">
+                                      <li key={sub.name}>
                                         <PersonButton
                                           node={sub}
                                           group={dept.name}
