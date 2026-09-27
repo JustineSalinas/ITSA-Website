@@ -3,6 +3,7 @@
 import React, { useRef, useState } from "react";
 import { motion, HTMLMotionProps, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 interface SpotlightCardProps extends HTMLMotionProps<"div"> {
   children: React.ReactNode;
@@ -18,6 +19,7 @@ export function SpotlightCard({
   enableTilt = true,
   ...props
 }: SpotlightCardProps) {
+  const prefersReducedMotion = useReducedMotion();
   const divRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [opacity, setOpacity] = useState(0);
@@ -38,7 +40,7 @@ export function SpotlightCard({
 
     setPosition({ x: mouseX, y: mouseY });
 
-    if (enableTilt) {
+    if (enableTilt && !prefersReducedMotion) {
       const width = rect.width;
       const height = rect.height;
 
@@ -61,11 +63,16 @@ export function SpotlightCard({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
-        rotateX: enableTilt ? rotateX : 0,
-        rotateY: enableTilt ? rotateY : 0,
+        rotateX: enableTilt && !prefersReducedMotion ? rotateX : 0,
+        rotateY: enableTilt && !prefersReducedMotion ? rotateY : 0,
         transformStyle: "preserve-3d",
       }}
-      whileHover={{ y: -4, transition: { duration: 0.2, ease: "easeOut" } }}
+      /* The tilt and lift are framer-motion, not CSS, so the global
+         prefers-reduced-motion rules cannot reach them. The spotlight glow is
+         a colour change, not movement, so it stays either way. */
+      whileHover={
+        prefersReducedMotion ? undefined : { y: -4, transition: { duration: 0.2, ease: "easeOut" } }
+      }
       className={cn(
         "relative overflow-hidden rounded-2xl border border-border/80 bg-card p-6 backdrop-blur-md transition-colors duration-300 hover:border-primary/40 shadow-sm",
         className

@@ -171,7 +171,7 @@ export function EventsClient({ events }: { events: EventItem[] }) {
                 Try a different search or date range.
               </p>
               {hasActiveFilters && (
-                <Button type="button" variant="outline" className="mt-6" onClick={clearFilters}>
+                <Button type="button" variant="outline" className="mt-6 h-11 px-5" onClick={clearFilters}>
                   Clear filters
                 </Button>
               )}

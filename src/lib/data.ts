@@ -3,6 +3,8 @@ import { getAdminDb, isAdminConfigured } from "@/lib/firebase/admin";
 import { placeholderEvents } from "@/data/placeholder";
 import { realOfficers } from "@/data/officers";
 import { newsData } from "@/data/news";
+import { getSanityNews } from "@/sanity/lib/news";
+import { getSanityOfficers } from "@/sanity/lib/officers";
 import type { EventItem, Officer, SocialLinks, NewsItem } from "@/lib/types";
 
 // The public pages read through these helpers. When Firebase Admin credentials
@@ -87,6 +89,14 @@ function toOfficer(id: string, data: FirebaseFirestore.DocumentData): Officer {
 }
 
 export async function getOfficers(): Promise<Officer[]> {
+  // Sanity is the intended long-term home for officer records (see
+  // ITSA-WEB-PMP-001, D4) -- checked first, ahead of the Firestore path
+  // below, which stays as a fallback during migration rather than being torn
+  // out. A configured-but-empty Sanity project falls through exactly like an
+  // empty Firestore collection already does.
+  const sanityOfficers = await getSanityOfficers();
+  if (sanityOfficers && sanityOfficers.length) return sanityOfficers;
+
   if (!isAdminConfigured) return realOfficers;
   try {
     const snap = await getAdminDb()
@@ -138,6 +148,11 @@ export function splitEvents(events: EventItem[]) {
 }
 
 export async function getNews(): Promise<NewsItem[]> {
+  // Same priority as getOfficers: Sanity first, Firestore as a fallback
+  // during migration, bundled data last.
+  const sanityNews = await getSanityNews();
+  if (sanityNews && sanityNews.length) return sanityNews;
+
   if (!isAdminConfigured) {
     return [...newsData].sort(
       (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()

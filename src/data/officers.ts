@@ -6,9 +6,9 @@ import type { Officer, OrgNode } from "@/lib/types";
 // /officers cards and the visual chart never drift apart.
 //
 // Reporting lines: the two Vice Chairmen and the five department heads
-// (Secretary + four VPs) are shown as direct reports of the Chairman. Each
-// department carries its own leads. Adjust the nesting here if the real
-// reporting lines differ.
+// (Secretary + four department Officers) are shown as direct reports of the
+// Chairman. Each department carries its own leads. Adjust the nesting here
+// if the real reporting lines differ.
 export const orgChart: OrgNode = {
   name: "Robert A. Aguilar Jr.",
   position: "Adviser",
@@ -16,6 +16,7 @@ export const orgChart: OrgNode = {
     {
       name: "Gabriel Ferrera",
       position: "Chairman",
+      photoUrl: "/officers/gabriel-ferrera.jpg",
       children: [
         {
           name: "Charles Janryl Jemina",
@@ -24,44 +25,74 @@ export const orgChart: OrgNode = {
         {
           name: "Theodore Samuel Navarro",
           position: "Vice Chairman for External Affairs",
+          photoUrl: "/officers/theodore-samuel-navarro.jpg",
         },
         {
-          name: "Samantha Quinn D. Bretana",
+          name: "Samantha Quinn Bretaña",
           position: "Secretary",
+          photoUrl: "/officers/samantha-quinn-d-bretana.jpg",
           children: [
-            { name: "Jhon Michael Mercado", position: "Assistant Secretary" },
+            {
+              name: "Michael Mercado",
+              position: "Assistant Secretary",
+              photoUrl: "/officers/jhon-michael-mercado.jpg",
+            },
           ],
         },
         {
           name: "Mhike Aleen Gacusan",
-          position: "Vice President for Communications",
+          position: "Communication Officer",
+          photoUrl: "/officers/mhike-aleen-gacusan.jpg",
           children: [
             {
               name: "Cholo Rosales",
               position: "Creatives Lead",
               children: [
                 { name: "Rovann Acevedo", position: "Documentation Lead" },
+                { name: "Tim Gabriel Nuñal", position: "Creatives" },
+                { name: "Denise Rae Baldisimo", position: "Creatives" },
+                { name: "Hannah Nicole Tuer", position: "Creatives" },
               ],
             },
           ],
         },
         {
           name: "John Kyle Amarante",
-          position: "Vice President for Technology",
+          position: "Technology Officer",
+          photoUrl: "/officers/john-kyle-amarante.jpg",
           children: [
-            { name: "Adrian Justin J. Salinas", position: "Web Development Lead" },
-            { name: "Ralph Danielle Delacruz", position: "Mobile Application Lead" },
-            { name: "James Melliza", position: "IoT Hardware Lead" },
+            {
+              name: "Adrian Justin J. Salinas",
+              position: "Web Development Lead",
+              children: [
+                { name: "Matthew Tabat", position: "Web Development - Backend" },
+                { name: "Alexander Michael Tolosa", position: "Web Development - Backend" },
+                { name: "Aziel Guerrero Misola", position: "Web Development - Backend" },
+                { name: "Deghne Gabriel Agana", position: "Web Development - Frontend" },
+              ],
+            },
+            {
+              name: "Ralph Danielle Dela Cruz",
+              position: "Mobile Application Lead",
+              photoUrl: "/officers/ralph-danielle-delacruz.jpg",
+            },
+            { name: "Dale Misajon", position: "IoT Hardware Lead" },
           ],
         },
         {
           name: "John Daniel Aboboto",
-          position: "Vice President for Operations",
-          children: [{ name: "Kevin Alcudia", position: "Events Lead" }],
+          position: "Operation Officer",
+          children: [
+            {
+              name: "Janseen Azares",
+              position: "Events Lead",
+              photoUrl: "/officers/janseen-azares.jpg",
+            },
+          ],
         },
         {
           name: "Elah Marie Loyola",
-          position: "Vice President for Finance",
+          position: "Finance Officer",
           children: [
             {
               name: "Elyza Elizabeth Gumarin",
@@ -88,7 +119,7 @@ function flatten(node: OrgNode, acc: Officer[] = []): Officer[] {
     name: node.name,
     position: node.position,
     bio: "",
-    photoUrl: "",
+    photoUrl: node.photoUrl ?? "",
     socials: {},
     sortOrder: acc.length + 1,
   });

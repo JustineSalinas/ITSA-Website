@@ -1,4 +1,4 @@
-import imageUrlBuilder, { type SanityImageSource } from "@sanity/image-url";
+import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
 import { defineQuery, type PortableTextBlock } from "next-sanity";
 import type { NewsItem } from "@/lib/types";
 import { dataset, projectId } from "../env";
@@ -12,7 +12,29 @@ import { getSanityClient } from "./client";
  * one type at a time without a rewrite.
  */
 
-const builder = projectId ? imageUrlBuilder({ projectId, dataset }) : undefined;
+const builder = projectId ? createImageUrlBuilder({ projectId, dataset }) : undefined;
+
+/**
+ * Portable Text -> plain paragraphs, joined the same way the existing
+ * hand-written NewsItem.content already is ("\n\n" between paragraphs, split
+ * back apart at render time). Deliberately not a full Portable Text renderer
+ * -- that needs @portabletext/react, a new dependency, for formatting
+ * (bold, links, headings) this site's content doesn't yet use. Rich
+ * rendering is a real upgrade to make later, not something to silently drop
+ * by leaving content empty, which is what shipped in the S1 spike.
+ */
+export function portableTextToPlain(blocks: PortableTextBlock[] | undefined): string {
+  if (!blocks) return "";
+  return blocks
+    .filter((b) => b._type === "block")
+    .map((b) =>
+      (b.children as { text?: string }[] | undefined)
+        ?.map((c) => c.text ?? "")
+        .join("") ?? "",
+    )
+    .filter((line) => line.trim() !== "")
+    .join("\n\n");
+}
 
 /**
  * Sanity serves resized, reformatted images from its CDN, so we ask for the
@@ -63,10 +85,7 @@ export async function getSanityNews(): Promise<NewsItem[] | null> {
       title: doc.title,
       slug: doc.slug,
       excerpt: doc.excerpt,
-      // Portable Text is a block array, not a string. Rendering it properly
-      // needs @portabletext/react on the article page; the listing only shows
-      // the excerpt, so the spike leaves this empty rather than pretending.
-      content: "",
+      content: portableTextToPlain(doc.content),
       date: doc.date,
       category: doc.category,
       imageUrl: doc.coverImage ? urlForImage(doc.coverImage) : undefined,

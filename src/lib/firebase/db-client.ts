@@ -12,7 +12,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { getDb, getFirebaseAuth } from "@/lib/firebase/client";
-import type { EventItem, Officer, SocialLinks } from "@/lib/types";
+import type { Application, EventItem, Officer, SocialLinks } from "@/lib/types";
 import type { EventInput, OfficerInput } from "@/lib/validations";
 
 /**
@@ -183,4 +183,51 @@ export async function deleteEvent(id: string): Promise<void> {
     deletedAt: Timestamp.now(),
     ...updatedStamp(),
   });
+}
+
+/**
+ * Reads applications directly (firestore.rules allows read: if isAdmin()),
+ * but status changes go through /api/admin/applications/[id] instead of a
+ * client update() call -- the rules set write: if false unconditionally on
+ * this collection, so a direct write would simply be rejected.
+ */
+export async function fetchApplications(): Promise<Application[]> {
+  const snap = await getDocs(
+    query(collection(getDb(), "applications"), orderBy("createdAt", "desc")),
+  );
+  return snap.docs.map((d) => {
+    const data = d.data();
+    const createdAt = data.createdAt;
+    return {
+      id: d.id,
+      name: data.name,
+      email: data.email,
+      studentId: data.studentId ?? null,
+      yearLevel: data.yearLevel ?? null,
+      interest: data.interest,
+      message: data.message,
+      status: data.status ?? "new",
+      createdAt:
+        createdAt instanceof Timestamp
+          ? createdAt.toDate().toISOString()
+          : new Date().toISOString(),
+    };
+  });
+}
+
+export async function updateApplicationStatus(
+  id: string,
+  status: Application["status"],
+): Promise<void> {
+  // Same-origin fetch sends the itsa_session cookie automatically -- that is
+  // what the route actually checks (getAdminSession), not a bearer token.
+  const res = await fetch(`/api/admin/applications/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status }),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error ?? "Failed to update status.");
+  }
 }

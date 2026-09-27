@@ -101,11 +101,15 @@ export async function POST(req: Request) {
   }
 
   try {
+    const db = getAdminDb();
     // The `firestore-send-email` (Trigger Email) extension watches this
     // collection and sends the message via the configured SMTP provider.
-    await getAdminDb()
-      .collection("mail")
-      .add({
+    // Two separate writes, not one document read by both systems: the email
+    // queue is the extension's own working data (it may mutate or clean up
+    // after itself), while `applications` is our durable, reviewable record.
+    // If email delivery is ever down, the application row still exists.
+    await Promise.all([
+      db.collection("mail").add({
         to,
         replyTo: data.email,
         message: {
@@ -114,7 +118,20 @@ export async function POST(req: Request) {
         },
         meta: { ...data, source: "website-join-form" },
         createdAt: FieldValue.serverTimestamp(),
-      });
+      }),
+      db.collection("applications").add({
+        name: data.name,
+        email: data.email,
+        studentId: data.studentId || null,
+        yearLevel: data.yearLevel || null,
+        interest: data.interest,
+        message: data.message,
+        // new -> contacted -> accepted, set by an admin in the review queue
+        // (D5). Never set by this route past its initial value.
+        status: "new",
+        createdAt: FieldValue.serverTimestamp(),
+      }),
+    ]);
 
     return NextResponse.json({ ok: true, delivered: true });
   } catch (err) {

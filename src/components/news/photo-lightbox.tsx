@@ -126,7 +126,7 @@ export function PhotoLightbox({
               <>
                 {status === "loading" && (
                   <div
-                    className="absolute inset-12 animate-pulse rounded-xl bg-white/10"
+                    className="absolute inset-4 animate-pulse rounded-xl bg-white/10 sm:inset-12"
                     aria-hidden="true"
                   />
                 )}

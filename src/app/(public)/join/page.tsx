@@ -61,8 +61,7 @@ export default function JoinPage() {
 
           {/* Form column (7 cols) */}
           <div className="lg:col-span-7">
-            <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-card/70 p-6 shadow-xl backdrop-blur-xl sm:p-10 dark:bg-card/40">
-              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-brand via-blue-500 to-brand-orange" />
+            <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-card/70 p-6 backdrop-blur-xl sm:p-10 dark:bg-card/40">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold tracking-tight">Member Registration</h2>
                 <p className="mt-1 text-sm text-muted-foreground">
