@@ -45,9 +45,7 @@
     "uuid": "^11.1.1",
     "js-yaml": "^4.3.2",
     "adm-zip": "^0.6.1",
-    "smol-toml": "^1.8.0",
-    "csv-parse": "^7.0.2",
-    "stream-json": "^3.5.0"
+    "smol-toml": "^1.8.0"
   },
   "devDependencies": {
     "@firebase/rules-unit-testing": "^5.0.1",
@@ -57,7 +55,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "^16.3.0",
-    "firebase-tools": "^15.27.0",
+    "firebase-tools": "^15.31.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
