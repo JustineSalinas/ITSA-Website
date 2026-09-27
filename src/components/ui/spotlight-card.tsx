@@ -15,7 +15,7 @@ interface SpotlightCardProps extends HTMLMotionProps<"div"> {
 export function SpotlightCard({
   children,
   className = "",
-  spotlightColor = "rgba(15, 32, 66, 0.12)",
+  spotlightColor = "rgba(47, 86, 214, 0.12)",
   enableTilt = true,
   ...props
 }: SpotlightCardProps) {
@@ -74,7 +74,7 @@ export function SpotlightCard({
         prefersReducedMotion ? undefined : { y: -4, transition: { duration: 0.2, ease: "easeOut" } }
       }
       className={cn(
-        "relative overflow-hidden rounded-2xl border border-border/80 bg-card p-6 backdrop-blur-md transition-colors duration-300 hover:border-primary/40 shadow-sm",
+        "relative overflow-hidden rounded-xl border border-border/80 bg-card p-6 backdrop-blur-md transition-all duration-300 hover:border-primary/40 hover:shadow-md",
         className
       )}
       {...props}
@@ -89,7 +89,7 @@ export function SpotlightCard({
       />
       {/* Dynamic border glow highlight */}
       <div
-        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300"
+        className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition-opacity duration-300"
         style={{
           opacity: opacity * 0.7,
           background: `radial-gradient(350px circle at ${position.x}px ${position.y}px, var(--brand), transparent 60%)`,

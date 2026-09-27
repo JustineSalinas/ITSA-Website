@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Calendar, Newspaper } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
 
 import type { NewsItem } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { formatNewsDate } from "@/lib/format";
 import { NewsMediaGallery } from "@/components/news/news-media-gallery";
@@ -25,23 +24,17 @@ export function LatestNews({ news }: LatestNewsProps) {
         {/* Header with Title and "View All News" button */}
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <Badge
-              variant="outline"
-              className="inline-flex items-center gap-2 rounded-full border-primary/20 bg-primary/10 px-3 py-1 font-mono text-xs font-semibold text-primary"
-            >
-              <Newspaper className="size-3.5 shrink-0" /> WHAT&apos;S NEW
-            </Badge>
-            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-balance sm:text-4xl lg:text-5xl">
+            <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
               Latest News
             </h2>
-            <p className="mt-3 max-w-lg text-lg text-muted-foreground">
+            <p className="mt-3 max-w-lg text-base sm:text-lg text-muted-foreground">
               Official announcements, workshop schedules, and student updates from ITSA.
             </p>
           </div>
 
           <Button
             variant="outline"
-            className="group rounded-full border-border/80 px-5 backdrop-blur-sm transition-all hover:border-primary/40 hover:bg-accent"
+            className="group border-border/80 px-5 transition-all hover:border-primary/40 hover:bg-muted"
             render={<Link href="/news" />}
           >
             View All News
@@ -58,10 +51,10 @@ export function LatestNews({ news }: LatestNewsProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
-              whileHover={{ y: -6 }}
+              whileHover={{ y: -4 }}
               className="h-full"
             >
-              <Card className="group flex h-full flex-col justify-between overflow-hidden border-border/80 bg-card/80 p-5 backdrop-blur-md transition-all duration-300 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5">
+              <Card className="group flex h-full flex-col justify-between overflow-hidden border-border/80 bg-card p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-md">
                 <div>
                   {/* Photo / Slideshow Media */}
                   {item.images && item.images.length > 0 && (
