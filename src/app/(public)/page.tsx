@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { getEvents, getOfficers, getNews, splitEvents } from "@/lib/data";
+import { UpcomingEvents } from "@/components/home/upcoming-events";
 import { Hero } from "@/components/home/hero";
 import { AboutItsa } from "@/components/home/about-itsa";
 import { HomeFaq } from "@/components/home/home-faq";
 import { JoinCta } from "@/components/home/join-cta";
 import { LatestNews } from "@/components/home/latest-news";
 import { PartnersCarousel } from "@/components/home/partners-carousel";
-import { EventCard } from "@/components/events/event-card";
 import { OfficerCard } from "@/components/officers/officer-card";
 import { Button } from "@/components/ui/button";
 
@@ -50,22 +50,7 @@ export default async function HomePage() {
             </Button>
           </div>
 
-          {featuredEvents.length ? (
-            <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {featuredEvents.map((event) => (
-                <EventCard key={event.id} event={event} />
-              ))}
-            </div>
-          ) : (
-            <div className="mt-12 rounded-2xl border border-dashed border-border/80 bg-card/40 p-12 text-center backdrop-blur-md">
-              <p className="font-heading text-xl font-bold">
-                No events scheduled yet
-              </p>
-              <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
-                We&apos;re currently cooking up the next schedule. Join ITSA to get notified when registration opens!
-              </p>
-            </div>
-          )}
+          <UpcomingEvents events={featuredEvents} />
         </div>
       </section>
 
