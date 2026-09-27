@@ -17,13 +17,15 @@ npm run build        # production build
 npm run lint         # eslint (flat config, eslint-config-next)
 npm run seed         # seed Firestore with sample officers/events (needs FIREBASE_* admin vars)
 npm run grant-admin  # grant/revoke/list officer access — see below
-npm run test:rules   # firestore.rules unit tests against the emulator
+npm run test:rules   # firestore.rules + storage.rules unit tests against the emulators
 ```
 
 There is no unit-test runner for app code; `test:rules` is the only test suite.
 It runs `node --test tests/*.test.mjs` inside `firebase emulators:exec` (Firestore
-emulator on port **8571**, project `itsa-rules-test`). To run a single rules test:
-`firebase emulators:exec --only firestore --project itsa-rules-test "node --test tests/firestore.rules.test.mjs"`.
+emulator on port **8571**, Storage emulator on port **8572**, project
+`itsa-rules-test`). To run a single rules test:
+`firebase emulators:exec --only firestore --project itsa-rules-test "node --test tests/firestore.rules.test.mjs"`
+(use `--only storage` and `tests/storage.rules.test.mjs` for the Storage rules).
 
 Managing officer access (requires admin credentials in `.env.local`):
 ```bash
@@ -66,6 +68,7 @@ session cookie (`itsa_session`, 8h). Auth constants live in `src/lib/auth/consta
 - Public collections `officers`, `events`: world-readable, admin-writable with field validation, **never hard-deleted** (`allow delete: if false`) — records are retired with a `deletedAt` stamp and filtered by `isLive()` in `data.ts`.
 - Server-only collections (`mail`, `applications`, `rate_limits`, `ask_log`): `allow read/write: if false` — only the Admin SDK, which bypasses rules, touches them.
 - `firestore.rules` is covered by `tests/firestore.rules.test.mjs`; run `npm run test:rules` after editing rules.
+- **Image uploads** (`api/admin/upload`): the only intended write path into Storage. It re-encodes every image to WebP with `sharp` (`src/lib/images/process.ts`) and writes to `media/{folder}/` through the Admin SDK — which **bypasses `storage.rules`**, so the route re-enforces admin, type and size (4 MB cap, under Vercel's ~4.5 MB body limit) in code. `storage.rules` is the independent second gate for browser writes and is covered by `tests/storage.rules.test.mjs`; deploy it with the route (`firebase deploy --only storage`).
 
 ### Notable subsystems
 - **Rate limiting** (`src/lib/rate-limit.ts`): transactional fixed-window counters in Firestore (per-instance memory would be bypassable on serverless). Stores salted IP hashes, never raw IPs. **Fails closed** — treat a limiter error as "deny".
