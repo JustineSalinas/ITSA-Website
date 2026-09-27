@@ -11,6 +11,15 @@ import { siteConfig } from "@/data/site";
 
 import { ParticleCanvas } from "@/components/ui/particle-canvas";
 
+const focusAreas = [
+  "Software Engineering",
+  "Cybersecurity",
+  "Cloud & DevOps",
+  "AI & Data Science",
+  "UI/UX Design",
+  "IoT & Systems",
+];
+
 export function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-border/60 bg-gradient-to-b from-background via-background to-muted/20 pb-20 pt-14 sm:pb-28 sm:pt-24">
@@ -30,9 +39,9 @@ export function Hero() {
         />
       </div>
 
-      {/* Single centred column. Narrower than the page so the headline keeps a
-          comfortable reading measure instead of stretching edge to edge. */}
-      <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+      {/* Centred column with generous max-width so the headline and subtitle
+          occupy the viewport comfortably without feeling cramped. */}
+      <div className="mx-auto max-w-5xl px-4 text-center sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -78,14 +87,12 @@ export function Hero() {
             </Badge>
           </motion.div>
 
-          {/* Headline. Solid colour with the orange mark as a graphic accent —
-              keeping the design review's call that orange is the logo's spark,
-              never a gradient text effect. */}
+          {/* Headline. Spanning widely across the viewport to occupy horizontal space. */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-6 font-sans text-[clamp(2.5rem,5.5vw,4.25rem)] font-black leading-[1.04] tracking-tight text-balance text-foreground"
+            className="mx-auto mt-6 max-w-4xl font-heading text-[clamp(2.5rem,5.8vw,4.5rem)] font-black leading-[1.08] tracking-tight text-foreground sm:leading-[1.06]"
           >
             Empowering IT students to lead &amp; innovate.
           </motion.h1>
@@ -95,7 +102,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground text-pretty"
+            className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground sm:text-xl text-pretty"
           >
             <strong className="text-foreground">{siteConfig.fullName}</strong> is the
             official academic association at {siteConfig.school}. We cultivate technical
@@ -125,6 +132,23 @@ export function Hero() {
             >
               Explore events &amp; workshops
             </Button>
+          </motion.div>
+
+          {/* Focus Area Tags per DESIGN.md */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="mt-12 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5"
+          >
+            {focusAreas.map((area) => (
+              <span
+                key={area}
+                className="inline-flex items-center rounded-full border border-border/80 bg-secondary/50 px-3.5 py-1 text-xs font-medium text-foreground/80 backdrop-blur-xs transition-colors hover:border-primary/40 hover:bg-card hover:text-foreground"
+              >
+                {area}
+              </span>
+            ))}
           </motion.div>
         </motion.div>
       </div>
