@@ -54,7 +54,10 @@
   --color-brand-orange: var(--brand-orange);
   --color-brand-red: var(--brand-red);
 
-  --font-heading: var(--font-display, var(--font-sans));
+  /* Headings match the hero, which has been set in Geist since the two
+     Bricolage reverts. Bricolage's quirk read as informal next to it and
+     left section headings looking like a different site from the hero. */
+  --font-heading: var(--font-sans);
 
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
