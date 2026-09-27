@@ -19,6 +19,7 @@ export type Officer = {
 export type OrgNode = {
   name: string;
   position: string;
+  photoUrl?: string;
   children?: OrgNode[];
 };
 
