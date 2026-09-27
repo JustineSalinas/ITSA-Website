@@ -92,7 +92,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="mx-auto mt-6 max-w-4xl font-heading text-[clamp(2.5rem,5.8vw,4.5rem)] font-black leading-[1.08] tracking-tight text-foreground sm:leading-[1.06]"
+            className="mx-auto mt-6 max-w-4xl font-sans text-[clamp(2.5rem,5.8vw,4.5rem)] font-black leading-[1.08] tracking-tight text-foreground sm:leading-[1.06]"
           >
             Empowering IT students to lead &amp; innovate.
           </motion.h1>
