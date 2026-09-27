@@ -15,13 +15,13 @@ colors:
   border: "oklch(0.90 0.014 250)"
 typography:
   display:
-    fontFamily: "Bricolage Grotesque, Geist, sans-serif"
+    fontFamily: "Geist, sans-serif"
     fontSize: "clamp(2.5rem, 7vw, 4.25rem)"
     fontWeight: 800
     lineHeight: 1.02
     letterSpacing: "-0.025em"
   headline:
-    fontFamily: "Bricolage Grotesque, Geist, sans-serif"
+    fontFamily: "Geist, sans-serif"
     fontSize: "clamp(1.875rem, 4vw, 2.25rem)"
     fontWeight: 700
     lineHeight: 1.1
@@ -115,11 +115,11 @@ A committed blue-and-orange complementary palette lifted from the ITSA logo, gro
 
 ## 3. Typography
 
-**Display Font:** Bricolage Grotesque (with Geist, sans-serif fallback)
+**Display/Heading Font:** Geist (with system-ui fallback)
 **Body Font:** Geist (with system-ui fallback)
 **Label/Mono Font:** Geist Mono
 
-**Character:** An expressive, slightly quirky grotesque for headlines paired with a clean, neutral workhorse for text — contrast by role, not two near-identical sans-serifs. Bricolage brings human character (it keeps the org from reading corporate); Geist keeps long copy calm and legible. Mono is earned, not costume: this is literally an IT association, so mono labels read as native.
+**Character:** One neutral, highly-legible workhorse carries both headings and body — Geist reads calm and credible at every size rather than contrasting an expressive display face against plain text. Bricolage Grotesque shipped originally for the display/headline roles but read as informal next to a Geist hero after two reverts settled that tension; its import stays loaded in `layout.tsx` so it's a one-line move back (`--font-heading` in `globals.css`) if that call changes again. Mono is earned, not costume: this is literally an IT association, so mono labels read as native.
 
 ### Hierarchy
 - **Display** (800, `clamp(2.5rem, 7vw, 4.25rem)`, 1.02, -0.025em): Hero headline only. Balanced wrap.
@@ -131,7 +131,7 @@ A committed blue-and-orange complementary palette lifted from the ITSA logo, gro
 ### Named Rules
 **The One-Kicker Rule.** A mono kicker is allowed **once**, in the hero (the school name). It is voice. Repeating a tiny uppercase eyebrow above every section is forbidden AI scaffolding — sections lead with the headline itself.
 
-**The Heading-Font Rule.** `h1–h4` always render in Bricolage Grotesque via the base layer. Body and UI never do.
+**The Heading-Font Rule.** `h1–h4` always render in Geist via the base layer (`--font-heading` in `globals.css`), matching the hero and body. UI never overrides it to something else per-component.
 
 ## 4. Elevation
 
@@ -184,7 +184,7 @@ An inline SVG constellation of gradient nodes (blue, deep-blue, orange) wired by
 - **Do** lead sections with the headline. Use the mono kicker exactly once (hero).
 - **Do** keep body text at Muted Ink or darker — verify 4.5:1. The old washed-out grey is banned.
 - **Do** ship the network SVG (or real student photography) as hero imagery; it is not optional decoration.
-- **Do** render `h1–h4` in Bricolage Grotesque; keep body/UI in Geist.
+- **Do** render `h1–h4` and body/UI in Geist — one heading-font variable, no per-component overrides.
 - **Do** provide a non-motion fallback for every animation (handled globally via reduced-motion).
 
 ### Don't:
