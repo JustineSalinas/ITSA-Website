@@ -65,10 +65,10 @@ export const orgChart: OrgNode = {
               name: "Adrian Justin J. Salinas",
               position: "Web Development Lead",
               children: [
-                { name: "Matthew Tabat", position: "Web Development - Backend" },
-                { name: "Alexander Michael Tolosa", position: "Web Development - Backend" },
-                { name: "Aziel Guerrero Misola", position: "Web Development - Backend" },
-                { name: "Deghne Gabriel Agana", position: "Web Development - Frontend" },
+                { name: "Matthew Tabat", position: "Security" },
+                { name: "Alexander Michael Tolosa", position: "Back-End Developer" },
+                { name: "Aziel Guerrero Misola", position: "Back-End Developer" },
+                { name: "Deghne Gabriel Agana", position: "Front-End Developer" },
               ],
             },
             {
