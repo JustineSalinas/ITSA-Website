@@ -24,11 +24,11 @@ export function OfficerCard({ officer }: { officer: Officer }) {
 
   return (
     <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
       className="h-full"
     >
-      <Card className="group relative h-full overflow-hidden border-border/80 bg-card/60 text-center backdrop-blur-md transition-all duration-300 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 dark:bg-card/40">
+      <Card className="group relative h-full overflow-hidden border-border/80 bg-card text-center transition-all duration-300 hover:border-primary/40 hover:shadow-md">
         {/* Top accent glow */}
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-brand to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
@@ -47,7 +47,7 @@ export function OfficerCard({ officer }: { officer: Officer }) {
 
           {/* Name and role each reserve two lines so every card in a row lines up,
               whether or not the text wraps ("Adviser" vs "Vice Chairman for Internal Affairs") */}
-          <h3 className="mt-4 flex min-h-[3.5rem] items-center text-xl font-bold tracking-tight text-balance">
+          <h3 className="mt-4 flex min-h-[3.5rem] items-center justify-center font-heading text-lg font-bold tracking-tight text-balance text-foreground sm:text-xl">
             {officer.name}
           </h3>
           <div className="flex min-h-[2.25rem] w-full items-start justify-center">
@@ -73,7 +73,7 @@ export function OfficerCard({ officer }: { officer: Officer }) {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={`${officer.name} on ${label}`}
-                  className="grid size-9 place-items-center rounded-lg border border-border/60 bg-background/60 text-muted-foreground backdrop-blur-sm transition-colors hover:border-primary/40 hover:bg-primary hover:text-primary-foreground"
+                  className="grid size-9 place-items-center rounded-lg border border-border/60 bg-muted/40 text-muted-foreground transition-colors hover:border-primary/40 hover:bg-primary hover:text-primary-foreground"
                 >
                   <Icon className="size-4" />
                 </motion.a>

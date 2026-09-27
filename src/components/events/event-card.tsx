@@ -14,11 +14,11 @@ export function EventCard({ event }: { event: EventItem }) {
 
   return (
     <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
       className="h-full"
     >
-      <Card className="group flex h-full flex-col overflow-hidden pt-0 border-border/80 bg-card/70 backdrop-blur-md transition-all duration-300 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5">
+      <Card className="group flex h-full flex-col overflow-hidden pt-0 border-border/80 bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-md">
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-gradient-to-br from-primary/80 to-primary">
           {event.imageUrl ? (
             <Image
@@ -34,7 +34,7 @@ export function EventCard({ event }: { event: EventItem }) {
             </div>
           )}
           <Badge
-            className="absolute left-3 top-3 backdrop-blur-md"
+            className="absolute left-3 top-3 rounded-full font-mono text-xs backdrop-blur-md"
             variant={upcoming ? "default" : "secondary"}
           >
             {upcoming ? "Upcoming" : "Past"}
@@ -55,7 +55,7 @@ export function EventCard({ event }: { event: EventItem }) {
             </span>
           </div>
 
-          <h3 className="mt-3 text-xl font-bold leading-snug tracking-tight">
+          <h3 className="mt-3 font-heading text-lg font-bold leading-snug tracking-tight text-foreground sm:text-xl">
             <Link href={`/events/${event.slug}`} className="transition-colors group-hover:text-primary">
               {event.title}
             </Link>

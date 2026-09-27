@@ -17,23 +17,23 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
 
   return (
     <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
       className="h-full"
     >
-      <Card className="group relative flex h-full flex-col overflow-hidden pt-0 border-border/80 bg-card/70 backdrop-blur-md transition-all duration-300 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5">
+      <Card className="group relative flex h-full flex-col overflow-hidden pt-0 border-border/80 bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-md">
         <Link href={`/projects/${project.slug}`} className="absolute inset-0 z-0">
           <span className="sr-only">View project {project.title}</span>
         </Link>
         
         <div className="relative z-10 aspect-[16/9] w-full overflow-hidden bg-gradient-to-br from-primary/80 to-primary pointer-events-none">
           {isFeatured && (
-            <div className="group/trophy absolute top-3 right-3 z-20 flex items-center justify-center rounded-full bg-amber-500 text-amber-950 p-2 shadow-md pointer-events-auto cursor-default">
-              <Trophy className="size-4 fill-amber-950" />
+            <div className="group/trophy absolute top-3 right-3 z-20 flex items-center justify-center rounded-full bg-gold text-slate-950 p-2 shadow-sm pointer-events-auto cursor-default">
+              <Trophy className="size-4 fill-slate-950" />
               
-              <div className="absolute right-0 top-full mt-2.5 opacity-0 invisible group-hover/trophy:opacity-100 group-hover/trophy:visible transition-all duration-200 whitespace-nowrap rounded-md bg-zinc-900 px-2.5 py-1 text-xs font-medium text-zinc-50 shadow-xl border border-zinc-800 pointer-events-none">
+              <div className="absolute right-0 top-full mt-2.5 opacity-0 invisible group-hover/trophy:opacity-100 group-hover/trophy:visible transition-all duration-200 whitespace-nowrap rounded-md bg-card px-2.5 py-1 text-xs font-medium text-foreground shadow-md border border-border pointer-events-none">
                 {awardTag || "Award Winner"}
-                <div className="absolute -top-1 right-3 h-2 w-2 rotate-45 bg-zinc-900 border-l border-t border-zinc-800"></div>
+                <div className="absolute -top-1 right-3 h-2 w-2 rotate-45 bg-card border-l border-t border-border"></div>
               </div>
             </div>
           )}
@@ -52,7 +52,7 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
         </div>
 
         <CardContent className="relative z-10 flex flex-1 flex-col p-6 pointer-events-none">
-          <div className="flex items-center gap-1.5 font-mono text-xs text-brand-cyan">
+          <div className="flex items-center gap-1.5 font-mono text-xs text-primary font-medium">
             {project.teamSize && project.teamSize > 1 ? (
               <>
                 <Users className="size-3.5" />
@@ -66,14 +66,14 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
             )}
           </div>
 
-          <h3 className="mt-3 text-xl font-bold leading-snug tracking-tight">
+          <h3 className="mt-3 font-heading text-lg font-bold leading-snug tracking-tight text-foreground sm:text-xl">
             <span className="transition-colors group-hover:text-primary">
               {project.title}
             </span>
           </h3>
 
           {isFeatured && project.awardName && (
-            <div className="mt-1.5 flex items-center gap-1.5 text-xs font-semibold text-amber-500">
+            <div className="mt-1.5 flex items-center gap-1.5 text-xs font-semibold text-brand-orange">
               <Trophy className="size-3" />
               {project.awardName}
             </div>
@@ -85,7 +85,7 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
 
           <div className="mt-4 flex flex-wrap gap-1.5">
             {project.tags.slice(0, 4).map(tag => (
-              <Badge key={tag} variant="secondary" className="bg-secondary/50 text-secondary-foreground hover:bg-secondary/70 border-none font-medium">
+              <Badge key={tag} variant="secondary" className="rounded-full bg-muted/60 text-muted-foreground font-mono text-[11px] border-none">
                 {tag}
               </Badge>
             ))}

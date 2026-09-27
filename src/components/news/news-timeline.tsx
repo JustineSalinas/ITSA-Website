@@ -83,7 +83,7 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
 
   if (news.length === 0) {
     return (
-      <div className="rounded-3xl border border-dashed border-border/80 bg-card/40 p-16 text-center backdrop-blur-md">
+      <div className="rounded-2xl border border-dashed border-border/80 bg-card/40 p-16 text-center backdrop-blur-md">
         <Newspaper className="mx-auto size-10 text-muted-foreground/60" aria-hidden="true" />
         <h2 className="mt-4 font-heading text-lg font-semibold">No news yet</h2>
         <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
@@ -132,7 +132,7 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
       )}
 
       {filtered.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-border/80 bg-card/40 p-12 text-center">
+        <div className="rounded-2xl border border-dashed border-border/80 bg-card/40 p-12 text-center">
           <p className="text-sm text-muted-foreground">No news in this category yet.</p>
         </div>
       ) : (
@@ -156,7 +156,7 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
                     className="absolute top-6 -left-[1.85rem] size-3 rounded-full border-2 border-background bg-primary sm:-left-[2.35rem]"
                   />
 
-                  <div className="overflow-hidden rounded-xl border border-border/80 bg-card/85 shadow-sm backdrop-blur-md transition-colors hover:border-primary/40">
+                  <div className="overflow-hidden rounded-xl border border-border/80 bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-md">
                     <h3>
                       <button
                         type="button"

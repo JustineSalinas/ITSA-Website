@@ -38,12 +38,11 @@ export default async function OfficersPage() {
       />
 
       {/* Officers Grid */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
         {officers.length === 0 ? (
-          <p className="text-center text-muted-foreground">
-            Officer profiles are being updated for the new academic year. Check
-            back soon!
-          </p>
+          <div className="rounded-2xl border border-dashed border-border/80 bg-card/40 p-12 text-center text-sm text-muted-foreground">
+            Officer profiles are being updated for the new academic year. Check back soon!
+          </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {officers.map((officer) => (
@@ -54,13 +53,13 @@ export default async function OfficersPage() {
       </section>
 
       {/* Organizational Structure Section */}
-      <section className="border-t border-border/60 bg-muted/20 py-20">
+      <section className="border-t border-border/60 bg-muted/20 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center mb-12">
-            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Organizational Hierarchy
             </h2>
-            <p className="mt-2 text-muted-foreground">
+            <p className="mt-2 text-base text-muted-foreground">
               How ITSA is structured from our faculty adviser to department directors and committee leads.
             </p>
           </div>

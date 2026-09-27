@@ -68,30 +68,30 @@ export default async function ProjectDetailPage({
       <header className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center mb-16 md:mb-24">
 
         <div className="mb-10">
-          <Button variant="outline" className="gap-2 rounded-full font-mono text-xs font-semibold transition-colors hover:bg-primary/5" render={<Link href="/projects" />}>
+          <Button variant="outline" size="sm" className="gap-2 font-mono text-xs font-semibold" render={<Link href="/projects" />}>
             <ArrowLeft className="size-3.5" /> BACK TO PROJECTS
           </Button>
         </div>
 
         <div className="flex flex-wrap justify-center gap-2 mb-6 md:mb-8">
           {project.tags.map(tag => (
-            <Badge key={tag} variant="secondary" className="px-3 py-1 text-xs font-semibold uppercase tracking-widest bg-primary/5 hover:bg-primary/10 border-primary/10 text-primary/80">
+            <Badge key={tag} variant="secondary" className="rounded-full px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wider bg-primary/10 border-primary/20 text-primary">
               {tag}
             </Badge>
           ))}
         </div>
 
-        <h1 className="text-4xl font-black tracking-tighter sm:text-5xl md:text-6xl lg:text-[5.5rem] text-foreground text-balance mb-8">
+        <h1 className="font-heading text-4xl font-black tracking-tight sm:text-5xl md:text-6xl text-foreground text-balance mb-8">
           {project.title}
         </h1>
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 mb-10">
           <div className="flex items-center justify-center gap-3">
-            <div className="size-8 rounded-full bg-brand/10 text-brand grid place-items-center shrink-0">
+            <div className="size-8 rounded-full bg-primary/10 text-primary grid place-items-center shrink-0">
               {project.teamSize && project.teamSize > 1 ? <Users className="size-4" /> : <User className="size-4" />}
             </div>
             <div className="flex flex-col items-start text-left">
-              <span className="font-semibold text-lg text-foreground/80 leading-tight">
+              <span className="font-semibold text-lg text-foreground leading-tight">
                 {project.teamSize && project.teamSize > 1 ? (project.teamName || `Team of ${project.teamSize}`) : project.author}
               </span>
               {(project.role || project.teamSize) && (
@@ -107,11 +107,11 @@ export default async function ProjectDetailPage({
 
           {project.awardName && (
             <div className="flex items-center justify-center gap-3">
-              <div className="size-8 rounded-full bg-amber-500/10 text-amber-500 grid place-items-center shrink-0">
+              <div className="size-8 rounded-full bg-brand-orange/15 text-brand-orange grid place-items-center shrink-0">
                 <Trophy className="size-4" />
               </div>
               <div className="flex flex-col items-start text-left">
-                <span className="font-semibold text-lg text-foreground/80 leading-tight">
+                <span className="font-semibold text-lg text-foreground leading-tight">
                   {project.awardName}
                 </span>
                 {(project.awardDate || project.awardHost) && (
@@ -128,7 +128,7 @@ export default async function ProjectDetailPage({
           {project.liveUrl && (
             <Button
               size="lg"
-              className="gap-2 group rounded-full px-8 w-full sm:w-auto text-base h-12"
+              className="gap-2 group px-6 w-full sm:w-auto text-base"
               render={<a href={project.liveUrl} target="_blank" rel="noreferrer" />}
             >
               Live Preview
@@ -139,7 +139,7 @@ export default async function ProjectDetailPage({
             <Button
               size="lg"
               variant="outline"
-              className="gap-2 group bg-card rounded-full px-8 w-full sm:w-auto border-border/80 shadow-sm text-base h-12"
+              className="gap-2 group border-border/80 bg-card px-6 w-full sm:w-auto text-base hover:bg-muted"
               render={<a href={project.githubUrl} target="_blank" rel="noreferrer" />}
             >
               Source Code
@@ -190,12 +190,12 @@ export default async function ProjectDetailPage({
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {project.teamMembers.map((member, index) => (
-                <div key={index} className="flex items-center gap-4 p-4 rounded-2xl bg-primary/5 border border-primary/10 transition-colors hover:bg-primary/10">
-                  <div className="size-10 rounded-full bg-brand/10 text-brand grid place-items-center shrink-0">
+                <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border/80 transition-all hover:border-primary/40 hover:shadow-md">
+                  <div className="size-10 rounded-full bg-primary/10 text-primary grid place-items-center shrink-0">
                     <User className="size-5" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-semibold text-foreground/90 leading-tight">{member.name}</span>
+                    <span className="font-semibold text-foreground leading-tight">{member.name}</span>
                     <span className="text-sm text-muted-foreground leading-tight mt-1">{member.role}</span>
                   </div>
                 </div>
@@ -223,7 +223,7 @@ export default async function ProjectDetailPage({
 
               {section.galleryCount === 1 && (
                 <div className="my-8 grid gap-4 sm:grid-cols-1">
-                  <div className="aspect-video w-full min-w-0 overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30 border border-border/50 grid place-items-center shadow-sm">
+                  <div className="aspect-video w-full min-w-0 overflow-hidden rounded-xl bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30 border border-border/60 grid place-items-center">
                     <Code2 className="size-10 text-primary-foreground/30" />
                   </div>
                 </div>
@@ -231,10 +231,10 @@ export default async function ProjectDetailPage({
 
               {section.galleryCount === 2 && (
                 <div className="my-8 grid grid-cols-2 gap-2 sm:gap-4">
-                  <div className="col-span-1 aspect-[4/5] sm:aspect-[4/3] w-full min-w-0 overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30 border border-border/50 grid place-items-center shadow-sm">
+                  <div className="col-span-1 aspect-[4/5] sm:aspect-[4/3] w-full min-w-0 overflow-hidden rounded-xl bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30 border border-border/60 grid place-items-center">
                     <Code2 className="size-8 text-primary-foreground/30" />
                   </div>
-                  <div className="col-span-1 aspect-[4/5] sm:aspect-[4/3] w-full min-w-0 overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30 border border-border/50 grid place-items-center shadow-sm">
+                  <div className="col-span-1 aspect-[4/5] sm:aspect-[4/3] w-full min-w-0 overflow-hidden rounded-xl bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30 border border-border/60 grid place-items-center">
                     <Code2 className="size-8 text-primary-foreground/30" />
                   </div>
                 </div>
@@ -242,13 +242,13 @@ export default async function ProjectDetailPage({
 
               {section.galleryCount === 3 && (
                 <div className="my-8 grid grid-cols-2 gap-2 sm:gap-4">
-                  <div className="col-span-2 aspect-[21/9] w-full min-w-0 overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30 border border-border/50 grid place-items-center shadow-sm">
+                  <div className="col-span-2 aspect-[21/9] w-full min-w-0 overflow-hidden rounded-xl bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30 border border-border/60 grid place-items-center">
                     <Code2 className="size-10 text-primary-foreground/30" />
                   </div>
-                  <div className="col-span-1 aspect-square sm:aspect-video w-full min-w-0 overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30 border border-border/50 grid place-items-center shadow-sm">
+                  <div className="col-span-1 aspect-square sm:aspect-video w-full min-w-0 overflow-hidden rounded-xl bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30 border border-border/60 grid place-items-center">
                     <Code2 className="size-8 text-primary-foreground/30" />
                   </div>
-                  <div className="col-span-1 aspect-square sm:aspect-video w-full min-w-0 overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30 border border-border/50 grid place-items-center shadow-sm">
+                  <div className="col-span-1 aspect-square sm:aspect-video w-full min-w-0 overflow-hidden rounded-xl bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30 border border-border/60 grid place-items-center">
                     <Code2 className="size-8 text-primary-foreground/30" />
                   </div>
                 </div>
@@ -261,12 +261,12 @@ export default async function ProjectDetailPage({
       {/* Navigation Section */}
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 mt-16 md:mt-24 pt-12 border-t border-border/40">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-          <Button variant="outline" className="gap-2 rounded-full font-mono text-xs font-semibold uppercase transition-colors hover:bg-primary/5 w-full sm:w-auto justify-start" render={<Link href={`/projects/${prevProject.slug}`} />}>
+          <Button variant="outline" className="gap-2 font-mono text-xs font-semibold uppercase transition-colors hover:border-primary/40 hover:bg-muted w-full sm:w-auto justify-start" render={<Link href={`/projects/${prevProject.slug}`} />}>
             <ArrowLeft className="size-3.5" />
             <span className="truncate max-w-[200px]">{prevProject.title}</span>
           </Button>
 
-          <Button variant="outline" className="gap-2 rounded-full font-mono text-xs font-semibold uppercase transition-colors hover:bg-primary/5 w-full sm:w-auto justify-end" render={<Link href={`/projects/${nextProject.slug}`} />}>
+          <Button variant="outline" className="gap-2 font-mono text-xs font-semibold uppercase transition-colors hover:border-primary/40 hover:bg-muted w-full sm:w-auto justify-end" render={<Link href={`/projects/${nextProject.slug}`} />}>
             <span className="truncate max-w-[200px]">{nextProject.title}</span>
             <ArrowRight className="size-3.5" />
           </Button>

@@ -35,7 +35,7 @@ export default async function ProjectsPage() {
         description={`A page to showcase the projects of IT students at ${siteConfig.school}.`}
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
         <ProjectsClient projects={projects} />
       </section>
     </>

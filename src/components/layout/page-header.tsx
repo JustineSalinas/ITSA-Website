@@ -49,20 +49,18 @@ export function PageHeader({
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="max-w-3xl"
         >
-          {kicker ? (
+          {kicker && (
             <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               {kicker}
             </p>
-          ) : (
-            <div className="mb-5 h-0.5 w-8 rounded-full bg-brand-orange" />
           )}
 
-          <h1 className="text-4xl font-black tracking-tight text-balance sm:text-5xl lg:text-6xl">
+          <h1 className="text-3xl font-extrabold tracking-tight text-balance text-foreground sm:text-4xl lg:text-5xl">
             {title}
           </h1>
 
           {description && (
-            <p className="mt-4 text-lg text-muted-foreground leading-relaxed text-pretty sm:text-xl">
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
               {description}
             </p>
           )}

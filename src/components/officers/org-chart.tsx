@@ -135,17 +135,17 @@ export function OrgChart({ root }: { root: OrgNode }) {
               node={adviser}
               group="Faculty"
               onSelect={setSelected}
-              className="block rounded-2xl"
+              className="block rounded-xl"
             >
               {/* Only spans inside: a button may not legally contain block
                   elements such as div, h3 or p. */}
-              <span className="relative flex items-center gap-5 overflow-hidden rounded-2xl border border-border/80 bg-card p-7 shadow-sm backdrop-blur-md transition-colors hover:border-primary/40">
+              <span className="relative flex items-center gap-5 overflow-hidden rounded-xl border border-border/80 bg-card p-7 transition-all duration-300 hover:border-primary/40 hover:shadow-md">
                 <PersonAvatar node={adviser} className="size-16" textClassName="text-base font-bold" />
                 <span className="min-w-0">
                   <span className="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 font-mono text-xs font-bold uppercase tracking-wider text-primary">
                     Faculty Adviser
                   </span>
-                  <span className="mt-1.5 block text-xl font-extrabold tracking-tight">
+                  <span className="mt-1.5 block font-heading text-xl font-extrabold tracking-tight text-foreground">
                     {adviser.name}
                   </span>
                   <span className="block text-sm text-muted-foreground">IT Department Adviser</span>
@@ -160,12 +160,12 @@ export function OrgChart({ root }: { root: OrgNode }) {
                 node={chairman}
                 group="Executive"
                 onSelect={setSelected}
-                className="block rounded-2xl"
+                className="block rounded-xl"
               >
-                <span className="relative flex items-center gap-5 overflow-hidden rounded-2xl border border-primary/40 bg-gradient-to-br from-primary/10 via-card/90 to-card p-7 shadow-sm backdrop-blur-md transition-colors hover:border-primary/60">
+                <span className="relative flex items-center gap-5 overflow-hidden rounded-xl border border-primary/40 bg-gradient-to-br from-primary/10 via-card to-card p-7 transition-all duration-300 hover:border-primary/60 hover:shadow-md">
                   <PersonAvatar
                     node={chairman}
-                    className="size-16 shadow-sm"
+                    className="size-16 shadow-xs"
                     textClassName="text-base font-bold"
                     fallbackClassName="bg-primary text-primary-foreground"
                   />
@@ -173,7 +173,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
                     <span className="inline-block rounded-full bg-primary/15 px-2.5 py-0.5 font-mono text-xs font-bold uppercase tracking-wider text-primary">
                       Executive Chairman
                     </span>
-                    <span className="mt-1.5 block text-xl font-extrabold tracking-tight">
+                    <span className="mt-1.5 block font-heading text-xl font-extrabold tracking-tight text-foreground">
                       {chairman.name}
                     </span>
                     <span className="block text-sm text-muted-foreground">Head of Association</span>
@@ -187,7 +187,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
         <div aria-hidden="true" className="h-8 w-0.5 bg-border/80" />
 
         {/* Tier 2: Directorate office & secretariat */}
-        <section className="w-full max-w-6xl rounded-2xl border border-border/80 bg-muted/20 p-7 backdrop-blur-md">
+        <section className="w-full max-w-6xl rounded-2xl border border-border/80 bg-muted/20 p-7">
           <h3 className="mb-5 text-center font-mono text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Directorate Office & Executive Secretariat
           </h3>
@@ -199,7 +199,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
                     node={node}
                     group={label}
                     onSelect={setSelected}
-                    className="flex items-center gap-4 rounded-xl border border-border/60 bg-card/70 p-5 hover:border-primary/40"
+                    className="flex items-center gap-4 rounded-xl border border-border/80 bg-card p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-md"
                   >
                     <PersonAvatar node={node} className="size-11" textClassName="text-xs font-bold" />
                     <span className="min-w-0">
@@ -224,7 +224,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
             Departmental Directorates & Technical Committees
           </h3>
 
-          <ul className="grid list-none items-start gap-7 md:grid-cols-2 xl:grid-cols-4">
+          <ul className="grid list-none items-start gap-8 lg:grid-cols-2">
             {departments.map((dept) => {
               const isOpen = openDepts.has(dept.code);
               const panelId = `dept-${dept.code}`;
@@ -247,7 +247,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
                       onClick={() => toggleDept(dept.code)}
                       aria-expanded={isOpen}
                       aria-controls={panelId}
-                      className="flex w-full items-center justify-between gap-3 p-7 text-left outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/50 md:hidden"
+                      className="flex w-full items-center justify-between gap-3 p-5 sm:p-6 text-left outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/50 md:hidden"
                     >
                       <span>
                         <span className="font-mono text-xs font-bold uppercase text-primary">
@@ -267,25 +267,32 @@ export function OrgChart({ root }: { root: OrgNode }) {
 
                     <div
                       id={panelId}
-                      className={`px-7 pb-7 md:block md:pt-7 ${isOpen ? "block" : "hidden"}`}
+                      className={`p-5 sm:p-7 md:block ${isOpen ? "block" : "hidden"}`}
                     >
                       {/* Desktop header -- the phone version lives in the button */}
-                      <div className="hidden border-b border-border/60 pb-4 md:block">
-                        <span className="font-mono text-xs font-bold uppercase text-primary">
-                          {dept.code} Directorate
-                        </span>
+                      <div className="hidden border-b border-border/60 pb-5 md:block">
+                        <div className="flex items-center justify-between">
+                          <span className="font-mono text-xs font-bold uppercase tracking-wider text-primary">
+                            {dept.code} Directorate
+                          </span>
+                          {dept.vp.children && (
+                            <span className="rounded-full bg-secondary px-2.5 py-0.5 font-mono text-[11px] font-medium text-muted-foreground">
+                              {1 + dept.vp.children.reduce((acc, c) => acc + 1 + (c.children?.length ?? 0), 0)} members
+                            </span>
+                          )}
+                        </div>
                         <PersonButton
                           node={dept.vp}
                           group={dept.name}
                           onSelect={setSelected}
-                          className="mt-1.5 flex items-center gap-3 rounded-lg"
+                          className="mt-3 flex items-center gap-3.5 rounded-xl p-2 transition-colors hover:bg-muted/50"
                         >
-                          <PersonAvatar node={dept.vp} className="size-11" textClassName="text-xs font-bold" />
-                          <span className="min-w-0">
-                            <span className="block text-lg font-extrabold tracking-tight hover:text-primary">
+                          <PersonAvatar node={dept.vp} className="size-12 shadow-xs" textClassName="text-sm font-bold" />
+                          <span className="min-w-0 flex-1">
+                            <span className="block font-heading text-lg font-bold tracking-tight text-foreground hover:text-primary">
                               {dept.vp.name}
                             </span>
-                            <span className="block min-h-[2.5rem] text-sm font-medium text-muted-foreground">
+                            <span className="block text-sm font-medium text-muted-foreground">
                               {dept.vp.position}
                             </span>
                           </span>
@@ -297,55 +304,70 @@ export function OrgChart({ root }: { root: OrgNode }) {
                       </p>
 
                       {dept.vp.children && dept.vp.children.length > 0 && (
-                        <div className="mt-5 space-y-4">
-                          <span className="font-mono text-xs font-semibold uppercase text-muted-foreground">
-                            Committee Leads
-                          </span>
-                          <ul className="list-none space-y-5">
+                        <div className="mt-6 space-y-4">
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                              Committee Leads
+                            </span>
+                            <div className="h-px flex-1 bg-border/60" />
+                          </div>
+
+                          <ul className="list-none space-y-4">
                             {dept.vp.children.map((lead) => (
-                              <li key={lead.name} className="relative pl-3.5">
-                                {/* Decorative connector, not a colour accent */}
-                                <span
-                                  aria-hidden="true"
-                                  className="absolute inset-y-0 left-0 w-0.5 rounded-full bg-primary/30"
-                                />
+                              <li
+                                key={lead.name}
+                                className="rounded-xl border border-border/60 bg-muted/20 p-3.5 sm:p-4 transition-colors hover:border-border"
+                              >
                                 <PersonButton
                                   node={lead}
                                   group={dept.name}
                                   onSelect={setSelected}
-                                  className="flex min-h-11 items-center gap-3 rounded-md"
+                                  className="flex items-center gap-3 rounded-lg"
                                 >
-                                  <PersonAvatar node={lead} className="size-9" textClassName="text-[10px] font-bold" />
-                                  <span className="min-w-0">
-                                    <span className="block text-sm font-bold hover:text-primary">
+                                  <PersonAvatar node={lead} className="size-10" textClassName="text-xs font-bold" />
+                                  <span className="min-w-0 flex-1">
+                                    <span className="block text-sm font-bold text-foreground hover:text-primary">
                                       {lead.name}
                                     </span>
-                                    <span className="block text-xs text-muted-foreground">
+                                    <span className="block text-xs font-medium text-muted-foreground">
                                       {lead.position}
                                     </span>
                                   </span>
                                 </PersonButton>
 
                                 {lead.children && lead.children.length > 0 && (
-                                  <ul className="ml-11 mt-3 list-none space-y-3 border-l-2 border-primary/20 pl-4">
-                                    {lead.children.map((sub) => (
-                                      <li key={sub.name}>
-                                        <PersonButton
-                                          node={sub}
-                                          group={dept.name}
-                                          onSelect={setSelected}
-                                          className="flex min-h-11 flex-col justify-center gap-0.5 rounded-md"
-                                        >
-                                          <span className="block text-sm font-semibold leading-snug text-foreground hover:text-primary">
-                                            {sub.name}
-                                          </span>
-                                          <span className="block text-xs leading-snug text-muted-foreground">
-                                            {sub.position}
-                                          </span>
-                                        </PersonButton>
-                                      </li>
-                                    ))}
-                                  </ul>
+                                  <div className="mt-3 border-t border-border/50 pt-3">
+                                    <span className="mb-2 block font-mono text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                                      Team Members
+                                    </span>
+                                    <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                      {lead.children.map((sub) => (
+                                        <li key={sub.name}>
+                                          <PersonButton
+                                            node={sub}
+                                            group={dept.name}
+                                            onSelect={setSelected}
+                                            className="flex items-center gap-2.5 rounded-md border border-border/40 bg-card/60 p-2 transition-all hover:border-primary/30 hover:bg-card"
+                                          >
+                                            <PersonAvatar
+                                              node={sub}
+                                              className="size-7 shrink-0"
+                                              textClassName="text-[10px] font-bold"
+                                              fallbackClassName="bg-primary/10 text-primary"
+                                            />
+                                            <span className="min-w-0 flex-1">
+                                              <span className="block truncate text-xs font-bold text-foreground hover:text-primary">
+                                                {sub.name}
+                                              </span>
+                                              <span className="block truncate text-[11px] text-muted-foreground">
+                                                {sub.position}
+                                              </span>
+                                            </span>
+                                          </PersonButton>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
                                 )}
                               </li>
                             ))}

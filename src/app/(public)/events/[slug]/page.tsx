@@ -100,15 +100,15 @@ export default async function EventDetailPage({ params }: Props) {
             {/* Event Quick Meta Chips inside Hero */}
             <div className="mt-6 flex flex-wrap gap-4 font-mono text-xs text-white/90">
               <span className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-1.5 backdrop-blur-md">
-                <CalendarDays className="size-4 text-amber-400" />
+                <CalendarDays className="size-4 text-brand-orange" />
                 {formatEventDate(event.eventDate)}
               </span>
               <span className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-1.5 backdrop-blur-md">
-                <Clock className="size-4 text-cyan-400" />
+                <Clock className="size-4 text-brand-cyan" />
                 {formatEventTime(event.eventDate)}
               </span>
               <span className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-1.5 backdrop-blur-md">
-                <MapPin className="size-4 text-emerald-400" />
+                <MapPin className="size-4 text-white" />
                 {event.location}
               </span>
             </div>
@@ -121,7 +121,7 @@ export default async function EventDetailPage({ params }: Props) {
           <div className="space-y-8 lg:col-span-8">
             {/* Event Poster / Feature Image */}
             {event.imageUrl && (
-              <div className="relative overflow-hidden rounded-2xl border border-border/80 bg-card shadow-md aspect-[16/9]">
+              <div className="relative overflow-hidden rounded-xl border border-border/80 bg-card aspect-[16/9]">
                 <Image
                   src={event.imageUrl}
                   alt={event.title}
@@ -134,7 +134,7 @@ export default async function EventDetailPage({ params }: Props) {
             )}
 
             {/* Overview Card */}
-            <div className="rounded-2xl border border-border/80 bg-card p-6 sm:p-8 shadow-sm">
+            <div className="rounded-xl border border-border/80 bg-card p-6 sm:p-8">
               <h2 className="text-2xl font-bold tracking-tight text-foreground border-b border-border/60 pb-4">
                 About this Event
               </h2>
@@ -146,13 +146,13 @@ export default async function EventDetailPage({ params }: Props) {
             </div>
 
             {/* Event Highlights & Value Delivery Card */}
-            <div className="rounded-2xl border border-border/80 bg-card p-6 sm:p-8 shadow-sm">
+            <div className="rounded-xl border border-border/80 bg-card p-6 sm:p-8">
               <h3 className="text-xl font-bold tracking-tight text-foreground border-b border-border/60 pb-3">
                 Key Highlights & Takeaways
               </h3>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-muted/30 p-4">
-                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600" />
+                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" />
                   <div>
                     <h4 className="text-sm font-bold">Practical Tech Knowledge</h4>
                     <p className="mt-1 text-xs text-muted-foreground">Gain actionable skills taught by student leads and industry speakers.</p>
@@ -160,7 +160,7 @@ export default async function EventDetailPage({ params }: Props) {
                 </div>
 
                 <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-muted/30 p-4">
-                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600" />
+                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" />
                   <div>
                     <h4 className="text-sm font-bold">Networking & Peer Connections</h4>
                     <p className="mt-1 text-xs text-muted-foreground">Connect with fellow IT builders, alumni, and tech mentors.</p>
@@ -168,7 +168,7 @@ export default async function EventDetailPage({ params }: Props) {
                 </div>
 
                 <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-muted/30 p-4">
-                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600" />
+                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" />
                   <div>
                     <h4 className="text-sm font-bold">Certificates & Recognition</h4>
                     <p className="mt-1 text-xs text-muted-foreground">Receive official attendance verification for your academic portfolio.</p>
@@ -176,7 +176,7 @@ export default async function EventDetailPage({ params }: Props) {
                 </div>
 
                 <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-muted/30 p-4">
-                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600" />
+                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" />
                   <div>
                     <h4 className="text-sm font-bold">Open to All IT Students</h4>
                     <p className="mt-1 text-xs text-muted-foreground">Free admission for all registered Information Technology students.</p>
@@ -188,12 +188,12 @@ export default async function EventDetailPage({ params }: Props) {
 
           {/* Sticky Sidebar Passport Card (4 Columns) */}
           <div className="space-y-6 lg:col-span-4">
-            <div className="sticky top-24 rounded-2xl border border-border/90 bg-card p-6 sm:p-8 shadow-lg">
+            <div className="sticky top-24 rounded-xl border border-border/80 bg-card p-6 sm:p-8">
               <div className="flex items-center justify-between border-b border-border/60 pb-4">
                 <span className="font-mono text-xs font-bold uppercase tracking-wider text-muted-foreground">
                   EVENT DETAILS
                 </span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] font-bold text-emerald-700">
+                <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 font-mono text-[10px] font-bold text-primary">
                   <Ticket className="size-3" /> FREE ENTRY
                 </span>
               </div>
@@ -221,7 +221,7 @@ export default async function EventDetailPage({ params }: Props) {
                 </div>
 
                 <div className="flex items-start gap-3.5">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-amber-500/10 text-amber-700">
+                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-orange/15 text-brand-orange">
                     <MapPin className="size-5" />
                   </span>
                   <div>
@@ -231,7 +231,7 @@ export default async function EventDetailPage({ params }: Props) {
                 </div>
 
                 <div className="flex items-start gap-3.5">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-blue-500/10 text-blue-700">
+                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
                     <Building2 className="size-5" />
                   </span>
                   <div>
@@ -243,7 +243,7 @@ export default async function EventDetailPage({ params }: Props) {
 
               {/* CTA Action Button */}
               {upcoming ? (
-                <Button className="mt-8 w-full bg-primary py-6 text-sm font-bold shadow-md hover:bg-primary/90" render={<Link href="/join" />}>
+                <Button size="lg" className="mt-8 w-full" render={<Link href="/join" />}>
                   Register Interest / RSVP Now
                 </Button>
               ) : (

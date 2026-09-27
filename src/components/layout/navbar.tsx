@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { navLinks } from "@/data/site";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/layout/logo";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import {
   Sheet,
   SheetContent,
@@ -25,7 +26,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Logo />
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -46,11 +47,13 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-1.5 md:flex">
-          <Button render={<Link href="/join" />}>Register Now</Button>
+        <div className="hidden items-center gap-2 md:flex">
+          <ThemeToggle />
+          <Button render={<Link href="/join" />}>Join ITSA</Button>
         </div>
 
-        <div className="flex items-center gap-1 md:hidden">
+        <div className="flex items-center gap-1.5 md:hidden">
+          <ThemeToggle />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
               render={
