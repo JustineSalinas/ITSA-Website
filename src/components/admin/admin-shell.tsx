@@ -6,11 +6,9 @@ import { useEffect } from "react";
 import { signOut } from "firebase/auth";
 import { toast } from "sonner";
 import {
-  CalendarDays,
   LayoutDashboard,
   LogOut,
   Mail,
-  Users,
   Loader2,
   ExternalLink,
 } from "lucide-react";
@@ -22,8 +20,6 @@ import { cn } from "@/lib/utils";
 
 const adminNav = [
   { href: "/admin", label: "Dashboard", Icon: LayoutDashboard },
-  { href: "/admin/events", label: "Events", Icon: CalendarDays },
-  { href: "/admin/officers", label: "Officers", Icon: Users },
   { href: "/admin/applications", label: "Enquiries", Icon: Mail },
 ];
 
