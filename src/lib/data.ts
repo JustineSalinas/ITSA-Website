@@ -5,6 +5,7 @@ import { realOfficers } from "@/data/officers";
 import { newsData } from "@/data/news";
 import { getSanityNews } from "@/sanity/lib/news";
 import { getSanityOfficers } from "@/sanity/lib/officers";
+import { getSanityEvents } from "@/sanity/lib/events";
 import type { EventItem, Officer, SocialLinks, NewsItem } from "@/lib/types";
 
 // The public pages read through these helpers. When Firebase Admin credentials
@@ -115,6 +116,9 @@ export async function getOfficers(): Promise<Officer[]> {
 }
 
 export async function getEvents(): Promise<EventItem[]> {
+  const sanityEvents = await getSanityEvents();
+  if (sanityEvents && sanityEvents.length) return sanityEvents;
+
   if (!isAdminConfigured) return placeholderEvents;
   try {
     const snap = await getAdminDb()
