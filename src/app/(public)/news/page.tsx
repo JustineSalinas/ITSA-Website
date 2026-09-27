@@ -39,7 +39,7 @@ export default async function NewsPage() {
         description="Stay informed with all official announcements, workshop registrations, student milestones, and community news from ITSA."
       />
 
-      <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-5xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
         {/* Back to Home button */}
         <div className="mb-8 flex items-center justify-between">
           <Button

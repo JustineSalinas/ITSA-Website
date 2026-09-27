@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MapPin, Building2, Shield, Clock, ArrowUp, Sparkles, CheckCircle2 } from "lucide-react";
+import { Mail, Building2, Shield, Clock } from "lucide-react";
 import { navLinks, siteConfig } from "@/data/site";
 import { Logo } from "@/components/layout/logo";
 import {

@@ -153,7 +153,7 @@ export function EventsClient({ events }: { events: EventItem[] }) {
 
       {/* Events Cards Grid */}
       {displayedEvents.length === 0 ? (
-        <div className="mt-12 rounded-3xl border border-dashed border-border/80 bg-card/40 p-16 text-center backdrop-blur-md">
+        <div className="mt-12 rounded-2xl border border-dashed border-border/80 bg-card/40 p-16 text-center backdrop-blur-md">
           <CalendarDays className="mx-auto size-10 text-muted-foreground/60" aria-hidden="true" />
           {events.length === 0 ? (
             <>

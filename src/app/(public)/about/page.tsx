@@ -59,7 +59,7 @@ export default function AboutPage() {
         description={`The ${siteConfig.fullName} is the official student organization for IT builders at ${siteConfig.school}.`}
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
         {/* Story overview */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -68,10 +68,10 @@ export default function AboutPage() {
           transition={{ duration: 0.5 }}
           className="mx-auto max-w-3xl text-center"
         >
-          <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
             Bridging the gap between classroom theory and production engineering.
           </h2>
-          <p className="mt-4 text-lg leading-relaxed text-muted-foreground text-pretty">
+          <p className="mt-4 text-base leading-relaxed text-muted-foreground text-pretty sm:text-lg">
             ITSA exists to turn classroom fundamentals into real project portfolios, hackathon trophies, and lasting industry networks. From your first hello world to your senior capstone project, ITSA is your home.
           </p>
         </motion.div>
@@ -84,14 +84,14 @@ export default function AboutPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <SpotlightCard spotlightColor="rgba(52, 169, 224, 0.25)" className="h-full p-8">
+            <SpotlightCard spotlightColor="rgba(47, 86, 214, 0.18)" className="h-full p-6 sm:p-8">
               <div className="flex items-center gap-4">
-                <span className="grid size-12 place-items-center rounded-xl bg-brand/15 text-brand">
+                <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
                   <Target className="size-6" />
                 </span>
-                <h2 className="text-2xl font-bold tracking-tight">Our Mission</h2>
+                <h3 className="font-heading text-xl font-bold tracking-tight text-foreground">Our Mission</h3>
               </div>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
                 To empower Information Technology students by fostering technical mastery, leadership skills, and a collaborative community—creating direct pathways into high-impact tech careers.
               </p>
             </SpotlightCard>
@@ -103,14 +103,14 @@ export default function AboutPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <SpotlightCard spotlightColor="rgba(247, 168, 30, 0.25)" className="h-full p-8">
+            <SpotlightCard spotlightColor="rgba(247, 168, 30, 0.18)" className="h-full p-6 sm:p-8">
               <div className="flex items-center gap-4">
                 <span className="grid size-12 place-items-center rounded-xl bg-brand-orange/15 text-brand-orange">
                   <Eye className="size-6" />
                 </span>
-                <h2 className="text-2xl font-bold tracking-tight">Our Vision</h2>
+                <h3 className="font-heading text-xl font-bold tracking-tight text-foreground">Our Vision</h3>
               </div>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground">
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
                 To be the premier student technology hub that cultivates innovative, resilient, and socially responsible IT leaders who shape the digital landscape of tomorrow.
               </p>
             </SpotlightCard>
@@ -120,8 +120,8 @@ export default function AboutPage() {
         {/* Core Values Section */}
         <div className="mt-24">
           <div className="text-center">
-            <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">What drives us</h2>
-            <p className="mt-2 text-muted-foreground">The core values that guide our events, workshops, and community culture.</p>
+            <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">What drives us</h2>
+            <p className="mt-2 text-base text-muted-foreground">The core values that guide our events, workshops, and community culture.</p>
           </div>
 
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -134,10 +134,10 @@ export default function AboutPage() {
                 transition={{ duration: 0.4, delay: idx * 0.1 }}
               >
                 <SpotlightCard className="h-full p-6">
-                  <span className="grid size-12 place-items-center rounded-xl bg-brand/10 text-brand">
+                  <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
                     <Icon className="size-6" />
                   </span>
-                  <h3 className="mt-5 text-xl font-bold">{title}</h3>
+                  <h3 className="mt-5 font-heading text-lg font-bold tracking-tight text-foreground">{title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     {description}
                   </p>
@@ -148,9 +148,9 @@ export default function AboutPage() {
         </div>
 
         {/* Milestones / Roadmap timeline */}
-        <div className="mt-24 rounded-3xl border border-border/80 bg-card/40 p-8 sm:p-12 backdrop-blur-md">
+        <div className="mt-24 rounded-3xl border border-border/80 bg-card p-8 sm:p-12">
           <div className="text-center">
-            <h2 className="text-2xl font-extrabold tracking-tight sm:text-3xl">Our Growth & Impact</h2>
+            <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Our Growth & Impact</h2>
             <p className="mt-2 text-sm text-muted-foreground">How we continuously elevate the student IT experience at {siteConfig.school}.</p>
           </div>
 
@@ -158,7 +158,7 @@ export default function AboutPage() {
             {milestones.map((m) => (
               <div key={m.year} className="flex flex-col border-t border-border/80 pt-6">
                 <span className="font-mono text-xs font-bold text-primary">{m.year}</span>
-                <h3 className="mt-2 text-lg font-bold">{m.title}</h3>
+                <h3 className="mt-2 font-heading text-base font-bold text-foreground">{m.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{m.description}</p>
               </div>
             ))}

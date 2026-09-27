@@ -6,6 +6,8 @@ import { siteConfig } from "@/data/site";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
+
 export const metadata: Metadata = {
   title: "Award-Winning Projects",
   description: `Exceptional, award-winning student projects from ${siteConfig.name} at ${siteConfig.school}.`,
@@ -40,20 +42,25 @@ export default async function AwardsPage() {
 
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 pt-10 sm:px-6 lg:px-8">
-        <Link href="/projects" className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-          <ArrowLeft className="mr-2 size-4" />
-          Back to all projects
-        </Link>
-      </div>
-
       <PageHeader
         kicker={`${awardProjects.length} awarded ${awardProjects.length === 1 ? "project" : "projects"}`}
-        title="Award-Winning Projects."
+        title="Award-Winning Projects"
         description={`Celebrating the most exceptional and recognized work by IT students at ${siteConfig.school}.`}
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
+        <div className="mb-6">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="group gap-2 text-xs font-semibold text-muted-foreground hover:text-foreground"
+            render={<Link href="/projects" />}
+          >
+            <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" />
+            Back to all projects
+          </Button>
+        </div>
+
         <ProjectsClient projects={awardProjects} hideAwardsButton={true} />
       </section>
     </>

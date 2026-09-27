@@ -20,33 +20,39 @@ import { siteConfig } from "@/data/site";
 export function JoinCta() {
   return (
     <section className="relative overflow-hidden border-t border-border/60 bg-gradient-to-b from-muted/20 to-background py-20 sm:py-28">
-      <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5, ease: "easeOut" }}
+          className="relative overflow-hidden rounded-3xl border border-border/80 bg-card p-8 text-center sm:p-14"
         >
-          <h2 className="text-3xl font-extrabold leading-[1.15] tracking-tight text-primary text-balance sm:text-4xl lg:text-5xl">
-            Ready to join {siteConfig.name}
-            <span className="block">this school year?</span>
-          </h2>
+          {/* Subtle atmosphere brand glow */}
+          <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 size-96 rounded-full bg-brand/10 blur-3xl" />
 
-          <p className="mx-auto mt-5 max-w-[46rem] text-base leading-relaxed text-muted-foreground text-pretty sm:text-lg">
-            Workshops, hackathons, mentorship, and a community of IT students who build
-            real things together. Membership is open to every IT student at{" "}
-            {siteConfig.school} — no experience required.
-          </p>
+          <div className="relative z-10 mx-auto max-w-2xl">
+            <h2 className="text-3xl font-extrabold leading-[1.15] tracking-tight text-primary text-balance sm:text-4xl">
+              Ready to join {siteConfig.name}
+              <span className="block">this school year?</span>
+            </h2>
 
-          <div className="mt-8">
-            <Button
-              size="lg"
-              className="group px-8 text-base font-semibold shadow-md transition-transform active:scale-95"
-              render={<Link href="/join" />}
-            >
-              Become a member
-              <ArrowRight className="ml-1.5 size-4 transition-transform group-hover:translate-x-1" />
-            </Button>
+            <p className="mx-auto mt-4 text-base leading-relaxed text-muted-foreground text-pretty sm:text-lg">
+              Workshops, hackathons, mentorship, and a community of IT students who build
+              real things together. Membership is open to every IT student at{" "}
+              {siteConfig.school} — no experience required.
+            </p>
+
+            <div className="mt-8">
+              <Button
+                size="lg"
+                className="group px-8 text-base font-semibold transition-all"
+                render={<Link href="/join" />}
+              >
+                Become a member
+                <ArrowRight className="ml-1.5 size-4 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </div>
           </div>
         </motion.div>
       </div>

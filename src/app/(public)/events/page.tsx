@@ -36,7 +36,7 @@ export default async function EventsPage() {
         description="From beginner-friendly coding labs to campus-wide hackathons — explore everything ITSA is planning and hosting."
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
         {/* EventsClient reads the URL (?when=&q=), so it needs a Suspense
             boundary for the static build to succeed. */}
         <Suspense fallback={null}>

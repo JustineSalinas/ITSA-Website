@@ -10,8 +10,6 @@ import { PartnersCarousel } from "@/components/home/partners-carousel";
 import { EventCard } from "@/components/events/event-card";
 import { OfficerCard } from "@/components/officers/officer-card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { LogoMark } from "@/components/layout/logo";
 
 export default async function HomePage() {
   const [events, officers, news] = await Promise.all([
@@ -35,22 +33,16 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <Badge
-                variant="outline"
-                className="inline-flex items-center gap-2 rounded-full border-primary/20 bg-primary/10 px-3 py-1 font-mono text-xs font-semibold text-primary"
-              >
-                <LogoMark className="size-3.5 shrink-0" /> WHAT&apos;S NEXT
-              </Badge>
-              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-balance sm:text-4xl lg:text-5xl">
+              <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
                 Upcoming Events & Labs
               </h2>
-              <p className="mt-3 max-w-lg text-lg text-muted-foreground">
+              <p className="mt-3 max-w-lg text-base sm:text-lg text-muted-foreground">
                 Workshops, competitions, hackathons, and social gatherings designed for real skill growth.
               </p>
             </div>
             <Button
               variant="outline"
-              className="group rounded-full border-border/80 px-5 backdrop-blur-sm transition-all hover:border-primary/40 hover:bg-accent"
+              className="group border-border/80 px-5 transition-all hover:border-primary/40 hover:bg-muted"
               render={<Link href="/events" />}
             >
               View calendar
@@ -65,7 +57,7 @@ export default async function HomePage() {
               ))}
             </div>
           ) : (
-            <div className="mt-12 rounded-3xl border border-dashed border-border/80 bg-card/40 p-12 text-center backdrop-blur-md">
+            <div className="mt-12 rounded-2xl border border-dashed border-border/80 bg-card/40 p-12 text-center backdrop-blur-md">
               <p className="font-heading text-xl font-bold">
                 No events scheduled yet
               </p>
@@ -81,19 +73,16 @@ export default async function HomePage() {
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-600/20 bg-amber-600/10 px-3 py-1 font-mono text-xs font-semibold text-amber-700">
-              EXECUTIVE BOARD
-            </div>
-            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-balance sm:text-4xl lg:text-5xl">
+            <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
               Meet your student leads
             </h2>
-            <p className="mt-3 max-w-lg text-lg text-muted-foreground">
+            <p className="mt-3 max-w-lg text-base sm:text-lg text-muted-foreground">
               Real students leading ITSA this academic year — passionate, accessible, and ready to support your tech journey.
             </p>
           </div>
           <Button
             variant="outline"
-            className="group rounded-full border-border/80 px-5 backdrop-blur-sm transition-all hover:border-primary/40 hover:bg-accent"
+            className="group border-border/80 px-5 transition-all hover:border-primary/40 hover:bg-muted"
             render={<Link href="/officers" />}
           >
             Meet the entire team
