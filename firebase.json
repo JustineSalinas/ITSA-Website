@@ -9,6 +9,9 @@
     "firestore": {
       "port": 8571
     },
+    "storage": {
+      "port": 8572
+    },
     "ui": {
       "enabled": false
     },
