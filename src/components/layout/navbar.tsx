@@ -46,10 +46,6 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-2 md:flex">
-          <Button render={<Link href="/join" />}>Join ITSA</Button>
-        </div>
-
         <div className="flex items-center gap-1.5 md:hidden">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
