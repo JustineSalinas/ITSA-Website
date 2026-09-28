@@ -15,31 +15,19 @@ import { siteConfig } from "@/data/site";
  * visitors will now reach it.
  */
 
+/**
+ * The four values, named only. Each one's full paragraph lives on /about, which
+ * the button at the foot of this section leads to -- repeating them here made
+ * six boxes on one screen and read as filler.
+ *
+ * Rendered as chips rather than a fourth row of cards: DESIGN.md rules out
+ * "four identical icon-cards in a row" as the generic-template shape.
+ */
 const values = [
-  {
-    title: "Innovation",
-    icon: Lightbulb,
-    description:
-      "We embrace curiosity and creativity, encouraging every member to explore cutting-edge tools, frameworks, and AI advancements.",
-  },
-  {
-    title: "Collaboration",
-    icon: Users,
-    description:
-      "We grow together — sharing code reviews, mentoring junior students, and co-building projects in an open peer ecosystem.",
-  },
-  {
-    title: "Excellence",
-    icon: Award,
-    description:
-      "We strive for high standards in our hackathons, practical workshops, and student-led software solutions.",
-  },
-  {
-    title: "Community",
-    icon: HeartHandshake,
-    description:
-      "We foster an inclusive, welcoming space where every IT student finds belonging, encouragement, and lifelong tech peers.",
-  },
+  { title: "Innovation", icon: Lightbulb },
+  { title: "Collaboration", icon: Users },
+  { title: "Excellence", icon: Award },
+  { title: "Community", icon: HeartHandshake },
 ];
 
 export function AboutItsa() {
@@ -100,28 +88,27 @@ export function AboutItsa() {
         })}
       </div>
 
-      {/* What drives us */}
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {values.map((value, i) => {
+      {/* What drives us -- named here, explained on /about */}
+      <motion.ul
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
+        className="mt-8 flex list-none flex-wrap items-center justify-center gap-2.5"
+      >
+        {values.map((value) => {
           const Icon = value.icon;
           return (
-            <motion.div
+            <li
               key={value.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.45, delay: i * 0.06, ease: "easeOut" }}
-              className="rounded-xl border border-border/80 bg-card p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-md"
+              className="flex items-center gap-2 rounded-full border border-border/80 bg-secondary/50 px-4 py-2 text-sm font-medium"
             >
-              <Icon className="size-5 text-primary" aria-hidden="true" />
-              <h3 className="mt-3 text-sm font-bold">{value.title}</h3>
-              <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
-                {value.description}
-              </p>
-            </motion.div>
+              <Icon className="size-4 text-primary" aria-hidden="true" />
+              {value.title}
+            </li>
           );
         })}
-      </div>
+      </motion.ul>
 
       <div className="mt-10 flex justify-center">
         <Button

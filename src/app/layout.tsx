@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/data/site";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
@@ -127,7 +126,6 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${display.variable} antialiased`}
     >
       <head>
@@ -137,17 +135,10 @@ export default function RootLayout({
         />
       </head>
       <body className="overflow-x-hidden">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          <SmoothScroll>
-            {children}
-          </SmoothScroll>
-          <Toaster richColors position="top-center" />
-        </ThemeProvider>
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
+        <Toaster richColors position="top-center" />
       </body>
     </html>
   );

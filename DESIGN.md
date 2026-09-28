@@ -15,13 +15,13 @@ colors:
   border: "oklch(0.90 0.014 250)"
 typography:
   display:
-    fontFamily: "Bricolage Grotesque, Geist, sans-serif"
+    fontFamily: "Geist, sans-serif"
     fontSize: "clamp(2.5rem, 7vw, 4.25rem)"
     fontWeight: 800
     lineHeight: 1.02
     letterSpacing: "-0.025em"
   headline:
-    fontFamily: "Bricolage Grotesque, Geist, sans-serif"
+    fontFamily: "Geist, sans-serif"
     fontSize: "clamp(1.875rem, 4vw, 2.25rem)"
     fontWeight: 700
     lineHeight: 1.1
@@ -82,7 +82,7 @@ It equally rejects the **generic SaaS/AI template** (cream background, a tiny up
 
 **Key Characteristics:**
 - Committed blue identity, orange as the intentional spark — straight from the logo.
-- Light by default (a phone glance in daylight), with a real dark mode — not dark-only.
+- Light-only (a phone glance in daylight) — no theme toggle, no dark-mode tokens.
 - Expressive grotesque headings over a neutral, highly-readable body.
 - The network motif (nodes + links + a soft dot field) recurs as the signature texture.
 - Warm, direct, peer-to-peer voice. Confident, never bureaucratic.
@@ -92,7 +92,7 @@ It equally rejects the **generic SaaS/AI template** (cream background, a tiny up
 A committed blue-and-orange complementary palette lifted from the ITSA logo, grounded on a near-white cool background (never cream).
 
 ### Primary
-- **Brand Blue** (`oklch(0.49 0.19 254)`): The identity color and the only text-bearing action color. Primary buttons, links, active nav, hero/CTA fills, icon accents. In dark mode it lifts to `oklch(0.72 0.15 254)` for legibility. It is dark enough (AA) to carry near-white text on solid fills.
+- **Brand Blue** (`oklch(0.49 0.19 254)`): The identity color and the only text-bearing action color. Primary buttons, links, active nav, hero/CTA fills, icon accents. It is dark enough (AA) to carry near-white text on solid fills.
 - **Brand Blue Deep** (`oklch(0.40 0.17 258)`): The center-node blue; gradient anchors and pressed states.
 - **Brand Cyan** (`oklch(0.70 0.13 232)`): The lighter connective blue. Network links, gradient highlights, secondary nodes.
 
@@ -115,11 +115,11 @@ A committed blue-and-orange complementary palette lifted from the ITSA logo, gro
 
 ## 3. Typography
 
-**Display Font:** Bricolage Grotesque (with Geist, sans-serif fallback)
+**Display/Heading Font:** Geist (with system-ui fallback)
 **Body Font:** Geist (with system-ui fallback)
 **Label/Mono Font:** Geist Mono
 
-**Character:** An expressive, slightly quirky grotesque for headlines paired with a clean, neutral workhorse for text — contrast by role, not two near-identical sans-serifs. Bricolage brings human character (it keeps the org from reading corporate); Geist keeps long copy calm and legible. Mono is earned, not costume: this is literally an IT association, so mono labels read as native.
+**Character:** One neutral, highly-legible workhorse carries both headings and body — Geist reads calm and credible at every size rather than contrasting an expressive display face against plain text. Bricolage Grotesque shipped originally for the display/headline roles but read as informal next to a Geist hero after two reverts settled that tension; its import stays loaded in `layout.tsx` so it's a one-line move back (`--font-heading` in `globals.css`) if that call changes again. Mono is earned, not costume: this is literally an IT association, so mono labels read as native.
 
 ### Hierarchy
 - **Display** (800, `clamp(2.5rem, 7vw, 4.25rem)`, 1.02, -0.025em): Hero headline only. Balanced wrap.
@@ -131,7 +131,7 @@ A committed blue-and-orange complementary palette lifted from the ITSA logo, gro
 ### Named Rules
 **The One-Kicker Rule.** A mono kicker is allowed **once**, in the hero (the school name). It is voice. Repeating a tiny uppercase eyebrow above every section is forbidden AI scaffolding — sections lead with the headline itself.
 
-**The Heading-Font Rule.** `h1–h4` always render in Bricolage Grotesque via the base layer. Body and UI never do.
+**The Heading-Font Rule.** `h1–h4` always render in Geist via the base layer (`--font-heading` in `globals.css`), matching the hero and body. UI never overrides it to something else per-component.
 
 ## 4. Elevation
 
@@ -184,7 +184,7 @@ An inline SVG constellation of gradient nodes (blue, deep-blue, orange) wired by
 - **Do** lead sections with the headline. Use the mono kicker exactly once (hero).
 - **Do** keep body text at Muted Ink or darker — verify 4.5:1. The old washed-out grey is banned.
 - **Do** ship the network SVG (or real student photography) as hero imagery; it is not optional decoration.
-- **Do** render `h1–h4` in Bricolage Grotesque; keep body/UI in Geist.
+- **Do** render `h1–h4` and body/UI in Geist — one heading-font variable, no per-component overrides.
 - **Do** provide a non-motion fallback for every animation (handled globally via reduced-motion).
 
 ### Don't:
@@ -193,5 +193,5 @@ An inline SVG constellation of gradient nodes (blue, deep-blue, orange) wired by
 - **Don't** drift toward an **amateur club page** — no clip art, clashing colors, or mismatched fonts.
 - **Don't** put white text on orange, or use orange for a primary button (contrast fails).
 - **Don't** use `border-left`/`border-right` colored stripes as accents, or arbitrary `z-index` values — use the semantic z-scale.
-- **Don't** reintroduce dark-only. Light is the default; dark is a real, maintained mode.
+- **Don't** reintroduce a theme toggle or dark-mode tokens. The site is light-only.
 - **Don't** exceed a `clamp()` max of ~4.25rem on the hero or letter-spacing tighter than -0.04em.

@@ -11,14 +11,8 @@ export type Partner = {
 };
 
 export const partners: Partner[] = [
-  { name: "Northwind Tech", logo: "/images/partners/northwind-tech.svg", width: 220, height: 60 },
-  { name: "Cebu Cloud", logo: "/images/partners/cebu-cloud.svg", width: 200, height: 60 },
-  { name: "Iloilo Devs", logo: "/images/partners/iloilo-devs.svg", width: 210, height: 60 },
-  { name: "Panay Systems", logo: "/images/partners/panay-systems.svg", width: 220, height: 60 },
-  { name: "Agustin Labs", logo: "/images/partners/agustin-labs.svg", width: 210, height: 60 },
-  { name: "ByteHub PH", logo: "/images/partners/bytehub-ph.svg", width: 200, height: 60 },
-  { name: "Apex Logic", logo: "/images/partners/apex-logic.svg", width: 200, height: 60 },
-  { name: "Nexus Data", logo: "/images/partners/nexus-data.svg", width: 210, height: 60 },
+  { name: "Augustinian Developers Society", logo: "/images/partners/ads.png", width: 84, height: 70 },
+  { name: "Holotech Society USA", logo: "/images/partners/holotech.png", width: 76, height: 70 },
 ];
 
-export const partnersArePlaceholders = true;
+export const partnersArePlaceholders = false;
