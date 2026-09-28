@@ -2,6 +2,10 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Site is light-only -- nothing ever adds a .dark class, so this pins any
+   leftover dark: utility to require one instead of falling back to
+   Tailwind's default OS prefers-color-scheme media query, which would
+   reintroduce dark styling via system preference instead of a toggle. */
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -107,43 +111,6 @@
   --sidebar-ring: oklch(0.49 0.19 254);
 }
 
-.dark {
-  --background: oklch(0.16 0.025 258);
-  --foreground: oklch(0.96 0.008 240);
-  --card: oklch(0.20 0.03 258);
-  --card-foreground: oklch(0.96 0.008 240);
-  --popover: oklch(0.20 0.03 258);
-  --popover-foreground: oklch(0.96 0.008 240);
-  --primary: oklch(0.72 0.15 254);
-  --primary-foreground: oklch(0.16 0.025 258);
-  --secondary: oklch(0.25 0.03 258);
-  --secondary-foreground: oklch(0.96 0.008 240);
-  --muted: oklch(0.23 0.025 258);
-  --muted-foreground: oklch(0.70 0.02 250);
-  --accent: oklch(0.25 0.03 258);
-  --accent-foreground: oklch(0.96 0.008 240);
-  --destructive: oklch(0.65 0.20 30);
-  --border: oklch(0.28 0.025 258);
-  --input: oklch(0.28 0.025 258);
-  --ring: oklch(0.72 0.15 254);
-  --gold: oklch(0.72 0.17 58);
-  --gold-foreground: oklch(0.16 0.025 258);
-  --brand: oklch(0.72 0.15 254);
-  --brand-deep: oklch(0.55 0.17 258);
-  --brand-foreground: oklch(0.16 0.025 258);
-  --brand-cyan: oklch(0.75 0.12 232);
-  --brand-orange: oklch(0.70 0.18 52);
-  --brand-red: oklch(0.60 0.21 30);
-  --sidebar: oklch(0.18 0.025 258);
-  --sidebar-foreground: oklch(0.96 0.008 240);
-  --sidebar-primary: oklch(0.72 0.15 254);
-  --sidebar-primary-foreground: oklch(0.16 0.025 258);
-  --sidebar-accent: oklch(0.24 0.025 258);
-  --sidebar-accent-foreground: oklch(0.96 0.008 240);
-  --sidebar-border: oklch(0.28 0.025 258);
-  --sidebar-ring: oklch(0.72 0.15 254);
-}
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -234,7 +201,7 @@
    Vertical indented tree (nested <ul>/<li>): reads top-to-bottom and fits any
    width, so it never scrolls horizontally. Each level indents under its parent
    with an L-shaped connector. Connector color is mixed from the foreground so
-   lines stay visible in both light and dark themes. Wrapped in @layer
+   lines stay visible at any foreground/background contrast. Wrapped in @layer
    components so Tailwind v4 emits it (unlayered top-level rules are dropped
    from the build output). */
 @layer components {
@@ -302,56 +269,7 @@
   display: none !important;
 }
 
-/* Partner logo marquee.
-   The track renders the logo list twice, so translating by exactly -50% lands
-   on an identical frame and the loop is seamless. Paused on hover and on
-   keyboard focus by utilities in the component; the global
-   prefers-reduced-motion block above also neutralises it. */
-@keyframes itsa-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-
-.animate-marquee {
-  animation: itsa-marquee 30s linear infinite;
-}
-
 @layer components {
-  /* ── Partners and Sponsors Technical Grid Strip ────────────────────────── */
-  .partner-strip {
-    position: relative;
-    border-top: 2px solid #0f172a;
-    border-bottom: 2px solid #0f172a;
-    background-color: #fcfcf9;
-    background-image:
-      linear-gradient(rgba(81, 107, 125, 0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(81, 107, 125, 0.025) 1px, transparent 1px);
-    background-size: 24px 24px;
-    overflow: visible;
-  }
-
-  :is(.dark) .partner-strip {
-    border-top-color: rgba(255, 255, 255, 0.2);
-    border-bottom-color: rgba(255, 255, 255, 0.2);
-    background-color: #0d131f;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  }
-
-  .partner-strip-label {
-    position: absolute;
-    z-index: 10;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    pointer-events: none;
-  }
-
   .neo-kicker {
     display: inline-flex;
     align-items: center;
@@ -372,13 +290,6 @@
     white-space: nowrap;
     pointer-events: auto;
     user-select: none;
-  }
-
-  :is(.dark) .neo-kicker {
-    background-color: #60a5fa;
-    border-color: #000000;
-    box-shadow: 3px 3px 0px #000000;
-    color: #000000;
   }
 }
 

@@ -82,7 +82,7 @@ It equally rejects the **generic SaaS/AI template** (cream background, a tiny up
 
 **Key Characteristics:**
 - Committed blue identity, orange as the intentional spark — straight from the logo.
-- Light by default (a phone glance in daylight), with a real dark mode — not dark-only.
+- Light-only (a phone glance in daylight) — no theme toggle, no dark-mode tokens.
 - Expressive grotesque headings over a neutral, highly-readable body.
 - The network motif (nodes + links + a soft dot field) recurs as the signature texture.
 - Warm, direct, peer-to-peer voice. Confident, never bureaucratic.
@@ -92,7 +92,7 @@ It equally rejects the **generic SaaS/AI template** (cream background, a tiny up
 A committed blue-and-orange complementary palette lifted from the ITSA logo, grounded on a near-white cool background (never cream).
 
 ### Primary
-- **Brand Blue** (`oklch(0.49 0.19 254)`): The identity color and the only text-bearing action color. Primary buttons, links, active nav, hero/CTA fills, icon accents. In dark mode it lifts to `oklch(0.72 0.15 254)` for legibility. It is dark enough (AA) to carry near-white text on solid fills.
+- **Brand Blue** (`oklch(0.49 0.19 254)`): The identity color and the only text-bearing action color. Primary buttons, links, active nav, hero/CTA fills, icon accents. It is dark enough (AA) to carry near-white text on solid fills.
 - **Brand Blue Deep** (`oklch(0.40 0.17 258)`): The center-node blue; gradient anchors and pressed states.
 - **Brand Cyan** (`oklch(0.70 0.13 232)`): The lighter connective blue. Network links, gradient highlights, secondary nodes.
 
@@ -193,5 +193,5 @@ An inline SVG constellation of gradient nodes (blue, deep-blue, orange) wired by
 - **Don't** drift toward an **amateur club page** — no clip art, clashing colors, or mismatched fonts.
 - **Don't** put white text on orange, or use orange for a primary button (contrast fails).
 - **Don't** use `border-left`/`border-right` colored stripes as accents, or arbitrary `z-index` values — use the semantic z-scale.
-- **Don't** reintroduce dark-only. Light is the default; dark is a real, maintained mode.
+- **Don't** reintroduce a theme toggle or dark-mode tokens. The site is light-only.
 - **Don't** exceed a `clamp()` max of ~4.25rem on the hero or letter-spacing tighter than -0.04em.
