@@ -23,38 +23,6 @@ service cloud.firestore {
       allow write: if false;
     }
 
-    // ── Public content ────────────────────────────────────────────────────
-    // Readable by anyone; writable only by verified admins.
-
-    function hasValidOfficer() {
-      let d = request.resource.data;
-      return d.name is string && d.name.size() > 1 && d.name.size() <= 120
-        && d.position is string && d.position.size() > 1 && d.position.size() <= 120
-        && d.sortOrder is int && d.sortOrder >= 0;
-    }
-
-    function hasValidEvent() {
-      let d = request.resource.data;
-      return d.title is string && d.title.size() > 1 && d.title.size() <= 160
-        && d.slug is string && d.slug.matches('^[a-z0-9]+(-[a-z0-9]+)*$')
-        && d.description is string && d.description.size() <= 4000
-        && d.location is string && d.location.size() <= 200;
-    }
-
-    match /officers/{officerId} {
-      allow read: if true;
-      allow create, update: if isAdmin() && hasValidOfficer();
-      // Records are retired with a `deletedAt` stamp (see update) rather than
-      // destroyed, so a mistaken removal is recoverable.
-      allow delete: if false;
-    }
-
-    match /events/{eventId} {
-      allow read: if true;
-      allow create, update: if isAdmin() && hasValidEvent();
-      allow delete: if false;
-    }
-
     // ── Server-only collections ───────────────────────────────────────────
     // Written exclusively by the Admin SDK, which bypasses these rules.
 
@@ -74,8 +42,7 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
-    // Tally of which "Ask ITSA" questions get tapped. Written only by the
-    // server; readable by officers so the team can act on what visitors ask.
+    // Tally of which "Ask ITSA" questions get tapped.
     match /ask_log/{questionId} {
       allow read: if isAdmin();
       allow write: if false;
