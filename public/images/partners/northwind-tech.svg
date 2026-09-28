@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60" fill="none" role="img" aria-label="Northwind Tech">
-  <path d="M12 30L26 8L32 24L48 24L36 34L40 50L26 38L12 50L17 34Z" fill="#3B82F6"/>
-  <path d="M26 8L26 38L40 50L36 34L48 24L32 24Z" fill="#1D4ED8"/>
-  <text x="60" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="17" font-weight="800" letter-spacing="-0.5" fill="#1E293B">NORTHWIND</text>
-  <text x="60" y="46" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="600" letter-spacing="3" fill="#64748B">TECH</text>
-</svg>

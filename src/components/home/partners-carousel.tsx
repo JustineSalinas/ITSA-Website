@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LogoMark } from "@/components/layout/logo";
 import { partners } from "@/data/partners";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 /**
  * Technical blueprint grid partner and sponsor carousel with a
@@ -18,10 +19,15 @@ import { partners } from "@/data/partners";
  * Pauses on hover and keyboard focus; respects prefers-reduced-motion.
  */
 export function PartnersCarousel() {
+  const prefersReducedMotion = useReducedMotion();
+
   if (partners.length === 0) return null;
 
-  // Duplicated so the second copy scrolls in seamlessly as the first scrolls out.
-  const track = [...partners, ...partners];
+  // Duplicated so the second copy scrolls in seamlessly as the first scrolls
+  // out. Skipped under reduced motion, where the CSS falls back to a static
+  // wrapped grid (motion-reduce:flex-wrap) -- duplicating there would show
+  // each partner twice with no animation to explain why.
+  const track = prefersReducedMotion ? partners : [...partners, ...partners];
 
   return (
     <section
