@@ -36,8 +36,23 @@ type UploadResponse = UploadSuccess | UploadError;
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
-/** Largest file we bother sending to the server (10 MiB). */
+/** Largest file the picker/drop zone accepts (10 MiB). */
 const MAX_BYTES = 10 * 1024 * 1024;
+
+/**
+ * Compression target, kept safely under the server's 4 MiB cap (itself kept
+ * under Vercel's ~4.5 MB function body limit -- a platform limit, not one
+ * the app can raise). Anything selected between this and MAX_BYTES gets
+ * shrunk client-side before it ever hits the network, so "up to 10 MB" in
+ * the UI stays true without the request ever risking a platform-level
+ * rejection the app can't explain to the user.
+ */
+const TARGET_BYTES = 3.5 * 1024 * 1024;
+
+/** Long edge cap for the pre-upload resize. The server re-encodes down to
+ *  2000px anyway; this just gets multi-megapixel phone photos into range
+ *  fast without relying on quality reduction alone. */
+const MAX_DIMENSION = 2400;
 
 /** Quick client-side pre-flight. Returns an error string or null. */
 function validateFile(file: File): string | null {
@@ -48,6 +63,52 @@ function validateFile(file: File): string | null {
     return `"${file.name}" is ${(file.size / 1024 / 1024).toFixed(1)} MB — please keep images under 10 MB.`;
   }
   return null;
+}
+
+/**
+ * Resizes/re-encodes the file in-browser when it's over TARGET_BYTES, so a
+ * large photo a user picks actually fits the server's cap. Animated GIFs are
+ * left untouched -- canvas only captures the first frame, which would
+ * silently kill the animation -- and the server's own cap is still the
+ * source of truth if compression can't get small enough or fails outright.
+ */
+async function compressImage(file: File): Promise<File> {
+  if (file.size <= TARGET_BYTES || file.type === "image/gif") return file;
+
+  const bitmap = await createImageBitmap(file);
+  let { width, height } = bitmap;
+  if (Math.max(width, height) > MAX_DIMENSION) {
+    const scale = MAX_DIMENSION / Math.max(width, height);
+    width = Math.round(width * scale);
+    height = Math.round(height * scale);
+  }
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    bitmap.close();
+    return file;
+  }
+  ctx.drawImage(bitmap, 0, 0, width, height);
+  bitmap.close();
+
+  // Step quality down until it fits, or give up after a few tries -- the
+  // server enforces its own cap regardless, this just avoids a guaranteed
+  // rejection for the common "12 MP phone photo" case.
+  let quality = 0.85;
+  let blob: Blob | null = null;
+  for (let attempt = 0; attempt < 6; attempt++) {
+    blob = await new Promise<Blob | null>((resolve) =>
+      canvas.toBlob(resolve, "image/jpeg", quality),
+    );
+    if (!blob || blob.size <= TARGET_BYTES) break;
+    quality -= 0.15;
+  }
+
+  if (!blob) return file;
+  return new File([blob], file.name.replace(/\.\w+$/, ".jpg"), { type: "image/jpeg" });
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -115,59 +176,71 @@ export function ImageUploadField({
       setError(null);
 
       // Show an immediate local preview so the user can see their file right
-      // away while the network request runs.
+      // away while compression and the network request run.
       const objectUrl = URL.createObjectURL(file);
       setPreview(objectUrl);
       setProgress(0);
 
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("folder", folder);
-
-      const xhr = new XMLHttpRequest();
-
-      // Drive the progress bar off real XHR upload events.
-      xhr.upload.onprogress = (e) => {
-        if (e.lengthComputable) {
-          setProgress(Math.round((e.loaded / e.total) * 100));
-        }
-      };
-
-      xhr.onload = () => {
-        // Always clean up the blob URL — hosted URL or not.
-        URL.revokeObjectURL(objectUrl);
-        setPreview(null);
-        setProgress(null);
-
-        let body: UploadResponse;
+      void (async () => {
+        let toSend: File;
         try {
-          body = JSON.parse(xhr.responseText) as UploadResponse;
+          toSend = await compressImage(file);
         } catch {
-          setError("Unexpected server response. Please try again.");
-          return;
+          // Compression is a best-effort shrink, not a requirement — if it
+          // throws for any reason, fall back to the original file and let
+          // the server's own cap be the final word.
+          toSend = file;
         }
 
-        if ("error" in body) {
-          // Surface the exact server message (oversized, wrong type, rate
-          // limit, etc.) so the user knows exactly what went wrong.
-          setError(body.error);
-          return;
-        }
+        const formData = new FormData();
+        formData.append("file", toSend);
+        formData.append("folder", folder);
 
-        onChange(body.url);
-      };
+        const xhr = new XMLHttpRequest();
 
-      xhr.onerror = () => {
-        URL.revokeObjectURL(objectUrl);
-        setPreview(null);
-        setProgress(null);
-        setError("Network error — check your connection and try again.");
-      };
+        // Drive the progress bar off real XHR upload events.
+        xhr.upload.onprogress = (e) => {
+          if (e.lengthComputable) {
+            setProgress(Math.round((e.loaded / e.total) * 100));
+          }
+        };
 
-      xhr.open("POST", "/api/admin/upload");
-      // Include the session cookie so the route handler can authenticate.
-      xhr.withCredentials = true;
-      xhr.send(formData);
+        xhr.onload = () => {
+          // Always clean up the blob URL — hosted URL or not.
+          URL.revokeObjectURL(objectUrl);
+          setPreview(null);
+          setProgress(null);
+
+          let body: UploadResponse;
+          try {
+            body = JSON.parse(xhr.responseText) as UploadResponse;
+          } catch {
+            setError("Unexpected server response. Please try again.");
+            return;
+          }
+
+          if ("error" in body) {
+            // Surface the exact server message (oversized, wrong type, rate
+            // limit, etc.) so the user knows exactly what went wrong.
+            setError(body.error);
+            return;
+          }
+
+          onChange(body.url);
+        };
+
+        xhr.onerror = () => {
+          URL.revokeObjectURL(objectUrl);
+          setPreview(null);
+          setProgress(null);
+          setError("Network error — check your connection and try again.");
+        };
+
+        xhr.open("POST", "/api/admin/upload");
+        // Include the session cookie so the route handler can authenticate.
+        xhr.withCredentials = true;
+        xhr.send(formData);
+      })();
     },
     [folder, onChange],
   );
