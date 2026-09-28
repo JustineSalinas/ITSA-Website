@@ -10,6 +10,9 @@ import { siteConfig } from "@/data/site";
  * until someone fills it in. That is deliberate: a wrong answer about fees or
  * eligibility costs more trust than no answer at all.
  */
+/** Groups related questions in the homepage FAQ explorer. */
+export type FaqCategory = "Getting Started" | "Community & Contact";
+
 export type FaqEntry = {
   id: string;
   /** Short label for the Ask ITSA panel button. */
@@ -22,6 +25,8 @@ export type FaqEntry = {
   cta?: { label: string; href: string };
   /** `join` entries also appear in the Join page FAQ list. */
   showOnJoinPage?: boolean;
+  /** Which section this falls under in the homepage FAQ explorer. */
+  category: FaqCategory;
 };
 
 export const faqs: FaqEntry[] = [
@@ -32,6 +37,7 @@ export const faqs: FaqEntry[] = [
     a: `All Information Technology students enrolled at ${siteConfig.school} are eligible and warmly invited to join.`,
     cta: { label: "Register now", href: "/join" },
     showOnJoinPage: true,
+    category: "Getting Started",
   },
   {
     id: "beginner",
@@ -40,6 +46,7 @@ export const faqs: FaqEntry[] = [
     a: "Zero experience required! Our workshops start from absolute fundamentals up to advanced production topics.",
     cta: { label: "Register now", href: "/join" },
     showOnJoinPage: true,
+    category: "Getting Started",
   },
   {
     id: "after-signup",
@@ -47,6 +54,7 @@ export const faqs: FaqEntry[] = [
     q: "How do I get involved after signing up?",
     a: "Once you submit your application, you will be invited to our official Discord server and upcoming onboarding orientation.",
     showOnJoinPage: true,
+    category: "Getting Started",
   },
   {
     id: "what-we-do",
@@ -55,6 +63,7 @@ export const faqs: FaqEntry[] = [
     a: "Hands-on workshops and labs, hackathons and competition squads, peer and alumni mentorship, plus real leadership and project opportunities.",
     cta: { label: "See our events", href: "/events" },
     showOnJoinPage: true,
+    category: "Getting Started",
   },
   {
     id: "projects",
@@ -62,6 +71,7 @@ export const faqs: FaqEntry[] = [
     q: "Can I showcase my own project on the site?",
     a: "Yes. The Projects page features work built by IT students. Send us a message and tell us what you have built.",
     cta: { label: "Browse projects", href: "/projects" },
+    category: "Community & Contact",
   },
   {
     id: "contact",
@@ -69,6 +79,7 @@ export const faqs: FaqEntry[] = [
     q: "How do I contact an ITSA officer?",
     a: `Email us at ${siteConfig.contactEmail}, or send a message through the form on the Join page and we will reply to you directly.`,
     cta: { label: "Send a message", href: "/join" },
+    category: "Community & Contact",
   },
   {
     id: "partnership",
@@ -76,6 +87,7 @@ export const faqs: FaqEntry[] = [
     q: "How can our company partner with or sponsor ITSA?",
     a: "We welcome partners for events, workshops, and competitions. Use the contact form and choose “Partnership / sponsorship” so it reaches the right officer.",
     cta: { label: "Get in touch", href: "/join" },
+    category: "Community & Contact",
   },
   {
     // TODO(ITSA officers): confirm the real answer and fill in `a` below.
@@ -88,6 +100,7 @@ export const faqs: FaqEntry[] = [
     a: "",
     cta: { label: "Ask us", href: "/join" },
     showOnJoinPage: true,
+    category: "Getting Started",
   },
 ];
 

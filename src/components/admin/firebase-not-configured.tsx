@@ -6,7 +6,7 @@ export function FirebaseNotConfigured() {
     <Card className="border-amber-500/40">
       <CardContent className="pt-6">
         <div className="flex items-start gap-3">
-          <div className="grid size-10 shrink-0 place-items-center rounded-lg bg-amber-500/15 text-amber-600 dark:text-amber-400">
+          <div className="grid size-10 shrink-0 place-items-center rounded-lg bg-amber-500/15 text-amber-600">
             <AlertTriangle className="size-5" />
           </div>
           <div className="space-y-2 text-sm">

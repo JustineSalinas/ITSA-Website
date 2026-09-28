@@ -6,7 +6,7 @@ import { AboutItsa } from "@/components/home/about-itsa";
 import { HomeFaq } from "@/components/home/home-faq";
 import { JoinCta } from "@/components/home/join-cta";
 import { LatestNews } from "@/components/home/latest-news";
-import { PartnersCarousel } from "@/components/home/partners-carousel";
+import { Partners } from "@/components/home/partners";
 import { EventCard } from "@/components/events/event-card";
 import { OfficerCard } from "@/components/officers/officer-card";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,7 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
-      <PartnersCarousel />
+      <Partners />
       <AboutItsa />
       <LatestNews news={news} />
 

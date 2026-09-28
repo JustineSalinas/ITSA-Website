@@ -31,7 +31,7 @@ export function PageHeader({
       {/* Atmosphere Background overlay */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div
-          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.1]"
+          className="absolute inset-0 opacity-[0.05]"
           style={{
             backgroundImage: `linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)`,
             backgroundSize: "36px 36px",
