@@ -2,22 +2,27 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
-import { answeredFaqs } from "@/data/faq";
+import { ArrowRight } from "lucide-react";
+import { answeredFaqs, type FaqEntry } from "@/data/faq";
 
 const categoryOrder = ["Getting Started", "Community & Contact"] as const;
 
+function slugify(s: string) {
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
 /**
- * Homepage FAQ, presented as a categorized explorer: a question list on one
- * side, one answer expanded at a time on the other, with prev/next to step
- * through every question in order. The 01/02-style numbering is already an
- * established label pattern in this design system (see DESIGN.md's
- * Typography hierarchy), just applied here across categories instead of a
- * flat list.
+ * Homepage FAQ, styled as a code-editor window: explorer sidebar grouped by
+ * category, one answer open at a time in a "file" pane with a breadcrumb
+ * tab, line-number gutter, markdown-styled heading, and prev/next paging.
  *
- * Questions come from src/data/faq.ts, the same source as the Join page FAQ
- * and the Ask ITSA panel, so an answer is written once. Entries with no
- * written answer stay hidden everywhere.
+ * This mirrors a reference site's editor-chrome FAQ structure and sizing,
+ * requested explicitly as structure-only -- rebuilt here in ITSA's own
+ * light palette (brand blue in place of the reference's neon green) rather
+ * than its dark theme, and with ITSA's own real questions rather than that
+ * site's unrelated content. Questions come from src/data/faq.ts, the same
+ * source as the Join page FAQ and the Ask ITSA panel, so an answer is
+ * written once. Entries with no written answer stay hidden everywhere.
  */
 export function HomeFaq() {
   const flat = answeredFaqs;
@@ -30,7 +35,7 @@ export function HomeFaq() {
 
   const [activeId, setActiveId] = useState(flat[0]?.id);
   const activeIndex = flat.findIndex((f) => f.id === activeId);
-  const active = flat[activeIndex];
+  const active: FaqEntry | undefined = flat[activeIndex];
 
   if (!active) return null;
 
@@ -39,100 +44,179 @@ export function HomeFaq() {
     setActiveId(next.id);
   }
 
+  // Decorative gutter only -- not tied to the real answer length, same as
+  // the reference's own static line count.
+  const gutterLines = Array.from({ length: 22 }, (_, i) => i + 1);
+
   return (
     <section className="border-t border-border/60 bg-muted/20 py-20 sm:py-24">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
             Questions students ask us
           </h2>
         </div>
 
-        <div className="mt-10 grid overflow-hidden rounded-2xl border border-border/80 bg-card md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
-          {/* Question list, grouped by category */}
-          <nav
-            aria-label="FAQ categories"
-            className="border-b border-border/70 p-2 md:max-h-[28rem] md:overflow-y-auto md:border-b-0 md:border-r"
-          >
-            <p className="px-3 py-2 font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              {flat.length} questions
-            </p>
-            {grouped.map((group) => (
-              <div key={group.category} className="mt-1 first:mt-0">
-                <p className="px-3 py-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-primary">
-                  {group.category}
-                </p>
-                <ul className="list-none">
-                  {group.items.map((item) => {
-                    const globalIndex = flat.findIndex((f) => f.id === item.id);
-                    const isActive = item.id === activeId;
-                    return (
-                      <li key={item.id}>
-                        <button
-                          type="button"
-                          onClick={() => setActiveId(item.id)}
-                          aria-current={isActive}
-                          className={`flex w-full min-h-11 items-start gap-2.5 rounded-lg px-3 py-2 text-left text-sm outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50 ${
-                            isActive
-                              ? "bg-primary/10 font-semibold text-primary"
-                              : "text-foreground hover:bg-accent/60"
-                          }`}
-                        >
-                          <span className="shrink-0 pt-px font-mono text-xs text-muted-foreground">
-                            {String(globalIndex + 1).padStart(2, "0")}
-                          </span>
-                          <span>{item.q}</span>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
+        <div className="mt-10 overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm">
+          {/* Window chrome bar */}
+          <div className="relative flex items-center border-b border-border/70 bg-muted/50 px-4 py-2.5">
+            <div className="flex items-center gap-1.5" aria-hidden="true">
+              <span className="size-2.5 rounded-full bg-red-400" />
+              <span className="size-2.5 rounded-full bg-amber-400" />
+              <span className="size-2.5 rounded-full bg-emerald-400" />
+            </div>
+            <span className="absolute left-1/2 -translate-x-1/2 font-mono text-xs text-muted-foreground">
+              itsa — faq.md
+            </span>
+          </div>
+          <div className="h-0.5 bg-primary" aria-hidden="true" />
+
+          <div className="grid md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+            {/* Explorer / question list */}
+            <nav
+              aria-label="FAQ categories"
+              className="border-b border-border/70 md:max-h-[32rem] md:overflow-y-auto md:border-b-0 md:border-r"
+            >
+              <div className="flex items-center justify-between border-b border-border/60 px-4 py-2.5">
+                <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Explorer
+                </span>
+                <span className="font-mono text-[11px] text-muted-foreground">
+                  {flat.length} items
+                </span>
               </div>
-            ))}
-          </nav>
+              {grouped.map((group) => (
+                <div key={group.category}>
+                  <p className="px-4 pt-3 pb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-primary">
+                    <span aria-hidden="true">▸ </span>
+                    {group.category}
+                  </p>
+                  <ul className="list-none">
+                    {group.items.map((item) => {
+                      const globalIndex = flat.findIndex((f) => f.id === item.id);
+                      const isActive = item.id === activeId;
+                      return (
+                        <li key={item.id}>
+                          <button
+                            type="button"
+                            onClick={() => setActiveId(item.id)}
+                            aria-current={isActive}
+                            className={`relative flex min-h-11 w-full items-start gap-2 py-3 pl-4 pr-4 text-left text-sm outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset ${
+                              isActive
+                                ? "bg-primary/10 font-semibold text-primary"
+                                : "text-foreground hover:bg-accent/60"
+                            }`}
+                          >
+                            {isActive && (
+                              <span
+                                aria-hidden="true"
+                                className="absolute inset-y-0 left-0 w-[3px] bg-primary"
+                              />
+                            )}
+                            <span className="shrink-0 pt-px font-mono text-xs text-muted-foreground">
+                              {String(globalIndex + 1).padStart(2, "0")}
+                            </span>
+                            <span>{item.q}</span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ))}
+            </nav>
 
-          {/* Detail panel */}
-          <div className="flex flex-col p-6 sm:p-8">
-            <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-              {active.category}
-            </p>
-            <h3 className="mt-2 font-heading text-xl font-bold tracking-tight text-balance sm:text-2xl">
-              {active.q}
-            </h3>
-            <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground sm:text-base">
-              {active.a}
-            </p>
-            {active.cta && (
-              <Link
-                href={active.cta.href}
-                className="mt-4 inline-flex w-fit items-center gap-1 text-sm font-semibold text-primary hover:underline"
-              >
-                {active.cta.label}
-                <ArrowRight className="size-3.5" aria-hidden="true" />
-              </Link>
-            )}
+            {/* Answer pane */}
+            <div className="flex flex-col md:min-h-[32rem]">
+              {/* Breadcrumb tab */}
+              <div className="flex items-center justify-between border-b border-border/60 px-4 py-2.5">
+                <span className="border-b-2 border-primary pb-2.5 -mb-[11px] font-mono text-xs">
+                  <span className="text-muted-foreground">{slugify(active.category)} / </span>
+                  <span className="text-foreground">
+                    q{String(activeIndex + 1).padStart(2, "0")}.answer
+                  </span>
+                </span>
+                <span className="flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground">
+                  <span className="size-1.5 rounded-full bg-primary" aria-hidden="true" />
+                  MD
+                </span>
+              </div>
 
-            <div className="mt-6 flex items-center justify-between border-t border-border/60 pt-4">
-              <span className="font-mono text-xs text-muted-foreground">
-                {activeIndex + 1} / {flat.length}
-              </span>
-              <div className="flex gap-2">
-                <button
-                  type="button"
-                  onClick={() => goTo(-1)}
-                  aria-label="Previous question"
-                  className="grid size-11 place-items-center rounded-lg border border-border/80 text-muted-foreground outline-none transition-colors hover:border-primary/40 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+              {/* Line-number gutter + content */}
+              <div className="flex flex-1 gap-4 px-4 py-5 sm:px-6">
+                <div
+                  aria-hidden="true"
+                  className="hidden shrink-0 select-none font-mono text-xs leading-7 text-muted-foreground/50 sm:block"
                 >
-                  <ArrowLeft className="size-3.5" aria-hidden="true" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => goTo(1)}
-                  aria-label="Next question"
-                  className="grid size-11 place-items-center rounded-lg border border-border/80 text-muted-foreground outline-none transition-colors hover:border-primary/40 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
-                >
-                  <ChevronRight className="size-3.5" aria-hidden="true" />
-                </button>
+                  {gutterLines.map((n) => (
+                    <div key={n}>{n}</div>
+                  ))}
+                </div>
+
+                <div className="min-w-0 flex-1">
+                  <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                    {active.category}
+                  </p>
+                  <h3 className="mt-3 text-balance">
+                    <span className="font-mono text-muted-foreground/60" aria-hidden="true">
+                      #{" "}
+                    </span>
+                    <span className="font-heading text-lg font-bold tracking-tight sm:text-xl">
+                      {active.q}
+                    </span>
+                  </h3>
+
+                  <div className="mt-5 flex items-center gap-3" aria-hidden="true">
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground/70">
+                      Answer
+                    </span>
+                    <span className="h-px flex-1 bg-border/70" />
+                  </div>
+
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                    {active.a}
+                  </p>
+
+                  {active.cta && (
+                    <div className="mt-6 rounded-lg border border-primary/25 bg-primary/5 p-4">
+                      <Link
+                        href={active.cta.href}
+                        className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-primary hover:underline"
+                      >
+                        <span aria-hidden="true">→</span>
+                        Next step
+                      </Link>
+                      <p className="mt-1.5 text-sm text-muted-foreground">
+                        {active.cta.label}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Footer / pager */}
+              <div className="mt-auto flex items-center justify-between border-t border-border/60 px-4 py-3 sm:px-6">
+                <span className="font-mono text-xs text-muted-foreground">
+                  {activeIndex + 1} / {flat.length}
+                </span>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => goTo(-1)}
+                    className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border/80 px-3 font-mono text-xs text-muted-foreground outline-none transition-colors hover:border-primary/40 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+                  >
+                    <ArrowRight className="size-3 rotate-180" aria-hidden="true" />
+                    prev
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => goTo(1)}
+                    className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border/80 px-3 font-mono text-xs text-muted-foreground outline-none transition-colors hover:border-primary/40 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+                  >
+                    next
+                    <ArrowRight className="size-3" aria-hidden="true" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
