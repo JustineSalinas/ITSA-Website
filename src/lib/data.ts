@@ -16,6 +16,26 @@ export async function getOfficers(): Promise<Officer[]> {
 export async function getEvents(): Promise<EventItem[]> {
   const sanityEvents = await getSanityEvents();
   if (sanityEvents && sanityEvents.length) return sanityEvents;
+
+  // The officers and news fallbacks below are real content -- the reconciled
+  // roster and actual event recaps -- so serving them when Sanity is quiet is
+  // merely stale. placeholderEvents is not: it is invented, and its dates are
+  // written as offsets from today, so it always reads as genuinely upcoming.
+  // Shipping that to visitors would invite students to workshops that were
+  // never scheduled, and nothing on the page would look wrong.
+  //
+  // So it stays a development convenience. In production an empty list is the
+  // honest answer, and the pages already say "No events scheduled yet". The
+  // error is logged rather than thrown: an empty events section is a far
+  // smaller failure than a homepage that will not render at all.
+  if (process.env.NODE_ENV === "production") {
+    console.error(
+      "[data] Sanity returned no events. Serving an empty list rather than the " +
+        "placeholder fixtures. Check the Sanity connection and that events are published.",
+    );
+    return [];
+  }
+
   return placeholderEvents;
 }
 

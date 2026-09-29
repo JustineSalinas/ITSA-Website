@@ -34,7 +34,7 @@ export default async function HomePage() {
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
-                Upcoming Events & Labs
+                Upcoming Events
               </h2>
               <p className="mt-3 max-w-lg text-base sm:text-lg text-muted-foreground">
                 Workshops, competitions, hackathons, and social gatherings designed for real skill growth.
