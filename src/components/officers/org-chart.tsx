@@ -103,6 +103,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
     { name: "Department of Communications", code: "COMMS", vp: execMembers.find((m) => m.position.includes("Communication")) },
     { name: "Department of Operations", code: "OPS", vp: execMembers.find((m) => m.position.includes("Operation")) },
     { name: "Department of Finance", code: "FINANCE", vp: execMembers.find((m) => m.position.includes("Finance")) },
+    { name: "Department of Documentation", code: "DOCS", vp: execMembers.find((m) => m.position.includes("Documentation")) },
   ];
 
   const directorate: Array<{ label: string; node?: OrgNode }> = [

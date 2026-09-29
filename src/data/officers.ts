@@ -33,7 +33,7 @@ export const orgChart: OrgNode = {
           photoUrl: "/officers/samantha-quinn-d-bretana.jpg",
           children: [
             {
-              name: "Michael Mercado",
+              name: "Jhon Michael Mercado",
               position: "Assistant Secretary",
               photoUrl: "/officers/jhon-michael-mercado.jpg",
             },
@@ -48,12 +48,19 @@ export const orgChart: OrgNode = {
               name: "Cholo Rosales",
               position: "Creatives Lead",
               children: [
-                { name: "Rovann Acevedo", position: "Documentation Lead" },
                 { name: "Tim Gabriel Nuñal", position: "Creatives" },
                 { name: "Denise Rae Baldisimo", position: "Creatives" },
                 { name: "Hannah Nicole Tuer", position: "Creatives" },
               ],
             },
+          ],
+        },
+        {
+          name: "Aiderson Abapo",
+          position: "Documentation Officer",
+          children: [
+            { name: "Rovann Acevedo", position: "Documentation Lead" },
+            { name: "Edrian Jed Fiesta", position: "Documentation" },
           ],
         },
         {
