@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { siteConfig } from "@/data/site";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
+import { PageLoader } from "@/components/loader/page-loader";
 
 const geistSans = Geist({
   variable: "--font-sans",
@@ -135,6 +136,7 @@ export default function RootLayout({
         />
       </head>
       <body className="overflow-x-hidden">
+        <PageLoader />
         <SmoothScroll>
           {children}
         </SmoothScroll>
