@@ -101,6 +101,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
   const departments = [
     { name: "Department of Technology", code: "TECH", vp: execMembers.find((m) => m.position.includes("Technology")) },
     { name: "Department of Communications", code: "COMMS", vp: execMembers.find((m) => m.position.includes("Communication")) },
+    { name: "Department of Documentation", code: "DOCS", vp: execMembers.find((m) => m.position.includes("Documentation")) },
     { name: "Department of Operations", code: "OPS", vp: execMembers.find((m) => m.position.includes("Operation")) },
     { name: "Department of Finance", code: "FINANCE", vp: execMembers.find((m) => m.position.includes("Finance")) },
   ];
@@ -118,6 +119,167 @@ export function OrgChart({ root }: { root: OrgNode }) {
       else next.add(code);
       return next;
     });
+  }
+
+  function renderDepartmentCard(dept: (typeof departments)[number]) {
+    const isOpen = openDepts.has(dept.code);
+    const panelId = `dept-${dept.code}`;
+
+    if (!dept.vp) {
+      return (
+        <li key={dept.code}>
+          <VacantCard label={`${dept.code} Directorate`} />
+        </li>
+      );
+    }
+
+    return (
+      <li key={dept.code}>
+        <SpotlightCard className="flex flex-col p-0">
+          {/* The toggle exists on phones only; from md up the panel
+              below is shown by CSS whatever this button's state is. */}
+          <button
+            type="button"
+            onClick={() => toggleDept(dept.code)}
+            aria-expanded={isOpen}
+            aria-controls={panelId}
+            className="flex w-full items-center justify-between gap-3 p-5 sm:p-6 text-left outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/50 md:hidden"
+          >
+            <span>
+              <span className="font-mono text-xs font-bold uppercase text-primary">
+                {dept.code} Directorate
+              </span>
+              <span className="mt-1.5 block text-lg font-extrabold tracking-tight">
+                {dept.vp.name}
+              </span>
+            </span>
+            <ChevronDown
+              aria-hidden="true"
+              className={`size-5 shrink-0 text-muted-foreground ${
+                prefersReducedMotion ? "" : "transition-transform duration-200"
+              } ${isOpen ? "rotate-180" : ""}`}
+            />
+          </button>
+
+          <div
+            id={panelId}
+            className={`p-5 sm:p-7 md:block ${isOpen ? "block" : "hidden"}`}
+          >
+            {/* Desktop header -- the phone version lives in the button */}
+            <div className="hidden border-b border-border/60 pb-5 md:block">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs font-bold uppercase tracking-wider text-primary">
+                  {dept.code} Directorate
+                </span>
+                {dept.vp.children && (
+                  <span className="rounded-full bg-secondary px-2.5 py-0.5 font-mono text-[11px] font-medium text-muted-foreground">
+                    {1 + dept.vp.children.reduce((acc, c) => acc + 1 + (c.children?.length ?? 0), 0)} members
+                  </span>
+                )}
+              </div>
+              <PersonButton
+                node={dept.vp}
+                group={dept.name}
+                onSelect={setSelected}
+                className="mt-3 flex items-center gap-3.5 rounded-xl p-2 transition-colors hover:bg-muted/50"
+              >
+                <PersonAvatar node={dept.vp} className="size-12 shadow-xs" textClassName="text-sm font-bold" />
+                <span className="min-w-0 flex-1">
+                  <span className="block font-heading text-lg font-bold tracking-tight text-foreground hover:text-primary">
+                    {dept.vp.name}
+                  </span>
+                  <span className="block text-sm font-medium text-muted-foreground">
+                    {dept.vp.position}
+                  </span>
+                </span>
+              </PersonButton>
+            </div>
+
+            <p className="text-sm font-medium text-muted-foreground md:hidden">
+              {dept.vp.position}
+            </p>
+
+            {dept.vp.children && dept.vp.children.length > 0 && (
+              <div className="mt-6 space-y-4">
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Committee Leads
+                  </span>
+                  <div className="h-px flex-1 bg-border/60" />
+                </div>
+
+                <ul className="list-none space-y-4">
+                  {dept.vp.children.map((lead) => (
+                    <li
+                      key={lead.name}
+                      className="rounded-xl border border-border/60 bg-muted/20 p-3.5 sm:p-4 transition-colors hover:border-border"
+                    >
+                      <PersonButton
+                        node={lead}
+                        group={dept.name}
+                        onSelect={setSelected}
+                        className="flex items-center gap-3 rounded-lg"
+                      >
+                        <PersonAvatar node={lead} className="size-10" textClassName="text-xs font-bold" />
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-sm font-bold text-foreground hover:text-primary">
+                            {lead.name}
+                          </span>
+                          <span className="block text-xs font-medium text-muted-foreground">
+                            {lead.position}
+                          </span>
+                        </span>
+                      </PersonButton>
+
+                      {lead.children && lead.children.length > 0 && (
+                        <div className="mt-3 border-t border-border/50 pt-3">
+                          <span className="mb-2 block font-mono text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                            Team Members
+                          </span>
+                          <ul
+                            className={`grid gap-2 ${
+                              lead.children.length === 1
+                                ? "grid-cols-1"
+                                : "grid-cols-1 sm:grid-cols-2"
+                            }`}
+                          >
+                            {lead.children.map((sub) => (
+                              <li key={sub.name}>
+                                <PersonButton
+                                  node={sub}
+                                  group={dept.name}
+                                  onSelect={setSelected}
+                                  className="flex items-center gap-2.5 rounded-md border border-border/40 bg-card/60 p-2.5 transition-all hover:border-primary/30 hover:bg-card"
+                                >
+                                  <PersonAvatar
+                                    node={sub}
+                                    className="size-7 shrink-0"
+                                    textClassName="text-[10px] font-bold"
+                                    fallbackClassName="bg-primary/10 text-primary"
+                                  />
+                                  <span className="min-w-0 flex-1">
+                                    <span className="block text-xs font-bold text-foreground hover:text-primary leading-snug">
+                                      {sub.name}
+                                    </span>
+                                    <span className="block text-[11px] text-muted-foreground leading-snug">
+                                      {sub.position}
+                                    </span>
+                                  </span>
+                                </PersonButton>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </SpotlightCard>
+      </li>
+    );
   }
 
   return (
@@ -191,28 +353,67 @@ export function OrgChart({ root }: { root: OrgNode }) {
           <h3 className="mb-5 text-center font-mono text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Directorate Office & Executive Secretariat
           </h3>
-          <ul className="grid list-none gap-5 sm:grid-cols-3">
-            {directorate.map(({ label, node }) => (
-              <li key={label}>
-                {node ? (
-                  <PersonButton
-                    node={node}
-                    group={label}
-                    onSelect={setSelected}
-                    className="flex items-center gap-4 rounded-xl border border-border/80 bg-card p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-md"
-                  >
-                    <PersonAvatar node={node} className="size-11" textClassName="text-xs font-bold" />
-                    <span className="min-w-0">
+          <ul className="grid list-none gap-5 sm:grid-cols-3 items-start">
+            {directorate.map(({ label, node }) => {
+              if (!node) {
+                return (
+                  <li key={label}>
+                    <VacantCard label={label} />
+                  </li>
+                );
+              }
+
+              const hasChildren = Boolean(node.children && node.children.length > 0);
+
+              return (
+                <li key={label}>
+                  <div className="flex flex-col rounded-xl border border-border/80 bg-card p-5 transition-all duration-300 hover:border-primary/40 hover:shadow-md">
+                    <div>
                       <span className="font-mono text-xs font-bold uppercase text-primary">{label}</span>
-                      <span className="mt-1.5 block min-h-[3rem] text-base font-bold">{node.name}</span>
-                      <span className="block text-sm text-muted-foreground">{node.position}</span>
-                    </span>
-                  </PersonButton>
-                ) : (
-                  <VacantCard label={label} />
-                )}
-              </li>
-            ))}
+                      <PersonButton
+                        node={node}
+                        group={label}
+                        onSelect={setSelected}
+                        className="mt-3 flex items-center gap-3.5 rounded-lg p-1.5 -mx-1.5 transition-colors hover:bg-muted/50"
+                      >
+                        <PersonAvatar node={node} className="size-11" textClassName="text-xs font-bold" />
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-base font-bold text-foreground hover:text-primary">
+                            {node.name}
+                          </span>
+                          <span className="block text-sm text-muted-foreground">{node.position}</span>
+                        </span>
+                      </PersonButton>
+                    </div>
+
+                    {hasChildren && (
+                      <div className="mt-3 border-t border-border/60 pt-3">
+                        <span className="mb-1.5 block font-mono text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                          Assistant
+                        </span>
+                        {node.children!.map((child) => (
+                          <PersonButton
+                            key={child.name}
+                            node={child}
+                            group={label}
+                            onSelect={setSelected}
+                            className="flex items-center gap-3 rounded-lg p-1.5 -mx-1.5 transition-colors hover:bg-muted/50"
+                          >
+                            <PersonAvatar node={child} className="size-9" textClassName="text-[11px] font-bold" />
+                            <span className="min-w-0 flex-1">
+                              <span className="block text-sm font-bold text-foreground hover:text-primary">
+                                {child.name}
+                              </span>
+                              <span className="block text-xs text-muted-foreground">{child.position}</span>
+                            </span>
+                          </PersonButton>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </section>
 
@@ -224,162 +425,17 @@ export function OrgChart({ root }: { root: OrgNode }) {
             Departmental Directorates & Technical Committees
           </h3>
 
-          <ul className="grid list-none items-start gap-8 lg:grid-cols-2">
-            {departments.map((dept) => {
-              const isOpen = openDepts.has(dept.code);
-              const panelId = `dept-${dept.code}`;
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            {/* Left Column: Technology & Communications */}
+            <ul className="flex flex-col gap-8 list-none">
+              {departments.slice(0, 2).map(renderDepartmentCard)}
+            </ul>
 
-              if (!dept.vp) {
-                return (
-                  <li key={dept.code}>
-                    <VacantCard label={`${dept.code} Directorate`} />
-                  </li>
-                );
-              }
-
-              return (
-                <li key={dept.code}>
-                  <SpotlightCard className="flex flex-col p-0">
-                    {/* The toggle exists on phones only; from md up the panel
-                        below is shown by CSS whatever this button's state is. */}
-                    <button
-                      type="button"
-                      onClick={() => toggleDept(dept.code)}
-                      aria-expanded={isOpen}
-                      aria-controls={panelId}
-                      className="flex w-full items-center justify-between gap-3 p-5 sm:p-6 text-left outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/50 md:hidden"
-                    >
-                      <span>
-                        <span className="font-mono text-xs font-bold uppercase text-primary">
-                          {dept.code} Directorate
-                        </span>
-                        <span className="mt-1.5 block text-lg font-extrabold tracking-tight">
-                          {dept.vp.name}
-                        </span>
-                      </span>
-                      <ChevronDown
-                        aria-hidden="true"
-                        className={`size-5 shrink-0 text-muted-foreground ${
-                          prefersReducedMotion ? "" : "transition-transform duration-200"
-                        } ${isOpen ? "rotate-180" : ""}`}
-                      />
-                    </button>
-
-                    <div
-                      id={panelId}
-                      className={`p-5 sm:p-7 md:block ${isOpen ? "block" : "hidden"}`}
-                    >
-                      {/* Desktop header -- the phone version lives in the button */}
-                      <div className="hidden border-b border-border/60 pb-5 md:block">
-                        <div className="flex items-center justify-between">
-                          <span className="font-mono text-xs font-bold uppercase tracking-wider text-primary">
-                            {dept.code} Directorate
-                          </span>
-                          {dept.vp.children && (
-                            <span className="rounded-full bg-secondary px-2.5 py-0.5 font-mono text-[11px] font-medium text-muted-foreground">
-                              {1 + dept.vp.children.reduce((acc, c) => acc + 1 + (c.children?.length ?? 0), 0)} members
-                            </span>
-                          )}
-                        </div>
-                        <PersonButton
-                          node={dept.vp}
-                          group={dept.name}
-                          onSelect={setSelected}
-                          className="mt-3 flex items-center gap-3.5 rounded-xl p-2 transition-colors hover:bg-muted/50"
-                        >
-                          <PersonAvatar node={dept.vp} className="size-12 shadow-xs" textClassName="text-sm font-bold" />
-                          <span className="min-w-0 flex-1">
-                            <span className="block font-heading text-lg font-bold tracking-tight text-foreground hover:text-primary">
-                              {dept.vp.name}
-                            </span>
-                            <span className="block text-sm font-medium text-muted-foreground">
-                              {dept.vp.position}
-                            </span>
-                          </span>
-                        </PersonButton>
-                      </div>
-
-                      <p className="text-sm font-medium text-muted-foreground md:hidden">
-                        {dept.vp.position}
-                      </p>
-
-                      {dept.vp.children && dept.vp.children.length > 0 && (
-                        <div className="mt-6 space-y-4">
-                          <div className="flex items-center gap-2">
-                            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                              Committee Leads
-                            </span>
-                            <div className="h-px flex-1 bg-border/60" />
-                          </div>
-
-                          <ul className="list-none space-y-4">
-                            {dept.vp.children.map((lead) => (
-                              <li
-                                key={lead.name}
-                                className="rounded-xl border border-border/60 bg-muted/20 p-3.5 sm:p-4 transition-colors hover:border-border"
-                              >
-                                <PersonButton
-                                  node={lead}
-                                  group={dept.name}
-                                  onSelect={setSelected}
-                                  className="flex items-center gap-3 rounded-lg"
-                                >
-                                  <PersonAvatar node={lead} className="size-10" textClassName="text-xs font-bold" />
-                                  <span className="min-w-0 flex-1">
-                                    <span className="block text-sm font-bold text-foreground hover:text-primary">
-                                      {lead.name}
-                                    </span>
-                                    <span className="block text-xs font-medium text-muted-foreground">
-                                      {lead.position}
-                                    </span>
-                                  </span>
-                                </PersonButton>
-
-                                {lead.children && lead.children.length > 0 && (
-                                  <div className="mt-3 border-t border-border/50 pt-3">
-                                    <span className="mb-2 block font-mono text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                                      Team Members
-                                    </span>
-                                    <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                                      {lead.children.map((sub) => (
-                                        <li key={sub.name}>
-                                          <PersonButton
-                                            node={sub}
-                                            group={dept.name}
-                                            onSelect={setSelected}
-                                            className="flex items-center gap-2.5 rounded-md border border-border/40 bg-card/60 p-2 transition-all hover:border-primary/30 hover:bg-card"
-                                          >
-                                            <PersonAvatar
-                                              node={sub}
-                                              className="size-7 shrink-0"
-                                              textClassName="text-[10px] font-bold"
-                                              fallbackClassName="bg-primary/10 text-primary"
-                                            />
-                                            <span className="min-w-0 flex-1">
-                                              <span className="block truncate text-xs font-bold text-foreground hover:text-primary">
-                                                {sub.name}
-                                              </span>
-                                              <span className="block truncate text-[11px] text-muted-foreground">
-                                                {sub.position}
-                                              </span>
-                                            </span>
-                                          </PersonButton>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                )}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  </SpotlightCard>
-                </li>
-              );
-            })}
-          </ul>
+            {/* Right Column: Documentation, Operations & Finance */}
+            <ul className="flex flex-col gap-8 list-none">
+              {departments.slice(2).map(renderDepartmentCard)}
+            </ul>
+          </div>
         </section>
       </motion.div>
 
