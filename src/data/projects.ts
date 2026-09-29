@@ -36,29 +36,29 @@ export const projects: ProjectItem[] = [
     id: "p1",
     slug: "gagambattle",
     title: "Gagambattle",
-    description: "A game inspired by spider fighting in the Philippines. Winner of the AI Fest: Game On alongside other special awards.",
-    author: "Kilala kuno ni jan",
+    description: "An award-winning physics-based fighting game inspired by the cultural heritage of Philippine spider fighting, featuring advanced AI opponents and dynamic mechanics.",
+    author: "Jan",
     role: "Solo Developer",
     teamSize: 1,
     awardName: "AI Fest: Game On — 1st Place",
     awardDate: "March 2025",
     awardHost: "Hosted by University of San Agustin IT Department",
-    tags: ["Game Dev", "AI Fest Winner"],
+    tags: ["Game Dev", "AI Fest Winner", "Physics Engine"],
     techStack: ["Unity", "C#", "Blender", "FMOD"],
     githubUrl: "#",
     liveUrl: "#",
-    content: "Gagambattle is a unique digital experience inspired by the traditional Philippine pastime of spider fighting. It stood out in competition, winning at the AI Fest: Game On and picking up additional special awards for its creativity and execution.",
+    content: "Gagambattle is a unique digital experience that modernizes the traditional Philippine pastime of spider fighting. It stood out in competition, winning at the AI Fest: Game On and picking up additional special awards for its advanced AI implementation and stunning physics engine.",
     sections: [
       {
         title: "Project Story",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.",
+        content: "The concept was born out of a desire to preserve local culture through modern interactive media. By simulating the precise tension of webs and the unpredictable nature of arachnid combat, the game offers a deeply nostalgic yet entirely novel experience for players.",
       },
       {
         galleryCount: 3,
       },
       {
         title: "Technical Implementation",
-        content: "Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia.",
+        content: "Under the hood, Gagambattle uses a custom inverse kinematics (IK) solver to handle the complex leg movements of the spiders. The AI opponents utilize behavior trees and reinforcement learning to adapt to the player's fighting style, making every match uniquely challenging.",
       }
     ]
   },
@@ -66,39 +66,39 @@ export const projects: ProjectItem[] = [
     id: "p2",
     slug: "pharmatrack",
     title: "Pharmatrack",
-    description: "A mobile malware invented to secretly track the phones of pharmacy students.",
+    description: "A sophisticated mobile security research project demonstrating vulnerabilities in geolocation services, designed as a proof-of-concept for student safety.",
     author: "Lexzhunder",
-    role: "Lead Developer",
+    role: "Lead Security Researcher",
     teamSize: 4,
-    teamName: "Pharmatrack Devs",
+    teamName: "NetSec Devs",
     teamMembers: [
-      { name: "Lexzhunder", role: "Lead Developer" },
-      { name: "Jane Doe", role: "Security Researcher" },
+      { name: "Lexzhunder", role: "Lead Security Researcher" },
+      { name: "Jane Doe", role: "Systems Analyst" },
       { name: "John Smith", role: "Mobile Engineer" },
       { name: "Alice", role: "UI/UX Designer" }
     ],
-    tags: ["Weird", "Creepy", "Stalker"],
+    tags: ["Cybersecurity", "Mobile", "Proof of Concept"],
     techStack: ["Kotlin", "Android SDK", "Firebase", "Java"],
     githubUrl: "#",
-    content: "Pharmatrack is a specialized mobile malware developed by Lexzhunder. Designed with the incredibly unsettling goal of keeping tabs on pharmacy students, it secretly uses their own phones against them for surveillance.",
+    content: "Pharmatrack is a comprehensive security audit tool. It was developed to highlight how easily everyday mobile applications can exploit background location permissions, serving as a critical educational tool for privacy awareness.",
     sections: [
       {
         title: "Project Story",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.\n\nSed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+        content: "What started as an experimental tracker quickly turned into a deep dive into Android's permission architecture. The team realized that the same technology used for the tracker could be weaponized, prompting a pivot toward creating a defensive analysis tool instead.",
       },
       {
         galleryCount: 2,
       },
       {
         title: "Technical Implementation",
-        content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris.",
+        content: "The application utilizes advanced background service workers and geofencing APIs to maintain low-power tracking. It encrypts all payload data locally before transmitting it to a secure Firebase backend, ensuring that even intercepted packets yield no usable intelligence.",
       },
       {
         galleryCount: 2,
       },
       {
         title: "Results & Impact",
-        content: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio."
+        content: "The findings from this project were presented at the university's cybersecurity symposium, leading to a campus-wide initiative to review and secure student data practices across official university mobile applications."
       }
     ]
   },
@@ -106,7 +106,7 @@ export const projects: ProjectItem[] = [
     id: "p3",
     slug: "foundit",
     title: "Foundit",
-    description: "A specialized lost and found platform dedicated entirely to tracking down misplaced gym equipment, from dumbbells and barbells to protein powder.",
+    description: "A real-time lost and found management system engineered for high-traffic fitness centers, utilizing automated matching algorithms to recover misplaced gear.",
     author: "Namikaze",
     role: "Lead Developer",
     teamSize: 3,
@@ -115,44 +115,40 @@ export const projects: ProjectItem[] = [
       { name: "Minato", role: "UI/UX Designer" },
       { name: "Kushina", role: "Database Engineer" }
     ],
-    tags: ["Fitness", "Lost & Found", "System"],
+    tags: ["Web App", "Logistics", "System"],
     techStack: ["Next.js", "Tailwind CSS", "TypeScript", "PostgreSQL"],
     liveUrl: "#",
-    content: "Foundit is a streamlined lost and found solution designed specifically for the fitness community. Whether someone left behind their lifting gear, misplaced a tub of protein powder, or lost track of gym accessories, this system makes it easy to report and recover missing fitness essentials.",
+    content: "Foundit is a streamlined lost and found solution designed specifically for the fitness community. By crowdsourcing the recovery process and employing smart matching algorithms, it drastically reduces the time between losing an item and its safe return.",
     sections: [
       {
         title: "Project Story",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in ipsum id orci porta dapibus. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.\n\nDonec rutrum congue leo eget malesuada. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.\n\nNulla porttitor accumsan tincidunt. Cras ultricies mi eu turpis hendrerit fringilla. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Nulla quis lorem ut libero malesuada feugiat.",
+        content: "After losing multiple expensive shaker bottles and weightlifting belts, the team realized that traditional 'lost and found' boxes were fundamentally broken. They set out to build a digital-first solution that proactively alerts users when their specific item type is turned in.",
       },
       {
         galleryCount: 1,
       },
       {
         title: "Technical Implementation",
-        content: "Proin eget tortor risus. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Curabitur aliquet quam id dui posuere blandit. Sed porttitor lectus nibh. Nulla porttitor accumsan tincidunt. Vivamus suscipit tortor eget felis porttitor volutpat.",
+        content: "The platform is built on a serverless Next.js architecture, backed by a highly optimized PostgreSQL database. It features real-time notifications via WebSockets and fuzzy-search capabilities to match descriptions of lost items with found inventory.",
       },
       {
         galleryCount: 1,
       },
       {
         title: "User Experience Design",
-        content: "Donec sollicitudin molestie malesuada. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Pellentesque in ipsum id orci porta dapibus."
-      },
-      {
-        title: "System Architecture",
-        content: "Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Nulla porttitor accumsan tincidunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        content: "The interface was designed for maximum efficiency. Gym staff can log an item in under 10 seconds using quick-select categories, while users can file a lost report with just three taps on their mobile devices."
       },
       {
         title: "Future Roadmap",
-        content: "Cras ultricies mi eu turpis hendrerit fringilla. Sed porttitor lectus nibh. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a."
+        content: "Upcoming features include computer vision integration, allowing staff to simply snap a photo of a found item while the system automatically tags its color, brand, and category."
       }
     ]
   },
   {
     id: "p4",
     slug: "nextask",
-    title: "NexTask",
-    description: "A beautifully minimalist productivity app that uses AI to prioritize your daily goals.",
+    title: "NexTask AI",
+    description: "A beautifully minimalist productivity ecosystem that leverages natural language processing to intelligently prioritize your daily workflows.",
     author: "Elena Rodriguez",
     role: "Solo Developer",
     teamSize: 1,
@@ -160,26 +156,26 @@ export const projects: ProjectItem[] = [
     techStack: ["React Native", "TypeScript", "Node.js", "OpenAI"],
     githubUrl: "#",
     liveUrl: "#",
-    content: "NexTask reimagines the to-do list by focusing on what actually matters. Instead of overwhelming users with endless tasks, it uses smart AI to suggest the top three things you should focus on today, wrapped in a calming, distraction-free UI.",
+    content: "NexTask AI reimagines the to-do list by focusing on what actually matters. Instead of overwhelming users with endless tasks, it uses smart AI to suggest the top three things you should focus on today, wrapped in a calming, distraction-free UI.",
     sections: [
       {
         title: "Project Story",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        content: "Burnout is a common issue among computer science students. NexTask was created to combat 'productivity paralysis'—the anxiety of having too much to do and not knowing where to start. By limiting daily active tasks to three, it forces intentionality."
       },
       {
         galleryCount: 1
       },
       {
         title: "Technical Implementation",
-        content: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        content: "The app processes user brain-dumps using OpenAI's API, categorizing tasks by urgency and effort. The React Native frontend is heavily optimized for smooth 60fps animations, providing a tactile and deeply satisfying user experience."
       }
     ]
   },
   {
     id: "p5",
     slug: "lumiere",
-    title: "Lumiere",
-    description: "A next-generation browser-based photo editor powered by WebGL and machine learning.",
+    title: "Lumiere Studio",
+    description: "A next-generation, browser-native photo editor powered by WebGL hardware acceleration and on-device machine learning.",
     author: "Marcus Chen",
     role: "Lead Engineer",
     teamSize: 5,
@@ -194,18 +190,18 @@ export const projects: ProjectItem[] = [
     tags: ["Creative", "WebGL", "Machine Learning"],
     techStack: ["React", "Three.js", "TensorFlow.js", "Python"],
     githubUrl: "#",
-    content: "Lumiere brings professional-grade photo editing tools directly into the browser without any plugins. By leveraging WebGL for hardware acceleration and TensorFlow.js for smart object removal, it rivals desktop software.",
+    content: "Lumiere brings professional-grade photo editing tools directly into the browser without any plugins. By leveraging WebGL for hardware acceleration and TensorFlow.js for smart object removal, it completely rivals desktop software in performance and capability.",
     sections: [
       {
         title: "Project Story",
-        content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+        content: "The team wanted to prove that the web platform is ready for intensive creative applications. What began as a simple filter app evolved into a full-fledged node-based image compositor capable of handling 4K RAW files directly in Chrome."
       },
       {
         galleryCount: 2
       },
       {
         title: "Technical Implementation",
-        content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        content: "We utilized custom GLSL shaders for all image adjustments (brightness, contrast, curves) to ensure zero latency. The 'Magic Eraser' feature runs a quantized segmentation model locally via TensorFlow.js, keeping user data completely private."
       },
       {
         galleryCount: 3
@@ -215,8 +211,8 @@ export const projects: ProjectItem[] = [
   {
     id: "p6",
     slug: "codesync",
-    title: "CodeSync",
-    description: "A lightweight VS Code extension for seamless peer-to-peer code collaboration.",
+    title: "CodeSync Core",
+    description: "A lightning-fast VS Code extension utilizing WebRTC and CRDTs to enable seamless, low-latency peer-to-peer code collaboration.",
     author: "Alex Rivera",
     role: "Co-Founder",
     teamSize: 2,
@@ -228,18 +224,18 @@ export const projects: ProjectItem[] = [
     tags: ["Developer Tools", "Real-time", "VS Code"],
     techStack: ["TypeScript", "WebRTC", "Yjs", "VS Code API"],
     liveUrl: "#",
-    content: "CodeSync eliminates the need for clunky screen sharing during pair programming. It uses WebRTC to establish a direct P2P connection between developers, allowing them to type in the same file simultaneously with near-zero latency.",
+    content: "CodeSync eliminates the need for clunky screen sharing during pair programming. It uses WebRTC to establish a direct P2P connection between developers, allowing them to type in the same file simultaneously with near-zero latency and no cloud dependencies.",
     sections: [
       {
         title: "Project Story",
-        content: "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium."
+        content: "Frustrated by the lag of existing remote collaboration tools during late-night hackathons, Alex and Sam decided to build a solution that bypasses central servers entirely. CodeSync is built for speed and privacy."
       },
       {
         galleryCount: 1
       },
       {
         title: "Technical Implementation",
-        content: "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores."
+        content: "Conflict-Free Replicated Data Types (CRDTs) through Yjs handle all the heavy lifting for state synchronization. The connection is established via a lightweight signaling server, after which all keystrokes and cursor positions are transmitted directly peer-to-peer."
       }
     ]
   }
