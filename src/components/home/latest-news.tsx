@@ -34,7 +34,7 @@ export function LatestNews({ news }: LatestNewsProps) {
 
           <Button
             variant="outline"
-            className="group border-border/80 px-5 transition-all hover:border-primary/40 hover:bg-muted"
+            className="group h-11 border-border/80 px-5 transition-all hover:border-primary/40 hover:bg-muted"
             render={<Link href="/news" />}
           >
             View All News
