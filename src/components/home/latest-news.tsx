@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { formatNewsDate } from "@/lib/format";
 import { NewsMediaGallery } from "@/components/news/news-media-gallery";
+import { GridBackground } from "@/components/layout/grid-background";
 
 interface LatestNewsProps {
   news: NewsItem[];
@@ -19,8 +20,11 @@ export function LatestNews({ news }: LatestNewsProps) {
   const recentNews = news.slice(0, 3);
 
   return (
-    <section className="relative border-b border-border/60 bg-muted/20 py-20 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden border-t border-black bg-white py-20 sm:py-28">
+      {/* ── Background Grid Pattern ── */}
+      <GridBackground />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header with Title and "View All News" button */}
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>

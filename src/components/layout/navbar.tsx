@@ -53,42 +53,42 @@ export function Navbar() {
                 <Button variant="ghost" size="icon" aria-label="Open menu" />
               }
             >
-            <Menu className="size-5" />
-          </SheetTrigger>
-          <SheetContent side="right" className="w-72">
-            <SheetHeader>
-              <SheetTitle className="text-left">
-                <Logo />
-              </SheetTitle>
-            </SheetHeader>
-            <nav className="mt-2 flex flex-col gap-1 px-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className={cn(
-                    "rounded-md px-3 py-2.5 text-sm font-medium transition-colors hover:bg-accent",
-                    isActive(link.href)
-                      ? "bg-accent text-primary"
-                      : "text-foreground",
-                  )}
+              <Menu className="size-5" />
+            </SheetTrigger>
+            <SheetContent side="right" className="w-72">
+              <SheetHeader>
+                <SheetTitle className="text-left">
+                  <Logo />
+                </SheetTitle>
+              </SheetHeader>
+              <nav className="mt-2 flex flex-col gap-1 px-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      "rounded-md px-3 py-2.5 text-sm font-medium transition-colors hover:bg-accent",
+                      isActive(link.href)
+                        ? "bg-accent text-primary"
+                        : "text-foreground",
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                <Button
+                  className="mt-3 w-full group justify-center"
+                  render={
+                    <Link href="/join" onClick={() => setOpen(false)} />
+                  }
                 >
-                  {link.label}
-                </Link>
-              ))}
-              <Button
-                className="mt-3 w-full group justify-center"
-                render={
-                  <Link href="/join" onClick={() => setOpen(false)} />
-                }
-              >
-                Join the Community
-                <ArrowUpRight className="ml-1.5 size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-              </Button>
-            </nav>
-          </SheetContent>
-        </Sheet>
+                  Join the Community
+                  <ArrowUpRight className="ml-1.5 size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </Button>
+              </nav>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>

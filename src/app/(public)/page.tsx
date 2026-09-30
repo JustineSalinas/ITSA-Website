@@ -6,10 +6,10 @@ import { AboutItsa } from "@/components/home/about-itsa";
 import { HomeFaq } from "@/components/home/home-faq";
 import { JoinCta } from "@/components/home/join-cta";
 import { LatestNews } from "@/components/home/latest-news";
-import { Partners } from "@/components/home/partners";
 import { EventCard } from "@/components/events/event-card";
 import { OfficerCard } from "@/components/officers/officer-card";
 import { Button } from "@/components/ui/button";
+import { GridBackground } from "@/components/layout/grid-background";
 
 export default async function HomePage() {
   const [events, officers, news] = await Promise.all([
@@ -24,12 +24,11 @@ export default async function HomePage() {
   return (
     <>
       <Hero />
-      <Partners />
       <AboutItsa />
       <LatestNews news={news} />
 
       {/* Upcoming events section */}
-      <section className="relative border-t border-border/60 bg-muted/20 py-20 sm:py-28">
+      <section className="relative border-t border-black bg-muted/20 py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
@@ -70,30 +69,35 @@ export default async function HomePage() {
       </section>
 
       {/* Officers preview section */}
-      <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
-              Meet your student leads
-            </h2>
-            <p className="mt-3 max-w-lg text-base sm:text-lg text-muted-foreground">
-              Real students leading ITSA this academic year — passionate, accessible, and ready to support your tech journey.
-            </p>
-          </div>
-          <Button
-            variant="outline"
-            className="group px-6"
-            render={<Link href="/officers" />}
-          >
-            Meet the entire team
-            <ArrowRight className="ml-1.5 size-4 transition-transform group-hover:translate-x-1" />
-          </Button>
-        </div>
+      <section className="relative overflow-hidden border-t border-black bg-white py-20 sm:py-28">
+        {/* ── Background Grid Pattern ── */}
+        <GridBackground />
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {featuredOfficers.map((officer) => (
-            <OfficerCard key={officer.id} officer={officer} />
-          ))}
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
+                Meet your student leads
+              </h2>
+              <p className="mt-3 max-w-lg text-base sm:text-lg text-muted-foreground">
+                Real students leading ITSA this academic year — passionate, accessible, and ready to support your tech journey.
+              </p>
+            </div>
+            <Button
+              variant="outline"
+              className="group px-6"
+              render={<Link href="/officers" />}
+            >
+              Meet the entire team
+              <ArrowRight className="ml-1.5 size-4 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {featuredOfficers.map((officer) => (
+              <OfficerCard key={officer.id} officer={officer} />
+            ))}
+          </div>
         </div>
       </section>
 
