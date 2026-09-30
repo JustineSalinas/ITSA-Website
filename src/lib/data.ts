@@ -1,12 +1,16 @@
 import "server-only";
-import { placeholderEvents } from "@/data/placeholder";
 import { realOfficers } from "@/data/officers";
-import { newsData } from "@/data/news";
 import { getSanityNews } from "@/sanity/lib/news";
 import { getSanityOfficers } from "@/sanity/lib/officers";
 import { getSanityEvents } from "@/sanity/lib/events";
 import type { EventItem, Officer, NewsItem } from "@/lib/types";
 
+// Officers still fall back to the real, reconciled org chart in
+// src/data/officers.ts -- that isn't placeholder content, it's the actual
+// roster, and the org chart tree itself has no Sanity equivalent (see
+// CLAUDE.md). Events, news, and projects (src/data/projects.ts) have no
+// bundled fallback: Sanity is their only source, and an empty result is the
+// honest answer until officers publish something there.
 export async function getOfficers(): Promise<Officer[]> {
   const sanityOfficers = await getSanityOfficers();
   if (sanityOfficers && sanityOfficers.length) return sanityOfficers;
@@ -15,28 +19,14 @@ export async function getOfficers(): Promise<Officer[]> {
 
 export async function getEvents(): Promise<EventItem[]> {
   const sanityEvents = await getSanityEvents();
-  if (sanityEvents && sanityEvents.length) return sanityEvents;
+  if (sanityEvents) return sanityEvents;
 
-  // The officers and news fallbacks below are real content -- the reconciled
-  // roster and actual event recaps -- so serving them when Sanity is quiet is
-  // merely stale. placeholderEvents is not: it is invented, and its dates are
-  // written as offsets from today, so it always reads as genuinely upcoming.
-  // Shipping that to visitors would invite students to workshops that were
-  // never scheduled, and nothing on the page would look wrong.
-  //
-  // So it stays a development convenience. In production an empty list is the
-  // honest answer, and the pages already say "No events scheduled yet". The
-  // error is logged rather than thrown: an empty events section is a far
-  // smaller failure than a homepage that will not render at all.
   if (process.env.NODE_ENV === "production") {
     console.error(
-      "[data] Sanity returned no events. Serving an empty list rather than the " +
-        "placeholder fixtures. Check the Sanity connection and that events are published.",
+      "[data] Sanity returned no events. Check the Sanity connection and that events are published.",
     );
-    return [];
   }
-
-  return placeholderEvents;
+  return [];
 }
 
 export async function getEventBySlug(slug: string): Promise<EventItem | null> {
@@ -57,9 +47,6 @@ export function splitEvents(events: EventItem[]) {
 
 export async function getNews(): Promise<NewsItem[]> {
   const sanityNews = await getSanityNews();
-  if (sanityNews && sanityNews.length) return sanityNews;
-  return [...newsData].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-  );
+  return sanityNews ?? [];
 }
 

@@ -29,23 +29,25 @@ students. There is no admin login/dashboard — content is edited through
 Sanity Studio (`/studio`). Path alias `@/*` → `src/*`.
 
 ### Route structure (`src/app/`)
-- `(public)/` — the whole site (home, about, events, news, officers, projects, join). Wraps children in navbar/footer and the "Ask ITSA" panel via `(public)/layout.tsx`.
+- `(public)/` — the whole site (home, about, events, news, officers, projects, join). Wraps children in navbar/footer via `(public)/layout.tsx`.
 - `studio/` — Sanity Studio, the content-editing surface for officers/events/news/projects/partners/faq.
-- `api/` — route handlers: `ask-log` (FAQ analytics tally).
+- `api/` — route handlers: `health` (uptime-monitor endpoint).
 
 ### Firebase, two SDKs
 - `src/lib/firebase/client.ts` — browser SDK, gated by `isFirebaseConfigured`.
-- `src/lib/firebase/admin.ts` — server Admin SDK (`server-only`), gated by `isAdminConfigured`. Only used for Firestore now (`getAdminDb`) — there is no Admin Auth or Storage usage left in the app.
-- **Graceful degradation is a core pattern**: when credentials are absent, the site still runs. `src/lib/data.ts` serves bundled content from `src/data/*` (`officers.ts`, `news.ts`, `placeholder.ts`) as a dev fallback, but **rethrows in production** so an outage surfaces instead of silently serving stale content. Preserve this dev-vs-prod split when touching the data layer.
+- `src/lib/firebase/admin.ts` — server Admin SDK (`server-only`), gated by `isAdminConfigured`. Only used by `api/health`'s Firestore reachability check (`getAdminDb`) — there is no Admin Auth or Storage usage left in the app, and Firestore is no longer a content store at all (see below).
 
-### Firestore data model & rules
-- Public collections `officers`, `events`: world-readable, admin-writable with field validation, **never hard-deleted** (`allow delete: if false`) — records are retired with a `deletedAt` stamp and filtered by `isLive()` in `data.ts`. (In practice these are now edited via Sanity, not Firestore, but the collections and rules remain.)
-- Server-only collections (`mail`, `rate_limits`, `ask_log`): `allow read/write: if false` — only the Admin SDK, which bypasses rules, touches them.
+### Content model — Sanity is the only source for events, news, and projects
+- `src/lib/data.ts` (`getEvents`, `getNews`) and `src/data/projects.ts` (`getProjects`) read from Sanity **only**. An empty Sanity result returns an empty array — there is no bundled/hardcoded fallback for any of these three, and there must not be one added back. The pages already render an honest empty state (`ProjectsClient`'s "No projects found", the events/news pages' own empty copy).
+- This replaced two different problems: `src/data/placeholder.ts` (events) was already dev-only-gated invented content; `src/data/projects.ts`'s old hardcoded array (`Gagambattle`, `Pharmatrack`, etc.) was **fully fabricated** — invented team members, `#` placeholder links — with **no dev-only gate**, so it was shown to real visitors whenever Sanity had no projects published. Both were deleted outright, not just gated further.
+- **Officers are the one exception**: `src/data/officers.ts`'s `orgChart`/`realOfficers` are real content (the actual reconciled roster), not placeholder data, and the org-chart *tree structure* (`orgChart`, with its reporting-line nesting) has no Sanity equivalent at all — `src/app/(public)/officers/page.tsx` imports `orgChart` directly from this file, never through Sanity. `getOfficers()` in `data.ts` still checks Sanity first and falls back to `realOfficers` (the same tree, flattened) only for the flat `/officers` card grid.
+- If you need to re-seed real content into Sanity from code (a one-time migration, not a fallback), write a throwaway script using `scripts/sanity-client.mjs`'s `requireWriteClient()` (needs `SANITY_API_TOKEN` in `.env.local`, Editor permission) and delete it once the migration is verified — see git history for the news-migration script this pattern came from.
+
+### Firestore security rules
+- `firestore.rules` denies every read and write from a client, signed in or not — there is no client read/write path left at all (the officer admin dashboard, the contact form, and the Ask ITSA tally were all removed, and content lives in Sanity now). Only the Admin SDK, which bypasses rules, touches Firestore (`api/health`'s check).
 - `firestore.rules` is covered by `tests/firestore.rules.test.mjs`; run `npm run test:rules` after editing rules.
 
 ### Notable subsystems
-- **Rate limiting** (`src/lib/rate-limit.ts`): transactional fixed-window counters in Firestore (per-instance memory would be bypassable on serverless). Stores salted IP hashes, never raw IPs. **Fails closed** — treat a limiter error as "deny".
-- **"Ask ITSA"** (`src/components/chat/`): a *guided FAQ panel, not an LLM chatbot* — a deliberate cost/risk decision. `api/ask-log` tallies which shipped question IDs get tapped (one counter per known ID, no free text, no visitor data). Don't assume a free-text AI backend exists.
 - **`/join`** is a purely informational Community & Careers page (Discord invite, career advice, growth resources) — there is no membership form or application flow anywhere on the site. `siteConfig.discordInvite` in `src/data/site.ts` is empty until the officers have a real invite link; the page hides the CTA button when it's empty rather than linking to a broken/placeholder server.
 
 ## Design system
