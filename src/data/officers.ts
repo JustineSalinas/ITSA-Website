@@ -12,6 +12,7 @@ import type { Officer, OrgNode } from "@/lib/types";
 export const orgChart: OrgNode = {
   name: "Robert A. Aguilar Jr.",
   position: "Adviser",
+  photoUrl: "/officers/robert-aguilar.jpg",
   children: [
     {
       name: "Gabriel Ferrera",
@@ -21,6 +22,7 @@ export const orgChart: OrgNode = {
         {
           name: "Charles Janryl Jemina",
           position: "Vice Chairman for Internal Affairs",
+          photoUrl: "/officers/charles-janryl-jemina.jpg",
         },
         {
           name: "Theodore Samuel Navarro",
@@ -47,10 +49,11 @@ export const orgChart: OrgNode = {
             {
               name: "Cholo Rosales",
               position: "Creatives Lead",
+              photoUrl: "/officers/cholo-rosales.png",
               children: [
-                { name: "Tim Gabriel Nuñal", position: "Creatives" },
-                { name: "Denise Rae Baldisimo", position: "Creatives" },
-                { name: "Hannah Nicole Tuer", position: "Creatives" },
+                { name: "Tim Gabriel Nuñal", position: "Creatives", photoUrl: "/officers/tim-gabriel-nunal.png" },
+                { name: "Denise Rae Baldisimo", position: "Creatives", photoUrl: "/officers/denise-rae-baldisimo.jpg" },
+                { name: "Hannah Nicole Tuer", position: "Creatives", photoUrl: "/officers/hannah-nicole-tuer.png" },
               ],
             },
           ],
@@ -59,8 +62,13 @@ export const orgChart: OrgNode = {
           name: "Aiderson Abapo",
           position: "Documentation Officer",
           children: [
-            { name: "Rovann Acevedo", position: "Documentation Lead" },
-            { name: "Edrian Jed Fiesta", position: "Documentation" },
+            {
+              name: "Rovann Acevedo",
+              position: "Documentation Lead",
+              children: [
+                { name: "Edrian Jed Fiesta", position: "Documentation", photoUrl: "/officers/edrian-jed-fiesta.jpg" },
+              ],
+            },
           ],
         },
         {
@@ -71,10 +79,11 @@ export const orgChart: OrgNode = {
             {
               name: "Adrian Justin J. Salinas",
               position: "Web Development Lead",
+              photoUrl: "/officers/adrian-justin-salinas.jpg",
               children: [
                 { name: "Matthew Tabat", position: "IT Security" },
-                { name: "Alexander Michael Tolosa", position: "Back-End Developer" },
-                { name: "Aziel Guerrero Misola", position: "Back-End Developer" },
+                { name: "Alexander Michael Tolosa", position: "Back-End Developer", photoUrl: "/officers/alexander-michael-tolosa.jpg" },
+                { name: "Aziel Guerrero Misola", position: "Front-End Developer", photoUrl: "/officers/aziel-guerrero-misola.jpg" },
                 { name: "Deghne Gabriel Agana", position: "Front-End Developer" },
               ],
             },
@@ -83,12 +92,13 @@ export const orgChart: OrgNode = {
               position: "Mobile Application Lead",
               photoUrl: "/officers/ralph-danielle-delacruz.jpg",
             },
-            { name: "Dale Misajon", position: "IoT Hardware Lead" },
+            { name: "Dale Misajon", position: "IoT Hardware Lead", photoUrl: "/officers/dale-misajon.jpg" },
           ],
         },
         {
           name: "John Daniel Aboboto",
           position: "Operation Officer",
+          photoUrl: "/officers/john-daniel-aboboto.png",
           children: [
             {
               name: "Janseen Azares",
@@ -100,6 +110,7 @@ export const orgChart: OrgNode = {
         {
           name: "Elah Marie Loyola",
           position: "Finance Officer",
+          photoUrl: "/officers/elah-marie-loyola.jpg",
           children: [
             {
               name: "Elyza Elizabeth Gumarin",
