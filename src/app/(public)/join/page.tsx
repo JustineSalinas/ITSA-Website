@@ -74,13 +74,9 @@ export default function JoinPage() {
               {siteConfig.discordInvite ? (
                 <Button
                   size="lg"
-                  className="group justify-center px-7"
+                  className="group shrink-0 justify-center px-7"
                   render={
-                    <a
-                      href={siteConfig.discordInvite}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    />
+                    <a href={siteConfig.discordInvite} target="_blank" rel="noopener noreferrer" />
                   }
                 >
                   Join the Discord

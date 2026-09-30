@@ -3,14 +3,19 @@ import type { NextConfig } from "next";
 const storageHost = "firebasestorage.googleapis.com";
 const bucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
 
-const isDev = process.env.NODE_ENV !== "production";
-
 // Content-Security-Policy.
 //
 // Firebase's JS SDK talks to several Google hosts and next-themes writes an
 // inline <script> before hydration, so 'unsafe-inline' is required for styles
-// and the theme bootstrap. In development, 'unsafe-eval' is required for
-// Next.js React Fast Refresh / Webpack runtime.
+// and the theme bootstrap. This ran report-only for a burn-in period; now
+// enforced on every public route.
+//
+// In dev, `next dev --webpack`'s React Fast Refresh runtime evaluates code
+// via the Function constructor and HMR talks to a plain ws:// socket -- both
+// blocked by the production policy below, which also force-upgrades every
+// request to HTTPS via upgrade-insecure-requests (breaking plain-HTTP
+// localhost entirely). None of that loosening ships in production.
+const isDev = process.env.NODE_ENV !== "production";
 const csp = [
   "default-src 'self'",
   "base-uri 'self'",
