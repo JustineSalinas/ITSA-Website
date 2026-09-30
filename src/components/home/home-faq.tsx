@@ -20,9 +20,8 @@ function slugify(s: string) {
  * requested explicitly as structure-only -- rebuilt here in ITSA's own
  * light palette (brand blue in place of the reference's neon green) rather
  * than its dark theme, and with ITSA's own real questions rather than that
- * site's unrelated content. Questions come from src/data/faq.ts, the same
- * source as the Join page FAQ and the Ask ITSA panel, so an answer is
- * written once. Entries with no written answer stay hidden everywhere.
+ * site's unrelated content. Questions come from src/data/faq.ts. Entries
+ * with no written answer stay hidden everywhere.
  */
 export function HomeFaq() {
   const flat = answeredFaqs;

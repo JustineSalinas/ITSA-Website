@@ -31,7 +31,11 @@ async function checkFirestore(): Promise<CheckResult> {
     await getAdminDb().collection("officers").limit(1).get();
     return { ok: true };
   } catch (error) {
-    return { ok: false, detail: error instanceof Error ? error.message : "unknown error" };
+    // The failure detail is logged for us, not returned to the caller: this
+    // endpoint has no auth, so an exception message (connection info, stack
+    // fragments) must never be visible to whoever is polling it.
+    console.error("[health] Firestore check failed:", error);
+    return { ok: false, detail: "unavailable" };
   }
 }
 
@@ -44,7 +48,8 @@ async function checkSanity(): Promise<CheckResult> {
     await client.fetch('*[_type == "news"][0]._id');
     return { ok: true };
   } catch (error) {
-    return { ok: false, detail: error instanceof Error ? error.message : "unknown error" };
+    console.error("[health] Sanity check failed:", error);
+    return { ok: false, detail: "unavailable" };
   }
 }
 

@@ -7,8 +7,8 @@ const bucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
 //
 // Firebase's JS SDK talks to several Google hosts and next-themes writes an
 // inline <script> before hydration, so 'unsafe-inline' is required for styles
-// and the theme bootstrap. It is shipped report-only first: watch the reports
-// for a week, then rename the header to `Content-Security-Policy` to enforce.
+// and the theme bootstrap. This ran report-only for a burn-in period; now
+// enforced on every public route.
 const csp = [
   "default-src 'self'",
   "base-uri 'self'",
@@ -29,8 +29,24 @@ const csp = [
   "upgrade-insecure-requests",
 ].join("; ");
 
+// The Sanity Studio embedded at /studio is its own SPA with a much wider set
+// of hosts (asset CDN, live API, realtime websocket) and is protected by
+// Sanity's own account auth, not by this app -- so it gets a separate,
+// deliberately permissive policy rather than inheriting the public site's
+// strict one and breaking content editing.
+const studioCsp = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "form-action 'self'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:",
+  "style-src 'self' 'unsafe-inline' https:",
+  "img-src 'self' data: blob: https:",
+  "font-src 'self' data: https:",
+  "connect-src 'self' https: wss:",
+].join("; ");
+
 const securityHeaders = [
-  // Clickjacking: nothing may frame this site, including the admin login.
   { key: "X-Frame-Options", value: "DENY" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
@@ -43,7 +59,7 @@ const securityHeaders = [
     value: "max-age=63072000; includeSubDomains; preload",
   },
   { key: "X-DNS-Prefetch-Control", value: "on" },
-  { key: "Content-Security-Policy-Report-Only", value: csp },
+  { key: "Content-Security-Policy", value: csp },
 ];
 
 const nextConfig: NextConfig = {
@@ -65,12 +81,11 @@ const nextConfig: NextConfig = {
     return [
       { source: "/:path*", headers: securityHeaders },
       {
-        // The admin surface must never be cached or indexed anywhere.
-        source: "/admin/:path*",
-        headers: [
-          { key: "Cache-Control", value: "no-store, max-age=0, must-revalidate" },
-          { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
-        ],
+        // Overrides the strict public CSP above with the permissive Studio
+        // one -- Next applies header blocks in order, so a matching key
+        // defined later wins for routes under /studio.
+        source: "/studio/:path*",
+        headers: [{ key: "Content-Security-Policy", value: studioCsp }],
       },
     ];
   },

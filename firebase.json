@@ -2,15 +2,9 @@
   "firestore": {
     "rules": "firestore.rules"
   },
-  "storage": {
-    "rules": "storage.rules"
-  },
   "emulators": {
     "firestore": {
       "port": 8571
-    },
-    "storage": {
-      "port": 8572
     },
     "ui": {
       "enabled": false

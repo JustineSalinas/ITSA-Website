@@ -122,9 +122,6 @@ export function OrgChart({ root }: { root: OrgNode }) {
   }
 
   function renderDepartmentCard(dept: (typeof departments)[number]) {
-    const isOpen = openDepts.has(dept.code);
-    const panelId = `dept-${dept.code}`;
-
     if (!dept.vp) {
       return (
         <li key={dept.code}>
@@ -133,6 +130,8 @@ export function OrgChart({ root }: { root: OrgNode }) {
       );
     }
 
+    const isOpen = openDepts.has(dept.code);
+    const panelId = `dept-${dept.code}`;
     return (
       <li key={dept.code}>
         <SpotlightCard className="flex flex-col p-0">
@@ -161,10 +160,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
             />
           </button>
 
-          <div
-            id={panelId}
-            className={`p-5 sm:p-7 md:block ${isOpen ? "block" : "hidden"}`}
-          >
+          <div id={panelId} className={`p-5 sm:p-7 md:block ${isOpen ? "block" : "hidden"}`}>
             {/* Desktop header -- the phone version lives in the button */}
             <div className="hidden border-b border-border/60 pb-5 md:block">
               <div className="flex items-center justify-between">
@@ -195,9 +191,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
               </PersonButton>
             </div>
 
-            <p className="text-sm font-medium text-muted-foreground md:hidden">
-              {dept.vp.position}
-            </p>
+            <p className="text-sm font-medium text-muted-foreground md:hidden">{dept.vp.position}</p>
 
             {dept.vp.children && dept.vp.children.length > 0 && (
               <div className="mt-6 space-y-4">
@@ -238,9 +232,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
                           </span>
                           <ul
                             className={`grid gap-2 ${
-                              lead.children.length === 1
-                                ? "grid-cols-1"
-                                : "grid-cols-1 sm:grid-cols-2"
+                              lead.children.length === 1 ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2"
                             }`}
                           >
                             {lead.children.map((sub) => (
@@ -353,7 +345,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
           <h3 className="mb-5 text-center font-mono text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Directorate Office & Executive Secretariat
           </h3>
-          <ul className="grid list-none gap-5 sm:grid-cols-3 items-start">
+          <ul className="grid list-none items-start gap-5 sm:grid-cols-3">
             {directorate.map(({ label, node }) => {
               if (!node) {
                 return (
@@ -374,7 +366,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
                         node={node}
                         group={label}
                         onSelect={setSelected}
-                        className="mt-3 flex items-center gap-3.5 rounded-lg p-1.5 -mx-1.5 transition-colors hover:bg-muted/50"
+                        className="-mx-1.5 mt-3 flex items-center gap-3.5 rounded-lg p-1.5 transition-colors hover:bg-muted/50"
                       >
                         <PersonAvatar node={node} className="size-11" textClassName="text-xs font-bold" />
                         <span className="min-w-0 flex-1">
@@ -397,7 +389,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
                             node={child}
                             group={label}
                             onSelect={setSelected}
-                            className="flex items-center gap-3 rounded-lg p-1.5 -mx-1.5 transition-colors hover:bg-muted/50"
+                            className="-mx-1.5 flex items-center gap-3 rounded-lg p-1.5 transition-colors hover:bg-muted/50"
                           >
                             <PersonAvatar node={child} className="size-9" textClassName="text-[11px] font-bold" />
                             <span className="min-w-0 flex-1">
@@ -419,20 +411,21 @@ export function OrgChart({ root }: { root: OrgNode }) {
 
         <div aria-hidden="true" className="h-8 w-0.5 bg-border/80" />
 
-        {/* Tier 3: Departments */}
+        {/* Tier 3: Departments, split into two columns so five cards of very
+            different lengths don't force a single long alternating column. */}
         <section className="w-full max-w-7xl">
           <h3 className="mb-7 text-center font-mono text-sm font-semibold uppercase tracking-wider text-muted-foreground">
             Departmental Directorates & Technical Committees
           </h3>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2">
             {/* Left Column: Technology & Communications */}
-            <ul className="flex flex-col gap-8 list-none">
+            <ul className="flex list-none flex-col gap-8">
               {departments.slice(0, 2).map(renderDepartmentCard)}
             </ul>
 
             {/* Right Column: Documentation, Operations & Finance */}
-            <ul className="flex flex-col gap-8 list-none">
+            <ul className="flex list-none flex-col gap-8">
               {departments.slice(2).map(renderDepartmentCard)}
             </ul>
           </div>
