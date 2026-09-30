@@ -2,10 +2,10 @@
 //
 //   npm run test:rules
 //
-// The app has no auth flow left -- the officer admin dashboard was removed --
-// so every collection is server-only: reachable exclusively through the
-// Admin SDK, which bypasses these rules entirely. These tests assert that no
-// client, signed in or not, can read or write any of them.
+// The app has no client read/write path left at all -- the officer admin
+// dashboard, the contact form, and the Ask ITSA tally were all removed, and
+// content now lives in Sanity. This asserts no client, signed in or not, can
+// read or write anything; the Admin SDK (api/health) bypasses these rules.
 import { test, before, after, beforeEach, describe } from "node:test";
 import { readFileSync } from "node:fs";
 import {
@@ -38,25 +38,13 @@ beforeEach(async () => {
 const asSignedIn = () => testEnv.authenticatedContext("random-uid").firestore();
 const asAnon = () => testEnv.unauthenticatedContext().firestore();
 
-describe("server-only collections are sealed", () => {
-  test("nobody may read or write the mail queue", async () => {
+describe("no client read/write path exists", () => {
+  test("nobody may read or write any collection", async () => {
     for (const ctx of [asSignedIn, asAnon]) {
-      await assertFails(getDoc(doc(ctx(), "mail/anything")));
-      await assertFails(setDoc(doc(ctx(), "mail/anything"), { to: "x@y.z" }));
-    }
-  });
-
-  test("nobody may read or write rate limit counters", async () => {
-    for (const ctx of [asSignedIn, asAnon]) {
-      await assertFails(getDoc(doc(ctx(), "rate_limits/anything")));
-      await assertFails(setDoc(doc(ctx(), "rate_limits/anything"), { count: 0 }));
-    }
-  });
-
-  test("nobody may read or write the Ask ITSA tally", async () => {
-    for (const ctx of [asSignedIn, asAnon]) {
-      await assertFails(getDoc(doc(ctx(), "ask_log/who-can-join")));
-      await assertFails(setDoc(doc(ctx(), "ask_log/who-can-join"), { count: 999 }));
+      await assertFails(getDoc(doc(ctx(), "officers/anything")));
+      await assertFails(setDoc(doc(ctx(), "officers/anything"), { name: "x" }));
+      await assertFails(getDoc(doc(ctx(), "anything/anything")));
+      await assertFails(setDoc(doc(ctx(), "anything/anything"), { a: 1 }));
     }
   });
 });

@@ -39,9 +39,9 @@ function getAdminApp(): App {
 }
 
 /**
- * Server-only Firestore access. The only remaining Admin SDK use in this app
- * -- the officer admin dashboard, its session/auth, and Storage uploads were
- * removed; this now backs only the Ask ITSA tally in api/ask-log.
+ * Server-only Firestore access. The officer admin dashboard, its
+ * session/auth, Storage uploads, and the Ask ITSA tally were all removed;
+ * this now backs only api/health's Firestore reachability check.
  */
 export function getAdminDb(): Firestore {
   return getFirestore(getAdminApp());

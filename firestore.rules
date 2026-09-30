@@ -3,23 +3,11 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // ── Server-only collections ───────────────────────────────────────────
-    // Written exclusively by the Admin SDK, which bypasses these rules.
-    // Nothing in this app authenticates as anyone anymore -- the officer
-    // admin dashboard was removed -- so there is no `request.auth` case
-    // worth special-casing here; everything is admin-SDK-only.
-
-    // Per-IP counters backing rate limits (e.g. the Ask ITSA tally endpoint).
-    match /rate_limits/{docId} {
-      allow read, write: if false;
-    }
-
-    // Tally of which "Ask ITSA" questions get tapped.
-    match /ask_log/{questionId} {
-      allow read, write: if false;
-    }
-
-    // Deny everything else by default.
+    // Nothing in this app authenticates as anyone -- the officer admin
+    // dashboard, the contact form, and the Ask ITSA tally were all removed,
+    // and content now lives in Sanity -- so there is no client read/write
+    // path left at all. The Admin SDK (api/health's Firestore check) bypasses
+    // these rules entirely.
     match /{document=**} {
       allow read, write: if false;
     }
