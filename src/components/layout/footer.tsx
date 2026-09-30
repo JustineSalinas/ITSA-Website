@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Mail, Building2, Shield, Clock } from "lucide-react";
 import { navLinks, siteConfig } from "@/data/site";
 import { Logo } from "@/components/layout/logo";
 import {
@@ -20,9 +19,9 @@ export function Footer() {
   return (
     <footer className="mt-auto border-t border-border/80 bg-slate-950 text-slate-100">
 
-      {/* Main 4-Column Corporate Footer */}
+      {/* Main 3-Column Corporate Footer */}
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {/* Col 1: Brand & Mission */}
           <div className="space-y-4">
             <Logo subtitleClassName="text-slate-400" />
@@ -96,37 +95,6 @@ export function Footer() {
                   Student Projects & Portfolios
                 </Link>
               </li>
-              <li>
-                <Link href="/admin" className="transition-colors hover:text-white">
-                  Executive Officer Portal
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 4: Official Headquarters */}
-          <div>
-            <h3 className="font-mono text-xs font-bold uppercase tracking-widest text-white">
-              Headquarters & Contact
-            </h3>
-            <ul className="mt-4.5 space-y-3 text-xs text-slate-400">
-              <li className="flex items-start gap-2.5">
-                <Building2 className="mt-0.5 size-4 shrink-0 text-white" />
-                <span>{siteConfig.location}</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Mail className="mt-0.5 size-4 shrink-0 text-white" />
-                <a
-                  href={`mailto:${siteConfig.contactEmail}`}
-                  className="transition-colors hover:text-white"
-                >
-                  {siteConfig.contactEmail}
-                </a>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Clock className="mt-0.5 size-4 shrink-0 text-white" />
-                <span>Mon – Fri, 8:00 AM – 5:00 PM</span>
-              </li>
             </ul>
           </div>
         </div>
@@ -136,13 +104,7 @@ export function Footer() {
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.fullName} ({siteConfig.name}). All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
-            <span className="font-mono text-[11px] text-slate-500">{siteConfig.school}</span>
-            <span>&middot;</span>
-            <Link href="/admin" className="flex items-center gap-1 font-mono text-[11px] text-slate-400 hover:text-white">
-              <Shield className="size-3 text-white" /> Officer Login
-            </Link>
-          </div>
+          <span className="font-mono text-[11px] text-slate-500">{siteConfig.school}</span>
         </div>
       </div>
     </footer>

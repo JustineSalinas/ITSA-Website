@@ -5,20 +5,10 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { LogoMark } from "@/components/layout/logo";
 import { HeroLogo } from "@/components/home/hero-logo";
 import { HeroMetaballs } from "@/components/home/hero-metaballs";
 import { siteConfig } from "@/data/site";
-
-const focusAreas = [
-  "Software Engineering",
-  "Cybersecurity",
-  "Cloud & DevOps",
-  "AI & Data Science",
-  "UI/UX Design",
-  "IoT & Systems",
-];
 
 export function Hero() {
   return (
@@ -31,18 +21,13 @@ export function Hero() {
         <HeroMetaballs className="w-full h-full" />
       </div>
 
-      {/* ── Subtle Background Watermark for Mobile (< lg) ── */}
-      <div 
-        className="pointer-events-none absolute -left-12 -top-12 z-0 block lg:hidden w-72 h-72 opacity-15 select-none"
-        aria-hidden="true"
-      >
-        <Image
-          src="/images/itsa-metaballs-vector.svg"
-          alt=""
-          fill
-          priority
-          className="object-contain object-left-top"
-        />
+      {/* ── Ambient Background Glow for Mobile (< lg): soft brand-tinted blur
+           instead of the sharp, saturated blob artwork, which read as a
+           harsh sticker sheet fighting the headline on small screens.
+           A gentle float keeps it feeling alive without needing a pointer. ── */}
+      <div className="pointer-events-none absolute inset-0 z-0 block overflow-hidden lg:hidden" aria-hidden="true">
+        <div className="animate-float absolute -left-16 -top-16 size-56 rounded-full bg-brand/10 blur-3xl" />
+        <div className="animate-float absolute -right-12 top-1/3 size-48 rounded-full bg-brand-orange/10 blur-3xl [animation-delay:-3s]" />
       </div>
 
       {/* ── Main Hero Grid: 3-column layout matching reference structure ── */}
@@ -60,7 +45,7 @@ export function Hero() {
             className="flex flex-col items-center text-center w-full max-w-xl xl:max-w-2xl mx-auto z-10"
           >
             {/* Institutional Seal & Association Lockup */}
-            <div className="flex max-w-full flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+            <div className="flex items-center justify-center gap-3 sm:gap-4">
               <Image
                 src="/usa.png"
                 alt={`${siteConfig.school} logo`}
@@ -69,18 +54,8 @@ export function Hero() {
                 priority
                 className="size-10 sm:size-12 object-contain drop-shadow-xs shrink-0"
               />
-              <span className="hidden h-7 w-px bg-slate-300 sm:inline" aria-hidden="true" />
-              <div className="flex items-center gap-2">
-                <LogoMark className="size-7 sm:size-8 shrink-0" />
-                <Badge
-                  variant="outline"
-                  className="rounded-full border-slate-300 bg-white/95 px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-medium text-slate-700 shadow-2xs backdrop-blur-xs"
-                >
-                  <span className="font-mono text-muted-foreground hidden sm:inline">{siteConfig.school}</span>
-                  <span className="mx-1.5 hidden h-2.5 w-px bg-slate-200 sm:inline" />
-                  <span className="font-semibold text-slate-900">Official Association</span>
-                </Badge>
-              </div>
+              <span className="h-7 w-px bg-slate-300" aria-hidden="true" />
+              <LogoMark className="size-9 sm:size-10 shrink-0" />
             </div>
 
             {/* Main Headline */}
@@ -92,7 +67,7 @@ export function Hero() {
                 Technology
               </span>
               <br />
-              <span>Association.</span>
+              <span>Student Association.</span>
             </h1>
 
             {/* University Tagline & Subtitle */}
@@ -129,18 +104,6 @@ export function Hero() {
                 Explore events
                 <ArrowUpRight className="ml-1 size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Button>
-            </div>
-
-            {/* Focus Area Tags */}
-            <div className="mt-6 sm:mt-7 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 max-w-xl">
-              {focusAreas.map((area) => (
-                <span
-                  key={area}
-                  className="inline-flex items-center rounded-full border border-slate-300 bg-white/90 px-2.5 sm:px-3 py-1 text-[11px] sm:text-xs font-medium text-slate-800 shadow-2xs backdrop-blur-xs transition-colors hover:border-blue-500 hover:text-blue-700"
-                >
-                  {area}
-                </span>
-              ))}
             </div>
           </motion.div>
 
