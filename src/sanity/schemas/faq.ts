@@ -63,13 +63,6 @@ export const faqType = defineType({
         defineField({ name: "href", title: "Link", type: "string", description: 'e.g. "/join"' }),
       ],
     }),
-    defineField({
-      name: "showOnJoinPage",
-      title: "Show on the Join page",
-      type: "boolean",
-      description: "If off, this only appears in the Ask ITSA panel, not the Join page's own FAQ list.",
-      initialValue: true,
-    }),
   ],
   preview: {
     select: { title: "question", subtitle: "answer" },

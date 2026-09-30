@@ -83,7 +83,7 @@ export function Navbar() {
                   <Link href="/join" onClick={() => setOpen(false)} />
                 }
               >
-                Register Now
+                Join the Community
               </Button>
             </nav>
           </SheetContent>

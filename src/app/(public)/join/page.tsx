@@ -1,93 +1,175 @@
 import type { Metadata } from "next";
-import { Mail, MapPin } from "lucide-react";
+import { Compass, Lightbulb, Mail, MapPin, MessageCircle, Rocket, TrendingUp } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
-import { JoinForm } from "@/components/forms/join-form";
-import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { CareerPaths } from "@/components/join/career-paths";
+import { SectionReveal } from "@/components/join/section-reveal";
 import { siteConfig } from "@/data/site";
-import { joinPageFaqs } from "@/data/faq";
 
 export const metadata: Metadata = {
-  title: "Join & Contact",
-  description: `Become a member of ${siteConfig.name} or get in touch with the ${siteConfig.fullName} at ${siteConfig.school}.`,
+  title: "Community & Careers",
+  description: `Grow your IT career, get advice, and connect with the ${siteConfig.fullName} community at ${siteConfig.school} — starting with our Discord.`,
   alternates: {
     canonical: "/join",
   },
   openGraph: {
-    title: `Join & Contact — ${siteConfig.name}`,
-    description: `Join ${siteConfig.fullName} or get in touch with our team at ${siteConfig.school}.`,
+    title: `Community & Careers — ${siteConfig.name}`,
+    description: `Career advice, growth resources, and the ${siteConfig.name} Discord community for IT students at ${siteConfig.school}.`,
     url: "/join",
     siteName: siteConfig.name,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: `Join & Contact — ${siteConfig.name}`,
-    description: `Join ${siteConfig.fullName} or reach out to our executive directorate.`,
+    title: `Community & Careers — ${siteConfig.name}`,
+    description: `Career advice, growth resources, and the ${siteConfig.name} Discord community.`,
   },
 };
+
+const chips = [
+  { label: "Find your path", icon: Compass },
+  { label: "Grow your skills", icon: TrendingUp },
+  { label: "Build a track record", icon: Rocket },
+  { label: "Get advice that helps", icon: Lightbulb },
+];
 
 export default function JoinPage() {
   return (
     <>
       <PageHeader
-        title="Become an ITSA member."
-        description="Ready to level up your technical skills, build real projects, and join a passionate student dev community?"
+        title="Grow your IT career with us."
+        description="Advice, skills, and a community of IT students figuring it out together — no application required, just show up."
+        kicker="8 career tracks, one community"
       />
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-12">
-          {/* Info column (5 cols) */}
-          <div className="space-y-8 lg:col-span-5">
-            {/* Direct Contact Glass Card */}
-            <SpotlightCard spotlightColor="rgba(47, 86, 214, 0.15)" className="p-6">
-              <h3 className="font-heading text-base font-bold text-foreground">Need direct assistance?</h3>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Have questions regarding sponsorship, partnerships, or department inquiries?
-              </p>
-              <div className="mt-4 space-y-2.5 font-mono text-xs">
-                <p className="flex items-center gap-2.5 text-muted-foreground">
-                  <Mail className="size-4 text-brand" />
-                  <a href={`mailto:${siteConfig.contactEmail}`} className="hover:text-foreground hover:underline">
-                    {siteConfig.contactEmail}
-                  </a>
-                </p>
-                <p className="flex items-center gap-2.5 text-muted-foreground">
-                  <MapPin className="size-4 text-brand-orange" />
-                  <span>{siteConfig.location}</span>
-                </p>
+        {/* Discord hero */}
+        <SectionReveal>
+          <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-card p-8 sm:p-12">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-brand/10 blur-3xl"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-24 -left-16 size-64 rounded-full bg-brand-orange/10 blur-3xl"
+            />
+            <div className="relative flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-start gap-4">
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-brand/10 text-brand">
+                  <MessageCircle className="size-6" />
+                </span>
+                <div>
+                  <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                    Join the ITSA Discord
+                  </h2>
+                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                    This is where ITSA actually happens day to day — announcements, study groups,
+                    project collabs, and direct access to officers and fellow IT students.
+                    There&apos;s no sign-up form; the server is open the moment you&apos;re an IT
+                    student here.
+                  </p>
+                </div>
               </div>
-            </SpotlightCard>
-          </div>
-
-          {/* Form column (7 cols) */}
-          <div className="lg:col-span-7">
-            <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-card p-6 sm:p-10">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold tracking-tight text-foreground">Member Registration</h2>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Fill out the form below and our team will get in touch with your onboarding details.
-                </p>
-              </div>
-              <JoinForm />
+              {siteConfig.discordInvite ? (
+                <a
+                  href={siteConfig.discordInvite}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex shrink-0 items-center justify-center rounded-full bg-brand px-6 py-3 text-sm font-semibold text-brand-foreground outline-none transition-colors hover:bg-brand/90 focus-visible:ring-3 focus-visible:ring-ring/50"
+                >
+                  Join the Discord
+                </a>
+              ) : (
+                <span
+                  role="note"
+                  aria-label="Discord invite link not available yet"
+                  className="inline-flex shrink-0 cursor-not-allowed items-center justify-center rounded-full border border-dashed border-border px-6 py-3 text-sm font-medium text-muted-foreground"
+                >
+                  Invite link coming soon
+                </span>
+              )}
             </div>
           </div>
-        </div>
+        </SectionReveal>
 
-        {/* Quick FAQ Section */}
-        <div className="mt-24 rounded-3xl border border-border/80 bg-muted/20 p-8 sm:p-12">
-          <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-            Everything you need to know
+        {/* Career paths explorer */}
+        <SectionReveal className="mt-16" delay={0.05}>
+          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            Explore IT career paths
           </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+            Tap a track to see what it actually involves, the skills worth building first, and
+            one concrete way to start this week.
+          </p>
 
-          <div className="mt-8 grid gap-6 md:grid-cols-3">
-            {joinPageFaqs.map((faq) => (
-              <div key={faq.q} className="rounded-xl border border-border/80 bg-card p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-md">
-                <h3 className="font-heading font-bold text-base text-foreground">{faq.q}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{faq.a}</p>
-              </div>
+          <ul className="mt-6 flex list-none flex-wrap items-center gap-2.5">
+            {chips.map((chip) => (
+              <li
+                key={chip.label}
+                className="flex items-center gap-2 rounded-full border border-border/80 bg-secondary/50 px-4 py-2 text-sm font-medium"
+              >
+                <chip.icon className="size-4 text-brand" aria-hidden="true" />
+                {chip.label}
+              </li>
             ))}
+          </ul>
+
+          <div className="mt-8">
+            <CareerPaths />
           </div>
-        </div>
+        </SectionReveal>
+
+        {/* Community welcome + contact, one confident panel instead of two generic cards */}
+        <SectionReveal className="mt-16" delay={0.05}>
+          <div className="relative overflow-hidden rounded-3xl bg-brand px-8 py-10 text-brand-foreground sm:px-12 sm:py-14">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 opacity-[0.08]"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle, currentColor 1.5px, transparent 1.5px)",
+                backgroundSize: "22px 22px",
+              }}
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-32 -right-16 size-80 rounded-full bg-brand-orange/25 blur-3xl"
+            />
+
+            <div className="relative grid gap-8 lg:grid-cols-12 lg:items-center">
+              <div className="lg:col-span-7">
+                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+                  Every IT student here is already in.
+                </h2>
+                <p className="mt-3 max-w-xl text-sm leading-relaxed text-brand-foreground/85 sm:text-base">
+                  All Information Technology students at {siteConfig.school} are part of ITSA by
+                  default — no membership form, no approval step. The Discord is the front door:
+                  come say hello, ask a question, or lurk in the announcements until something
+                  catches your interest.
+                </p>
+              </div>
+
+              <div className="lg:col-span-5">
+                <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-brand-foreground/70">
+                  Prefer email?
+                </p>
+                <div className="mt-3 flex flex-col gap-2">
+                  <a
+                    href={`mailto:${siteConfig.contactEmail}`}
+                    className="flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-sm outline-none transition-colors hover:bg-white/15 focus-visible:ring-3 focus-visible:ring-white/50"
+                  >
+                    <Mail className="size-4 shrink-0" aria-hidden="true" />
+                    {siteConfig.contactEmail}
+                  </a>
+                  <span className="flex items-center gap-2.5 rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-sm">
+                    <MapPin className="size-4 shrink-0" aria-hidden="true" />
+                    {siteConfig.location}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </SectionReveal>
       </section>
     </>
   );
