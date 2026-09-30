@@ -3,30 +3,33 @@ import type { NextConfig } from "next";
 const storageHost = "firebasestorage.googleapis.com";
 const bucket = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET;
 
+const isDev = process.env.NODE_ENV !== "production";
+
 // Content-Security-Policy.
 //
 // Firebase's JS SDK talks to several Google hosts and next-themes writes an
 // inline <script> before hydration, so 'unsafe-inline' is required for styles
-// and the theme bootstrap. This ran report-only for a burn-in period; now
-// enforced on every public route.
+// and the theme bootstrap. In development, 'unsafe-eval' is required for
+// Next.js React Fast Refresh / Webpack runtime.
 const csp = [
   "default-src 'self'",
   "base-uri 'self'",
   "object-src 'none'",
   "frame-ancestors 'none'",
   "form-action 'self'",
-  "script-src 'self' 'unsafe-inline' https://apis.google.com https://www.gstatic.com",
+  `script-src 'self' 'unsafe-inline' ${isDev ? "'unsafe-eval' " : ""}https://apis.google.com https://www.gstatic.com`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://firebasestorage.googleapis.com https://lh3.googleusercontent.com",
   "font-src 'self' data:",
   [
     "connect-src 'self'",
+    ...(isDev ? ["ws:"] : []),
     "https://*.googleapis.com",
     "https://*.firebaseio.com",
     "wss://*.firebaseio.com",
     "https://firebasestorage.googleapis.com",
   ].join(" "),
-  "upgrade-insecure-requests",
+  ...(isDev ? [] : ["upgrade-insecure-requests"]),
 ].join("; ");
 
 // The Sanity Studio embedded at /studio is its own SPA with a much wider set

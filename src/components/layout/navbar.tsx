@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Menu } from "lucide-react";
+import { Menu, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navLinks } from "@/data/site";
 import { Button } from "@/components/ui/button";
@@ -78,12 +78,13 @@ export function Navbar() {
                 </Link>
               ))}
               <Button
-                className="mt-3"
+                className="mt-3 w-full group justify-center"
                 render={
                   <Link href="/join" onClick={() => setOpen(false)} />
                 }
               >
                 Join the Community
+                <ArrowUpRight className="ml-1.5 size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Button>
             </nav>
           </SheetContent>
