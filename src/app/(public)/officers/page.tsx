@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getOfficers } from "@/lib/data";
 import { orgChart } from "@/data/officers";
 import { PageHeader } from "@/components/layout/page-header";
+import { GridBackground } from "@/components/layout/grid-background";
 import { OfficerCard } from "@/components/officers/officer-card";
 import { OrgChart } from "@/components/officers/org-chart";
 import { siteConfig } from "@/data/site";
@@ -38,18 +39,23 @@ export default async function OfficersPage() {
       />
 
       {/* Officers Grid */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
-        {officers.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-border/80 bg-card/40 p-12 text-center text-sm text-muted-foreground">
-            Officer profiles are being updated for the new academic year. Check back soon!
-          </div>
-        ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {officers.map((officer) => (
-              <OfficerCard key={officer.id} officer={officer} />
-            ))}
-          </div>
-        )}
+      <section className="relative overflow-hidden bg-white py-16 sm:py-24">
+        {/* ── Background Grid Pattern ── */}
+        <GridBackground />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {officers.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-border/80 bg-card/40 p-12 text-center text-sm text-muted-foreground">
+              Officer profiles are being updated for the new academic year. Check back soon!
+            </div>
+          ) : (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {officers.map((officer) => (
+                <OfficerCard key={officer.id} officer={officer} />
+              ))}
+            </div>
+          )}
+        </div>
       </section>
 
       {/* Organizational Structure Section */}

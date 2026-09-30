@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getProjects } from "@/data/projects";
 import { PageHeader } from "@/components/layout/page-header";
+import { GridBackground } from "@/components/layout/grid-background";
 import { ProjectsClient } from "@/components/projects/projects-client";
 import { siteConfig } from "@/data/site";
 
@@ -35,8 +36,13 @@ export default async function ProjectsPage() {
         description={`A page to showcase the projects of IT students at ${siteConfig.school}.`}
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
-        <ProjectsClient projects={projects} />
+      <section className="relative overflow-hidden bg-white py-16 sm:py-24">
+        {/* ── Background Grid Pattern ── */}
+        <GridBackground />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <ProjectsClient projects={projects} />
+        </div>
       </section>
     </>
   );

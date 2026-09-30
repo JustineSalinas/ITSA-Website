@@ -48,23 +48,23 @@ export function HomeFaq() {
   const gutterLines = Array.from({ length: 22 }, (_, i) => i + 1);
 
   return (
-    <section className="border-t border-border/60 bg-muted/20 py-20 sm:py-24">
+    <section className="border-t border-black bg-black py-20 sm:py-24 text-white">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl text-white">
             Questions students ask us
           </h2>
         </div>
 
-        <div className="mt-10 overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm">
+        <div className="mt-10 overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/90 shadow-2xl">
           {/* Window chrome bar */}
-          <div className="relative flex items-center border-b border-border/70 bg-muted/50 px-4 py-2.5">
+          <div className="relative flex items-center border-b border-zinc-800 bg-zinc-900/80 px-4 py-2.5">
             <div className="flex items-center gap-1.5" aria-hidden="true">
-              <span className="size-2.5 rounded-full bg-red-400" />
-              <span className="size-2.5 rounded-full bg-amber-400" />
-              <span className="size-2.5 rounded-full bg-emerald-400" />
+              <span className="size-2.5 rounded-full bg-red-500/80" />
+              <span className="size-2.5 rounded-full bg-amber-500/80" />
+              <span className="size-2.5 rounded-full bg-emerald-500/80" />
             </div>
-            <span className="absolute left-1/2 -translate-x-1/2 font-mono text-xs text-muted-foreground">
+            <span className="absolute left-1/2 -translate-x-1/2 font-mono text-xs text-zinc-400">
               itsa — faq.md
             </span>
           </div>
@@ -74,19 +74,19 @@ export function HomeFaq() {
             {/* Explorer / question list */}
             <nav
               aria-label="FAQ categories"
-              className="border-b border-border/70 md:max-h-[32rem] md:overflow-y-auto md:border-b-0 md:border-r"
+              className="border-b border-zinc-800 md:max-h-[32rem] md:overflow-y-auto md:border-b-0 md:border-r bg-zinc-950/50"
             >
-              <div className="flex items-center justify-between border-b border-border/60 px-4 py-2.5">
-                <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              <div className="flex items-center justify-between border-b border-zinc-800/80 px-4 py-2.5 bg-zinc-900/40">
+                <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
                   Explorer
                 </span>
-                <span className="font-mono text-[11px] text-muted-foreground">
+                <span className="font-mono text-[11px] text-zinc-500">
                   {flat.length} items
                 </span>
               </div>
               {grouped.map((group) => (
                 <div key={group.category}>
-                  <p className="px-4 pt-3 pb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-primary">
+                  <p className="px-4 pt-3 pb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-blue-400">
                     <span aria-hidden="true">▸ </span>
                     {group.category}
                   </p>
@@ -100,10 +100,10 @@ export function HomeFaq() {
                             type="button"
                             onClick={() => setActiveId(item.id)}
                             aria-current={isActive}
-                            className={`relative flex min-h-11 w-full items-start gap-2 py-3 pl-4 pr-4 text-left text-sm outline-none transition-colors focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:ring-inset ${
+                            className={`relative flex min-h-11 w-full items-start gap-2 py-3 pl-4 pr-4 text-left text-sm outline-none transition-colors focus-visible:ring-3 focus-visible:ring-primary/50 focus-visible:ring-inset ${
                               isActive
-                                ? "bg-primary/10 font-semibold text-primary"
-                                : "text-foreground hover:bg-accent/60"
+                                ? "bg-primary/20 font-semibold text-white"
+                                : "text-zinc-400 hover:bg-zinc-900/60 hover:text-zinc-200"
                             }`}
                           >
                             {isActive && (
@@ -112,7 +112,7 @@ export function HomeFaq() {
                                 className="absolute inset-y-0 left-0 w-[3px] bg-primary"
                               />
                             )}
-                            <span className="shrink-0 pt-px font-mono text-xs text-muted-foreground">
+                            <span className="shrink-0 pt-px font-mono text-xs text-zinc-500">
                               {String(globalIndex + 1).padStart(2, "0")}
                             </span>
                             <span>{item.q}</span>
@@ -126,16 +126,16 @@ export function HomeFaq() {
             </nav>
 
             {/* Answer pane */}
-            <div className="flex flex-col md:min-h-[32rem]">
+            <div className="flex flex-col md:min-h-[32rem] bg-zinc-950/80">
               {/* Breadcrumb tab */}
-              <div className="flex items-center justify-between border-b border-border/60 px-4 py-2.5">
+              <div className="flex items-center justify-between border-b border-zinc-800 px-4 py-2.5 bg-zinc-900/30">
                 <span className="border-b-2 border-primary pb-2.5 -mb-[11px] font-mono text-xs">
-                  <span className="text-muted-foreground">{slugify(active.category)} / </span>
-                  <span className="text-foreground">
+                  <span className="text-zinc-500">{slugify(active.category)} / </span>
+                  <span className="text-white">
                     q{String(activeIndex + 1).padStart(2, "0")}.answer
                   </span>
                 </span>
-                <span className="flex items-center gap-1.5 font-mono text-[11px] text-muted-foreground">
+                <span className="flex items-center gap-1.5 font-mono text-[11px] text-zinc-400">
                   <span className="size-1.5 rounded-full bg-primary" aria-hidden="true" />
                   MD
                 </span>
@@ -145,7 +145,7 @@ export function HomeFaq() {
               <div className="flex flex-1 gap-4 px-4 py-5 sm:px-6">
                 <div
                   aria-hidden="true"
-                  className="hidden shrink-0 select-none font-mono text-xs leading-7 text-muted-foreground/50 sm:block"
+                  className="hidden shrink-0 select-none font-mono text-xs leading-7 text-zinc-600 sm:block"
                 >
                   {gutterLines.map((n) => (
                     <div key={n}>{n}</div>
@@ -153,39 +153,39 @@ export function HomeFaq() {
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                  <p className="font-mono text-[11px] uppercase tracking-wider text-blue-400">
                     {active.category}
                   </p>
                   <h3 className="mt-3 text-balance">
-                    <span className="font-mono text-muted-foreground/60" aria-hidden="true">
+                    <span className="font-mono text-zinc-500" aria-hidden="true">
                       #{" "}
                     </span>
-                    <span className="font-heading text-lg font-bold tracking-tight sm:text-xl">
+                    <span className="font-heading text-lg font-bold tracking-tight text-white sm:text-xl">
                       {active.q}
                     </span>
                   </h3>
 
                   <div className="mt-5 flex items-center gap-3" aria-hidden="true">
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground/70">
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-400">
                       Answer
                     </span>
-                    <span className="h-px flex-1 bg-border/70" />
+                    <span className="h-px flex-1 bg-zinc-800" />
                   </div>
 
-                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
+                  <p className="mt-4 text-sm leading-relaxed text-zinc-300 sm:text-base">
                     {active.a}
                   </p>
 
                   {active.cta && (
-                    <div className="mt-6 rounded-lg border border-primary/25 bg-primary/5 p-4">
+                    <div className="mt-6 rounded-lg border border-primary/30 bg-primary/10 p-4">
                       <Link
                         href={active.cta.href}
-                        className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-primary hover:underline"
+                        className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase tracking-wider text-blue-400 hover:text-blue-300 hover:underline"
                       >
                         <span aria-hidden="true">→</span>
                         Next step
                       </Link>
-                      <p className="mt-1.5 text-sm text-muted-foreground">
+                      <p className="mt-1.5 text-sm text-zinc-300">
                         {active.cta.label}
                       </p>
                     </div>
@@ -194,15 +194,15 @@ export function HomeFaq() {
               </div>
 
               {/* Footer / pager */}
-              <div className="mt-auto flex items-center justify-between border-t border-border/60 px-4 py-3 sm:px-6">
-                <span className="font-mono text-xs text-muted-foreground">
+              <div className="mt-auto flex items-center justify-between border-t border-zinc-800 px-4 py-3 sm:px-6 bg-zinc-900/30">
+                <span className="font-mono text-xs text-zinc-400">
                   {activeIndex + 1} / {flat.length}
                 </span>
                 <div className="flex gap-2">
                   <button
                     type="button"
                     onClick={() => goTo(-1)}
-                    className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border/80 px-3 font-mono text-xs text-muted-foreground outline-none transition-colors hover:border-primary/40 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+                    className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900/80 px-3 font-mono text-xs text-zinc-300 outline-none transition-colors hover:border-primary/50 hover:bg-zinc-800 hover:text-white focus-visible:ring-3 focus-visible:ring-primary/50"
                   >
                     <ArrowRight className="size-3 rotate-180" aria-hidden="true" />
                     prev
@@ -210,7 +210,7 @@ export function HomeFaq() {
                   <button
                     type="button"
                     onClick={() => goTo(1)}
-                    className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-border/80 px-3 font-mono text-xs text-muted-foreground outline-none transition-colors hover:border-primary/40 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+                    className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-zinc-800 bg-zinc-900/80 px-3 font-mono text-xs text-zinc-300 outline-none transition-colors hover:border-primary/50 hover:bg-zinc-800 hover:text-white focus-visible:ring-3 focus-visible:ring-primary/50"
                   >
                     next
                     <ArrowRight className="size-3" aria-hidden="true" />
@@ -221,9 +221,9 @@ export function HomeFaq() {
           </div>
         </div>
 
-        <p className="mt-6 text-center text-sm text-muted-foreground">
+        <p className="mt-6 text-center text-sm text-zinc-400">
           Still have a question?{" "}
-          <Link href="/join" className="font-semibold text-primary hover:underline">
+          <Link href="/join" className="font-semibold text-blue-400 hover:text-blue-300 hover:underline">
             Send us a message
           </Link>{" "}
           and an officer will reply.

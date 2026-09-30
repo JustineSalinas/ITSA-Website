@@ -32,8 +32,9 @@ const values = [
 
 export function AboutItsa() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
-      <motion.div
+    <section className="w-full border-t border-black bg-white py-20 sm:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
@@ -120,6 +121,7 @@ export function AboutItsa() {
           Read our full story
           <ArrowRight className="ml-1.5 size-4 transition-transform group-hover:translate-x-1" />
         </Button>
+      </div>
       </div>
     </section>
   );

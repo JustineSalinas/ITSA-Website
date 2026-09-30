@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
+import { GridBackground } from "@/components/layout/grid-background";
 
 /**
  * Closing banner. Pure ITSA brand art -- the blob network + wordmark -- with
@@ -23,8 +24,11 @@ export function JoinCta() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section className="border-t border-border/60 bg-gradient-to-b from-muted/20 to-background py-20 sm:py-28">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+    <section className="relative overflow-hidden border-t border-black bg-white py-20 sm:py-28">
+      {/* ── Background Grid Pattern ── */}
+      <GridBackground />
+
+      <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="animate-float">
           <motion.div
             initial={{ opacity: 0, y: 16 }}

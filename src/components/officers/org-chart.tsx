@@ -132,7 +132,6 @@ export function OrgChart({ root }: { root: OrgNode }) {
 
     const isOpen = openDepts.has(dept.code);
     const panelId = `dept-${dept.code}`;
-
     return (
       <li key={dept.code}>
         <SpotlightCard className="flex flex-col p-0">
@@ -420,9 +419,12 @@ export function OrgChart({ root }: { root: OrgNode }) {
           </h3>
 
           <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2">
+            {/* Left Column: Technology & Communications */}
             <ul className="flex list-none flex-col gap-8">
               {departments.slice(0, 2).map(renderDepartmentCard)}
             </ul>
+
+            {/* Right Column: Documentation, Operations & Finance */}
             <ul className="flex list-none flex-col gap-8">
               {departments.slice(2).map(renderDepartmentCard)}
             </ul>
