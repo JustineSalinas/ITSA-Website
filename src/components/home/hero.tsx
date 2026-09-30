@@ -85,11 +85,12 @@ export function Hero() {
               and a vibrant student developer network ready to lead.
             </p>
 
-            {/* Action Buttons with Neo-Brutalist Hard Drop Shadows */}
+            {/* Action Buttons -- the neo-brutalist hard-shadow treatment this
+                pair originated is now Button's global default style. */}
             <div className="mt-6 sm:mt-8 flex w-full flex-col sm:flex-row sm:w-auto items-center justify-center gap-3 sm:gap-4">
               <Button
                 size="lg"
-                className="group relative rounded-xl border-2 border-slate-800 bg-[#1e3a8a] px-6 text-white shadow-[3px_3px_0px_#0f172a] transition-all hover:-translate-y-0.5 hover:bg-[#172554] hover:shadow-[5px_5px_0px_#0f172a] active:translate-y-0 active:shadow-[1px_1px_0px_#0f172a] justify-center w-full sm:w-auto"
+                className="group w-full justify-center sm:w-auto"
                 render={<Link href="/join" />}
               >
                 Become a member
@@ -98,7 +99,7 @@ export function Hero() {
               <Button
                 size="lg"
                 variant="outline"
-                className="group rounded-xl border-2 border-slate-800 bg-white px-6 text-slate-900 shadow-[3px_3px_0px_#0f172a] transition-all hover:-translate-y-0.5 hover:bg-slate-50 hover:shadow-[5px_5px_0px_#0f172a] active:translate-y-0 active:shadow-[1px_1px_0px_#0f172a] justify-center w-full sm:w-auto"
+                className="group w-full justify-center sm:w-auto"
                 render={<Link href="/events" />}
               >
                 Explore events

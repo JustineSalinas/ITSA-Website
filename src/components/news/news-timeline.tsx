@@ -271,7 +271,7 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
           <Button
             type="button"
             variant="outline"
-            className="h-11 px-5"
+            className="px-7"
             onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
           >
             Show more news ({filtered.length - visibleCount} left)

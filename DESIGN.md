@@ -51,13 +51,13 @@ components:
   button-primary:
     backgroundColor: "{colors.brand-blue}"
     textColor: "{colors.background}"
-    rounded: "{rounded.lg}"
-    padding: "0 0.625rem"
-    height: "2.25rem"
+    rounded: "{rounded.full}"
+    padding: "0 1.25rem"
+    height: "2.5rem"
   button-outline:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.lg}"
+    rounded: "{rounded.full}"
   chip-focus:
     backgroundColor: "{colors.brand-blue}"
     textColor: "{colors.background}"
@@ -142,16 +142,18 @@ Predominantly flat, with soft brand-tinted glow rather than hard drop shadows. D
 - **Brand glow** (`drop-shadow(0 20px 40px rgba(47,86,214,0.18))`): Under the hero network only — atmosphere, not a UI shadow.
 
 ### Named Rules
-**The Flat-At-Rest Rule.** Surfaces are flat by default. If a card has a resting drop shadow, it's too heavy — depth is tonal until the user interacts.
+**The Flat-At-Rest Rule.** Surfaces are flat by default. If a card has a resting drop shadow, it's too heavy — depth is tonal until the user interacts. Buttons are the named exception (see §5, Buttons) — the hard offset shadow at rest is the whole point of that component's treatment, not a violation of this rule.
 
 ## 5. Components
 
 ### Buttons
-- **Shape:** Gently rounded (`rounded-lg`, 0.75rem).
-- **Primary:** Solid Brand Blue with near-white text; `hover:bg-primary/80`. The only text-bearing brand-colored button. Active state nudges down 1px.
-- **Outline:** White surface, ink text, hairline border; `hover:bg-muted`. Used for secondary navigation ("All events", "Full team", "Explore events").
-- **Ghost / Link:** Transparent; link variant uses Brand Blue with underline-on-hover. On the blue CTA panel, the ghost button flips to near-white text over `hover:bg-white/10`.
-- **Focus:** 3px `ring-ring/50` (blue) with a border shift — always visible.
+- **Shape:** Pill (`rounded-full`), neo-brutalist: thick 2px ink border, hard offset shadow at rest that grows on hover as the button lifts (`-translate-y-0.5`), then compresses to a 1px shadow on `:active`. This is a deliberate exception to the Flat-At-Rest elevation rule below — buttons are the one element allowed a resting shadow, because the whole point of the treatment is that every button reads as physically pressable everywhere on the site, not just in the hero it started in.
+- **Primary:** Solid Brand Blue (`bg-primary`) with near-white text, hard shadow in the ink token (`--foreground`), hover darkens to `bg-brand-deep`. The only text-bearing brand-colored button.
+- **Outline / Secondary:** Same border-and-shadow treatment, white or tinted-secondary fill, ink text.
+- **Destructive:** Same treatment, solid `bg-destructive` fill.
+- **Ghost / Link:** No border, no shadow, no lift — the two variants exempt from the neo-brutalist treatment. Ghost is a plain hover fill; link is Brand Blue text with underline-on-hover.
+- **Colors are tokens, never literal hex** — border and shadow both resolve through `--foreground`, fills through `--primary`/`--brand-deep`/`--secondary`/`--destructive`, so this stays in sync with the palette above automatically.
+- **Focus:** 3px `ring-ring/50` (blue) — always visible.
 
 ### Chips / Tags
 - **Focus-area tags (hero):** Pill (`rounded-full`), `secondary/50` fill, hairline border, small medium text. A quiet inventory of what ITSA covers.

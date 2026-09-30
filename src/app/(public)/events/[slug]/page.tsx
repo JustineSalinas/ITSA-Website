@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CalendarDays, Clock, MapPin, CheckCircle2, Ticket, Building2 } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CalendarDays, Clock, MapPin, CheckCircle2, Ticket, Building2 } from "lucide-react";
 import { getEventBySlug, getEvents } from "@/lib/data";
 import { formatEventDate, formatEventTime, isUpcoming } from "@/lib/format";
 import { Button } from "@/components/ui/button";
@@ -243,8 +243,9 @@ export default async function EventDetailPage({ params }: Props) {
 
               {/* CTA Action Button */}
               {upcoming ? (
-                <Button size="lg" className="mt-8 w-full" render={<Link href="/join" />}>
+                <Button size="lg" className="mt-8 w-full justify-center group" render={<Link href="/join" />}>
                   Register Interest / RSVP Now
+                  <ArrowUpRight className="ml-1.5 size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </Button>
               ) : (
                 <div className="mt-8 rounded-xl border border-border bg-muted/40 p-4 text-center font-mono text-xs text-muted-foreground">

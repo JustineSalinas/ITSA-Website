@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Filter, Search, Terminal, Trophy } from "lucide-react";
 import type { ProjectItem } from "@/data/projects";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { ProjectCard } from "./project-card";
 
 export function ProjectsClient({ projects, hideAwardsButton }: { projects: ProjectItem[]; hideAwardsButton?: boolean }) {
@@ -36,13 +37,15 @@ export function ProjectsClient({ projects, hideAwardsButton }: { projects: Proje
         {/* Actions */}
         <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto shrink-0">
           {!hideAwardsButton && (
-            <Link 
-              href="/projects/awards" 
-              className="inline-flex w-full sm:w-auto items-center justify-center whitespace-nowrap rounded-full border border-border/80 bg-card px-4 py-2 text-xs font-semibold text-foreground transition-colors hover:border-primary/40 hover:bg-muted"
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full sm:w-auto font-semibold"
+              render={<Link href="/projects/awards" />}
             >
-              <Trophy className="mr-2 size-3.5 text-brand-orange" />
+              <Trophy className="mr-1.5 size-3.5 text-brand-orange" />
               Award Winners
-            </Link>
+            </Button>
           )}
           
           {/* Search Input */}
@@ -75,12 +78,14 @@ export function ProjectsClient({ projects, hideAwardsButton }: { projects: Proje
           <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
             We couldn&apos;t find any projects matching your current filters and search query.
           </p>
-          <button
+          <Button
+            variant="outline"
+            size="sm"
             onClick={() => setSearchQuery("")}
-            className="mt-6 inline-flex rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/20"
+            className="mt-6"
           >
             Clear search
-          </button>
+          </Button>
         </div>
       ) : (
         <motion.div

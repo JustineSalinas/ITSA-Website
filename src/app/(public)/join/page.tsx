@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Compass, Lightbulb, Mail, MapPin, MessageCircle, Rocket, TrendingUp } from "lucide-react";
+import { ArrowUpRight, Compass, Lightbulb, Mail, MapPin, MessageCircle, Rocket, TrendingUp } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { CareerPaths } from "@/components/join/career-paths";
 import { SectionReveal } from "@/components/join/section-reveal";
+import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -71,14 +72,16 @@ export default function JoinPage() {
                 </div>
               </div>
               {siteConfig.discordInvite ? (
-                <a
-                  href={siteConfig.discordInvite}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex shrink-0 items-center justify-center rounded-full bg-brand px-6 py-3 text-sm font-semibold text-brand-foreground outline-none transition-colors hover:bg-brand/90 focus-visible:ring-3 focus-visible:ring-ring/50"
+                <Button
+                  size="lg"
+                  className="group shrink-0 justify-center px-7"
+                  render={
+                    <a href={siteConfig.discordInvite} target="_blank" rel="noopener noreferrer" />
+                  }
                 >
                   Join the Discord
-                </a>
+                  <ArrowUpRight className="ml-1.5 size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </Button>
               ) : (
                 <span
                   role="note"

@@ -42,11 +42,11 @@ export default async function HomePage() {
             </div>
             <Button
               variant="outline"
-              className="group border-border/80 px-5 transition-all hover:border-primary/40 hover:bg-muted"
+              className="group px-6"
               render={<Link href="/events" />}
             >
               View calendar
-              <ArrowRight className="ml-1 size-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="ml-1.5 size-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </div>
 
@@ -82,11 +82,11 @@ export default async function HomePage() {
           </div>
           <Button
             variant="outline"
-            className="group border-border/80 px-5 transition-all hover:border-primary/40 hover:bg-muted"
+            className="group px-6"
             render={<Link href="/officers" />}
           >
             Meet the entire team
-            <ArrowRight className="ml-1 size-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="ml-1.5 size-4 transition-transform group-hover:translate-x-1" />
           </Button>
         </div>
 

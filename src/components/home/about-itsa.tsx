@@ -114,11 +114,11 @@ export function AboutItsa() {
         <Button
           variant="outline"
           size="lg"
-          className="group border-border/80 bg-card transition-all hover:border-primary/40 hover:bg-muted"
+          className="group px-7"
           render={<Link href="/about" />}
         >
           Read our full story
-          <ArrowRight className="ml-1 size-4 transition-transform group-hover:translate-x-1" />
+          <ArrowRight className="ml-1.5 size-4 transition-transform group-hover:translate-x-1" />
         </Button>
       </div>
     </section>

@@ -128,22 +128,22 @@ export default async function ProjectDetailPage({
           {project.liveUrl && (
             <Button
               size="lg"
-              className="gap-2 group px-6 w-full sm:w-auto text-base"
+              className="gap-2 group px-7 w-full sm:w-auto text-base justify-center"
               render={<a href={project.liveUrl} target="_blank" rel="noreferrer" />}
             >
               Live Preview
-              <ExternalLink className="size-4 opacity-70 transition-opacity group-hover:opacity-100" />
+              <ExternalLink className="size-4 opacity-80 transition-opacity group-hover:opacity-100" />
             </Button>
           )}
           {project.githubUrl && (
             <Button
               size="lg"
               variant="outline"
-              className="gap-2 group border-border/80 bg-card px-6 w-full sm:w-auto text-base hover:bg-muted"
+              className="gap-2 group px-7 w-full sm:w-auto text-base justify-center"
               render={<a href={project.githubUrl} target="_blank" rel="noreferrer" />}
             >
               Source Code
-              <GithubIcon className="size-4 opacity-70 transition-opacity group-hover:opacity-100" />
+              <GithubIcon className="size-4 opacity-80 transition-opacity group-hover:opacity-100" />
             </Button>
           )}
         </div>
@@ -261,12 +261,12 @@ export default async function ProjectDetailPage({
       {/* Navigation Section */}
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 mt-16 md:mt-24 pt-12 border-t border-border/40">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-          <Button variant="outline" className="gap-2 font-mono text-xs font-semibold uppercase transition-colors hover:border-primary/40 hover:bg-muted w-full sm:w-auto justify-start" render={<Link href={`/projects/${prevProject.slug}`} />}>
+          <Button variant="outline" className="gap-2 font-mono text-xs uppercase px-5 w-full sm:w-auto justify-start" render={<Link href={`/projects/${prevProject.slug}`} />}>
             <ArrowLeft className="size-3.5" />
             <span className="truncate max-w-[200px]">{prevProject.title}</span>
           </Button>
 
-          <Button variant="outline" className="gap-2 font-mono text-xs font-semibold uppercase transition-colors hover:border-primary/40 hover:bg-muted w-full sm:w-auto justify-end" render={<Link href={`/projects/${nextProject.slug}`} />}>
+          <Button variant="outline" className="gap-2 font-mono text-xs uppercase px-5 w-full sm:w-auto justify-end" render={<Link href={`/projects/${nextProject.slug}`} />}>
             <span className="truncate max-w-[200px]">{nextProject.title}</span>
             <ArrowRight className="size-3.5" />
           </Button>
