@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import { getEvents } from "@/lib/data";
 import { PageHeader } from "@/components/layout/page-header";
+import { GridBackground } from "@/components/layout/grid-background";
 import { EventsClient } from "@/components/events/events-client";
 import { siteConfig } from "@/data/site";
 
@@ -36,12 +37,17 @@ export default async function EventsPage() {
         description="From beginner-friendly coding labs to campus-wide hackathons — explore everything ITSA is planning and hosting."
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
-        {/* EventsClient reads the URL (?when=&q=), so it needs a Suspense
-            boundary for the static build to succeed. */}
-        <Suspense fallback={null}>
-          <EventsClient events={events} />
-        </Suspense>
+      <section className="relative overflow-hidden bg-white py-16 sm:py-24">
+        {/* ── Background Grid Pattern ── */}
+        <GridBackground />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* EventsClient reads the URL (?when=&q=), so it needs a Suspense
+              boundary for the static build to succeed. */}
+          <Suspense fallback={null}>
+            <EventsClient events={events} />
+          </Suspense>
+        </div>
       </section>
     </>
   );

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Eye, Target, Heart, GraduationCap, Handshake, Lightbulb } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
+import { GridBackground } from "@/components/layout/grid-background";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { siteConfig } from "@/data/site";
 
@@ -59,7 +60,11 @@ export default function AboutPage() {
         description={`The ${siteConfig.fullName} is the official student organization for IT builders at ${siteConfig.school}.`}
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden bg-white py-16 sm:py-24">
+        {/* ── Background Grid Pattern ── */}
+        <GridBackground />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Story overview */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -163,6 +168,7 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
+        </div>
         </div>
       </section>
     </>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ArrowUpRight, Compass, Lightbulb, Mail, MapPin, MessageCircle, Rocket, TrendingUp } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
+import { GridBackground } from "@/components/layout/grid-background";
 import { CareerPaths } from "@/components/join/career-paths";
 import { SectionReveal } from "@/components/join/section-reveal";
 import { Button } from "@/components/ui/button";
@@ -42,7 +43,11 @@ export default function JoinPage() {
         kicker="8 career tracks, one community"
       />
 
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:py-24 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden bg-white py-16 sm:py-24">
+        {/* ── Background Grid Pattern ── */}
+        <GridBackground />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Discord hero */}
         <SectionReveal>
           <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-card p-8 sm:p-12">
@@ -173,6 +178,7 @@ export default function JoinPage() {
             </div>
           </div>
         </SectionReveal>
+        </div>
       </section>
     </>
   );
