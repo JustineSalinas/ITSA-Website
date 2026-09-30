@@ -55,6 +55,6 @@ required — our workshops start from the fundamentals.
 
 ## Contact
 
-- **Email:** itsa@usa.edu.ph
+- **Email:** itechsoc-rso@usa.edu.ph
 - **Location:** General Luna St., Iloilo City, Philippines
 - **Facebook:** https://www.facebook.com/profile.php?id=61592045333438

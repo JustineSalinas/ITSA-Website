@@ -6,7 +6,7 @@ export const siteConfig = {
   description:
     "The official student organization of Information Technology students at the University of San Agustin — building community, skills, and opportunities in tech.",
   url: "https://itsa-usa.org",
-  contactEmail: "itsa@usa.edu.ph",
+  contactEmail: "itechsoc-rso@usa.edu.ph",
   location: "General Luna St., Iloilo City, Philippines",
   // Set once the officers have a real invite link. Empty hides the CTA
   // everywhere instead of linking to a broken/placeholder server.
