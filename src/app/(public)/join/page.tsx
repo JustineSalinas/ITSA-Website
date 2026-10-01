@@ -148,7 +148,7 @@ export default function JoinPage() {
             {/* Community Photo with Neo-Brutalist Frame & Badges */}
             <div className="relative z-10 mt-6 sm:mt-8 overflow-hidden rounded-2xl border-2 border-foreground bg-slate-900 shadow-[4px_4px_0_0_var(--foreground)] aspect-[16/9] max-h-[460px] w-full group">
               <Image
-                src="/images/itsa-community.png"
+                src="/images/itsa-community.webp"
                 alt="ITSA Student Officers and Community Members"
                 fill
                 className="object-cover object-[center_35%] transition-transform duration-500 group-hover:scale-[1.02]"
