@@ -40,8 +40,8 @@ export default function JoinPage() {
     <>
       <PageHeader
         title="Grow your IT career with us."
-        description="Advice, skills, and a community of IT students figuring it out together — no application required, just show up."
-        kicker="8 career tracks, one community"
+        description="Advice, skills, and a community of IT students figuring it out together: no application required, just show up."
+        kicker="9 career tracks, one community"
       />
 
       <section className="relative overflow-hidden bg-white py-16 sm:py-24">

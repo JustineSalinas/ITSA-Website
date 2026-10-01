@@ -66,7 +66,7 @@ export default async function OfficersPage() {
               Organizational Hierarchy
             </h2>
             <p className="mt-2 text-base text-muted-foreground">
-              How ITSA is structured from our faculty adviser to department directors and committee leads.
+              How ITSA is structured from our IT academic supervisor to department directors and committee leads.
             </p>
           </div>
 

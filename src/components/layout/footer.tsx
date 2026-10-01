@@ -24,9 +24,9 @@ export function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {/* Col 1: Brand & Mission */}
           <div className="space-y-4">
-            <Logo subtitleClassName="text-slate-400" />
+            <Logo showSubtitle subtitleClassName="text-slate-400" />
             <p className="text-xs leading-relaxed text-slate-400">
-              {siteConfig.fullName} — empowering Information Technology students through technical excellence, leadership, and community support.
+              {siteConfig.fullName}, empowering Information Technology students through technical excellence, leadership, and community support.
             </p>
             <div className="flex gap-2 pt-2">
               {socialLinks.map(({ href, label, Icon }) => (

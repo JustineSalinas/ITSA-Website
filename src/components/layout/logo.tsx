@@ -25,10 +25,14 @@ export function LogoMark({
 export function Logo({
   className,
   showText = true,
+  showSubtitle = false,
+  textClassName,
   subtitleClassName,
 }: {
   className?: string;
   showText?: boolean;
+  showSubtitle?: boolean;
+  textClassName?: string;
   subtitleClassName?: string;
 }) {
   return (
@@ -44,18 +48,25 @@ export function Logo({
         <LogoMark priority />
       </span>
       {showText && (
-        <span className="flex flex-col leading-none">
-          <span className="font-heading text-base font-extrabold tracking-tight">
-            {siteConfig.name}
-          </span>
+        <span className="flex flex-col justify-center leading-none">
           <span
             className={cn(
-              "mt-0.5 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground",
-              subtitleClassName,
+              "font-heading text-lg font-extrabold tracking-tight transition-colors group-hover:text-primary",
+              textClassName,
             )}
           >
-            {siteConfig.school}
+            {siteConfig.name}
           </span>
+          {showSubtitle && (
+            <span
+              className={cn(
+                "mt-0.5 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground",
+                subtitleClassName,
+              )}
+            >
+              {siteConfig.school}
+            </span>
+          )}
         </span>
       )}
     </Link>

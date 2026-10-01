@@ -6,6 +6,7 @@ import {
   Boxes,
   Cloud,
   Code2,
+  FolderKanban,
   type LucideIcon,
   Palette,
   Server,
@@ -27,7 +28,7 @@ type CareerPath = {
 };
 
 /**
- * Roles named here are broad, real IT career tracks — not ITSA-specific
+ * Roles named here are broad, real IT career tracks: not ITSA-specific
  * titles or claims about placement/outcomes. The "first step" is advice,
  * not a promise of a program ITSA runs, since no such curriculum exists yet.
  */
@@ -38,9 +39,9 @@ const paths: CareerPath[] = [
     icon: Code2,
     title: "Web & Software Development",
     blurb:
-      "Building the applications people use every day — from browser-based tools to backend services that keep them running.",
+      "Building the applications people use every day, from browser-based tools to backend services that keep them running.",
     skills: ["JavaScript/TypeScript", "Git & version control", "REST/HTTP basics", "A framework (React, Next.js, etc.)"],
-    firstStep: "Pick one small idea and ship it end to end — a finished toy project teaches more than a half-finished big one.",
+    firstStep: "Pick one small idea and ship it end to end: a finished toy project teaches more than a half-finished big one.",
   },
   {
     id: "mobile",
@@ -48,9 +49,9 @@ const paths: CareerPath[] = [
     icon: Smartphone,
     title: "Mobile App Development",
     blurb:
-      "Designing and building for the device most people actually reach for first — with its own constraints around performance and offline use.",
+      "Designing and building for the device most people actually reach for first, with its own constraints around performance and offline use.",
     skills: ["Kotlin/Swift or Flutter/React Native", "UI state management", "App store release basics", "Working with device APIs"],
-    firstStep: "Rebuild a simple app you already use daily — cloning a familiar UI forces you to think through real interaction details.",
+    firstStep: "Rebuild a simple app you already use daily: cloning a familiar UI forces you to think through real interaction details.",
   },
   {
     id: "data",
@@ -58,9 +59,9 @@ const paths: CareerPath[] = [
     icon: Boxes,
     title: "Data Analytics & AI",
     blurb:
-      "Turning raw data into decisions — from dashboards and reports to the models behind today's AI-driven products.",
+      "Turning raw data into decisions, from dashboards and reports to the models behind today's AI-driven products.",
     skills: ["Python & SQL", "Statistics fundamentals", "Data visualization", "ML basics (once fundamentals are solid)"],
-    firstStep: "Find a public dataset you're curious about and ask it one real question — the analysis process matters more than the topic.",
+    firstStep: "Find a public dataset you're curious about and ask it one real question: the analysis process matters more than the topic.",
   },
   {
     id: "security",
@@ -68,9 +69,9 @@ const paths: CareerPath[] = [
     icon: Shield,
     title: "Cybersecurity",
     blurb:
-      "Thinking like an attacker to defend like one — network security, secure coding, and incident response all fall under this track.",
+      "Thinking like an attacker to defend like one: network security, secure coding, and incident response all fall under this track.",
     skills: ["Networking fundamentals", "Linux command line", "OWASP top 10", "Capture-the-flag practice"],
-    firstStep: "Try a beginner CTF (capture-the-flag) challenge online — it's the fastest way to see if the offense/defense mindset clicks for you.",
+    firstStep: "Try a beginner CTF (capture-the-flag) challenge online: it's the fastest way to see if the offense/defense mindset clicks for you.",
   },
   {
     id: "cloud",
@@ -78,9 +79,9 @@ const paths: CareerPath[] = [
     icon: Cloud,
     title: "Cloud & DevOps",
     blurb:
-      "Keeping applications deployed, scalable, and running smoothly — the infrastructure layer most other tracks quietly depend on.",
+      "Keeping applications deployed, scalable, and running smoothly: the infrastructure layer most other tracks quietly depend on.",
     skills: ["Linux & shell scripting", "A cloud provider (AWS/GCP/Azure)", "CI/CD basics", "Containers (Docker)"],
-    firstStep: "Deploy something you've already built to a real cloud host — the friction you hit is the actual syllabus.",
+    firstStep: "Deploy something you've already built to a real cloud host: the friction you hit is the actual syllabus.",
   },
   {
     id: "design",
@@ -88,7 +89,7 @@ const paths: CareerPath[] = [
     icon: Palette,
     title: "UI/UX Design",
     blurb:
-      "Making software make sense — research, wireframes, and interfaces that people can use without a manual.",
+      "Making software make sense: research, wireframes, and interfaces that people can use without a manual.",
     skills: ["Figma or similar tools", "Basic usability heuristics", "Wireframing & prototyping", "Reading feedback critically"],
     firstStep: "Redesign one screen of an app that frustrates you, and be able to explain why your version is better.",
   },
@@ -98,9 +99,9 @@ const paths: CareerPath[] = [
     icon: Server,
     title: "IT Support & Networking",
     blurb:
-      "The hands-on backbone of every organization's tech — hardware, networks, and the systems that keep people working.",
+      "The hands-on backbone of every organization's tech: hardware, networks, and the systems that keep people working.",
     skills: ["Networking fundamentals", "Windows/Linux administration", "Troubleshooting method", "Certifications (CompTIA A+/Network+)"],
-    firstStep: "Set up and break your own small home network or lab — troubleshooting your own mess is the fastest teacher.",
+    firstStep: "Set up and break your own small home network or lab: troubleshooting your own mess is the fastest teacher.",
   },
   {
     id: "qa",
@@ -108,9 +109,19 @@ const paths: CareerPath[] = [
     icon: TestTube2,
     title: "Quality Assurance & Testing",
     blurb:
-      "The discipline of finding what's broken before users do — manual testing, automation, and a sharp eye for edge cases.",
+      "The discipline of finding what's broken before users do: manual testing, automation, and a sharp eye for edge cases.",
     skills: ["Test-case design", "Bug reporting clarity", "Basic automation scripting", "Reading a codebase you didn't write"],
-    firstStep: "Pick an app you use often and try to genuinely break it — then write up what you found like a real bug report.",
+    firstStep: "Pick an app you use often and try to genuinely break it, then write up what you found like a real bug report.",
+  },
+  {
+    id: "pm",
+    label: "Project Management",
+    icon: FolderKanban,
+    title: "IT Project Management",
+    blurb:
+      "Bridging technology, business, and teams to turn complex roadmaps into shipped, high-impact software products.",
+    skills: ["Agile & Scrum methodologies", "Sprint planning & Jira", "Stakeholder communication", "Risk & scope management"],
+    firstStep: "Coordinate or lead a small group project or hackathon squad from initial ideation to final demo.",
   },
 ];
 

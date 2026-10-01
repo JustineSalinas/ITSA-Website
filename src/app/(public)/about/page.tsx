@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Eye, Target, Heart, GraduationCap, Handshake, Lightbulb } from "lucide-react";
+import { Compass, Telescope, Heart, GraduationCap, Handshake, Lightbulb } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { GridBackground } from "@/components/layout/grid-background";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
@@ -18,7 +18,7 @@ const values = [
     Icon: Handshake,
     title: "Collaboration",
     description:
-      "We grow together — sharing code reviews, mentoring junior students, and co-building projects in a open peer ecosystem.",
+      "We grow together by sharing code reviews, mentoring junior students, and co-building projects in an open peer ecosystem.",
   },
   {
     Icon: GraduationCap,
@@ -92,12 +92,12 @@ export default function AboutPage() {
             <SpotlightCard spotlightColor="rgba(47, 86, 214, 0.18)" className="h-full p-6 sm:p-8">
               <div className="flex items-center gap-4">
                 <span className="grid size-12 place-items-center rounded-xl bg-primary/10 text-primary">
-                  <Target className="size-6" />
+                  <Compass className="size-6" />
                 </span>
                 <h3 className="font-heading text-xl font-bold tracking-tight text-foreground">Our Mission</h3>
               </div>
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
-                To empower Information Technology students by fostering technical mastery, leadership skills, and a collaborative community—creating direct pathways into high-impact tech careers.
+                To empower Information Technology students by fostering technical mastery, leadership skills, and a collaborative community, creating direct pathways into high-impact tech careers.
               </p>
             </SpotlightCard>
           </motion.div>
@@ -111,7 +111,7 @@ export default function AboutPage() {
             <SpotlightCard spotlightColor="rgba(247, 168, 30, 0.18)" className="h-full p-6 sm:p-8">
               <div className="flex items-center gap-4">
                 <span className="grid size-12 place-items-center rounded-xl bg-brand-orange/15 text-brand-orange">
-                  <Eye className="size-6" />
+                  <Telescope className="size-6" />
                 </span>
                 <h3 className="font-heading text-xl font-bold tracking-tight text-foreground">Our Vision</h3>
               </div>

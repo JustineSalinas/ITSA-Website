@@ -11,7 +11,7 @@ import type { Officer, OrgNode } from "@/lib/types";
 // if the real reporting lines differ.
 export const orgChart: OrgNode = {
   name: "Robert A. Aguilar Jr.",
-  position: "Adviser",
+  position: "IT Academic Supervisor",
   photoUrl: "/officers/robert-aguilar.jpg",
   children: [
     {

@@ -65,7 +65,7 @@ export function HomeFaq() {
               <span className="size-2.5 rounded-full bg-emerald-500/80" />
             </div>
             <span className="absolute left-1/2 -translate-x-1/2 font-mono text-xs text-zinc-400">
-              itsa — faq.md
+              itsa / faq.md
             </span>
           </div>
           <div className="h-0.5 bg-primary" aria-hidden="true" />

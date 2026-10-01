@@ -90,7 +90,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
   // never reads as empty; on desktop the toggles are hidden and all four show.
   const [openDepts, setOpenDepts] = useState<Set<string>>(new Set(["TECH"]));
 
-  const adviser = root;
+  const supervisor = root;
   const chairman = root.children?.[0];
   const execMembers = chairman?.children ?? [];
 
@@ -282,27 +282,27 @@ export function OrgChart({ root }: { root: OrgNode }) {
         transition={{ duration: prefersReducedMotion ? 0 : 0.3 }}
         className="flex flex-col items-center space-y-12"
       >
-        {/* Tier 1: Faculty Adviser & Chairman */}
+        {/* Tier 1: IT Academic Supervisor & Chairman */}
         <ul className="flex w-full max-w-5xl list-none flex-wrap justify-center gap-8">
           <li className="min-w-[280px] flex-1 sm:min-w-[300px]">
             <PersonButton
-              node={adviser}
-              group="Faculty"
+              node={supervisor}
+              group="Academic Supervision"
               onSelect={setSelected}
               className="block rounded-xl"
             >
               {/* Only spans inside: a button may not legally contain block
                   elements such as div, h3 or p. */}
               <span className="relative flex items-center gap-5 overflow-hidden rounded-xl border border-border/80 bg-card p-7 transition-all duration-300 hover:border-primary/40 hover:shadow-md">
-                <PersonAvatar node={adviser} className="size-16" textClassName="text-base font-bold" />
+                <PersonAvatar node={supervisor} className="size-16" textClassName="text-base font-bold" />
                 <span className="min-w-0">
                   <span className="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 font-mono text-xs font-bold uppercase tracking-wider text-primary">
-                    Faculty Adviser
+                    Academic Supervisor
                   </span>
                   <span className="mt-1.5 block font-heading text-xl font-extrabold tracking-tight text-foreground">
-                    {adviser.name}
+                    {supervisor.name}
                   </span>
-                  <span className="block text-sm text-muted-foreground">IT Department Adviser</span>
+                  <span className="block text-sm text-muted-foreground">{supervisor.position}</span>
                 </span>
               </span>
             </PersonButton>
