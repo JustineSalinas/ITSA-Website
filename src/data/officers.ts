@@ -133,7 +133,7 @@ export const orgChart: OrgNode = {
           children: [
             {
               name: "Adrian Justin J. Salinas",
-              position: "Web Development Lead",
+              position: "IT Project Manager",
               section: "BSIT 3C",
               photoUrl: "/officers/adrian-justin-salinas.jpg",
               socials: {
@@ -142,18 +142,18 @@ export const orgChart: OrgNode = {
                 github: "https://github.com/JustineSalinas",
                 website: "https://ajsalinas.vercel.app/",
               },
+            },
+            {
+              name: "Alexander Michael Tolosa",
+              position: "Web Development Lead",
+              section: "BSIT 3C",
+              photoUrl: "/officers/alexander-michael-tolosa.jpg",
               children: [
                 {
                   name: "Matthew Tabat",
                   position: "IT Security",
                   section: "BSIT 3C",
                   photoUrl: "/officers/matthew-tabat.png",
-                },
-                {
-                  name: "Alexander Michael Tolosa",
-                  position: "Front-End Developer",
-                  section: "BSIT 3C",
-                  photoUrl: "/officers/alexander-michael-tolosa.jpg",
                 },
                 {
                   name: "Aziel Guerrero Misola",

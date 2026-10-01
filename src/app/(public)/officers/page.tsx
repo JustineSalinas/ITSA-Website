@@ -66,15 +66,14 @@ const departmentCategories = [
     kicker: "Engineering & Development",
     description: "Building student software platforms, leading technical workshops, and maintaining IT infrastructure.",
     matcher: (o: { position: string; section?: string }) =>
-      o.section === "Technology" ||
-      o.section === "Web Development" ||
-      o.section === "Mobile Applications" ||
-      o.section === "IoT & Hardware" ||
       o.position.includes("Technology") ||
       o.position.includes("Developer") ||
       o.position.includes("Security") ||
       o.position.includes("Hardware") ||
-      o.position.includes("IoT"),
+      o.position.includes("IoT") ||
+      o.position.includes("Web") ||
+      o.position.includes("Mobile") ||
+      o.position.includes("Project"),
   },
   {
     id: "documentation",
