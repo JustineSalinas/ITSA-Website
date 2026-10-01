@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Compass, Lightbulb, Mail, MapPin, MessageCircle, Rocket, TrendingUp } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
@@ -176,7 +175,7 @@ export default function JoinPage() {
               </div>
 
               <div className="lg:col-span-5">
-                <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-brand-foreground/70">
+                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-brand-foreground/70">
                   Prefer email?
                 </p>
                 <div className="mt-3 flex flex-col gap-2">

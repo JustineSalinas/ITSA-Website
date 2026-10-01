@@ -170,7 +170,7 @@ export function CareerPaths() {
             </p>
 
             <div className="mt-6 rounded-xl border border-brand-orange/25 bg-brand-orange/5 p-4">
-              <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-brand-orange">
+              <p className="font-mono text-xs font-semibold uppercase tracking-wider text-brand-orange">
                 First step
               </p>
               <p className="mt-1.5 text-sm leading-relaxed text-foreground">{active.firstStep}</p>
@@ -178,7 +178,7 @@ export function CareerPaths() {
           </div>
 
           <div className="sm:col-span-2">
-            <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+            <p className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Skills to build
             </p>
             <ul className="mt-3 flex list-none flex-col gap-2">

@@ -192,7 +192,7 @@ export function NewsMediaGallery({
             </span>
           </button>
         )}
-        <div className="flex items-center rounded-full bg-black/60 px-2 py-0.5 font-mono text-[10px] font-semibold text-white/90 backdrop-blur-md">
+        <div className="flex items-center rounded-full bg-black/60 px-2 py-0.5 font-mono text-xs font-semibold text-white/90 backdrop-blur-md">
           <span>
             {currentIndex + 1} / {total}
           </span>

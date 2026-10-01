@@ -78,7 +78,7 @@ export function LatestNews({ news }: LatestNewsProps) {
                       {formatNewsDate(item.date)}
                     </span>
                     {item.category && (
-                      <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-bold uppercase text-primary">
+                      <span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-bold uppercase text-primary">
                         {item.category}
                       </span>
                     )}
