@@ -7,36 +7,58 @@ import type { Officer, OrgNode } from "@/lib/types";
 //
 // Reporting lines: the two Vice Chairmen and the five department heads
 // (Secretary + four department Officers) are shown as direct reports of the
-// Chairman. Each department carries its own leads. Adjust the nesting here
-// if the real reporting lines differ.
+// Chairman. Each department carries its own leads.
 export const orgChart: OrgNode = {
   name: "Robert A. Aguilar Jr.",
   position: "IT Academic Supervisor",
+  section: "Faculty",
   photoUrl: "/officers/robert-aguilar.jpg",
   children: [
     {
       name: "Gabriel Ferrera",
       position: "Chairman",
+      section: "BSIT 4A",
       photoUrl: "/officers/gabriel-ferrera.jpg",
+      socials: {
+        linkedin: "https://linkedin.com",
+        instagram: "https://instagram.com",
+        website: "https://itsa-usa.org",
+      },
       children: [
         {
           name: "Charles Janryl Jemina",
           position: "Vice Chairman for Internal Affairs",
+          section: "BSIT 2A",
           photoUrl: "/officers/charles-janryl-jemina.jpg",
+          socials: {
+            linkedin: "https://linkedin.com",
+            instagram: "https://instagram.com",
+          },
         },
         {
           name: "Theodore Samuel Navarro",
           position: "Vice Chairman for External Affairs",
+          section: "BSIT 3C",
           photoUrl: "/officers/theodore-samuel-navarro.jpg",
+          socials: {
+            linkedin: "https://linkedin.com",
+            instagram: "https://instagram.com",
+          },
         },
         {
           name: "Samantha Quinn Bretaña",
           position: "Secretary",
+          section: "BSIT 2A",
           photoUrl: "/officers/samantha-quinn-d-bretana.jpg",
+          socials: {
+            linkedin: "https://linkedin.com",
+            instagram: "https://instagram.com",
+          },
           children: [
             {
               name: "Jhon Michael Mercado",
               position: "Assistant Secretary",
+              section: "BSIT 3C",
               photoUrl: "/officers/jhon-michael-mercado.jpg",
             },
           ],
@@ -44,16 +66,37 @@ export const orgChart: OrgNode = {
         {
           name: "Mhike Aleen Gacusan",
           position: "Communication Officer",
+          section: "BSIT 4A",
           photoUrl: "/officers/mhike-aleen-gacusan.jpg",
+          socials: {
+            linkedin: "https://linkedin.com",
+            instagram: "https://instagram.com",
+          },
           children: [
             {
               name: "Cholo Rosales",
               position: "Creatives Lead",
+              section: "BSIT 4A",
               photoUrl: "/officers/cholo-rosales.png",
               children: [
-                { name: "Tim Gabriel Nuñal", position: "Creatives", photoUrl: "/officers/tim-gabriel-nunal.png" },
-                { name: "Denise Rae Baldisimo", position: "Creatives", photoUrl: "/officers/denise-rae-baldisimo.jpg" },
-                { name: "Hannah Nicole Tuer", position: "Creatives", photoUrl: "/officers/hannah-nicole-tuer.png" },
+                {
+                  name: "Tim Gabriel Nuñal",
+                  position: "Creatives",
+                  section: "BSIT 3C",
+                  photoUrl: "/officers/tim-gabriel-nunal.png",
+                },
+                {
+                  name: "Denise Rae Baldisimo",
+                  position: "Creatives",
+                  section: "BSIT 1C",
+                  photoUrl: "/officers/denise-rae-baldisimo.jpg",
+                },
+                {
+                  name: "Hannah Nicole Tuer",
+                  position: "Creatives",
+                  section: "BSIT 1C",
+                  photoUrl: "/officers/hannah-nicole-tuer.png",
+                },
               ],
             },
           ],
@@ -61,12 +104,19 @@ export const orgChart: OrgNode = {
         {
           name: "Aiderson Abapo",
           position: "Documentation Officer",
+          section: "BSIT 4B",
           children: [
             {
               name: "Rovann Acevedo",
               position: "Documentation Lead",
+              section: "BSIT 4A",
               children: [
-                { name: "Edrian Jed Fiesta", position: "Documentation", photoUrl: "/officers/edrian-jed-fiesta.jpg" },
+                {
+                  name: "Edrian Jed Fiesta",
+                  position: "Documentation",
+                  section: "BSIT 4A",
+                  photoUrl: "/officers/edrian-jed-fiesta.jpg",
+                },
               ],
             },
           ],
@@ -74,35 +124,79 @@ export const orgChart: OrgNode = {
         {
           name: "John Kyle Amarante",
           position: "Technology Officer",
+          section: "BSIT 3A",
           photoUrl: "/officers/john-kyle-amarante.jpg",
+          socials: {
+            linkedin: "https://linkedin.com",
+            instagram: "https://instagram.com",
+          },
           children: [
             {
               name: "Adrian Justin J. Salinas",
               position: "Web Development Lead",
+              section: "BSIT 3C",
               photoUrl: "/officers/adrian-justin-salinas.jpg",
+              socials: {
+                linkedin: "https://www.linkedin.com/in/adrian-justin-salinas-a4768b226/",
+                instagram: "https://www.instagram.com/a.jsalinas/",
+                github: "https://github.com/JustineSalinas",
+                website: "https://ajsalinas.vercel.app/",
+              },
               children: [
-                { name: "Matthew Tabat", position: "IT Security" },
-                { name: "Alexander Michael Tolosa", position: "Back-End Developer", photoUrl: "/officers/alexander-michael-tolosa.jpg" },
-                { name: "Aziel Guerrero Misola", position: "Front-End Developer", photoUrl: "/officers/aziel-guerrero-misola.jpg" },
-                { name: "Deghne Gabriel Agana", position: "Front-End Developer" },
+                {
+                  name: "Matthew Tabat",
+                  position: "IT Security",
+                  section: "BSIT 3C",
+                  photoUrl: "/officers/matthew-tabat.png",
+                },
+                {
+                  name: "Alexander Michael Tolosa",
+                  position: "Front-End Developer",
+                  section: "BSIT 3C",
+                  photoUrl: "/officers/alexander-michael-tolosa.jpg",
+                },
+                {
+                  name: "Aziel Guerrero Misola",
+                  position: "Front-End Developer",
+                  section: "BSIT 3C",
+                  photoUrl: "/officers/aziel-guerrero-misola.jpg",
+                },
+                {
+                  name: "Deghne Gabriel Agana",
+                  position: "Front-End Developer",
+                  section: "BSIT 3C",
+                  photoUrl: "/officers/deghne-gabriel-agana.jpg",
+                },
               ],
             },
             {
               name: "Ralph Danielle Dela Cruz",
               position: "Mobile Application Lead",
+              section: "BSIT 4A",
               photoUrl: "/officers/ralph-danielle-delacruz.jpg",
             },
-            { name: "Dale Misajon", position: "IoT Hardware Lead", photoUrl: "/officers/dale-misajon.jpg" },
+            {
+              name: "Dale Misajon",
+              position: "IoT Hardware Lead",
+              section: "BSIT 3A",
+              photoUrl: "/officers/dale-misajon.jpg",
+            },
           ],
         },
         {
           name: "John Daniel Aboboto",
           position: "Operation Officer",
+          section: "BSIT 2A",
           photoUrl: "/officers/john-daniel-aboboto.png",
+          socials: {
+            linkedin: "https://linkedin.com",
+            instagram: "https://instagram.com",
+          },
           children: [
             {
               name: "Janseen Azares",
               position: "Events Lead",
+              section: "BSIT 4A",
               photoUrl: "/officers/janseen-azares.jpg",
             },
           ],
@@ -110,11 +204,17 @@ export const orgChart: OrgNode = {
         {
           name: "Elah Marie Loyola",
           position: "Finance Officer",
+          section: "BSIT 4A",
           photoUrl: "/officers/elah-marie-loyola.jpg",
+          socials: {
+            linkedin: "https://linkedin.com",
+            instagram: "https://instagram.com",
+          },
           children: [
             {
               name: "Elyza Elizabeth Gumarin",
               position: "Assistant Finance Officer",
+              section: "BSIT 4B",
             },
           ],
         },
@@ -131,17 +231,19 @@ function slugify(name: string): string {
 }
 
 // Depth-first (top-down) flattening so card order mirrors the chart's reading order.
-function flatten(node: OrgNode, acc: Officer[] = []): Officer[] {
+function flatten(node: OrgNode, parentSection: string = "", acc: Officer[] = []): Officer[] {
+  const currentSection = node.section ?? parentSection;
   acc.push({
     id: slugify(node.name),
     name: node.name,
     position: node.position,
+    section: currentSection,
     bio: "",
     photoUrl: node.photoUrl ?? "",
-    socials: {},
+    socials: node.socials ?? {},
     sortOrder: acc.length + 1,
   });
-  node.children?.forEach((child) => flatten(child, acc));
+  node.children?.forEach((child) => flatten(child, currentSection, acc));
   return acc;
 }
 
