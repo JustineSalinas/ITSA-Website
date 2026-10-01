@@ -361,11 +361,11 @@ export function OrgChart({ root }: { root: OrgNode }) {
                         </div>
                       </PersonButton>
 
-                      {/* Specialists / Team Members */}
+                      {/* Team Members */}
                       {lead.children && lead.children.length > 0 && (
                         <div className="mt-4 border-t-2 border-foreground/15 pt-3.5">
                           <span className="mb-2.5 block font-mono text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                            Specialists & Team Members ({lead.children.length})
+                            Team Members ({lead.children.length})
                           </span>
                           <ul
                             className={`grid gap-2.5 ${

@@ -166,7 +166,7 @@ export const orgChart: OrgNode = {
             {
               name: "Ryan Carlo Cruzada",
               position: "Cybersecurity Lead",
-              section: "BSIT 3C",
+              section: "BSIT 4A",
               children: [
                 {
                   name: "Matthew Tabat",
