@@ -168,7 +168,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
                   {dept.code} Directorate
                 </span>
                 {dept.vp.children && (
-                  <span className="rounded-full bg-secondary px-2.5 py-0.5 font-mono text-[11px] font-medium text-muted-foreground">
+                  <span className="rounded-full bg-secondary px-2.5 py-0.5 font-mono text-xs font-medium text-muted-foreground">
                     {1 + dept.vp.children.reduce((acc, c) => acc + 1 + (c.children?.length ?? 0), 0)} members
                   </span>
                 )}
@@ -227,7 +227,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
 
                       {lead.children && lead.children.length > 0 && (
                         <div className="mt-3 border-t border-border/50 pt-3">
-                          <span className="mb-2 block font-mono text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                          <span className="mb-2 block font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                             Team Members
                           </span>
                           <ul
@@ -246,14 +246,14 @@ export function OrgChart({ root }: { root: OrgNode }) {
                                   <PersonAvatar
                                     node={sub}
                                     className="size-7 shrink-0"
-                                    textClassName="text-[10px] font-bold"
+                                    textClassName="text-xs font-bold"
                                     fallbackClassName="bg-primary/10 text-primary"
                                   />
                                   <span className="min-w-0 flex-1">
                                     <span className="block text-xs font-bold text-foreground hover:text-primary leading-snug">
                                       {sub.name}
                                     </span>
-                                    <span className="block text-[11px] text-muted-foreground leading-snug">
+                                    <span className="block text-xs text-muted-foreground leading-snug">
                                       {sub.position}
                                     </span>
                                   </span>
@@ -380,7 +380,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
 
                     {hasChildren && (
                       <div className="mt-3 border-t border-border/60 pt-3">
-                        <span className="mb-1.5 block font-mono text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                        <span className="mb-1.5 block font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                           Assistant
                         </span>
                         {node.children!.map((child) => (
@@ -391,7 +391,7 @@ export function OrgChart({ root }: { root: OrgNode }) {
                             onSelect={setSelected}
                             className="-mx-1.5 flex items-center gap-3 rounded-lg p-1.5 transition-colors hover:bg-muted/50"
                           >
-                            <PersonAvatar node={child} className="size-9" textClassName="text-[11px] font-bold" />
+                            <PersonAvatar node={child} className="size-9" textClassName="text-xs font-bold" />
                             <span className="min-w-0 flex-1">
                               <span className="block text-sm font-bold text-foreground hover:text-primary">
                                 {child.name}

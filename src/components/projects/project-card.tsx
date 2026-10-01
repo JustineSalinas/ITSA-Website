@@ -42,6 +42,8 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
             <img
               src={project.imageUrl}
               alt={project.title}
+              loading="lazy"
+              decoding="async"
               className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
           ) : (
@@ -85,7 +87,7 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
 
           <div className="mt-4 flex flex-wrap gap-1.5">
             {project.tags.slice(0, 4).map(tag => (
-              <Badge key={tag} variant="secondary" className="rounded-full bg-muted/60 text-muted-foreground font-mono text-[11px] border-none">
+              <Badge key={tag} variant="secondary" className="rounded-full bg-muted/60 text-muted-foreground font-mono text-xs border-none">
                 {tag}
               </Badge>
             ))}

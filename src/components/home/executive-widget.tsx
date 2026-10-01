@@ -15,7 +15,7 @@ export function ExecutiveHeroWidget() {
           <span className="font-mono text-xs font-bold uppercase tracking-wider text-foreground">
             ITSA this year
           </span>
-          <span className="font-mono text-[10px] text-muted-foreground">AY 2026</span>
+          <span className="font-mono text-xs text-muted-foreground">AY 2026</span>
         </div>
 
         {/* Three facts about the org, in one brand colour — not a status dashboard */}
@@ -24,7 +24,7 @@ export function ExecutiveHeroWidget() {
             <div className="font-mono text-2xl font-black tabular-nums text-primary">
               <AnimatedCounter value={240} suffix="+" />
             </div>
-            <div className="mt-1 text-[11px] leading-tight text-muted-foreground">
+            <div className="mt-1 text-xs leading-tight text-muted-foreground">
               Active
               <br />
               members
@@ -35,7 +35,7 @@ export function ExecutiveHeroWidget() {
             <div className="font-mono text-2xl font-black tabular-nums text-primary">
               <AnimatedCounter value={15} suffix="+" />
             </div>
-            <div className="mt-1 text-[11px] leading-tight text-muted-foreground">
+            <div className="mt-1 text-xs leading-tight text-muted-foreground">
               Workshops
               <br />
               a year
@@ -46,7 +46,7 @@ export function ExecutiveHeroWidget() {
             <div className="font-mono text-2xl font-black tabular-nums text-primary">
               <AnimatedCounter value={5} />
             </div>
-            <div className="mt-1 text-[11px] leading-tight text-muted-foreground">
+            <div className="mt-1 text-xs leading-tight text-muted-foreground">
               Student
               <br />
               departments
@@ -57,10 +57,10 @@ export function ExecutiveHeroWidget() {
         {/* Featured Corporate Announcement Card */}
         <div className="mt-6 rounded-xl border border-primary/20 bg-primary/5 p-4">
           <div className="flex items-center justify-between">
-            <span className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase text-primary">
+            <span className="inline-flex items-center gap-1.5 font-mono text-xs font-bold uppercase text-primary">
               <Sparkles className="size-3" /> OFFICIAL ANNOUNCEMENT
             </span>
-            <span className="font-mono text-[10px] text-muted-foreground">ACTIVE BULLETIN</span>
+            <span className="font-mono text-xs text-muted-foreground">ACTIVE BULLETIN</span>
 
           </div>
           <h4 className="mt-2 text-sm font-bold tracking-tight text-foreground">

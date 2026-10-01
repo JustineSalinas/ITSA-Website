@@ -77,16 +77,16 @@ export function HomeFaq() {
               className="border-b border-zinc-800 md:max-h-[32rem] md:overflow-y-auto md:border-b-0 md:border-r bg-zinc-950/50"
             >
               <div className="flex items-center justify-between border-b border-zinc-800/80 px-4 py-2.5 bg-zinc-900/40">
-                <span className="font-mono text-[11px] font-semibold uppercase tracking-wider text-zinc-400">
+                <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-400">
                   Explorer
                 </span>
-                <span className="font-mono text-[11px] text-zinc-500">
+                <span className="font-mono text-xs text-zinc-400">
                   {flat.length} items
                 </span>
               </div>
               {grouped.map((group) => (
                 <div key={group.category}>
-                  <p className="px-4 pt-3 pb-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-blue-400">
+                  <p className="px-4 pt-3 pb-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-blue-400">
                     <span aria-hidden="true">▸ </span>
                     {group.category}
                   </p>
@@ -112,7 +112,7 @@ export function HomeFaq() {
                                 className="absolute inset-y-0 left-0 w-[3px] bg-primary"
                               />
                             )}
-                            <span className="shrink-0 pt-px font-mono text-xs text-zinc-500">
+                            <span className="shrink-0 pt-px font-mono text-xs text-zinc-400">
                               {String(globalIndex + 1).padStart(2, "0")}
                             </span>
                             <span>{item.q}</span>
@@ -130,12 +130,12 @@ export function HomeFaq() {
               {/* Breadcrumb tab */}
               <div className="flex items-center justify-between border-b border-zinc-800 px-4 py-2.5 bg-zinc-900/30">
                 <span className="border-b-2 border-primary pb-2.5 -mb-[11px] font-mono text-xs">
-                  <span className="text-zinc-500">{slugify(active.category)} / </span>
+                  <span className="text-zinc-400">{slugify(active.category)} / </span>
                   <span className="text-white">
                     q{String(activeIndex + 1).padStart(2, "0")}.answer
                   </span>
                 </span>
-                <span className="flex items-center gap-1.5 font-mono text-[11px] text-zinc-400">
+                <span className="flex items-center gap-1.5 font-mono text-xs text-zinc-400">
                   <span className="size-1.5 rounded-full bg-primary" aria-hidden="true" />
                   MD
                 </span>
@@ -153,11 +153,11 @@ export function HomeFaq() {
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <p className="font-mono text-[11px] uppercase tracking-wider text-blue-400">
+                  <p className="font-mono text-xs uppercase tracking-wider text-blue-400">
                     {active.category}
                   </p>
                   <h3 className="mt-3 text-balance">
-                    <span className="font-mono text-zinc-500" aria-hidden="true">
+                    <span className="font-mono text-zinc-400" aria-hidden="true">
                       #{" "}
                     </span>
                     <span className="font-heading text-lg font-bold tracking-tight text-white sm:text-xl">
@@ -166,7 +166,7 @@ export function HomeFaq() {
                   </h3>
 
                   <div className="mt-5 flex items-center gap-3" aria-hidden="true">
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-400">
+                    <span className="font-mono text-xs uppercase tracking-wider text-zinc-400">
                       Answer
                     </span>
                     <span className="h-px flex-1 bg-zinc-800" />

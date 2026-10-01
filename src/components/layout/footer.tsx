@@ -36,7 +36,7 @@ export function Footer() {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={label}
-                  className="grid size-9 place-items-center rounded-lg border border-white/10 bg-slate-900/80 text-slate-400 transition-colors hover:border-primary hover:bg-primary hover:text-white"
+                  className="grid size-11 place-items-center rounded-lg border border-white/10 bg-slate-900/80 text-slate-400 transition-colors hover:border-primary hover:bg-primary hover:text-white"
                 >
                   <Icon className="size-4" />
                 </a>
@@ -104,7 +104,7 @@ export function Footer() {
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.fullName} ({siteConfig.name}). All rights reserved.
           </p>
-          <span className="font-mono text-[11px] text-slate-500">{siteConfig.school}</span>
+          <span className="font-mono text-xs text-slate-400">{siteConfig.school}</span>
         </div>
       </div>
     </footer>
