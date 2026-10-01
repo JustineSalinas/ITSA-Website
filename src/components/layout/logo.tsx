@@ -50,7 +50,7 @@ export function Logo({
           </span>
           <span
             className={cn(
-              "mt-0.5 text-[10px] font-medium uppercase tracking-[0.16em] text-muted-foreground",
+              "mt-0.5 text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground",
               subtitleClassName,
             )}
           >

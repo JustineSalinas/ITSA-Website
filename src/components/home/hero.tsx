@@ -31,8 +31,8 @@ export function Hero() {
            harsh sticker sheet fighting the headline on small screens.
            A gentle float keeps it feeling alive without needing a pointer. ── */}
       <div className="pointer-events-none absolute inset-0 z-[1] block overflow-hidden lg:hidden" aria-hidden="true">
-        <div className="animate-float absolute -left-16 -top-16 size-56 rounded-full bg-brand/10 blur-3xl" />
-        <div className="animate-float absolute -right-12 top-1/3 size-48 rounded-full bg-brand-orange/10 blur-3xl [animation-delay:-3s]" />
+        <div className="absolute -left-16 -top-16 size-56 rounded-full bg-brand/10 blur-3xl" />
+        <div className="absolute -right-12 top-1/3 size-48 rounded-full bg-brand-orange/10 blur-3xl" />
       </div>
 
       {/* ── Main Hero Grid: 3-column layout matching reference structure ── */}
@@ -64,14 +64,9 @@ export function Hero() {
             </div>
 
             {/* Main Headline - Exactly Two Lines */}
-            <h1 className="mt-5 sm:mt-6 font-sans text-2xl xs:text-3xl sm:text-4xl lg:text-[2.6rem] xl:text-[3.1rem] 2xl:text-[3.4rem] font-black leading-[1.12] sm:leading-[1.08] tracking-tight text-slate-900">
+            <h1 className="mt-5 sm:mt-6 font-sans text-2xl xs:text-3xl sm:text-4xl lg:text-[2.6rem] xl:text-[3.1rem] 2xl:text-[3.4rem] font-extrabold leading-[1.12] sm:leading-[1.08] tracking-tight text-foreground">
               <span className="block whitespace-nowrap">
-                <span className="bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500 bg-clip-text text-transparent">
-                  Information
-                </span>{" "}
-                <span className="bg-gradient-to-r from-teal-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  Technology
-                </span>
+                Information <span className="text-brand">Technology</span>
               </span>
               <span className="block whitespace-nowrap">
                 Student Association.
@@ -118,7 +113,7 @@ export function Hero() {
             {/* Partner Affiliates - Centered below hero text in corresponding full color */}
             {partners.length > 0 && (
               <div className="mt-8 sm:mt-10 flex flex-col items-center justify-center gap-2">
-                <p className="font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
+                <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                   Partners
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">

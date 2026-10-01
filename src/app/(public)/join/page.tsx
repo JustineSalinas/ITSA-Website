@@ -158,7 +158,7 @@ export default function JoinPage() {
               </div>
 
               <div className="lg:col-span-5">
-                <p className="font-mono text-[11px] font-semibold uppercase tracking-wider text-brand-foreground/70">
+                <p className="font-mono text-xs font-semibold uppercase tracking-wider text-brand-foreground/70">
                   Prefer email?
                 </p>
                 <div className="mt-3 flex flex-col gap-2">

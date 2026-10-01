@@ -193,7 +193,7 @@ export default async function EventDetailPage({ params }: Props) {
                 <span className="font-mono text-xs font-bold uppercase tracking-wider text-muted-foreground">
                   EVENT DETAILS
                 </span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 font-mono text-[10px] font-bold text-primary">
+                <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 font-mono text-xs font-bold text-primary">
                   <Ticket className="size-3" /> FREE ENTRY
                 </span>
               </div>
@@ -205,7 +205,7 @@ export default async function EventDetailPage({ params }: Props) {
                     <CalendarDays className="size-5" />
                   </span>
                   <div>
-                    <span className="block font-mono text-[10px] uppercase text-muted-foreground">Date</span>
+                    <span className="block font-mono text-xs uppercase text-muted-foreground">Date</span>
                     <span className="text-base font-bold text-foreground">{formatEventDate(event.eventDate)}</span>
                   </div>
                 </div>
@@ -215,7 +215,7 @@ export default async function EventDetailPage({ params }: Props) {
                     <Clock className="size-5" />
                   </span>
                   <div>
-                    <span className="block font-mono text-[10px] uppercase text-muted-foreground">Time</span>
+                    <span className="block font-mono text-xs uppercase text-muted-foreground">Time</span>
                     <span className="text-base font-bold text-foreground">{formatEventTime(event.eventDate)}</span>
                   </div>
                 </div>
@@ -225,7 +225,7 @@ export default async function EventDetailPage({ params }: Props) {
                     <MapPin className="size-5" />
                   </span>
                   <div>
-                    <span className="block font-mono text-[10px] uppercase text-muted-foreground">Venue / Location</span>
+                    <span className="block font-mono text-xs uppercase text-muted-foreground">Venue / Location</span>
                     <span className="text-base font-bold text-foreground">{event.location}</span>
                   </div>
                 </div>
@@ -235,7 +235,7 @@ export default async function EventDetailPage({ params }: Props) {
                     <Building2 className="size-5" />
                   </span>
                   <div>
-                    <span className="block font-mono text-[10px] uppercase text-muted-foreground">Organizer</span>
+                    <span className="block font-mono text-xs uppercase text-muted-foreground">Organizer</span>
                     <span className="text-base font-bold text-foreground">ITSA Executive Directorate</span>
                   </div>
                 </div>

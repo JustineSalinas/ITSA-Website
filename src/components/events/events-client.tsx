@@ -112,7 +112,7 @@ export function EventsClient({ events }: { events: EventItem[] }) {
                 }`}
               >
                 <span>{FILTER_LABELS[tab]}</span>
-                <span className="ml-2 font-mono text-[10px] opacity-75">({counts[tab]})</span>
+                <span className="ml-2 font-mono text-xs opacity-75">({counts[tab]})</span>
               </button>
             );
           })}

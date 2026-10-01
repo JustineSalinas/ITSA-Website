@@ -119,7 +119,7 @@ A committed blue-and-orange complementary palette lifted from the ITSA logo, gro
 **Body Font:** Geist (with system-ui fallback)
 **Label/Mono Font:** Geist Mono
 
-**Character:** One neutral, highly-legible workhorse carries both headings and body — Geist reads calm and credible at every size rather than contrasting an expressive display face against plain text. Bricolage Grotesque shipped originally for the display/headline roles but read as informal next to a Geist hero after two reverts settled that tension; its import stays loaded in `layout.tsx` so it's a one-line move back (`--font-heading` in `globals.css`) if that call changes again. Mono is earned, not costume: this is literally an IT association, so mono labels read as native.
+**Character:** One neutral, highly-legible workhorse carries both headings and body — Geist reads calm and credible at every size rather than contrasting an expressive display face against plain text. Bricolage Grotesque was tried for the display/headline roles but read as informal next to a Geist hero, and it has since been removed from `layout.tsx` entirely; reintroducing it means re-adding the `next/font` import and pointing `--font-heading` in `globals.css` at it. The hero headline is Geist 800 in solid ink with one brand-blue word — never gradient text. Mono is earned, not costume: this is literally an IT association, so mono labels read as native.
 
 ### Hierarchy
 - **Display** (800, `clamp(2.5rem, 7vw, 4.25rem)`, 1.02, -0.025em): Hero headline only. Balanced wrap.

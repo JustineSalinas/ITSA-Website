@@ -263,7 +263,7 @@ export function HeroLogo({ className, priority = true }: HeroLogoProps) {
                   e.stopPropagation();
                   triggerJelly(letter.id);
                 }}
-                className="w-full h-full opacity-0 cursor-pointer focus:outline-none"
+                className="w-full h-full cursor-pointer rounded-xl bg-transparent outline-none focus-visible:ring-3 focus-visible:ring-ring/60 focus-visible:ring-inset"
                 aria-label={`Letter ${letter.name} - ${letter.label}`}
               />
             ))}

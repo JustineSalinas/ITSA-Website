@@ -252,14 +252,28 @@
 }
 }
 
+/* Reduced motion: stop looping decoration and positional travel, but keep
+   short opacity/color transitions so hover, open/close and focus still give
+   feedback. (Blanket 0.01ms overrides erased that feedback.) */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  html {
     scroll-behavior: auto !important;
+  }
+  .animate-node,
+  .animate-float {
+    animation: none !important;
+  }
+  .animate-rise {
+    animation: itsa-fade 0.2s ease-out both !important;
+  }
+}
+
+@keyframes itsa-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -267,29 +281,5 @@
 .lenis-debug,
 [data-lenis-debug] {
   display: none !important;
-}
-
-@layer components {
-  .neo-kicker {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 14px;
-    background-color: #93c5fd;
-    border: 2px solid #000000;
-    border-radius: 2px;
-    box-shadow: 3px 3px 0px #000000;
-    font-family: var(--font-heading, var(--font-sans), system-ui, sans-serif);
-    font-size: 12px;
-    font-weight: 800;
-    font-style: normal;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    line-height: 1;
-    color: #000000;
-    white-space: nowrap;
-    pointer-events: auto;
-    user-select: none;
-  }
 }
 
