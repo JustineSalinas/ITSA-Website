@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight, Compass, Lightbulb, Mail, MapPin, MessageCircle, Rocket, TrendingUp } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { GridBackground } from "@/components/layout/grid-background";
@@ -48,9 +50,10 @@ export default function JoinPage() {
         <GridBackground />
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Discord hero */}
+        {/* Community / Discord hero */}
         <SectionReveal>
-          <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-card p-8 sm:p-12">
+          <div className="relative overflow-hidden rounded-3xl border border-border/80 bg-card p-6 sm:p-8 lg:p-10 shadow-sm">
+            {/* Subtle brand ambient glow matching original card */}
             <div
               aria-hidden="true"
               className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-brand/10 blur-3xl"
@@ -59,7 +62,9 @@ export default function JoinPage() {
               aria-hidden="true"
               className="pointer-events-none absolute -bottom-24 -left-16 size-64 rounded-full bg-brand-orange/10 blur-3xl"
             />
-            <div className="relative flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
+
+            {/* Discord Header Content matching Pic 2 */}
+            <div className="relative z-10 flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-start gap-4">
                 <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-brand/10 text-brand">
                   <MessageCircle className="size-6" />
@@ -68,7 +73,7 @@ export default function JoinPage() {
                   <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                     Join the ITSA Discord
                   </h2>
-                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
                     This is where ITSA actually happens day to day — announcements, study groups,
                     project collabs, and direct access to officers and fellow IT students.
                     There&apos;s no sign-up form; the server is open the moment you&apos;re an IT
@@ -76,6 +81,7 @@ export default function JoinPage() {
                   </p>
                 </div>
               </div>
+
               {siteConfig.discordInvite ? (
                 <Button
                   size="lg"
@@ -96,6 +102,18 @@ export default function JoinPage() {
                   Invite link coming soon
                 </span>
               )}
+            </div>
+
+            {/* Community Photo - 100% UN-FADED, natural studio lighting and faces */}
+            <div className="relative z-10 mt-8 sm:mt-10 overflow-hidden rounded-2xl border border-border/70 shadow-sm aspect-[16/9] max-h-[460px] w-full bg-slate-100">
+              <Image
+                src="/images/itsa-community.png"
+                alt="ITSA Community"
+                fill
+                className="object-cover object-[center_35%]"
+                sizes="(max-width: 1280px) 100vw, 1280px"
+                priority
+              />
             </div>
           </div>
         </SectionReveal>
