@@ -2,33 +2,9 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Target, Eye, Lightbulb, Users, Award, HeartHandshake } from "lucide-react";
+import { ArrowRight, Compass, Telescope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/data/site";
-
-/**
- * A short "About ITSA" block for the homepage.
- *
- * Wording is taken verbatim from the /about page so the two can never drift
- * into saying different things. This is a summary and an entry point, not a
- * replacement: About is no longer in the main navigation, so this is how most
- * visitors will now reach it.
- */
-
-/**
- * The four values, named only. Each one's full paragraph lives on /about, which
- * the button at the foot of this section leads to -- repeating them here made
- * six boxes on one screen and read as filler.
- *
- * Rendered as chips rather than a fourth row of cards: DESIGN.md rules out
- * "four identical icon-cards in a row" as the generic-template shape.
- */
-const values = [
-  { title: "Innovation", icon: Lightbulb },
-  { title: "Collaboration", icon: Users },
-  { title: "Excellence", icon: Award },
-  { title: "Community", icon: HeartHandshake },
-];
 
 export function AboutItsa() {
   return (
@@ -46,7 +22,7 @@ export function AboutItsa() {
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground text-pretty">
           We bring Information Technology students together to build real skills, real
-          projects, and real careers — through workshops, competitions, mentorship, and
+          projects, and real careers through workshops, competitions, mentorship, and
           a community that lasts beyond graduation.
         </p>
       </motion.div>
@@ -55,12 +31,12 @@ export function AboutItsa() {
       <div className="mt-12 grid gap-6 md:grid-cols-2">
         {[
           {
-            icon: Target,
+            icon: Compass,
             title: "Our Mission",
-            body: "To empower Information Technology students by fostering technical mastery, leadership skills, and a collaborative community—creating direct pathways into high-impact tech careers.",
+            body: "To empower Information Technology students by fostering technical mastery, leadership skills, and a collaborative community, creating direct pathways into high-impact tech careers.",
           },
           {
-            icon: Eye,
+            icon: Telescope,
             title: "Our Vision",
             body: "To be the premier student technology hub that cultivates innovative, resilient, and socially responsible IT leaders who shape the digital landscape of tomorrow.",
           },
@@ -89,29 +65,7 @@ export function AboutItsa() {
         })}
       </div>
 
-      {/* What drives us -- named here, explained on /about */}
-      <motion.ul
-        initial={{ opacity: 0, y: 12 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-40px" }}
-        transition={{ duration: 0.45, ease: "easeOut" }}
-        className="mt-8 flex list-none flex-wrap items-center justify-center gap-2.5"
-      >
-        {values.map((value) => {
-          const Icon = value.icon;
-          return (
-            <li
-              key={value.title}
-              className="flex items-center gap-2 rounded-full border border-border/80 bg-secondary/50 px-4 py-2 text-sm font-medium"
-            >
-              <Icon className="size-4 text-primary" aria-hidden="true" />
-              {value.title}
-            </li>
-          );
-        })}
-      </motion.ul>
-
-      <div className="mt-10 flex justify-center">
+      <div className="mt-10 sm:mt-12 flex justify-center">
         <Button
           variant="outline"
           size="lg"

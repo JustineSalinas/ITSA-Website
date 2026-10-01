@@ -48,9 +48,9 @@ export default async function NewsPage() {
           {/* Back to Home button */}
           <div className="mb-8 flex items-center justify-between">
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
-              className="group gap-2 text-xs font-semibold text-muted-foreground hover:text-foreground"
+              className="group"
               render={<Link href="/" />}
             >
               <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" />

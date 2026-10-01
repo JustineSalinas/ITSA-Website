@@ -80,7 +80,7 @@ export default async function HomePage() {
                 Meet your student leads
               </h2>
               <p className="mt-3 max-w-lg text-base sm:text-lg text-muted-foreground">
-                Real students leading ITSA this academic year — passionate, accessible, and ready to support your tech journey.
+                Real students leading ITSA this academic year, passionate, accessible, and ready to support your tech journey.
               </p>
             </div>
             <Button

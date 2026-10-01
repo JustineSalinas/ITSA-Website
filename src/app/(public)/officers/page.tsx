@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     canonical: "/officers",
   },
   openGraph: {
-    title: `Executive Officers — ${siteConfig.name}`,
+    title: `Executive Officers | ${siteConfig.name}`,
     description: `Meet the student leaders guiding ${siteConfig.fullName} at ${siteConfig.school}.`,
     url: "/officers",
     siteName: siteConfig.name,
@@ -22,19 +22,114 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `Executive Officers — ${siteConfig.name}`,
+    title: `Executive Officers | ${siteConfig.name}`,
     description: `Meet the student leaders guiding ${siteConfig.fullName} at ${siteConfig.school}.`,
   },
 };
 
+const departmentCategories = [
+  {
+    id: "supervisor",
+    title: "Supervisor",
+    kicker: "Academic Leadership",
+    description: "Guiding ITSA with faculty academic supervision and institutional direction.",
+    matcher: (o: { position: string; name: string }) =>
+      o.position.includes("Supervisor") || o.name.includes("Aguilar"),
+  },
+  {
+    id: "president",
+    title: "President",
+    kicker: "Executive Leadership",
+    description: "Leading the student association, strategic vision, and campus representation.",
+    matcher: (o: { position: string }) =>
+      o.position === "Chairman" || o.position === "President",
+  },
+  {
+    id: "vice-chairmans",
+    title: "Vice Chairmans",
+    kicker: "Internal & External Affairs",
+    description: "Overseeing student welfare, university partnerships, and cross-organization collaborations.",
+    matcher: (o: { position: string }) =>
+      o.position.includes("Vice Chairman") || o.position.includes("Vice President"),
+  },
+  {
+    id: "secretaries",
+    title: "Secretaries",
+    kicker: "Secretariat & Records",
+    description: "Managing official communications, minutes, resolutions, and student records.",
+    matcher: (o: { position: string }) =>
+      o.position.includes("Secretary"),
+  },
+  {
+    id: "technology",
+    title: "Technology",
+    kicker: "Engineering & Development",
+    description: "Building student software platforms, leading technical workshops, and maintaining IT infrastructure.",
+    matcher: (o: { position: string; section?: string }) =>
+      o.section === "Technology" ||
+      o.section === "Web Development" ||
+      o.section === "Mobile Applications" ||
+      o.section === "IoT & Hardware" ||
+      o.position.includes("Technology") ||
+      o.position.includes("Developer") ||
+      o.position.includes("Security") ||
+      o.position.includes("Hardware") ||
+      o.position.includes("IoT"),
+  },
+  {
+    id: "documentation",
+    title: "Documentation",
+    kicker: "Archives & Reports",
+    description: "Capturing association milestones, event reports, photography archives, and official documentation.",
+    matcher: (o: { position: string; section?: string }) =>
+      o.section === "Documentation" || o.position.includes("Documentation"),
+  },
+  {
+    id: "operations",
+    title: "Operations",
+    kicker: "Logistics & Events",
+    description: "Executing on-the-ground event logistics, venue management, and project execution.",
+    matcher: (o: { position: string; section?: string }) =>
+      o.section === "Operations" ||
+      o.position.includes("Operation") ||
+      o.position.includes("Events"),
+  },
+  {
+    id: "finance",
+    title: "Finance",
+    kicker: "Treasury & Budget",
+    description: "Ensuring fiscal responsibility, budget transparency, and sponsorship accounting.",
+    matcher: (o: { position: string; section?: string }) =>
+      o.section === "Finance" || o.position.includes("Finance"),
+  },
+  {
+    id: "communication",
+    title: "Communication",
+    kicker: "Creatives & Public Relations",
+    description: "Designing visual media, managing official dispatches, branding, and social channels.",
+    matcher: (o: { position: string; section?: string }) =>
+      o.section === "Communications" ||
+      o.section === "Creatives" ||
+      o.position.includes("Communication") ||
+      o.position.includes("Creatives"),
+  },
+];
+
 export default async function OfficersPage() {
   const officers = await getOfficers();
+
+  const categorized = departmentCategories
+    .map((cat) => ({
+      ...cat,
+      officers: officers.filter(cat.matcher),
+    }))
+    .filter((cat) => cat.officers.length > 0);
 
   return (
     <>
       <PageHeader
         kicker={`${officers.length} student ${officers.length === 1 ? "lead" : "leads"}`}
-        title="Meet the people driving ITSA."
+        title="Meet the ITSA Organization."
         description="Dedicated student leaders, mentors, and department chairs guiding our association this academic year."
       />
 
@@ -49,24 +144,75 @@ export default async function OfficersPage() {
               Officer profiles are being updated for the new academic year. Check back soon!
             </div>
           ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {officers.map((officer) => (
-                <OfficerCard key={officer.id} officer={officer} />
-              ))}
-            </div>
+            <>
+              {/* Quick Jump Department Pills */}
+              <div className="mb-12 flex flex-wrap items-center gap-2 border-b-2 border-foreground/15 pb-6">
+                <span className="font-mono text-xs font-bold uppercase tracking-wider text-muted-foreground mr-2">
+                  Jump to:
+                </span>
+                {categorized.map((cat) => (
+                  <a
+                    key={cat.id}
+                    href={`#${cat.id}`}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-border bg-secondary/50 px-3.5 py-1 text-xs font-semibold text-foreground transition-all hover:border-foreground hover:bg-primary hover:text-primary-foreground hover:shadow-[2px_2px_0_0_var(--foreground)]"
+                  >
+                    <span>{cat.title}</span>
+                    <span className="font-mono text-[10px] opacity-75">({cat.officers.length})</span>
+                  </a>
+                ))}
+              </div>
+
+              {/* Categorized Departments */}
+              <div className="space-y-16 sm:space-y-20">
+                {categorized.map((cat) => (
+                  <div key={cat.id} id={cat.id} className="scroll-mt-28">
+                    {/* Category Header */}
+                    <div className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b-2 border-foreground/15 pb-4">
+                      <div>
+                        <span className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                          {cat.kicker}
+                        </span>
+                        <h2 className="mt-1 text-2xl font-extrabold tracking-tight sm:text-3xl text-foreground">
+                          {cat.title}
+                        </h2>
+                        <p className="mt-1 text-xs sm:text-sm text-muted-foreground max-w-xl">
+                          {cat.description}
+                        </p>
+                      </div>
+                      <span className="rounded-full border-2 border-foreground bg-card px-3.5 py-1 font-mono text-xs font-bold text-foreground shadow-[2px_2px_0_0_var(--foreground)]">
+                        {cat.officers.length} {cat.officers.length === 1 ? "Officer" : "Officers"}
+                      </span>
+                    </div>
+
+                    {/* Officers Grid */}
+                    <div className="grid gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                      {cat.officers.map((officer) => (
+                        <OfficerCard key={officer.id} officer={officer} />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
         </div>
       </section>
 
       {/* Organizational Structure Section */}
-      <section className="border-t border-border/60 bg-muted/20 py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+      <section className="relative overflow-hidden border-t-2 border-foreground bg-white py-20 sm:py-28">
+        {/* ── Background Grid Pattern ── */}
+        <GridBackground />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center mb-16">
+            <div className="inline-flex items-center gap-2 rounded-full border-2 border-foreground bg-card px-4 py-1.5 font-mono text-xs font-bold uppercase tracking-widest text-primary shadow-[2px_2px_0_0_var(--foreground)]">
+              Chain of Leadership
+            </div>
+            <h2 className="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl text-foreground">
               Organizational Hierarchy
             </h2>
-            <p className="mt-2 text-base text-muted-foreground">
-              How ITSA is structured from our faculty adviser to department directors and committee leads.
+            <p className="mt-3 text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+              Structural blueprint of ITSA, from faculty supervision down to committee leads and specialized technical teams.
             </p>
           </div>
 

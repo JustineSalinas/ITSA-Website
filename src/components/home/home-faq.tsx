@@ -65,7 +65,7 @@ export function HomeFaq() {
               <span className="size-2.5 rounded-full bg-emerald-500/80" />
             </div>
             <span className="absolute left-1/2 -translate-x-1/2 font-mono text-xs text-zinc-400">
-              itsa — faq.md
+              itsa / faq.md
             </span>
           </div>
           <div className="h-0.5 bg-primary" aria-hidden="true" />
@@ -74,7 +74,7 @@ export function HomeFaq() {
             {/* Explorer / question list */}
             <nav
               aria-label="FAQ categories"
-              className="border-b border-zinc-800 md:max-h-[32rem] md:overflow-y-auto md:border-b-0 md:border-r bg-zinc-950/50"
+              className="border-b border-zinc-800 md:border-b-0 md:border-r bg-zinc-950/50"
             >
               <div className="flex items-center justify-between border-b border-zinc-800/80 px-4 py-2.5 bg-zinc-900/40">
                 <span className="font-mono text-xs font-semibold uppercase tracking-wider text-zinc-400">
@@ -126,7 +126,7 @@ export function HomeFaq() {
             </nav>
 
             {/* Answer pane */}
-            <div className="flex flex-col md:min-h-[32rem] bg-zinc-950/80">
+            <div className="flex flex-col bg-zinc-950/80">
               {/* Breadcrumb tab */}
               <div className="flex items-center justify-between border-b border-zinc-800 px-4 py-2.5 bg-zinc-900/30">
                 <span className="border-b-2 border-primary pb-2.5 -mb-[11px] font-mono text-xs">

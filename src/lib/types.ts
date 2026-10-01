@@ -3,12 +3,14 @@ export type SocialLinks = {
   instagram?: string;
   linkedin?: string;
   github?: string;
+  website?: string;
 };
 
 export type Officer = {
   id: string;
   name: string;
   position: string;
+  section?: string;
   bio: string;
   photoUrl: string;
   socials: SocialLinks;
@@ -19,7 +21,9 @@ export type Officer = {
 export type OrgNode = {
   name: string;
   position: string;
+  section?: string;
   photoUrl?: string;
+  socials?: SocialLinks;
   children?: OrgNode[];
 };
 

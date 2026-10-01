@@ -96,7 +96,7 @@ export function Hero() {
                 className="group w-full justify-center sm:w-auto"
                 render={<Link href="/join" />}
               >
-                Become a member
+                Join the community
                 <ArrowUpRight className="ml-1 size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </Button>
               <Button
@@ -112,35 +112,58 @@ export function Hero() {
 
             {/* Partner Affiliates - Centered below hero text in corresponding full color */}
             {partners.length > 0 && (
-              <div className="mt-8 sm:mt-10 flex flex-col items-center justify-center gap-2">
+              <div className="mt-8 sm:mt-10 flex flex-col items-center justify-center gap-2.5">
                 <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
                   Partners
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
                   {partners.map((partner) => {
-                    const logo = (
+                    const logoImg = (
                       <Image
                         src={partner.logo}
                         alt={partner.name}
                         width={partner.width || 84}
                         height={partner.height || 70}
-                        className="h-8 sm:h-9 w-auto object-contain transition-transform duration-200 hover:scale-105"
+                        className="h-8 sm:h-9 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
                       />
                     );
-                    return partner.href ? (
-                      <Link
+
+                    return (
+                      <div
                         key={partner.name}
-                        href={partner.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        title={partner.name}
-                        className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        className="group relative flex items-center justify-center"
                       >
-                        {logo}
-                      </Link>
-                    ) : (
-                      <div key={partner.name} title={partner.name} className="flex items-center justify-center">
-                        {logo}
+                        {partner.href ? (
+                          <Link
+                            href={partner.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          >
+                            {logoImg}
+                          </Link>
+                        ) : (
+                          <div
+                            tabIndex={0}
+                            role="img"
+                            aria-label={partner.name}
+                            className="flex items-center justify-center cursor-pointer rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          >
+                            {logoImg}
+                          </div>
+                        )}
+
+                        {/* Pop-out Organization Name Tooltip */}
+                        <div
+                          role="tooltip"
+                          className="pointer-events-none absolute -bottom-9 left-1/2 -translate-x-1/2 z-30 whitespace-nowrap rounded-md border border-slate-800 bg-slate-900/95 px-2.5 py-1 text-xs font-semibold text-slate-100 shadow-xl backdrop-blur-xs opacity-0 translate-y-1 scale-95 transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 group-hover:scale-100 group-focus-within:opacity-100 group-focus-within:translate-y-0 group-focus-within:scale-100"
+                        >
+                          {partner.name}
+                          <span
+                            aria-hidden="true"
+                            className="absolute -top-1 left-1/2 -translate-x-1/2 size-2 rotate-45 border-l border-t border-slate-800 bg-slate-900/95"
+                          />
+                        </div>
                       </div>
                     );
                   })}

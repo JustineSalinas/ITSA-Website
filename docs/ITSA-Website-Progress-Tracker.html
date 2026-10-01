@@ -1,0 +1,816 @@
+<title>ITSA Website Progress Tracker</title>
+<style>
+  /* Light "paper" theme on purpose: this joins the SRS and SPMP as a document
+     set the team copies into Google Docs, and a dark-theme copy would paste
+     near-white text onto a white page. Every colour is painted explicitly. */
+  :root {
+    --paper: #FFFFFF;
+    --ground: #EFF3F7;
+    --panel: #F6F9FC;
+    --line: #D2DAE5;
+    --line-soft: #E5EAF1;
+    --ink: #0D1524;
+    --ink-2: #3B4759;
+    --ink-3: #6C788A;
+    --accent: #0A5FA0;
+    --accent-soft: #E4EEF8;
+    --crit: #A81F26;
+    --crit-soft: #F9E6E6;
+    --warn: #8A5207;
+    --warn-soft: #FBEFDB;
+    --ok: #11603F;
+    --ok-soft: #DEEFE5;
+    --prog: #1F5FA8;
+    --prog-soft: #E2EDF9;
+
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 26px 16px 90px;
+  }
+
+  .sheet {
+    max-width: 1080px;
+    margin: 0 auto;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 52px 56px 72px;
+  }
+
+  .doc-kind {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 14px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    margin: 0 0 10px;
+  }
+  .subtitle { font-size: 1.05rem; color: var(--ink-2); margin: 0 0 24px; max-width: 62ch; }
+
+  table.meta { border-collapse: collapse; width: 100%; margin-bottom: 34px; }
+  table.meta td {
+    border: 1px solid var(--line);
+    padding: 8px 12px;
+    font-size: 0.86rem;
+    color: var(--ink-2);
+    background: var(--panel);
+  }
+  table.meta td:first-child {
+    width: 150px; font-weight: 700; color: var(--ink);
+    font-size: 0.76rem; letter-spacing: 0.05em; text-transform: uppercase;
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.58rem;
+    line-height: 1.25;
+    margin: 46px 0 4px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--ink);
+  }
+  h3 {
+    font-family: var(--sans);
+    font-size: 1.0rem; font-weight: 700;
+    margin: 28px 0 10px;
+  }
+  p { margin: 0 0 14px; color: var(--ink-2); }
+  strong, b { color: var(--ink); }
+  ul, ol { margin: 0 0 16px; padding-left: 22px; color: var(--ink-2); }
+  li { margin-bottom: 6px; }
+  li::marker { color: var(--ink-3); }
+  code {
+    font-family: var(--mono); font-size: 0.85em;
+    background: var(--panel); border: 1px solid var(--line-soft);
+    padding: 0.06em 0.34em; color: var(--ink-2);
+  }
+
+  /* Status key */
+  .keybar {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    padding: 14px 16px; margin-bottom: 26px;
+    background: var(--panel); border: 1px solid var(--line);
+  }
+  .pill {
+    display: inline-block; font-family: var(--mono);
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 3px 8px;
+    border: 1px solid; white-space: nowrap;
+  }
+  .pill.done  { color: var(--ok);   background: var(--ok-soft);   border-color: var(--ok); }
+  .pill.prog  { color: var(--prog); background: var(--prog-soft); border-color: var(--prog); }
+  .pill.block { color: var(--crit); background: var(--crit-soft); border-color: var(--crit); }
+  .pill.new   { color: var(--ink-2); background: var(--paper);    border-color: var(--ink-3); border-style: dashed; }
+
+  /* Metrics */
+  .metrics {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(126px, 1fr));
+    gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: 26px;
+  }
+  .metric { background: var(--paper); padding: 15px 16px; }
+  .metric .n {
+    font-family: var(--mono); font-size: 1.6rem;
+    font-variant-numeric: tabular-nums; line-height: 1.1; display: block;
+  }
+  .metric .l {
+    font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase;
+    color: var(--ink-3); margin-top: 4px; display: block;
+  }
+  .n.ok { color: var(--ok); } .n.crit { color: var(--crit); } .n.prog { color: var(--prog); }
+
+  /* Callouts */
+  .callout {
+    border: 1px solid var(--accent); border-left-width: 4px;
+    background: var(--accent-soft); padding: 16px 20px; margin: 0 0 24px;
+  }
+  .callout.crit { border-color: var(--crit); background: var(--crit-soft); }
+  .callout.warn { border-color: var(--warn); background: var(--warn-soft); }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout h3 { margin-top: 0; }
+  .callout.crit h3 { color: var(--crit); }
+  .callout.warn h3 { color: var(--warn); }
+
+  /* Tables */
+  .tablewrap { overflow-x: auto; margin-bottom: 20px; }
+  table.grid { border-collapse: collapse; width: 100%; font-size: 0.87rem; min-width: 680px; }
+  table.grid th {
+    background: var(--ink); color: var(--paper); text-align: left;
+    padding: 9px 11px; font-size: 0.71rem; letter-spacing: 0.07em;
+    text-transform: uppercase; font-weight: 700; border: 1px solid var(--ink);
+  }
+  table.grid td {
+    border: 1px solid var(--line); padding: 9px 11px;
+    color: var(--ink-2); vertical-align: top;
+  }
+  table.grid tr:nth-child(even) td { background: var(--panel); }
+  td.id {
+    font-family: var(--mono); font-size: 0.78rem; white-space: nowrap;
+    color: var(--ink); font-weight: 700;
+  }
+  td.who { white-space: nowrap; font-weight: 600; color: var(--ink); }
+  td.dep { font-family: var(--mono); font-size: 0.75rem; color: var(--ink-3); white-space: nowrap; }
+  td.st  { white-space: nowrap; }
+
+  .phase-head {
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    margin: 40px 0 6px;
+  }
+  .phase-tag {
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 9px; background: var(--ink); color: var(--paper);
+  }
+  .phase-tag.done { background: var(--ok); }
+  .phase-tag.crit { background: var(--crit); }
+  .phase-when { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+
+  .flowbox {
+    font-family: var(--mono); font-size: 12px; line-height: 1.7;
+    background: var(--panel); border: 1px solid var(--line);
+    padding: 16px 18px; overflow-x: auto; white-space: pre; color: var(--ink-2);
+    margin-bottom: 20px;
+  }
+
+  .note { font-size: 0.86rem; color: var(--ink-3); }
+
+  @media (max-width: 720px) {
+    .sheet { padding: 32px 20px 48px; }
+    h1 { font-size: 1.85rem; }
+    table.meta td:first-child { width: 104px; }
+  }
+</style>
+
+<div class="sheet">
+
+  <p class="doc-kind">Implementation Plan &amp; Progress Tracker</p>
+  <h1>ITSA Website</h1>
+  <p class="subtitle">
+    Every part of the project from start to finish — what is done, what is blocked,
+    who owns what, and the order it has to happen in.
+  </p>
+
+  <table class="meta">
+    <tr><td>Repository</td><td>JustineSalinas/ITSA-Website</td></tr>
+    <tr><td>Project manager</td><td>AJ Salinas</td></tr>
+    <tr><td>Team</td><td>Alexander Tolosa · Aziel Misola · Deghne Agana · Twice Navarro · Matthew</td></tr>
+    <tr><td>Method</td><td>Scrum — two-week sprints, adapted for a volunteer student team (see &sect;6)</td></tr>
+    <tr><td>Updated</td><td>31 August 2026</td></tr>
+    <tr><td>Companions</td><td>Software Requirements Specification (SRS) · Software Project Management Plan (SPMP)</td></tr>
+  </table>
+
+  <div class="keybar">
+    <span class="pill new">Not Started</span>
+    <span class="pill prog">In Progress</span>
+    <span class="pill block">Blocked</span>
+    <span class="pill done">Done</span>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><span class="n ok">9</span><span class="l">Shipped</span></div>
+    <div class="metric"><span class="n prog">1</span><span class="l">In progress</span></div>
+    <div class="metric"><span class="n crit">4</span><span class="l">Blocked</span></div>
+    <div class="metric"><span class="n">38</span><span class="l">Not started</span></div>
+    <div class="metric"><span class="n">5</span><span class="l">Team members</span></div>
+    <div class="metric"><span class="n">5</span><span class="l">Phases</span></div>
+    <div class="metric"><span class="n">6</span><span class="l">Sprints</span></div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>1. Read this first</h2>
+
+  <div class="callout crit">
+    <h3>One task is blocking the entire project</h3>
+    <p>
+      The security rules that protect our database were written, tested, and merged
+      weeks ago — but they were never switched on for the live database, because the
+      Firebase credentials were never added to <code>.env.local</code>. Right now the
+      live site still accepts changes from <strong>any signed-in Google account</strong>,
+      and because the repository is public, that weakness is readable by anyone.
+    </p>
+    <p>
+      It also blocks the team: nobody can build or test an admin feature against real
+      rules until this is done. It is tasks <code>P0-1</code> through <code>P0-4</code>,
+      roughly 30 minutes of console work, and it is owned by the project manager.
+    </p>
+  </div>
+
+  <h3>The real reason this redesign exists</h3>
+  <p>
+    The Google Drive problem is not a Drive problem. It is that <strong>three of our
+    four content types cannot be published without a developer.</strong>
+  </p>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Content</th><th>Admin page</th><th>Database rule</th><th>What it takes to publish today</th></tr>
+      <tr><td><strong>Events</strong></td><td>Yes</td><td>Yes</td><td>An officer fills a form. Working.</td></tr>
+      <tr><td><strong>Officers</strong></td><td>Yes</td><td>Yes</td><td>Works — but 19 officers are still written into the code as a fallback.</td></tr>
+      <tr><td><strong>News</strong></td><td><strong>No</strong></td><td><strong>No</strong></td><td><strong>A developer edits code, opens a PR, and deploys — per article.</strong></td></tr>
+      <tr><td><strong>Projects</strong></td><td><strong>No</strong></td><td><strong>No</strong></td><td><strong>Same — per project.</strong></td></tr>
+    </table>
+  </div>
+
+  <p>
+    There is a second blocker: <strong>there is no way to upload an image anywhere on
+    the site.</strong> Events and officers accept an image <em>link</em>, not a file, and
+    for security only our own storage is allowed to serve pictures — but nothing exists
+    to put a picture <em>into</em> that storage. So a Drive folder of event photos
+    currently has no route onto the website at all.
+  </p>
+  <p>
+    Everything in Phase 1 exists to fix exactly that. <strong>The redesign has landed
+    when an officer who cannot code can take a folder from the Drive and publish
+    it.</strong>
+  </p>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>2. The team</h2>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Person</th><th>Role</th><th>Owns</th><th>GitHub</th></tr>
+      <tr><td class="who">AJ Salinas</td><td>Project manager</td><td>Firebase &amp; hosting consoles, access, releases</td><td>JustineSalinas</td></tr>
+      <tr><td class="who">Alexander Tolosa</td><td>Lead design</td><td>Structure, design system, interaction spec</td><td>Alexander-Tolosa</td></tr>
+      <tr><td class="who">Aziel Misola</td><td>Web developer</td><td>Public-facing interactivity, accessibility</td><td>Yaki-Soba</td></tr>
+      <tr><td class="who">Deghne Agana</td><td>Web developer</td><td>Admin surfaces, content migration</td><td>DeghneG</td></tr>
+      <tr><td class="who">Twice Navarro</td><td>Backend developer</td><td>Data model, upload service, import tooling</td><td>Tways-study <span class="pill done">accepted</span></td></tr>
+      <tr><td class="who">Matthew</td><td>Security</td><td>Rules, upload hardening, monitoring, review</td><td>mattnotfound11</td></tr>
+    </table>
+  </div>
+
+  <p class="note">
+    Two identity notes worth fixing early: Aziel's commits are attributed to a second
+    account (<code>AzielMisola</code>) that has no repository access, and Deghne's
+    commits show the author as <code>unknown</code>. Both are two-minute fixes now and
+    genuine confusion later, when nobody remembers who wrote what.
+  </p>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>3. Already shipped</h2>
+  <p>Recording this so the remaining work is judged against real progress.</p>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>What</th><th>Who</th><th>Status</th></tr>
+      <tr><td>Public site — home, about, officers, events, join</td><td class="who">Team</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td>Officer admin — sign-in, events, officer profiles</td><td class="who">Team</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td>Security hardening — admin claims, sessions, rate limiting, headers, 19 vulnerable packages cleared <em>(merged, not switched on)</em></td><td class="who">AJ</td><td class="st"><span class="pill prog">Merged</span></td></tr>
+      <tr><td>Automated checks on every pull request (lint, build, 22 rules tests, package audit)</td><td class="who">AJ</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td>Repaired the build that stopped the site publishing for a day</td><td class="who">AJ</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td>News feed, media gallery, footer and logo revisions</td><td class="who">Alexander</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td>Projects showcase, teams &amp; awards</td><td class="who">Deghne</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td>Interactive projects directory; design fixes for generic patterns</td><td class="who">Aziel</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td>"Ask ITSA" guided answer panel</td><td class="who">AJ</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td>Requirements (SRS) and project plan (SPMP) documents</td><td class="who">AJ</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td>Homepage restructure — centred hero, 5-item nav, partners, About, FAQ, CTA <em>(PR #9, green, awaiting merge)</em></td><td class="who">AJ</td><td class="st"><span class="pill prog">In Progress</span></td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="phase-head">
+    <span class="phase-tag crit">Phase 0 · Unblock</span>
+    <span class="phase-when">this week · ~30 minutes of console work</span>
+  </div>
+  <p>Nothing else starts cleanly until these are done. Owned mostly by the PM.</p>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Task</th><th>Owner</th><th>Depends on</th><th>Status</th></tr>
+      <tr><td class="id">P0-1</td><td><strong>Add Firebase credentials to <code>.env.local</code></strong> — the service account key (server) and the six web-app values (browser). Both are currently empty, which is why nothing below can run.</td><td class="who">AJ</td><td class="dep">—</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">P0-1b</td><td><strong>Create the Firestore database and enable Email/Password Authentication</strong> in the Firebase console. The credentials in P0-1 are valid, but the services they point at do not exist yet &mdash; verified 9 Sep 2026, the databases list is empty. This, not P0-1, is what blocks everything below.</td><td class="who">AJ</td><td class="dep">P0-1</td><td class="st"><span class="pill block">Blocked</span></td></tr>
+      <tr><td class="id">P0-2</td><td>Create officer sign-in accounts in Firebase Authentication</td><td class="who">AJ</td><td class="dep">P0-1</td><td class="st"><span class="pill block">Blocked</span></td></tr>
+      <tr><td class="id">P0-3</td><td><strong>Grant website admin to at least two officers</strong> — one is a single point of failure</td><td class="who">AJ</td><td class="dep">P0-2</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">P0-4</td><td><strong>Deploy the database and storage rules.</strong> Must come after P0-3 or everyone, including us, is locked out</td><td class="who">AJ</td><td class="dep">P0-3</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">P0-5</td><td>Set the spam-protection secret in the hosting environment</td><td class="who">AJ</td><td class="dep">—</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">P0-6</td><td>Turn on automatic cleanup of old rate-limit records</td><td class="who">AJ</td><td class="dep">P0-1</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">P0-7</td><td><strong>Turn on branch protection</strong> so changes need a pull request and passing checks. Currently off; four people have pushed straight to the live branch</td><td class="who">AJ</td><td class="dep">—</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">P0-8</td><td>Accept the repository invitation</td><td class="who">Twice</td><td class="dep">—</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">P0-9</td><td>Link <code>azi18misola@gmail.com</code> to the Yaki-Soba account so past commits attribute correctly</td><td class="who">Aziel</td><td class="dep">—</td><td class="st"><span class="pill prog">In Progress</span></td></tr>
+      <tr><td class="id">P0-10</td><td>Set <code>git config user.name</code> — commits currently show as "unknown"</td><td class="who">Deghne</td><td class="dep">—</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">P0-11</td><td>Merge PR #9 (homepage restructure)</td><td class="who">AJ</td><td class="dep">—</td><td class="st"><span class="pill done">Done</span></td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="phase-head">
+    <span class="phase-tag">Phase 1 · Content pipeline</span>
+    <span class="phase-when">weeks 1–2 · the Drive fix</span>
+  </div>
+  <p>
+    This is the heart of the redesign. Twice is on the critical path — Deghne's work
+    waits on <code>T1</code> and <code>T2</code>.
+  </p>
+
+  <h3>Twice Navarro — backend</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Task</th><th>Depends on</th><th>Status</th></tr>
+      <tr><td class="id">T1</td><td><strong>Database collections and rules for news and projects.</strong> Mirror the existing events setup. Matthew reviews before merge</td><td class="dep">P0-4</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">T2</td><td><strong>Image upload service.</strong> Accepts a file, compresses it, stores it in our own storage, returns a link. This is the single piece that unlocks the Drive</td><td class="dep">P0-4, M1</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">T3</td><td>Data helper for projects, following the existing news pattern exactly</td><td class="dep">T1</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">T4</td><td><strong>Bulk import tool</strong> for the Drive backlog — a folder of photos and a spreadsheet in, published records out</td><td class="dep">T1, T2</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">T5</td><td>Store join enquiries as reviewable records instead of email only</td><td class="dep">P0-4</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+    </table>
+  </div>
+
+  <h3>Deghne Agana — admin surfaces</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Task</th><th>Depends on</th><th>Status</th></tr>
+      <tr><td class="id">D1</td><td><strong>Admin page for News</strong> — create, edit, retire. Mirror the existing Events admin</td><td class="dep">T1</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">D2</td><td><strong>Admin page for Projects</strong></td><td class="dep">T1</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">D3</td><td><strong>Image upload interface</strong> — drag and drop, preview, progress. The officer-facing half of T2</td><td class="dep">T2</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">D4</td><td>Move the 19 officers out of the code and into the database, so the annual handover is a form and not a code change</td><td class="dep">P0-4</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">D5</td><td>Admin review queue for join enquiries — new, contacted, accepted</td><td class="dep">T5</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+    </table>
+  </div>
+
+  <h3>Matthew — security</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Task</th><th>Depends on</th><th>Status</th></tr>
+      <tr><td class="id">M1</td><td><strong>Storage rules for the upload path.</strong> File upload is a brand new way in — this must land <em>with</em> T2, not after it</td><td class="dep">—</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">M2</td><td>Upload limits — allowed file types, maximum size, and a cap on how often. Reuse the existing rate limiter</td><td class="dep">T2</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">M6</td><td>Security review of each new admin page before it merges</td><td class="dep">D1–D3</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="phase-head">
+    <span class="phase-tag">Phase 2 · Fill the site</span>
+    <span class="phase-when">week 3 · the Drive backlog</span>
+  </div>
+  <p>
+    The payoff. Once the pipeline exists, this is mostly officers doing data entry, not
+    developers writing code — which is the entire point.
+  </p>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Task</th><th>Owner</th><th>Depends on</th><th>Status</th></tr>
+      <tr><td class="id">C1</td><td>Audit and organise the Drive folders — decide what is an <em>event</em>, what is <em>news</em>, and what is a <em>project</em>. Do this before uploading anything</td><td class="who">AJ + officers</td><td class="dep">—</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">C2</td><td><strong>Compress the photos before upload.</strong> Current event photos are about 1 MB each; 200 KB looks identical on a phone</td><td class="who">Alexander</td><td class="dep">C1</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">C3</td><td>Upload past events with their photo galleries</td><td class="who">Officers</td><td class="dep">D3, C2</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">C4</td><td>Upload the news backlog</td><td class="who">Officers</td><td class="dep">D1, D3</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">C5</td><td>Collect and publish real student projects — replace the sample entries and the placeholder text still on the Projects page</td><td class="who">Deghne</td><td class="dep">D2</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">C6</td><td>Publish this term's upcoming events, and keep them current</td><td class="who">Officers</td><td class="dep">P0-4</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="phase-head">
+    <span class="phase-tag">Phase 3 · Interactivity</span>
+    <span class="phase-when">weeks 3–4</span>
+  </div>
+
+  <div class="callout warn">
+    <p style="margin-bottom:0">
+      <strong>Fix the motion foundation before adding motion.</strong> Two smooth-scroll
+      systems currently run at once on the Projects pages and fight each other, and the
+      news carousel slides forever with no way to pause on a phone — an accessibility
+      failure. Building new animation on top of that makes every bug harder to find.
+      <code>Z1</code> and <code>Z7</code> come first; they do not depend on anything else
+      and can start today.
+    </p>
+  </div>
+
+  <h3>Alexander Tolosa — structure and design system</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Task</th><th>Depends on</th><th>Status</th></tr>
+      <tr><td class="id">A1</td><td><strong>Information architecture.</strong> A page map: what lives where, and what News, Events and Projects each mean so they stop overlapping. This unblocks Aziel</td><td class="dep">—</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">A2</td><td>Design tokens and consistent cards, spacing and type across every page</td><td class="dep">—</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">A3</td><td><strong>Interactive components specification</strong> — written down before anyone builds, so "interactive" means the same thing to all of us</td><td class="dep">A1</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">A4</td><td>Fix the logo files — about 936 KB today, replacing a 1.4 KB version, and one of the three is not used anywhere</td><td class="dep">—</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">A5</td><td>Design review of each interactive component against the spec</td><td class="dep">A3</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+    </table>
+  </div>
+
+  <h3>Aziel Misola — public interactivity</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Task</th><th>Depends on</th><th>Status</th></tr>
+      <tr><td class="id">Z1</td><td><strong>Fix the duplicate smooth-scroll</strong> and make it respect the "reduce motion" setting site-wide. Start here</td><td class="dep">—</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">Z7</td><td><strong>Fix the news carousel</strong> — add a pause control and honour "reduce motion". Currently unpausable on touch</td><td class="dep">—</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">Z2</td><td>Events: filter by upcoming and past, search, and category</td><td class="dep">A3, Z1</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">Z3</td><td>News: category filter and a timeline view of past activity</td><td class="dep">A3, Z1</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">Z4</td><td><strong>Photo gallery with lightbox</strong> for event albums — the thing that makes uploading the Drive worth it</td><td class="dep">A3, C3</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">Z5</td><td>Interactive officer org chart</td><td class="dep">A3, D4</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">Z6</td><td><strong>Accessibility pass</strong> — colour contrast, keyboard operation, visible focus. Target WCAG 2.1 AA</td><td class="dep">Z1–Z5</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <div class="phase-head">
+    <span class="phase-tag">Phase 4 · Make it last</span>
+    <span class="phase-when">this term, then ongoing</span>
+  </div>
+  <p>
+    What keeps the site alive after this batch of officers graduates — the single
+    largest long-term risk to the project.
+  </p>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Task</th><th>Owner</th><th>Status</th></tr>
+      <tr><td class="id">M3</td><td>Turn on App Check, so only our own website can reach our database — not a script someone writes</td><td class="who">Matthew</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">M4</td><td>Enforce the content security policy, currently in watch-and-report mode</td><td class="who">Matthew</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">M5</td><td><strong>Scheduled database backups.</strong> We are about to put years of Drive content in there</td><td class="who">Matthew</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">M7</td><td>Officer roles with different permissions — e.g. only the President can add or remove officers</td><td class="who">Matthew + Twice</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">H1</td><td>Error and uptime monitoring, so a broken site tells us instead of waiting to be noticed</td><td class="who">Twice</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">H2</td><td><strong>Written handover runbook</strong> — who holds the Firebase, hosting and domain accounts, how to add an officer, how to restore a backup, who to call</td><td class="who">AJ</td><td class="st"><span class="pill done">Done</span></td></tr>
+      <tr><td class="id">H3</td><td>Search-engine and social-sharing details, so a shared link shows a real preview</td><td class="who">Alexander</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">H4</td><td>Event RSVP and attendance, building on the enquiries model</td><td class="who">Twice</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>4. Quick content fixes</h2>
+  <p>Small, unblocked, and each visible to every visitor. Good first tasks.</p>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>ID</th><th>Task</th><th>Owner</th><th>Status</th></tr>
+      <tr><td class="id">Q1</td><td>Replace <code>public/usa.png</code> — currently a plain grey square standing in for the university logo</td><td class="who">Alexander</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">Q2</td><td>Replace the six invented partner logos and names, then switch off the "sample logos" notice</td><td class="who">AJ</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">Q3</td><td><strong>Answer "Is there a membership fee?"</strong> in <code>src/data/faq.ts</code>. It is probably the most common unasked question, and the site answers it nowhere. Filling in one line publishes it to the homepage FAQ, the Join page, and the Ask ITSA panel at once</td><td class="who">AJ</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">Q4</td><td>Remove the placeholder text and invented author names from the Projects page</td><td class="who">Deghne</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+      <tr><td class="id">Q5</td><td>Fix the ITSA logo colours in the footer so they match the original mark</td><td class="who">Alexander</td><td class="st"><span class="pill new">Not Started</span></td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>5. What waits on what</h2>
+
+  <div class="flowbox">PHASE 0   AJ: credentials -> officer accounts -> grant admin -> deploy rules
+             |                                                    |
+             |                                                    v
+PHASE 1      |            Twice: T1 collections ------> Deghne: D1, D2 admin pages
+             |            Twice: T2 upload ------------> Deghne: D3 upload interface
+             |                    ^
+             |            Matthew: M1, M2  (alongside T2, not after)
+             |
+             +----------> Aziel: Z1, Z7 motion fixes   (independent - start today)
+             +----------> Alexander: A1, A2, A4        (independent - start today)
+
+PHASE 2      Twice: T4 import tool + Deghne: D3  --->  officers upload the Drive
+
+PHASE 3      Alexander: A3 spec  ---->  Aziel: Z2-Z6  ---->  Alexander: A5 review
+
+PHASE 4      Matthew: M3, M4, M5, M7     AJ: H2 runbook</div>
+
+  <h3>Two ordering rules worth holding the team to</h3>
+  <ol>
+    <li><strong>Security lands with the feature, not after it.</strong> Matthew's upload rules (<code>M1</code>) must merge alongside Twice's upload service (<code>T2</code>). An upload endpoint reviewed after it ships is an endpoint that was live and unreviewed.</li>
+    <li><strong>Fix motion before adding motion.</strong> <code>Z1</code> and <code>Z7</code> before any new interactive component.</li>
+  </ol>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>6. How we work — Scrum</h2>
+
+  <p>
+    Scrum, adapted for a volunteer student team. Textbook Scrum assumes people are
+    available all day; we are not. Everything below is scaled to roughly six to eight
+    hours a week per person, around classes.
+  </p>
+
+  <div class="callout warn">
+    <p style="margin-bottom:0">
+      <strong>The one rule that keeps this honest:</strong> the people doing the work
+      estimate the work. The project manager sets priority and decides what "done"
+      means; the developers decide how big something is. A manager who estimates for
+      the team ends up with numbers nobody believes and a plan nobody can hit.
+    </p>
+  </div>
+
+  <h3>6.1 Roles</h3>
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Scrum role</th><th>Who</th><th>Responsible for</th></tr>
+      <tr>
+        <td><strong>Product Owner</strong></td>
+        <td class="who">AJ Salinas</td>
+        <td>Owns the backlog and its order. Decides what is most valuable next, writes acceptance criteria, and accepts or rejects finished work. Single point of decision when priorities collide.</td>
+      </tr>
+      <tr>
+        <td><strong>Scrum Master</strong></td>
+        <td class="who">Alexander Tolosa</td>
+        <td>Runs the four ceremonies, keeps them short, and — most importantly — clears blockers. When someone says "I'm stuck on X," this is the person who gets X unstuck.</td>
+      </tr>
+      <tr>
+        <td><strong>Development team</strong></td>
+        <td class="who">Alexander, Aziel, Deghne, Twice, Matthew</td>
+        <td>Estimates the work, commits to a sprint, and decides how to build it. The team collectively owns the sprint — not each person owning only their own rows.</td>
+      </tr>
+    </table>
+  </div>
+
+  <p class="note">
+    The Product Owner and Scrum Master should not be the same person. The PO pushes for
+    more scope; the SM protects the team's capacity. Putting both in one head means one
+    of the two jobs quietly stops happening — usually the second.
+  </p>
+
+  <h3>6.2 Sprint cadence</h3>
+  <p>
+    <strong>Two-week sprints.</strong> One week is too short to finish anything
+    meaningful around a class schedule; a month is too long to notice you have drifted.
+  </p>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Ceremony</th><th>When</th><th>How long</th><th>Purpose</th></tr>
+      <tr>
+        <td><strong>Sprint Planning</strong></td>
+        <td>Monday, start of sprint</td>
+        <td>45 min</td>
+        <td>PO presents the priority order; the team estimates and pulls in what it believes it can finish. Ends with a written sprint goal.</td>
+      </tr>
+      <tr>
+        <td><strong>Written stand-up</strong></td>
+        <td>Mon / Wed / Fri, in Discord</td>
+        <td>2 min each</td>
+        <td>Three lines: what I finished, what I am on, what is blocking me. <strong>Written, not a meeting</strong> — five students cannot reliably be in the same room daily, and pretending otherwise just produces skipped stand-ups.</td>
+      </tr>
+      <tr>
+        <td><strong>Backlog refinement</strong></td>
+        <td>Mid-sprint, Wednesday</td>
+        <td>30 min</td>
+        <td>Look at what is coming next sprint. Split anything too big, add acceptance criteria, surface unknowns while there is still time to investigate.</td>
+      </tr>
+      <tr>
+        <td><strong>Sprint Review</strong></td>
+        <td>Friday, end of sprint</td>
+        <td>30 min</td>
+        <td>Demo on the live preview link, not on a laptop. If it cannot be shown working, it is not done.</td>
+      </tr>
+      <tr>
+        <td><strong>Retrospective</strong></td>
+        <td>Straight after the review</td>
+        <td>20 min</td>
+        <td>What helped, what got in the way, one thing we change next sprint. Exactly one — teams that pick five change nothing.</td>
+      </tr>
+    </table>
+  </div>
+
+  <p class="note">
+    Total ceremony overhead: about two hours per fortnight per person. If it grows past
+    that, the Scrum Master should cut something rather than let the team quietly start
+    skipping meetings.
+  </p>
+
+  <h3>6.3 The board</h3>
+  <p>
+    Five columns. They extend the status key at the top of this document rather than
+    replacing it, so there is one vocabulary and not two.
+  </p>
+
+  <div class="flowbox">  BACKLOG  ->  READY  ->  IN PROGRESS  ->  IN REVIEW  ->  DONE
+     |          |            |               |             |
+  Not         Not         In Progress     In Progress    Done
+  Started     Started                     (PR open)
+                                                    ^
+                          BLOCKED  <-----------------+
+                        (any column, flag it in stand-up)</div>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Column</th><th>Means</th><th>Rule</th></tr>
+      <tr><td><strong>Backlog</strong></td><td>Known, not yet ready to start</td><td>Anyone may add. Only the PO orders it.</td></tr>
+      <tr><td><strong>Ready</strong></td><td>Meets the Definition of Ready below</td><td>Nothing enters a sprint until it is here.</td></tr>
+      <tr><td><strong>In Progress</strong></td><td>Someone is actively on it</td><td><strong>Maximum two per person.</strong> Three parallel half-finished tasks deliver nothing.</td></tr>
+      <tr><td><strong>In Review</strong></td><td>Pull request open, checks passing</td><td>Reviews within two days. Waiting on review is the most common reason work stalls.</td></tr>
+      <tr><td><strong>Done</strong></td><td>Meets the Definition of Done below</td><td>Merged and clicked through on the live site.</td></tr>
+      <tr><td><strong>Blocked</strong></td><td>Cannot proceed</td><td>Say so in the stand-up the same day. A blocker nobody hears about is just a task that is silently late.</td></tr>
+    </table>
+  </div>
+
+  <h3>6.4 Estimating</h3>
+  <p>
+    Story points, sized against each other rather than against hours. The rubric below
+    is calibrated to student evenings, which is the unit that actually exists here.
+  </p>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Points</th><th>Feels like</th><th>Example from this project</th></tr>
+      <tr><td class="id">1</td><td>Under an hour</td><td>Answer the membership fee question (<code>Q3</code>)</td></tr>
+      <tr><td class="id">2</td><td>One evening</td><td>Fix the news carousel pause (<code>Z7</code>)</td></tr>
+      <tr><td class="id">3</td><td>Two or three evenings</td><td>Database collections and rules for news and projects (<code>T1</code>)</td></tr>
+      <tr><td class="id">5</td><td>Most of a week around classes</td><td>The image upload service (<code>T2</code>)</td></tr>
+      <tr><td class="id">8</td><td><strong>Too big — split it</strong></td><td>"Build the whole admin area" is not a task</td></tr>
+    </table>
+  </div>
+
+  <p>
+    <strong>Do not commit to a velocity you have not measured.</strong> Plan Sprint 1
+    conservatively — around 15 to 20 points across the whole team — then use what
+    actually got finished as the number for Sprint 2. Two sprints in, the average is
+    real and planning becomes accurate. Guessing high in Sprint 1 and missing it teaches
+    the team that the plan is fiction.
+  </p>
+
+  <h3>6.5 Definition of Ready</h3>
+  <p>A task may not enter a sprint until all of these are true:</p>
+  <ul>
+    <li>It has a named owner.</li>
+    <li>It has <strong>acceptance criteria</strong> — a sentence describing what must be true for it to be accepted.</li>
+    <li>Its dependencies are already Done, not merely planned.</li>
+    <li>It is estimated at 5 points or fewer. Bigger items get split first.</li>
+    <li>Anything it needs — a design, a decision, an asset, an account — exists.</li>
+  </ul>
+  <p class="note">
+    That last point is what most often bites this project: several tasks depend on the
+    Firebase credentials in <code>P0-1</code>, and none of them are Ready until those
+    exist.
+  </p>
+
+  <h3>6.6 Definition of Done</h3>
+  <p>Unchanged from how the team already works — a task is Done when:</p>
+  <ul>
+    <li>It works on a phone as well as a laptop.</li>
+    <li>It was built on a branch and merged through a pull request.</li>
+    <li>The automatic checks pass — lint, build, security rules, package audit.</li>
+    <li>Someone else reviewed it.</li>
+    <li>It has been clicked through on the live site after merging.</li>
+    <li>Its row in this tracker says Done, with the date.</li>
+  </ul>
+  <p class="note">
+    Task <code>P0-7</code> turns points two and three from something everyone must
+    remember into something the repository enforces. Four people have pushed straight to
+    the live branch so far; one of those pushes stopped the site from publishing for a
+    day.
+  </p>
+
+  <h3>6.7 Sprint plan</h3>
+  <p>
+    The phases above are the backlog; these are the sprints that deliver them. Sprint
+    goals are fixed. <strong>The task lists are a proposal for planning, not a
+    commitment</strong> — the team pulls what it believes it can finish, and re-estimates
+    in each planning session.
+  </p>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Sprint</th><th>Goal</th><th>Tasks</th><th>Notes</th></tr>
+      <tr>
+        <td class="id">Sprint&nbsp;0<br><span class="note">3 days</span></td>
+        <td><strong>Unblock the project</strong></td>
+        <td class="dep">P0-1 … P0-11</td>
+        <td>Mostly the PO in the Firebase console. Not a real sprint — a gate. Nothing else can be Ready until <code>P0-4</code> is Done.</td>
+      </tr>
+      <tr>
+        <td class="id">Sprint&nbsp;1<br><span class="note">2 weeks</span></td>
+        <td><strong>Pipeline foundations, and stop the bleeding</strong></td>
+        <td class="dep">T1, T2, M1, M2<br>Z1, Z7, A1, A4<br>Q1, Q3, Q5</td>
+        <td>Twice and Matthew build the pipeline core together. Aziel and Alexander work in parallel on items that depend on nothing, so they are not idle waiting on Phase 0.</td>
+      </tr>
+      <tr>
+        <td class="id">Sprint&nbsp;2<br><span class="note">2 weeks</span></td>
+        <td><strong>Officers can publish without a developer</strong></td>
+        <td class="dep">D1, D2, D3<br>T3, T5, M6<br>A2, A3</td>
+        <td>The sprint that makes the redesign real. Demo at review is an officer publishing a news post live, with a photo, without touching code.</td>
+      </tr>
+      <tr>
+        <td class="id">Sprint&nbsp;3<br><span class="note">2 weeks</span></td>
+        <td><strong>The site is full of real content</strong></td>
+        <td class="dep">T4, D4, D5<br>C1 … C6, Q2, Q4</td>
+        <td>Mostly officers doing data entry rather than developers writing code — which is the whole point. Developers support and unblock.</td>
+      </tr>
+      <tr>
+        <td class="id">Sprint&nbsp;4<br><span class="note">2 weeks</span></td>
+        <td><strong>The site feels alive and is usable by everyone</strong></td>
+        <td class="dep">Z2, Z3, Z4, Z5, Z6<br>A5, H3</td>
+        <td>Interactivity, now that the motion foundation is fixed and there is real content to interact with.</td>
+      </tr>
+      <tr>
+        <td class="id">Sprint&nbsp;5<br><span class="note">2 weeks</span></td>
+        <td><strong>It survives us</strong></td>
+        <td class="dep">M3, M4, M5, M7<br>H1, H2, H4</td>
+        <td>Hardening, backups, roles, and the handover runbook. Do not let this sprint get cut — it is the one that protects everything before it.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="callout">
+    <h3>Three adaptations to hold on to</h3>
+    <p>
+      <strong>Stand-ups are written, three times a week.</strong> Five students with
+      different timetables cannot reliably meet daily. A written stand-up that actually
+      happens beats a daily meeting that does not.
+    </p>
+    <p>
+      <strong>Plan around exams explicitly.</strong> When a sprint overlaps assessments,
+      halve the committed points at planning rather than discovering it at review. A
+      sprint that is honestly small is a success; a sprint that is optimistically large
+      is a failure with extra steps.
+    </p>
+    <p style="margin-bottom:0">
+      <strong>Sprint 5 is not optional.</strong> Backups, roles, and the handover note
+      are what let next year's officers run this site. They are the easiest work to
+      postpone and the most expensive to skip.
+    </p>
+  </div>
+
+
+  <h2>7. Risks</h2>
+
+  <div class="tablewrap">
+    <table class="grid">
+      <tr><th>Risk</th><th>Likelihood</th><th>What happens</th><th>What we do about it</th></tr>
+      <tr><td><strong>The rules never get switched on</strong></td><td>Medium</td><td>Anyone with an account can deface the site. The weakness is publicly readable</td><td><code>P0-1</code>–<code>P0-4</code> this week. Nothing else starts first</td></tr>
+      <tr><td><strong>Twice is a single point of failure</strong></td><td><strong>High</strong></td><td>Deghne is fully blocked; the whole Drive pipeline stalls</td><td>Pair Deghne on <code>T2</code>. If the invite stays unaccepted, move <code>T1</code> to Deghne</td></tr>
+      <tr><td><strong>Everyone builds interactivity, nobody builds the pipeline</strong></td><td><strong>High</strong></td><td>A beautiful site with no content. Interactivity is the fun part; the pipeline is the valuable one</td><td>Only Aziel and Alexander are assigned to Phase 3. Hold that line</td></tr>
+      <tr><td><strong>Officers graduate and nobody has the passwords</strong></td><td><strong>High</strong></td><td>The site slowly dies — no new events, no fixes</td><td><code>H2</code> runbook, <code>D4</code> roster out of code, <code>M7</code> roles instead of shared logins</td></tr>
+      <tr><td><strong>Events and news go stale</strong></td><td><strong>High</strong></td><td>Directly undermines the credibility the whole site exists to build</td><td><code>C6</code>, and make posting part of the routine for every activity</td></tr>
+      <tr><td><strong>Another unreviewed change breaks the site</strong></td><td>Medium</td><td>Nothing can publish — this has already happened once</td><td><code>P0-7</code> branch protection</td></tr>
+      <tr><td><strong>Exams</strong></td><td><strong>High</strong></td><td>Work stops mid-way and context is lost</td><td>Keep tasks small and finishable. Phase 0 is deliberately tiny</td></tr>
+    </table>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <h2>8. Definition of done for the whole redesign</h2>
+  <ol>
+    <li>The database rules are live, and at least two officers can sign in.</li>
+    <li><strong>An officer who cannot code can take a folder from the Drive — photos and all — and publish it as an event, a news post, or a project.</strong></li>
+    <li>Nothing on the public site is placeholder text, an invented name, or a sample logo.</li>
+    <li>The site loads acceptably on a mid-range phone on campus wifi.</li>
+    <li>Someone other than the author has checked the site with a keyboard only, and for colour contrast.</li>
+    <li>A handover note exists, and next year's officers can run the site without any of us.</li>
+  </ol>
+
+  <div class="callout">
+    <p style="margin-bottom:0">
+      Point 2 is the one that matters. Everything in Phase 1 and Phase 2 exists to make
+      it true, and if it is still false at the end of term, the redesign did not land —
+      however good the site looks.
+    </p>
+  </div>
+
+  <p class="note" style="margin-top:36px; border-top:1px solid var(--line); padding-top:16px">
+    Companion documents: <strong>Software Requirements Specification (SRS)</strong> —
+    what the site must do and how a person moves through it ·
+    <strong>Software Project Management Plan (SPMP)</strong> — schedule, process, and
+    the earlier tracker.
+  </p>
+
+</div>

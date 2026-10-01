@@ -11,8 +11,8 @@ export type Partner = {
 };
 
 export const partners: Partner[] = [
-  { name: "Augustinian Developers Society", logo: "/images/partners/ads.png", width: 84, height: 70 },
-  { name: "Holotech Society USA", logo: "/images/partners/holotech.png", width: 76, height: 70 },
+  { name: "Augustinian Developer Society", logo: "/images/partners/ads.png", width: 84, height: 70 },
+  { name: "Holotech Society", logo: "/images/partners/holotech.png", width: 76, height: 70 },
 ];
 
 export const partnersArePlaceholders = false;
