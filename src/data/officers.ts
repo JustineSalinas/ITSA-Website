@@ -150,12 +150,6 @@ export const orgChart: OrgNode = {
               photoUrl: "/officers/alexander-michael-tolosa.jpg",
               children: [
                 {
-                  name: "Matthew Tabat",
-                  position: "IT Security",
-                  section: "BSIT 3C",
-                  photoUrl: "/officers/matthew-tabat.png",
-                },
-                {
                   name: "Aziel Guerrero Misola",
                   position: "Front-End Developer",
                   section: "BSIT 3C",
@@ -166,6 +160,19 @@ export const orgChart: OrgNode = {
                   position: "Front-End Developer",
                   section: "BSIT 3C",
                   photoUrl: "/officers/deghne-gabriel-agana.jpg",
+                },
+              ],
+            },
+            {
+              name: "Ryan Carlo Cruzada",
+              position: "Cybersecurity Lead",
+              section: "BSIT 3C",
+              children: [
+                {
+                  name: "Matthew Tabat",
+                  position: "IT Security",
+                  section: "BSIT 3C",
+                  photoUrl: "/officers/matthew-tabat.png",
                 },
               ],
             },

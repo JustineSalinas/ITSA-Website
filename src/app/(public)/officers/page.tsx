@@ -73,7 +73,8 @@ const departmentCategories = [
       o.position.includes("IoT") ||
       o.position.includes("Web") ||
       o.position.includes("Mobile") ||
-      o.position.includes("Project"),
+      o.position.includes("Project") ||
+      o.position.includes("Cyber"),
   },
   {
     id: "documentation",
