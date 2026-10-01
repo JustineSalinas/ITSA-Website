@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight, Compass, Lightbulb, Mail, MapPin, MessageCircle, Rocket, TrendingUp } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
