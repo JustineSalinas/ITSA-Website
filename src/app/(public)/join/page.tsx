@@ -103,15 +103,16 @@ export default function JoinPage() {
               )}
             </div>
 
-            {/* Community Photo - 100% UN-FADED, natural studio lighting and faces */}
-            <div className="relative z-10 mt-8 sm:mt-10 overflow-hidden rounded-2xl border border-border/70 shadow-sm aspect-[16/9] max-h-[460px] w-full bg-slate-100">
+            {/* Community Photo - crystal-clear 4K view */}
+            <div className="relative z-10 mt-8 sm:mt-10 overflow-hidden rounded-2xl border border-border/70 shadow-sm bg-slate-100">
               <Image
-                src="/images/itsa-community.png"
+                src="/images/itsa-community.webp"
                 alt="ITSA Community"
-                fill
-                className="object-cover object-[center_35%]"
-                sizes="(max-width: 1280px) 100vw, 1280px"
+                width={3840}
+                height={2160}
+                unoptimized
                 priority
+                className="w-full h-auto object-cover"
               />
             </div>
           </div>
