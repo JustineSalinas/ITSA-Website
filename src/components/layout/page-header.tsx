@@ -51,7 +51,7 @@ export function PageHeader({
 
       {/* Signature Right-Side Connected Nodes / Metaballs Artwork */}
       {showArtwork && (
-        <HeaderMetaballs className="w-[300px] sm:w-[400px] md:w-[480px] lg:w-[580px] xl:w-[680px]" />
+        <HeaderMetaballs className="w-[300px] opacity-25 sm:w-[400px] sm:opacity-100 md:w-[480px] lg:w-[580px] xl:w-[680px]" />
       )}
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
