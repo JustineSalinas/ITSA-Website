@@ -21,6 +21,16 @@ export function FeaturedProjectCard({ data }: { data: FeaturedProject }) {
       transition={{ duration: 0.5 }}
       className="relative mx-auto w-full overflow-hidden rounded-3xl border-2 border-foreground bg-card p-6 sm:p-8 lg:p-10 shadow-[6px_6px_0_0_var(--foreground)]"
     >
+      {/* Background accents: mirrored corners vs. FeaturedPortfolioCard */}
+      <div
+        className="pointer-events-none absolute -left-32 -top-32 size-96 rounded-full bg-brand/10 blur-3xl"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute -bottom-32 -right-32 size-96 rounded-full bg-brand-orange/10 blur-3xl"
+        aria-hidden="true"
+      />
+
       {/* Top Badge */}
       <div className="relative z-10 flex justify-center sm:justify-start">
         <span className="inline-flex items-center gap-2 rounded-full border-2 border-foreground bg-brand/10 px-4 py-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-brand shadow-[2px_2px_0_0_var(--foreground)]">
