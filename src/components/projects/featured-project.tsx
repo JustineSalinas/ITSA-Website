@@ -19,7 +19,7 @@ export function FeaturedProjectCard({ data }: { data: FeaturedProject }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5 }}
-      className="relative mx-auto w-full overflow-hidden rounded-3xl border-2 border-foreground bg-card p-6 sm:p-8 lg:p-10 shadow-[6px_6px_0_0_var(--foreground)]"
+      className="relative mx-auto w-full overflow-hidden rounded-3xl border-2 border-foreground bg-card p-6 sm:p-8 lg:p-8 shadow-[6px_6px_0_0_var(--foreground)]"
     >
       {/* Background accents: mirrored corners vs. FeaturedPortfolioCard */}
       <div
@@ -39,11 +39,11 @@ export function FeaturedProjectCard({ data }: { data: FeaturedProject }) {
         </span>
       </div>
 
-      <div className="relative z-10 mt-6 flex flex-col gap-8 lg:flex-row-reverse lg:items-center lg:gap-10">
+      <div className="relative z-10 mt-6 flex flex-col gap-8 lg:flex-row-reverse lg:items-center lg:gap-8">
         {/* Info (sits right of the preview on desktop) */}
         <div className="flex-1 space-y-6 text-center sm:text-left">
           <div>
-            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl lg:text-5xl text-balance">
+            <h2 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl text-balance">
               {data.title}
             </h2>
             <p className="mt-2 text-base font-medium text-foreground sm:text-lg">
@@ -54,7 +54,7 @@ export function FeaturedProjectCard({ data }: { data: FeaturedProject }) {
             )}
           </div>
 
-          <p className="text-base leading-relaxed text-muted-foreground sm:text-lg text-pretty max-w-2xl mx-auto sm:mx-0">
+          <p className="text-base leading-relaxed text-muted-foreground text-pretty max-w-xl mx-auto sm:mx-0">
             {data.description}
           </p>
 
@@ -114,7 +114,7 @@ export function FeaturedProjectCard({ data }: { data: FeaturedProject }) {
         {/* Preview */}
         <motion.div
           whileHover={reduceMotion ? undefined : { y: -5 }}
-          className="relative w-full max-w-2xl lg:w-[50%] shrink-0 mx-auto"
+          className="relative w-full max-w-2xl lg:w-[44%] shrink-0 mx-auto"
         >
           <div className="overflow-hidden rounded-xl sm:rounded-2xl border-2 border-foreground bg-foreground">
             {/* Browser Header */}
@@ -137,7 +137,7 @@ export function FeaturedProjectCard({ data }: { data: FeaturedProject }) {
                 alt={`Screenshot of ${data.title}`}
                 fill
                 className="object-cover object-top"
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                sizes="(max-width: 1024px) 100vw, 44vw"
               />
             </div>
           </div>
