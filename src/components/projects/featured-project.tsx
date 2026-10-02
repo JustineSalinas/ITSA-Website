@@ -40,7 +40,7 @@ export function FeaturedProjectCard({ data }: { data: FeaturedProject }) {
         <span className="text-sm text-muted-foreground">{data.month}</span>
       </div>
 
-      <div className="relative z-10 mt-6 flex flex-col gap-8 lg:flex-row-reverse lg:items-center lg:gap-8">
+      <div className="relative z-10 mt-6 flex flex-col-reverse gap-8 lg:flex-row-reverse lg:items-center lg:gap-8">
         {/* Info (sits right of the preview on desktop) */}
         <div className="flex-1 space-y-6 text-center sm:text-left">
           <div>

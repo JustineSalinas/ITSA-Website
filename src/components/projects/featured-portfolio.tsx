@@ -36,7 +36,7 @@ export function FeaturedPortfolioCard({ data }: { data: FeaturedPortfolio }) {
         <span className="text-sm text-muted-foreground">{data.month}</span>
       </div>
 
-      <div className="relative z-10 mt-8 flex flex-col gap-10 lg:flex-row lg:items-center">
+      <div className="relative z-10 mt-8 flex flex-col-reverse gap-10 lg:flex-row lg:items-center">
         {/* Left: Info */}
         <div className="flex-1 space-y-6 text-center sm:text-left">
           <div>
