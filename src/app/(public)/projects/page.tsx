@@ -4,8 +4,10 @@ import { PageHeader } from "@/components/layout/page-header";
 import { GridBackground } from "@/components/layout/grid-background";
 import { ProjectsClient } from "@/components/projects/projects-client";
 import { FeaturedPortfolioCard } from "@/components/projects/featured-portfolio";
+import { FeaturedProjectCard } from "@/components/projects/featured-project";
 import { siteConfig } from "@/data/site";
 import { currentFeaturedPortfolio } from "@/data/featured-portfolio";
+import { currentFeaturedProject } from "@/data/featured-project";
 export const metadata: Metadata = {
   title: "Student Projects & Portfolios",
   description: `Explore student projects, games, web applications, and innovations built by ${siteConfig.fullName} (${siteConfig.name}) members at ${siteConfig.school}.`,
@@ -29,11 +31,16 @@ export const metadata: Metadata = {
 export default async function ProjectsPage() {
   const projects = await getProjects();
   const spotlight = currentFeaturedPortfolio;
+  const projectOfTheMonth = currentFeaturedProject;
 
   return (
     <>
       <PageHeader
-        kicker={`${projects.length} student ${projects.length === 1 ? "project" : "projects"}`}
+        kicker={
+          projects.length > 0
+            ? `${projects.length} student ${projects.length === 1 ? "project" : "projects"}`
+            : undefined
+        }
         title="Built by our community."
         description={`A page to showcase the projects of IT students at ${siteConfig.school}.`}
       />
@@ -46,6 +53,11 @@ export default async function ProjectsPage() {
           {spotlight && (
             <div className="mb-16 sm:mb-24">
               <FeaturedPortfolioCard data={spotlight} />
+            </div>
+          )}
+          {projectOfTheMonth && (
+            <div className="mb-16 sm:mb-24">
+              <FeaturedProjectCard data={projectOfTheMonth} />
             </div>
           )}
           <ProjectsClient projects={projects} />

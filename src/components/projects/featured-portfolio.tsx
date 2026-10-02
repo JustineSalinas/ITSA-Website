@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Send } from "lucide-react";
 import { GithubIcon } from "@/components/icons/social";
 import { Button } from "@/components/ui/button";
 import type { FeaturedPortfolio } from "@/data/featured-portfolio";
 
 export function FeaturedPortfolioCard({ data }: { data: FeaturedPortfolio }) {
+  const reduceMotion = useReducedMotion();
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -96,13 +97,13 @@ export function FeaturedPortfolioCard({ data }: { data: FeaturedPortfolio }) {
             )}
           </div>
 
-          {data.submissionUrl && (
+          {data.submissionUrl && data.submissionUrl !== "#" && (
             <div className="pt-4">
               <a
                 href={data.submissionUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center text-xs font-semibold uppercase tracking-wider text-muted-foreground hover:text-brand transition-colors"
+                className="group inline-flex items-center text-sm font-semibold text-muted-foreground hover:text-brand transition-colors"
               >
                 <Send className="mr-2 size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 Nominate for next month
@@ -113,17 +114,17 @@ export function FeaturedPortfolioCard({ data }: { data: FeaturedPortfolio }) {
 
         {/* Right: Browser Mockup */}
         <motion.div
-          whileHover={{ y: -5 }}
+          whileHover={reduceMotion ? undefined : { y: -5 }}
           className="relative w-full max-w-2xl lg:w-[55%] shrink-0 mx-auto"
         >
-          <div className="overflow-hidden rounded-xl sm:rounded-2xl border-2 border-foreground bg-slate-900 shadow-[6px_6px_0_0_var(--foreground)]">
+          <div className="overflow-hidden rounded-xl sm:rounded-2xl border-2 border-foreground bg-foreground shadow-[6px_6px_0_0_var(--foreground)]">
             {/* Browser Header */}
             <div className="flex items-center gap-2 border-b-2 border-foreground bg-muted px-4 py-3">
-              <div className="size-3 shrink-0 rounded-full border border-foreground bg-red-400" />
-              <div className="size-3 shrink-0 rounded-full border border-foreground bg-amber-400" />
-              <div className="size-3 shrink-0 rounded-full border border-foreground bg-emerald-400" />
+              <div className="size-3 shrink-0 rounded-full border border-foreground bg-brand-red" />
+              <div className="size-3 shrink-0 rounded-full border border-foreground bg-brand-orange" />
+              <div className="size-3 shrink-0 rounded-full border border-foreground bg-brand-cyan" />
               <div className="ml-2 sm:ml-4 flex h-6 w-full max-w-[240px] items-center rounded-md border border-foreground/20 bg-background/60 px-2 shadow-inner">
-                <span className="text-[10px] text-muted-foreground truncate opacity-70">
+                <span className="text-xs text-muted-foreground truncate">
                   {data.liveUrl.replace(/^https?:\/\//, "")}
                 </span>
               </div>

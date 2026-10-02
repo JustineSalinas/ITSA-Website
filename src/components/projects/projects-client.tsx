@@ -26,6 +26,18 @@ export function ProjectsClient({ projects, hideAwardsButton }: { projects: Proje
     });
   }, [projects, deferredSearchQuery]);
 
+  // Nothing published yet: skip the search/filter chrome and say so plainly.
+  if (projects.length === 0) {
+    return (
+      <div className="mt-8 border-t border-border/40 pt-8">
+        <h2 className="text-lg font-semibold tracking-tight">Project Directory</h2>
+        <p className="mt-2 max-w-md text-sm text-muted-foreground">
+          No student projects have been published yet. Check back soon.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-8">
       {/* Filter and Search Bar */}
