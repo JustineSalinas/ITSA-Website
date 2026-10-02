@@ -36,7 +36,8 @@ const chips = [
   { label: "Get advice that helps", icon: Lightbulb },
 ];
 
-export default function JoinPage() {
+export default async function JoinPage() {
+
   return (
     <>
       <PageHeader
@@ -166,6 +167,7 @@ export default function JoinPage() {
             </div>
           </div>
         </SectionReveal>
+
 
         {/* Career paths explorer */}
         <SectionReveal className="mt-16" delay={0.05}>

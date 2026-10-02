@@ -3,8 +3,9 @@ import { getProjects } from "@/data/projects";
 import { PageHeader } from "@/components/layout/page-header";
 import { GridBackground } from "@/components/layout/grid-background";
 import { ProjectsClient } from "@/components/projects/projects-client";
+import { FeaturedPortfolioCard } from "@/components/projects/featured-portfolio";
 import { siteConfig } from "@/data/site";
-
+import { currentFeaturedPortfolio } from "@/data/featured-portfolio";
 export const metadata: Metadata = {
   title: "Student Projects & Portfolios",
   description: `Explore student projects, games, web applications, and innovations built by ${siteConfig.fullName} (${siteConfig.name}) members at ${siteConfig.school}.`,
@@ -27,6 +28,7 @@ export const metadata: Metadata = {
 
 export default async function ProjectsPage() {
   const projects = await getProjects();
+  const spotlight = currentFeaturedPortfolio;
 
   return (
     <>
@@ -41,6 +43,11 @@ export default async function ProjectsPage() {
         <GridBackground />
 
         <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {spotlight && (
+            <div className="mb-16 sm:mb-24">
+              <FeaturedPortfolioCard data={spotlight} />
+            </div>
+          )}
           <ProjectsClient projects={projects} />
         </div>
       </section>
