@@ -28,11 +28,12 @@ export function FeaturedPortfolioCard({ data }: { data: FeaturedPortfolio }) {
       />
 
       {/* Top Badge */}
-      <div className="relative z-10 flex justify-center sm:justify-start">
+      <div className="relative z-10 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 sm:justify-start">
         <span className="inline-flex items-center gap-2 rounded-full border-2 border-foreground bg-brand/10 px-4 py-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-brand">
           <span className="size-2 rounded-full bg-brand animate-pulse" />
-          Portfolio of the Month — {data.month}
+          Portfolio of the Month
         </span>
+        <span className="text-sm text-muted-foreground">{data.month}</span>
       </div>
 
       <div className="relative z-10 mt-8 flex flex-col gap-10 lg:flex-row lg:items-center">
