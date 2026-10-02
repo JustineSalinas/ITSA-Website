@@ -29,7 +29,7 @@ export function FeaturedPortfolioCard({ data }: { data: FeaturedPortfolio }) {
 
       {/* Top Badge */}
       <div className="relative z-10 flex justify-center sm:justify-start">
-        <span className="inline-flex items-center gap-2 rounded-full border-2 border-foreground bg-brand/10 px-4 py-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-brand shadow-[2px_2px_0_0_var(--foreground)]">
+        <span className="inline-flex items-center gap-2 rounded-full border-2 border-foreground bg-brand/10 px-4 py-1.5 font-mono text-xs font-semibold uppercase tracking-wider text-brand">
           <span className="size-2 rounded-full bg-brand animate-pulse" />
           Portfolio of the Month — {data.month}
         </span>
@@ -117,7 +117,7 @@ export function FeaturedPortfolioCard({ data }: { data: FeaturedPortfolio }) {
           whileHover={reduceMotion ? undefined : { y: -5 }}
           className="relative w-full max-w-2xl lg:w-[55%] shrink-0 mx-auto"
         >
-          <div className="overflow-hidden rounded-xl sm:rounded-2xl border-2 border-foreground bg-foreground shadow-[6px_6px_0_0_var(--foreground)]">
+          <div className="overflow-hidden rounded-xl sm:rounded-2xl border-2 border-foreground bg-foreground">
             {/* Browser Header */}
             <div className="flex items-center gap-2 border-b-2 border-foreground bg-muted px-4 py-3">
               <div className="size-3 shrink-0 rounded-full border border-foreground bg-brand-red" />
