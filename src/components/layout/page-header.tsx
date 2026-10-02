@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { HeaderMetaballs } from "@/components/layout/header-metaballs";
 
 interface PageHeaderProps {
   title: string;
@@ -13,6 +14,11 @@ interface PageHeaderProps {
    */
   kicker?: string;
   className?: string;
+  /**
+   * Whether to display the signature ITSA organic connected nodes artwork
+   * pinned to the right side of the header. Defaults to true.
+   */
+  showArtwork?: boolean;
 }
 
 export function PageHeader({
@@ -20,6 +26,7 @@ export function PageHeader({
   description,
   kicker,
   className,
+  showArtwork = true,
 }: PageHeaderProps) {
   return (
     <section
@@ -42,12 +49,17 @@ export function PageHeader({
         <div className="absolute -top-24 left-1/2 -translate-x-1/2 size-[600px] rounded-full bg-brand/10 blur-[130px]" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      {/* Signature Right-Side Connected Nodes / Metaballs Artwork */}
+      {showArtwork && (
+        <HeaderMetaballs className="w-[300px] sm:w-[400px] md:w-[480px] lg:w-[580px] xl:w-[680px]" />
+      )}
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="max-w-3xl"
+          className="max-w-xl md:max-w-2xl lg:max-w-3xl"
         >
           {kicker && (
             <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground">
