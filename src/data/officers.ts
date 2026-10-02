@@ -74,6 +74,24 @@ export const orgChart: OrgNode = {
           },
           children: [
             {
+              name: "Rovann Acevedo",
+              position: "Documentation Lead",
+              section: "BSIT 4A",
+              children: [
+                {
+                  name: "Aiderson Abapo",
+                  position: "Documentation Officer",
+                  section: "BSIT 4B",
+                },
+                {
+                  name: "Edrian Jed Fiesta",
+                  position: "Documentation",
+                  section: "BSIT 4A",
+                  photoUrl: "/officers/2x2/edrian-jed-fiesta.jpg",
+                },
+              ],
+            },
+            {
               name: "Cholo Rosales",
               position: "Creatives Lead",
               section: "BSIT 4A",
@@ -96,26 +114,6 @@ export const orgChart: OrgNode = {
                   position: "Creatives",
                   section: "BSIT 1C",
                   photoUrl: "/officers/2x2/hannah-nicole-tuer.png",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          name: "Aiderson Abapo",
-          position: "Documentation Officer",
-          section: "BSIT 4B",
-          children: [
-            {
-              name: "Rovann Acevedo",
-              position: "Documentation Lead",
-              section: "BSIT 4A",
-              children: [
-                {
-                  name: "Edrian Jed Fiesta",
-                  position: "Documentation",
-                  section: "BSIT 4A",
-                  photoUrl: "/officers/2x2/edrian-jed-fiesta.jpg",
                 },
               ],
             },

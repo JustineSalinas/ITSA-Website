@@ -160,13 +160,6 @@ export function OrgChart({ root }: { root: OrgNode }) {
       vp: execMembers.find((m) => m.position.includes("Communication")),
     },
     {
-      name: "Department of Documentation",
-      code: "DOCS",
-      tagColor: "bg-emerald-200/50 text-emerald-950 border-foreground",
-      badgeColor: "border-emerald-500 bg-emerald-500/15 text-foreground",
-      vp: execMembers.find((m) => m.position.includes("Documentation")),
-    },
-    {
       name: "Department of Operations",
       code: "OPS",
       tagColor: "bg-amber-200/50 text-amber-950 border-foreground",
@@ -229,7 +222,10 @@ export function OrgChart({ root }: { root: OrgNode }) {
     return count;
   }
 
-  function renderDepartmentCard(dept: (typeof departments)[number]) {
+  const byCode = (code: string) => departments.find((d) => d.code === code);
+
+  function renderDepartmentCard(dept: (typeof departments)[number] | undefined) {
+    if (!dept) return null;
     if (!dept.vp) {
       return (
         <li key={dept.code} className="w-full">
@@ -671,17 +667,19 @@ export function OrgChart({ root }: { root: OrgNode }) {
           {/* Departments Display */}
           {activeFilter === "ALL" ? (
             <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-2">
+              {/* Looked up by code, not by index: the columns used to name
+                  positions in the array, so removing a department left one
+                  column reaching past the end and the page failed to build. */}
               {/* Left Column: Technology & Finance */}
               <ul className="flex list-none flex-col gap-8">
-                {renderDepartmentCard(departments[0])}
-                {renderDepartmentCard(departments[4])}
+                {renderDepartmentCard(byCode("TECH"))}
+                {renderDepartmentCard(byCode("FINANCE"))}
               </ul>
 
-              {/* Right Column: Communications, Operations & Documentation */}
+              {/* Right Column: Communications & Operations */}
               <ul className="flex list-none flex-col gap-8">
-                {renderDepartmentCard(departments[1])}
-                {renderDepartmentCard(departments[3])}
-                {renderDepartmentCard(departments[2])}
+                {renderDepartmentCard(byCode("COMMS"))}
+                {renderDepartmentCard(byCode("OPS"))}
               </ul>
             </div>
           ) : (
