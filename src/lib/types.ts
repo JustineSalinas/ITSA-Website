@@ -56,4 +56,3 @@ export type NewsItem = {
   tags?: string[];
 };
 
-
