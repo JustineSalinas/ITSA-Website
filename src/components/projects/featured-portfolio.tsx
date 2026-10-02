@@ -47,7 +47,7 @@ export function FeaturedPortfolioCard({ data }: { data: FeaturedPortfolio }) {
           </div>
 
           <p className="text-base leading-relaxed text-muted-foreground sm:text-lg text-pretty max-w-2xl mx-auto sm:mx-0">
-            "{data.description}"
+            &quot;{data.description}&quot;
           </p>
 
           <div className="flex flex-wrap justify-center sm:justify-start gap-2">
