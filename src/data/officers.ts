@@ -220,7 +220,14 @@ export const orgChart: OrgNode = {
               name: "Elyza Elizabeth Gumarin",
               position: "Assistant Finance Officer",
               section: "BSIT 4B",
-                          },
+              photoUrl: "/officers/ay2026/elyza-elizabeth-gumarin.jpg",
+            },
+            {
+              name: "Nizon Jeorgie I. Pison II",
+              position: "Assistant Finance Officer",
+              section: "BSIT 3C",
+              photoUrl: "/officers/ay2026/nizon-jeorgie-i-pison-ii.jpg",
+            },
           ],
         },
       ],
@@ -248,6 +255,7 @@ const shootPhotos: Record<string, string> = {
   "Janseen Azares": "/officers/ay2026/janseen-azares.jpg",
   "Elah Marie Loyola": "/officers/ay2026/elah-marie-loyola.jpg",
   "Elyza Elizabeth Gumarin": "/officers/ay2026/elyza-elizabeth-gumarin.jpg",
+  "Nizon Jeorgie I. Pison II": "/officers/ay2026/nizon-jeorgie-i-pison-ii.jpg",
 };
 
 function slugify(name: string): string {
