@@ -165,6 +165,7 @@ export const orgChart: OrgNode = {
               name: "Ryan Carlo Cruzada",
               position: "Cybersecurity Lead",
               section: "BSIT 4A",
+              photoUrl: "/officers/ay2026/ryan-carlo-cruzada.png",
               children: [
                 {
                   name: "Matthew Tabat",
@@ -256,6 +257,7 @@ const shootPhotos: Record<string, string> = {
   "Elah Marie Loyola": "/officers/ay2026/elah-marie-loyola.jpg",
   "Elyza Elizabeth Gumarin": "/officers/ay2026/elyza-elizabeth-gumarin.jpg",
   "Nizon Jeorgie I. Pison II": "/officers/ay2026/nizon-jeorgie-i-pison-ii.jpg",
+  "Ryan Carlo Cruzada": "/officers/ay2026/ryan-carlo-cruzada.png",
 };
 
 function slugify(name: string): string {
