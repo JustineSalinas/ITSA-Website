@@ -36,11 +36,7 @@ export default async function ProjectsPage() {
   return (
     <>
       <PageHeader
-        kicker={
-          projects.length > 0
-            ? `${projects.length} student ${projects.length === 1 ? "project" : "projects"}`
-            : undefined
-        }
+        kicker={`${projects.length} student ${projects.length === 1 ? "project" : "projects"}`}
         title="Built by our community."
         description={`A page to showcase the projects of IT students at ${siteConfig.school}.`}
       />

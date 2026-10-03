@@ -12,15 +12,9 @@ export interface FeaturedPortfolio {
   submissionUrl?: string;
 }
 
-export const currentFeaturedPortfolio: FeaturedPortfolio | null = {
-  month: "October 2026",
-  studentName: "Alex Developer",
-  section: "BSIT 3C",
-  role: "Front-End Developer & UI/UX Designer",
-  screenshotUrl: "/images/itsa-community.webp", // Mock screenshot
-  liveUrl: "https://alex.dev",
-  githubUrl: "https://github.com/alexdev",
-  description: "Alex consistently goes above and out in our dev-collab channels, helping freshmen debug their code and sharing incredible open-source projects.",
-  techStack: ["Next.js", "Tailwind CSS", "Framer Motion"],
-  submissionUrl: "#",
-};
+// Rotation is manual, same as featured-project.ts: an officer swaps this
+// entry once a month after a real student's portfolio has been picked. Leave
+// it null rather than filling it with placeholder content -- a fabricated
+// name, quote, and screenshot (even reusing a real ITSA photo out of
+// context) would be shown to real visitors as if genuine.
+export const currentFeaturedPortfolio: FeaturedPortfolio | null = null;
