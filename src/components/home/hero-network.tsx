@@ -81,7 +81,7 @@ export function HeroNetwork({ className }: HeroNetworkProps) {
           y: Math.random() * height,
           vx: (Math.random() - 0.5) * 0.35,
           vy: (Math.random() - 0.5) * 0.35,
-          size: Math.random() * 1.6 + 1,
+          size: Math.random() * 2.5 + 2,
           color: nodeColors[i % nodeColors.length],
         });
       }
@@ -126,8 +126,8 @@ export function HeroNetwork({ className }: HeroNetworkProps) {
           const isNearMouse = distToMouse < mouse.radius;
 
           ctx!.strokeStyle = isNearMouse ? linkHighlightColor : linkColor;
-          ctx!.globalAlpha = (isNearMouse ? 0.5 : 0.18) * opacity;
-          ctx!.lineWidth = 1;
+          ctx!.globalAlpha = (isNearMouse ? 0.65 : 0.3) * opacity;
+          ctx!.lineWidth = 1.75;
           ctx!.beginPath();
           ctx!.moveTo(particles[a].x, particles[a].y);
           ctx!.lineTo(particles[b].x, particles[b].y);

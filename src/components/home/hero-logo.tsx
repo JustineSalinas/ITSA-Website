@@ -20,6 +20,12 @@ interface LetterConfig {
   src: string;
   origin: string;
   delay: number;
+  /** Nudges the letter away from the shared center, in % of its own box, so
+   *  the four quadrants (which tile edge-to-edge in the source artwork)
+   *  read as distinct letters with breathing room instead of one dense,
+   *  fused blob mass next to the airier hero network beside it. */
+  offsetX: number;
+  offsetY: number;
 }
 
 const LETTERS: LetterConfig[] = [
@@ -30,6 +36,8 @@ const LETTERS: LetterConfig[] = [
     src: "/itsa-letter-i.svg",
     origin: "30% 22%",
     delay: 0.08,
+    offsetX: -3,
+    offsetY: -3,
   },
   {
     id: "t",
@@ -38,6 +46,8 @@ const LETTERS: LetterConfig[] = [
     src: "/itsa-letter-t.svg",
     origin: "75% 36%",
     delay: 0.18,
+    offsetX: 3,
+    offsetY: -3,
   },
   {
     id: "s",
@@ -46,6 +56,8 @@ const LETTERS: LetterConfig[] = [
     src: "/itsa-letter-s.svg",
     origin: "26% 65%",
     delay: 0.28,
+    offsetX: -3,
+    offsetY: 3,
   },
   {
     id: "a",
@@ -54,6 +66,8 @@ const LETTERS: LetterConfig[] = [
     src: "/itsa-letter-a.svg",
     origin: "71% 77%",
     delay: 0.38,
+    offsetX: 3,
+    offsetY: 3,
   },
 ];
 
@@ -195,12 +209,16 @@ export function HeroLogo({ className, priority = true }: HeroLogoProps) {
                 initial={{
                   opacity: 0,
                   scale: shouldReduceMotion ? 1 : 0.58,
+                  x: `${letter.offsetX}%`,
+                  y: `${letter.offsetY}%`,
                 }}
                 animate={
                   shouldReduceMotion
                     ? {
                         opacity: 1,
                         scale: 1,
+                        x: `${letter.offsetX}%`,
+                        y: `${letter.offsetY}%`,
                         transition: { duration: 0.4, delay: letter.delay },
                       }
                     : isJelly
@@ -209,6 +227,8 @@ export function HeroLogo({ className, priority = true }: HeroLogoProps) {
                         scaleX: [1, 1.25, 0.82, 1.12, 0.94, 1],
                         scaleY: [1, 0.8, 1.22, 0.9, 1.06, 1],
                         scale: 1,
+                        x: `${letter.offsetX}%`,
+                        y: `${letter.offsetY}%`,
                         transition: { duration: 0.65, ease: "easeInOut" },
                       }
                     : isHovered
@@ -217,6 +237,8 @@ export function HeroLogo({ className, priority = true }: HeroLogoProps) {
                         scale: 1.08,
                         scaleX: 1.1,
                         scaleY: 0.92,
+                        x: `${letter.offsetX}%`,
+                        y: `${letter.offsetY}%`,
                         transition: {
                           type: "spring",
                           stiffness: 420,
@@ -228,6 +250,8 @@ export function HeroLogo({ className, priority = true }: HeroLogoProps) {
                         scale: 1,
                         scaleX: 1,
                         scaleY: 1,
+                        x: `${letter.offsetX}%`,
+                        y: `${letter.offsetY}%`,
                         transition: {
                           type: "spring",
                           stiffness: 340,
@@ -244,6 +268,9 @@ export function HeroLogo({ className, priority = true }: HeroLogoProps) {
                   alt={`ITSA Blob letter ${letter.name}`}
                   fill
                   unoptimized
+                  style={{
+                    filter: "drop-shadow(0 12px 22px rgba(47,86,214,0.22))",
+                  }}
                   priority={priority}
                   className="object-contain"
                 />
