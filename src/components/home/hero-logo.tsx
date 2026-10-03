@@ -269,7 +269,7 @@ export function HeroLogo({ className, priority = true }: HeroLogoProps) {
                   fill
                   unoptimized
                   style={{
-                    filter: "drop-shadow(0 12px 22px rgba(47,86,214,0.22))",
+                    filter: "drop-shadow(0 4px 8px rgba(47,86,214,0.14))",
                   }}
                   priority={priority}
                   className="object-contain"

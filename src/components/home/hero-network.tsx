@@ -75,15 +75,34 @@ export function HeroNetwork({ className }: HeroNetworkProps) {
       // Sparser than the original (area / 9000) -- a quiet constellation,
       // not a busy sticker sheet.
       const count = Math.round((width * height) / 14000);
-      for (let i = 0; i < count; i++) {
-        particles.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.35,
-          vy: (Math.random() - 0.5) * 0.35,
-          size: Math.random() * 2.5 + 2,
-          color: nodeColors[i % nodeColors.length],
-        });
+
+      // Pure Math.random() placement can clump by chance with a count this
+      // low (it's a fresh draw every page load, so some loads look visibly
+      // bottom- or top-heavy). Stratified placement -- one particle per
+      // roughly-square grid cell, jittered within it -- guarantees even
+      // top-to-bottom, left-to-right coverage every time instead of leaving
+      // it to luck.
+      const cols = Math.max(1, Math.round(Math.sqrt((count * width) / height)));
+      const rows = Math.max(1, Math.ceil(count / cols));
+      const cellW = width / cols;
+      const cellH = height / rows;
+
+      let i = 0;
+      outer: for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          if (i >= count) break outer;
+          const jitterX = (Math.random() - 0.5) * cellW * 0.7;
+          const jitterY = (Math.random() - 0.5) * cellH * 0.7;
+          particles.push({
+            x: col * cellW + cellW / 2 + jitterX,
+            y: row * cellH + cellH / 2 + jitterY,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            size: Math.random() * 2.5 + 2,
+            color: nodeColors[i % nodeColors.length],
+          });
+          i++;
+        }
       }
     }
 
