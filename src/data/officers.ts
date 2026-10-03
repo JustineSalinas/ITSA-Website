@@ -77,6 +77,7 @@ export const orgChart: OrgNode = {
               name: "Rovann Acevedo",
               position: "Documentation Lead",
               section: "BSIT 4A",
+              photoUrl: "/officers/ay2026/rovann-acevedo.png",
               children: [
                 {
                   name: "Aiderson Abapo",
@@ -258,6 +259,7 @@ const shootPhotos: Record<string, string> = {
   "Elyza Elizabeth Gumarin": "/officers/ay2026/elyza-elizabeth-gumarin.jpg",
   "Nizon Jeorgie I. Pison II": "/officers/ay2026/nizon-jeorgie-i-pison-ii.jpg",
   "Ryan Carlo Cruzada": "/officers/ay2026/ryan-carlo-cruzada.png",
+  "Rovann Acevedo": "/officers/ay2026/rovann-acevedo.png",
 };
 
 function slugify(name: string): string {
