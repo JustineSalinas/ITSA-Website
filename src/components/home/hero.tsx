@@ -7,7 +7,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LogoMark } from "@/components/layout/logo";
 import { HeroLogo } from "@/components/home/hero-logo";
-import { HeroMetaballs } from "@/components/home/hero-metaballs";
+import { HeroNetwork } from "@/components/home/hero-network";
 import { GridBackground } from "@/components/layout/grid-background";
 import { siteConfig } from "@/data/site";
 import { partners } from "@/data/partners";
@@ -19,11 +19,12 @@ export function Hero() {
       {/* ── Background Grid Pattern (In the Very Back) ── */}
       <GridBackground />
 
-      {/* ── Left Interactive Metaballs Artwork (Desktop): Covers full height, interactive 3D parallax, and gradient fade so it never blocks text ── */}
-      <div 
-        className="absolute inset-y-0 left-0 z-[1] hidden lg:block w-[46vw] xl:w-[50vw] max-w-[760px] 2xl:max-w-[840px] pointer-events-auto select-none"
+      {/* ── Left Interactive Particle Network (Desktop): fills the left column,
+           nodes respond to the cursor, gradient fade so it never blocks text ── */}
+      <div
+        className="absolute inset-y-0 left-0 z-[1] hidden lg:block w-[46vw] xl:w-[50vw] max-w-[760px] 2xl:max-w-[840px] pointer-events-none select-none"
       >
-        <HeroMetaballs className="w-full h-full" />
+        <HeroNetwork className="w-full h-full" />
       </div>
 
       {/* ── Ambient Background Glow for Mobile (< lg): soft brand-tinted blur
