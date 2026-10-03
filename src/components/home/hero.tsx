@@ -15,7 +15,7 @@ import { partners } from "@/data/partners";
 export function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-border/80 bg-white py-8 sm:py-12 lg:py-0 flex items-center min-h-[calc(100vh-4rem)] lg:min-h-[calc(100vh-4.5rem)] 2xl:min-h-[840px]">
-      
+
       {/* ── Background Grid Pattern (In the Very Back) ── */}
       <GridBackground />
 

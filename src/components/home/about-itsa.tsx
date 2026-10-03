@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight, Compass, Telescope } from "lucide-react";
@@ -15,16 +16,33 @@ export function AboutItsa() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="text-center"
+        className="relative overflow-hidden rounded-3xl px-6 py-16 text-center sm:px-10 sm:py-20"
       >
-        <h2 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
-          The official IT student association at {siteConfig.school}
-        </h2>
-        <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground text-pretty">
-          We bring Information Technology students together to build real skills, real
-          projects, and real careers through workshops, competitions, mentorship, and
-          a community that lasts beyond graduation.
-        </p>
+        {/* Real campus photo behind the intro copy -- dark scrim keeps the
+            white text readable while the photo itself stays fully visible,
+            not washed out to near-nothing like the earlier hero attempt. */}
+        <Image
+          src="/images/usa-background.jpg"
+          alt="University of San Agustin campus"
+          fill
+          className="object-cover"
+          sizes="(max-width: 1280px) 100vw, 1280px"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/70 to-slate-950/85"
+        />
+
+        <div className="relative z-10">
+          <h2 className="text-3xl font-bold tracking-tight text-balance text-white sm:text-4xl">
+            The official IT student association at {siteConfig.school}
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-200 text-pretty">
+            We bring Information Technology students together to build real skills, real
+            projects, and real careers through workshops, competitions, mentorship, and
+            a community that lasts beyond graduation.
+          </p>
+        </div>
       </motion.div>
 
       {/* Mission and vision, quoted from the About page. */}
