@@ -14,6 +14,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
+  FacebookIcon,
   GithubIcon,
   InstagramIcon,
   LinkedinIcon,
@@ -741,6 +742,17 @@ export function OrgChart({ root }: { root: OrgNode }) {
                   <span className="font-mono text-xs font-bold uppercase text-muted-foreground mr-1">
                     Connect:
                   </span>
+                  {selected.socials.facebook && (
+                    <a
+                      href={selected.socials.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="grid size-9 place-items-center rounded-lg border-2 border-foreground bg-card text-foreground transition-all hover:-translate-y-0.5 hover:bg-[#1877F2] hover:text-white hover:shadow-[2px_2px_0_0_var(--foreground)]"
+                      title="Facebook"
+                    >
+                      <FacebookIcon className="size-4" />
+                    </a>
+                  )}
                   {selected.socials.linkedin && (
                     <a
                       href={selected.socials.linkedin}

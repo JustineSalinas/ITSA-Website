@@ -6,16 +6,21 @@ import { Globe } from "lucide-react";
 import type { Officer } from "@/lib/types";
 import { initials } from "@/lib/format";
 import {
+  FacebookIcon,
   GithubIcon,
   InstagramIcon,
   LinkedinIcon,
 } from "@/components/icons/social";
 
 export function OfficerCard({ officer }: { officer: Officer }) {
+  const hasFacebook = Boolean(officer.socials?.facebook);
   const hasLinkedIn = Boolean(officer.socials?.linkedin);
   const hasInstagram = Boolean(officer.socials?.instagram);
-  const hasPersonalLink = Boolean(officer.socials?.website);
   const hasGithub = Boolean(officer.socials?.github);
+  const hasPersonalLink = Boolean(officer.socials?.website);
+
+  const hasAnySocial =
+    hasFacebook || hasLinkedIn || hasInstagram || hasGithub || hasPersonalLink;
 
   return (
     <motion.div
@@ -70,9 +75,23 @@ export function OfficerCard({ officer }: { officer: Officer }) {
         </div>
 
         {/* Bottom: Social and Personal Profile Links */}
-        <div className="mt-3.5 flex items-center justify-center gap-1.5 border-t border-border/60 pt-3">
+        <div className="mt-3.5 flex min-h-[38px] items-center justify-center gap-1.5 border-t border-border/60 pt-3">
+          {/* Facebook */}
+          {hasFacebook && (
+            <a
+              href={officer.socials.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${officer.name} on Facebook`}
+              title="Facebook Profile"
+              className="grid size-8 place-items-center rounded-lg border border-border bg-secondary/50 text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-foreground hover:bg-[#1877F2] hover:text-white hover:shadow-[2px_2px_0_0_var(--foreground)]"
+            >
+              <FacebookIcon className="size-3.5" />
+            </a>
+          )}
+
           {/* LinkedIn */}
-          {hasLinkedIn ? (
+          {hasLinkedIn && (
             <a
               href={officer.socials.linkedin}
               target="_blank"
@@ -83,17 +102,10 @@ export function OfficerCard({ officer }: { officer: Officer }) {
             >
               <LinkedinIcon className="size-3.5" />
             </a>
-          ) : (
-            <span
-              className="grid size-8 place-items-center rounded-lg border border-dashed border-border/50 text-muted-foreground/30 cursor-not-allowed"
-              title="LinkedIn not provided"
-            >
-              <LinkedinIcon className="size-3.5" />
-            </span>
           )}
 
           {/* Instagram */}
-          {hasInstagram ? (
+          {hasInstagram && (
             <a
               href={officer.socials.instagram}
               target="_blank"
@@ -104,37 +116,9 @@ export function OfficerCard({ officer }: { officer: Officer }) {
             >
               <InstagramIcon className="size-3.5" />
             </a>
-          ) : (
-            <span
-              className="grid size-8 place-items-center rounded-lg border border-dashed border-border/50 text-muted-foreground/30 cursor-not-allowed"
-              title="Instagram not provided"
-            >
-              <InstagramIcon className="size-3.5" />
-            </span>
           )}
 
-          {/* Personal Profile Link */}
-          {hasPersonalLink ? (
-            <a
-              href={officer.socials.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${officer.name}'s Personal Profile`}
-              title="Personal Profile Link"
-              className="grid size-8 place-items-center rounded-lg border border-border bg-secondary/50 text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-foreground hover:bg-primary hover:text-primary-foreground hover:shadow-[2px_2px_0_0_var(--foreground)]"
-            >
-              <Globe className="size-3.5" />
-            </a>
-          ) : (
-            <span
-              className="grid size-8 place-items-center rounded-lg border border-dashed border-border/50 text-muted-foreground/30 cursor-not-allowed"
-              title="Personal profile not provided"
-            >
-              <Globe className="size-3.5" />
-            </span>
-          )}
-
-          {/* GitHub (if provided) */}
+          {/* GitHub */}
           {hasGithub && (
             <a
               href={officer.socials.github}
@@ -146,6 +130,43 @@ export function OfficerCard({ officer }: { officer: Officer }) {
             >
               <GithubIcon className="size-3.5" />
             </a>
+          )}
+
+          {/* Personal Profile Link */}
+          {hasPersonalLink && (
+            <a
+              href={officer.socials.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${officer.name}'s Personal Profile`}
+              title="Personal Profile Link"
+              className="grid size-8 place-items-center rounded-lg border border-border bg-secondary/50 text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-foreground hover:bg-primary hover:text-primary-foreground hover:shadow-[2px_2px_0_0_var(--foreground)]"
+            >
+              <Globe className="size-3.5" />
+            </a>
+          )}
+
+          {!hasAnySocial && (
+            <>
+              <span
+                className="grid size-8 place-items-center rounded-lg border border-dashed border-border/50 text-muted-foreground/30 cursor-not-allowed"
+                title="LinkedIn not provided"
+              >
+                <LinkedinIcon className="size-3.5" />
+              </span>
+              <span
+                className="grid size-8 place-items-center rounded-lg border border-dashed border-border/50 text-muted-foreground/30 cursor-not-allowed"
+                title="Instagram not provided"
+              >
+                <InstagramIcon className="size-3.5" />
+              </span>
+              <span
+                className="grid size-8 place-items-center rounded-lg border border-dashed border-border/50 text-muted-foreground/30 cursor-not-allowed"
+                title="Personal profile not provided"
+              >
+                <Globe className="size-3.5" />
+              </span>
+            </>
           )}
         </div>
       </div>

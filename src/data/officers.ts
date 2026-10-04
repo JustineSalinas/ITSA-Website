@@ -28,24 +28,42 @@ export const orgChart: OrgNode = {
           position: "Vice Chairman for Internal Affairs",
           section: "BSIT 2A",
           photoUrl: "/officers/2x2/charles-janryl-jemina.jpg",
+          socials: {
+            facebook: "https://www.facebook.com/a4wagyu",
+            instagram: "https://www.instagram.com/wagyu_steak.01/",
+          },
         },
         {
           name: "Theodore Samuel Navarro",
           position: "Vice Chairman for External Affairs",
           section: "BSIT 3C",
           photoUrl: "/officers/2x2/theodore-samuel-navarro.jpg",
+          socials: {
+            facebook: "https://www.facebook.com/tways.varo/",
+            linkedin: "https://www.linkedin.com/in/theodore-samuel-navarro-b10018415/",
+            instagram: "https://www.instagram.com/twaysiykyk/",
+            github: "https://github.com/Tways-study",
+            website: "https://webportfolio-two-phi.vercel.app/",
+          },
         },
         {
           name: "Samantha Quinn Bretaña",
           position: "Secretary",
           section: "BSIT 2A",
           photoUrl: "/officers/2x2/samantha-quinn-d-bretana.jpg",
+          socials: {
+            instagram: "https://www.instagram.com/_.thvsmq/",
+          },
           children: [
             {
               name: "Jhon Michael Mercado",
               position: "Assistant Secretary",
               section: "BSIT 3C",
               photoUrl: "/officers/2x2/jhon-michael-mercado.jpg",
+              socials: {
+                facebook: "https://www.facebook.com/jhonjhon.fries",
+                instagram: "https://www.instagram.com/jaunemixkael/",
+              },
             },
           ],
         },
@@ -54,6 +72,9 @@ export const orgChart: OrgNode = {
           position: "Communication Officer",
           section: "BSIT 4A",
           photoUrl: "/officers/2x2/mhike-aleen-gacusan.jpg",
+          socials: {
+            instagram: "https://www.instagram.com/_k1bzz/",
+          },
           children: [
             {
               name: "Rovann Acevedo",
@@ -131,6 +152,11 @@ export const orgChart: OrgNode = {
           position: "Technology Officer",
           section: "BSIT 3A",
           photoUrl: "/officers/2x2/john-kyle-amarante.jpg",
+          socials: {
+            linkedin: "https://www.linkedin.com/in/klynxen/",
+            instagram: "https://www.instagram.com/klyxenn/",
+            github: "https://github.com/Klyxen",
+          },
           children: [
             {
               name: "Adrian Justin J. Salinas",
@@ -203,6 +229,12 @@ export const orgChart: OrgNode = {
           position: "Operation Officer",
           section: "BSIT 2A",
           photoUrl: "/officers/2x2/john-daniel-aboboto.png",
+          socials: {
+            facebook: "https://www.facebook.com/johndanielaboboto.xian.10",
+            linkedin: "https://www.linkedin.com/in/john-daniel-aboboto-412116441/",
+            instagram: "https://www.instagram.com/jeandaneljm_m/",
+            github: "https://github.com/shyzm",
+          },
           children: [
             {
               name: "Janseen Azares",
@@ -220,6 +252,10 @@ export const orgChart: OrgNode = {
           position: "Finance Officer",
           section: "BSIT 4A",
           photoUrl: "/officers/2x2/elah-marie-loyola.jpg",
+          socials: {
+            linkedin: "https://www.linkedin.com/in/elah-marie-loyola-292253437/",
+            instagram: "https://www.instagram.com/elahmari_/",
+          },
           children: [
             {
               name: "Elyza Elizabeth Gumarin",

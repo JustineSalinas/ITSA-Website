@@ -33,6 +33,7 @@ type SanityOfficer = {
     instagram?: string;
     linkedin?: string;
     github?: string;
+    website?: string;
   };
 };
 
