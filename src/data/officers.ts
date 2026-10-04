@@ -20,9 +20,8 @@ export const orgChart: OrgNode = {
       section: "BSIT 4A",
       photoUrl: "/officers/2x2/gabriel-ferrera.jpg",
       socials: {
-        linkedin: "https://linkedin.com",
-        instagram: "https://instagram.com",
-        website: "https://itsa-usa.org",
+        linkedin: "https://www.linkedin.com/in/gabriel-ferrera-b2a659417/",
+        instagram: "https://www.instagram.com/gavhatesu/",
       },
       children: [
         {
@@ -31,8 +30,8 @@ export const orgChart: OrgNode = {
           section: "BSIT 2A",
           photoUrl: "/officers/2x2/charles-janryl-jemina.jpg",
           socials: {
-            linkedin: "https://linkedin.com",
-            instagram: "https://instagram.com",
+            facebook: "https://www.facebook.com/a4wagyu",
+            instagram: "https://www.instagram.com/wagyu_steak.01/",
           },
         },
         {
@@ -41,8 +40,11 @@ export const orgChart: OrgNode = {
           section: "BSIT 3C",
           photoUrl: "/officers/2x2/theodore-samuel-navarro.jpg",
           socials: {
-            linkedin: "https://linkedin.com",
-            instagram: "https://instagram.com",
+            facebook: "https://www.facebook.com/tways.varo/",
+            linkedin: "https://www.linkedin.com/in/theodore-samuel-navarro-b10018415/",
+            instagram: "https://www.instagram.com/twaysiykyk/",
+            github: "https://github.com/Tways-study",
+            website: "https://webportfolio-two-phi.vercel.app/",
           },
         },
         {
@@ -51,8 +53,7 @@ export const orgChart: OrgNode = {
           section: "BSIT 2A",
           photoUrl: "/officers/2x2/samantha-quinn-d-bretana.jpg",
           socials: {
-            linkedin: "https://linkedin.com",
-            instagram: "https://instagram.com",
+            instagram: "https://www.instagram.com/_.thvsmq/",
           },
           children: [
             {
@@ -60,6 +61,10 @@ export const orgChart: OrgNode = {
               position: "Assistant Secretary",
               section: "BSIT 3C",
               photoUrl: "/officers/2x2/jhon-michael-mercado.jpg",
+              socials: {
+                facebook: "https://www.facebook.com/jhonjhon.fries",
+                instagram: "https://www.instagram.com/jaunemixkael/",
+              },
             },
           ],
         },
@@ -69,8 +74,7 @@ export const orgChart: OrgNode = {
           section: "BSIT 4A",
           photoUrl: "/officers/2x2/mhike-aleen-gacusan.jpg",
           socials: {
-            linkedin: "https://linkedin.com",
-            instagram: "https://instagram.com",
+            instagram: "https://www.instagram.com/_k1bzz/",
           },
           children: [
             {
@@ -126,8 +130,9 @@ export const orgChart: OrgNode = {
           section: "BSIT 3A",
           photoUrl: "/officers/2x2/john-kyle-amarante.jpg",
           socials: {
-            linkedin: "https://linkedin.com",
-            instagram: "https://instagram.com",
+            linkedin: "https://www.linkedin.com/in/klynxen/",
+            instagram: "https://www.instagram.com/klyxenn/",
+            github: "https://github.com/Klyxen",
           },
           children: [
             {
@@ -196,8 +201,10 @@ export const orgChart: OrgNode = {
           section: "BSIT 2A",
           photoUrl: "/officers/2x2/john-daniel-aboboto.png",
           socials: {
-            linkedin: "https://linkedin.com",
-            instagram: "https://instagram.com",
+            facebook: "https://www.facebook.com/johndanielaboboto.xian.10",
+            linkedin: "https://www.linkedin.com/in/john-daniel-aboboto-412116441/",
+            instagram: "https://www.instagram.com/jeandaneljm_m/",
+            github: "https://github.com/shyzm",
           },
           children: [
             {
@@ -214,8 +221,8 @@ export const orgChart: OrgNode = {
           section: "BSIT 4A",
           photoUrl: "/officers/2x2/elah-marie-loyola.jpg",
           socials: {
-            linkedin: "https://linkedin.com",
-            instagram: "https://instagram.com",
+            linkedin: "https://www.linkedin.com/in/elah-marie-loyola-292253437/",
+            instagram: "https://www.instagram.com/elahmari_/",
           },
           children: [
             {

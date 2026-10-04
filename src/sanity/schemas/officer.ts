@@ -71,6 +71,7 @@ export const officerType = defineType({
         defineField({ name: "instagram", title: "Instagram", type: "url" }),
         defineField({ name: "linkedin", title: "LinkedIn", type: "url" }),
         defineField({ name: "github", title: "GitHub", type: "url" }),
+        defineField({ name: "website", title: "Personal Website / Portfolio", type: "url" }),
       ],
     }),
   ],
