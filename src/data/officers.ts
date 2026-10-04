@@ -177,18 +177,34 @@ export const orgChart: OrgNode = {
                   position: "Front-End Developer",
                   section: "BSIT 3C",
                   photoUrl: "/officers/2x2/alexander-michael-tolosa.jpg",
+                  socials: {
+                    facebook: "https://www.facebook.com/alexandermichaelstolosa11",
+                    linkedin: "https://www.linkedin.com/in/alexander-michael-tolosa-a598b93b3/",
+                    instagram: "https://www.instagram.com/lex.zuhnder/",
+                    github: "https://github.com/Alexander-Tolosa",
+                    website: "https://alexandertolosa.vercel.app/",
+                  },
                 },
                 {
                   name: "Aziel Guerrero Misola",
                   position: "Front-End Developer",
                   section: "BSIT 3C",
                   photoUrl: "/officers/2x2/aziel-guerrero-misola.jpg",
+                  socials: {
+                    instagram: "https://www.instagram.com/i_ziiell",
+                    github: "https://github.com/Yaki-Soba",
+                  },
                 },
                 {
                   name: "Deghne Gabriel Agana",
                   position: "Front-End Developer",
                   section: "BSIT 3C",
                   photoUrl: "/officers/2x2/deghne-gabriel-agana.jpg",
+                  socials: {
+                    facebook: "https://www.facebook.com/deghne.agana",
+                    instagram: "https://www.instagram.com/deghne.gbrl",
+                    github: "https://github.com/DeghneG",
+                  },
                 },
               ],
             },
@@ -203,6 +219,12 @@ export const orgChart: OrgNode = {
                   position: "IT Security",
                   section: "BSIT 3C",
                   photoUrl: "/officers/2x2/matthew-tabat.png",
+                  socials: {
+                    facebook: "https://www.facebook.com/matthew.tabat.5",
+                    linkedin: "https://www.linkedin.com/in/matthew-tabat-606096387/",
+                    instagram: "https://www.instagram.com/__mattyow",
+                    website: "https://tabat-dev.vercel.app/",
+                  },
                 },
               ],
             },
@@ -211,6 +233,10 @@ export const orgChart: OrgNode = {
               position: "Mobile Application Lead",
               section: "BSIT 4A",
               photoUrl: "/officers/2x2/ralph-danielle-delacruz.jpg",
+              socials: {
+                facebook: "https://www.facebook.com/ralph.danielledelacruz",
+                github: "https://github.com/CodeNameFish",
+              },
             },
             {
               name: "Dale Misajon",
