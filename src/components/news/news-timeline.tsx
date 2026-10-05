@@ -2,11 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { Calendar, ChevronDown, Newspaper, User } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ChevronDown, Globe, Link2, Newspaper } from "lucide-react";
+import { toast } from "sonner";
 import type { NewsItem } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { NewsMediaGallery } from "@/components/news/news-media-gallery";
+import { siteConfig } from "@/data/site";
 import { formatNewsDate } from "@/lib/format";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
@@ -22,8 +24,14 @@ function monthLabel(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", { month: "long", year: "numeric" });
 }
 
-function dayLabel(iso: string) {
-  return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+async function copyLink(slug: string) {
+  const url = `${window.location.origin}/news/${slug}`;
+  try {
+    await navigator.clipboard.writeText(url);
+    toast.success("Link copied");
+  } catch {
+    toast.error("Couldn't copy the link");
+  }
 }
 
 export function NewsTimeline({ news }: { news: NewsItem[] }) {
@@ -153,112 +161,130 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
                   {/* Date dot sitting on the line */}
                   <span
                     aria-hidden="true"
-                    className="absolute top-6 -left-[1.85rem] size-3 rounded-full border-2 border-background bg-primary sm:-left-[2.35rem]"
+                    className="absolute top-8 -left-[1.85rem] size-3 rounded-full border-2 border-background bg-primary sm:-left-[2.35rem]"
                   />
 
-                  <div className="overflow-hidden rounded-xl border border-border/80 bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-md">
-                    <h3>
+                  {/* Styled as a social post: page header, caption, media, actions. */}
+                  <article className="overflow-hidden rounded-2xl border-2 border-foreground bg-card shadow-[4px_4px_0_0_var(--foreground)] transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_var(--foreground)] motion-reduce:transition-none motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0">
+                    {/* Post header */}
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 px-4 pt-4 sm:flex-nowrap sm:px-5">
+                      <span className="relative size-11 shrink-0 overflow-hidden rounded-full border-2 border-foreground bg-white">
+                        <Image src="/logo.png" alt="" aria-hidden="true" fill sizes="44px" className="object-contain p-1" />
+                      </span>
+                      <div className="min-w-0 flex-1 basis-40">
+                        <p className="text-sm font-bold leading-tight text-foreground sm:truncate">
+                          {siteConfig.fullName}
+                        </p>
+                        <p className="mt-0.5 flex items-center gap-1.5 whitespace-nowrap font-mono text-xs text-muted-foreground">
+                          <time dateTime={item.date}>{formatNewsDate(item.date)}</time>
+                          <span aria-hidden="true">·</span>
+                          <Globe className="size-3" aria-label="Public" />
+                        </p>
+                      </div>
+                      {item.category && (
+                        <Badge
+                          variant="outline"
+                          className="shrink-0 border-primary/20 bg-primary/10 font-mono text-xs font-semibold text-primary"
+                        >
+                          {item.category}
+                        </Badge>
+                      )}
+                    </div>
+
+                    {/* Caption */}
+                    <div className="px-4 pt-4 sm:px-5">
+                      <h3 className="font-heading text-xl font-extrabold leading-snug tracking-tight text-foreground sm:text-2xl">
+                        <Link href={`/news/${item.slug}`} className="hover:text-brand">
+                          {item.title}
+                        </Link>
+                      </h3>
+                      {isOpen ? (
+                        <div id={panelId} className="mt-3 space-y-3 text-base leading-relaxed text-foreground/90">
+                          {item.content.split("\n\n").map((paragraph, pIdx) => (
+                            <p key={pIdx}>{paragraph}</p>
+                          ))}
+                          {item.tags && item.tags.length > 0 && (
+                            <p className="flex flex-wrap gap-x-3 font-semibold text-brand">
+                              {item.tags.map((tag) => (
+                                <span key={tag}>#{tag}</span>
+                              ))}
+                            </p>
+                          )}
+                        </div>
+                      ) : (
+                        <p id={panelId} className="mt-2 line-clamp-3 text-base leading-relaxed text-foreground/80">
+                          {item.excerpt}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Media: up to two tiles, "+N" on the last when there are more */}
+                    {item.images && item.images.length > 0 && (
+                      <div
+                        className={`mt-4 grid gap-0.5 border-y-2 border-foreground bg-foreground ${
+                          item.images.length === 1 ? "grid-cols-1" : "grid-cols-2"
+                        }`}
+                      >
+                        {item.images.slice(0, 2).map((src, imgIdx, shown) => (
+                          <Link
+                            key={src}
+                            href={`/news/${item.slug}`}
+                            className={`group/media relative block overflow-hidden bg-muted ${
+                              shown.length === 1 ? "aspect-[4/3] sm:aspect-[16/9]" : "aspect-square"
+                            }`}
+                            tabIndex={imgIdx === 0 ? 0 : -1}
+                            aria-label={imgIdx === 0 ? `Open article: ${item.title}` : undefined}
+                            aria-hidden={imgIdx === 0 ? undefined : true}
+                          >
+                            <Image
+                              src={src}
+                              alt={imgIdx === 0 ? item.title : ""}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 480px"
+                              className="object-cover transition-transform duration-500 group-hover/media:scale-[1.03]"
+                            />
+                            {imgIdx === 1 && item.images!.length > 2 && (
+                              <span className="absolute inset-0 grid place-items-center bg-foreground/55 text-3xl font-bold text-white">
+                                +{item.images!.length - 2}
+                              </span>
+                            )}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Actions */}
+                    <div className="flex flex-wrap items-center gap-1 px-2 py-2 sm:px-3">
                       <button
                         type="button"
                         onClick={() => toggle(item.id)}
                         aria-expanded={isOpen}
                         aria-controls={panelId}
-                        className="flex w-full items-start gap-4 p-5 text-left outline-none focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/50 sm:p-6"
+                        className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-muted-foreground outline-none transition-colors hover:bg-secondary hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
                       >
-                        {item.images && item.images.length > 0 && (
-                          <span className="relative hidden size-20 shrink-0 overflow-hidden rounded-lg bg-muted/50 sm:block">
-                            <Image
-                              src={item.images[0]}
-                              alt=""
-                              aria-hidden="true"
-                              fill
-                              sizes="80px"
-                              className="object-cover"
-                            />
-                          </span>
-                        )}
-
-                        <span className="min-w-0 flex-1">
-                          <span className="flex flex-wrap items-center gap-2 font-mono text-xs text-muted-foreground">
-                            <Calendar className="size-3.5 text-primary" aria-hidden="true" />
-                            {dayLabel(item.date)}
-                            {item.category && (
-                              <Badge
-                                variant="outline"
-                                className="border-primary/20 bg-primary/10 font-mono text-xs font-semibold text-primary"
-                              >
-                                {item.category}
-                              </Badge>
-                            )}
-                          </span>
-
-                          <span className="mt-2 block font-heading text-lg font-bold tracking-tight text-foreground sm:text-xl">
-                            {item.title}
-                          </span>
-
-                          {!isOpen && (
-                            <span className="mt-1.5 line-clamp-2 block text-sm text-muted-foreground">
-                              {item.excerpt}
-                            </span>
-                          )}
-                        </span>
-
                         <ChevronDown
                           aria-hidden="true"
-                          className={`mt-1 size-5 shrink-0 text-muted-foreground ${
-                            prefersReducedMotion ? "" : "transition-transform duration-200"
-                          } ${isOpen ? "rotate-180" : ""}`}
+                          className={`size-4 ${prefersReducedMotion ? "" : "transition-transform duration-200"} ${isOpen ? "rotate-180" : ""}`}
                         />
+                        {isOpen ? "Show less" : "Read more"}
                       </button>
-                    </h3>
-
-                    {/* Mounted only while open: a hidden gallery would still
-                        run its slideshow timer in the background. */}
-                    {isOpen && (
-                      <div id={panelId} className="border-t border-border/60 px-5 pt-5 pb-6 sm:px-6">
-                        {item.author && (
-                          <p className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
-                            <User className="size-3.5 text-primary" aria-hidden="true" />
-                            Posted by <strong className="text-foreground">{item.author.name}</strong>{" "}
-                            ({item.author.role})
-                          </p>
-                        )}
-
-                        {item.images && item.images.length > 0 && (
-                          <div className="mt-5">
-                            <NewsMediaGallery
-                              images={item.images}
-                              alt={item.title}
-                              aspectRatio="aspect-[16/9] sm:aspect-[21/9]"
-                            />
-                          </div>
-                        )}
-
-                        <div className="mt-5 space-y-4 text-base leading-relaxed text-foreground/90">
-                          {item.content.split("\n\n").map((paragraph, pIdx) => (
-                            <p key={pIdx}>{paragraph}</p>
-                          ))}
-                        </div>
-
-                        {item.tags && item.tags.length > 0 && (
-                          <div className="mt-6 flex flex-wrap gap-2 border-t border-border/40 pt-4">
-                            {item.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className="rounded-md bg-secondary/80 px-2.5 py-1 font-mono text-xs font-medium text-secondary-foreground"
-                              >
-                                #{tag}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-
-                        <p className="mt-4 font-mono text-xs text-muted-foreground">
-                          {formatNewsDate(item.date)}
-                        </p>
-                      </div>
-                    )}
-                  </div>
+                      <button
+                        type="button"
+                        onClick={() => copyLink(item.slug)}
+                        className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-muted-foreground outline-none transition-colors hover:bg-secondary hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+                      >
+                        <Link2 aria-hidden="true" className="size-4" />
+                        Copy link
+                      </button>
+                      <Link
+                        href={`/news/${item.slug}`}
+                        className="ml-auto inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3 text-sm font-bold text-foreground transition-all hover:gap-2.5 hover:text-brand"
+                      >
+                        Full article
+                        <ArrowRight className="size-4" aria-hidden="true" />
+                      </Link>
+                    </div>
+                  </article>
                 </div>
               </li>
             );
