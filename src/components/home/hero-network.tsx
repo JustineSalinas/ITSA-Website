@@ -5,6 +5,7 @@ import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 interface HeroNetworkProps {
   className?: string;
+  orientation?: "left" | "right" | "full";
 }
 
 interface Particle {
@@ -23,8 +24,8 @@ interface Particle {
  * reworked to fit this component:
  *
  * - Sized to its container via ResizeObserver, not window.innerWidth/Height
- *   -- the original assumed a full-viewport canvas; here it only fills the
- *   left column.
+ *   -- the original assumed a full-viewport canvas; here it fills the
+ *   left or right column, or full hero background.
  * - Transparent background (clearRect every frame) instead of an opaque
  *   `fillStyle = 'black'` fill -- the original was a dark hero; this one
  *   sits over the site's white background.
@@ -35,7 +36,7 @@ interface Particle {
  *   animation loop and pointer interactivity entirely, rather than the
  *   original's unconditional rAF + mousemove loop.
  */
-export function HeroNetwork({ className }: HeroNetworkProps) {
+export function HeroNetwork({ className, orientation = "left" }: HeroNetworkProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
@@ -210,17 +211,27 @@ export function HeroNetwork({ className }: HeroNetworkProps) {
     };
   }, [prefersReducedMotion]);
 
+  const maskStyle =
+    orientation === "right"
+      ? {
+          maskImage:
+            "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 36%, rgba(0,0,0,0.22) 62%, rgba(0,0,0,0) 84%)",
+          WebkitMaskImage:
+            "linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 36%, rgba(0,0,0,0.22) 62%, rgba(0,0,0,0) 84%)",
+        }
+      : orientation === "full"
+      ? undefined
+      : {
+          maskImage:
+            "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 36%, rgba(0,0,0,0.22) 62%, rgba(0,0,0,0) 84%)",
+          WebkitMaskImage:
+            "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 36%, rgba(0,0,0,0.22) 62%, rgba(0,0,0,0) 84%)",
+        };
+
   return (
     <canvas
       ref={canvasRef}
-      style={{
-        // Fades out toward the headline, same as the SVG blob artwork this
-        // replaces -- the network should never read behind the text.
-        maskImage:
-          "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 36%, rgba(0,0,0,0.22) 62%, rgba(0,0,0,0) 84%)",
-        WebkitMaskImage:
-          "linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 36%, rgba(0,0,0,0.22) 62%, rgba(0,0,0,0) 84%)",
-      }}
+      style={maskStyle}
       className={className}
       aria-hidden="true"
     />

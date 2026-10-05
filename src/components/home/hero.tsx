@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LogoMark } from "@/components/layout/logo";
-import { HeroLogo } from "@/components/home/hero-logo";
 import { HeroNetwork } from "@/components/home/hero-network";
 import { GridBackground } from "@/components/layout/grid-background";
 import { siteConfig } from "@/data/site";
@@ -24,21 +23,29 @@ export function Hero() {
       <div
         className="absolute inset-y-0 left-0 z-[1] hidden lg:block w-[46vw] xl:w-[50vw] max-w-[760px] 2xl:max-w-[840px] pointer-events-none select-none"
       >
-        <HeroNetwork className="w-full h-full" />
+        <HeroNetwork orientation="left" className="w-full h-full" />
       </div>
 
-      {/* ── Ambient Background Glow for Mobile (< lg): soft brand-tinted blur
-           instead of the sharp, saturated blob artwork, which read as a
-           harsh sticker sheet fighting the headline on small screens.
-           A gentle float keeps it feeling alive without needing a pointer. ── */}
+      {/* ── Right Interactive Particle Network (Desktop): fills the right column,
+           nodes respond to the cursor, gradient fade so it never blocks text ── */}
+      <div
+        className="absolute inset-y-0 right-0 z-[1] hidden lg:block w-[46vw] xl:w-[50vw] max-w-[760px] 2xl:max-w-[840px] pointer-events-none select-none"
+      >
+        <HeroNetwork orientation="right" className="w-full h-full" />
+      </div>
+
+      {/* ── Ambient Background Glow & Particle Network for Mobile (< lg) ── */}
       <div className="pointer-events-none absolute inset-0 z-[1] block overflow-hidden lg:hidden" aria-hidden="true">
         <div className="absolute -left-16 -top-16 size-56 rounded-full bg-brand/10 blur-3xl" />
         <div className="absolute -right-12 top-1/3 size-48 rounded-full bg-brand-orange/10 blur-3xl" />
+        <div className="absolute inset-0 opacity-40">
+          <HeroNetwork orientation="full" className="w-full h-full" />
+        </div>
       </div>
 
       {/* ── Main Hero Grid: 3-column layout matching reference structure ── */}
       <div className="relative z-10 mx-auto w-full max-w-[1720px] px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16">
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(200px,380px)_minmax(480px,720px)_minmax(240px,460px)] xl:grid-cols-[minmax(240px,440px)_minmax(540px,760px)_minmax(280px,500px)] items-center justify-between gap-6 lg:gap-4 xl:gap-8 min-h-[580px] lg:min-h-[640px] py-6 lg:py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(200px,380px)_minmax(480px,720px)_minmax(200px,380px)] xl:grid-cols-[minmax(240px,440px)_minmax(540px,760px)_minmax(240px,440px)] items-center justify-between gap-6 lg:gap-4 xl:gap-8 min-h-[580px] lg:min-h-[640px] py-6 lg:py-10">
 
           {/* Left Column Spacer (holds space matching the left pinned artwork) */}
           <div className="hidden lg:block w-full pointer-events-none" aria-hidden="true" />
@@ -78,11 +85,6 @@ export function Hero() {
             <p className="mt-3 font-mono text-xs sm:text-sm font-semibold tracking-tight text-slate-600">
               {siteConfig.school}
             </p>
-
-            {/* Interactive Logo for Mobile (< lg) inserted directly in flow */}
-            <div className="my-5 flex lg:hidden items-center justify-center w-full">
-              <HeroLogo className="w-[240px] sm:w-[280px]" priority={false} />
-            </div>
 
             <p className="mt-2 sm:mt-3 max-w-lg text-sm leading-relaxed text-slate-700 sm:text-base text-pretty">
               The official academic association cultivates technical excellence, software craft,
@@ -187,10 +189,8 @@ export function Hero() {
             )}
           </motion.div>
 
-          {/* Right Column: Animated Hero Blob Logo (Desktop Only) */}
-          <div className="hidden lg:flex items-center justify-end w-full z-10">
-            <HeroLogo className="w-[300px] lg:w-[340px] xl:w-[420px] 2xl:w-[480px]" priority />
-          </div>
+          {/* Right Column Spacer (holds space matching the right network artwork) */}
+          <div className="hidden lg:block w-full pointer-events-none" aria-hidden="true" />
 
         </div>
       </div>
