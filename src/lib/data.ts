@@ -1,5 +1,6 @@
 import "server-only";
 import { realOfficers } from "@/data/officers";
+import { localNews } from "@/data/news";
 import { getSanityNews } from "@/sanity/lib/news";
 import { getSanityOfficers } from "@/sanity/lib/officers";
 import { getSanityEvents } from "@/sanity/lib/events";
@@ -8,9 +9,8 @@ import type { EventItem, Officer, NewsItem } from "@/lib/types";
 // Officers still fall back to the real, reconciled org chart in
 // src/data/officers.ts -- that isn't placeholder content, it's the actual
 // roster, and the org chart tree itself has no Sanity equivalent (see
-// CLAUDE.md). Events, news, and projects (src/data/projects.ts) have no
-// bundled fallback: Sanity is their only source, and an empty result is the
-// honest answer until officers publish something there.
+// CLAUDE.md). Events have no bundled fallback: Sanity is their only source. News and
+// projects also have real local content (src/data/news.ts, src/data/projects.ts).
 export async function getOfficers(): Promise<Officer[]> {
   const sanityOfficers = await getSanityOfficers();
   if (sanityOfficers && sanityOfficers.length) return sanityOfficers;
@@ -45,9 +45,12 @@ export function splitEvents(events: EventItem[]) {
   return { upcoming, past };
 }
 
+// Local, real announcements plus anything published in Sanity. A Sanity post
+// with the same slug as a local one wins, so editing it there overrides.
 export async function getNews(): Promise<NewsItem[]> {
-  const sanityNews = await getSanityNews();
-  return sanityNews ?? [];
+  const sanityNews = (await getSanityNews()) ?? [];
+  const sanitySlugs = new Set(sanityNews.map((n) => n.slug));
+  return [...sanityNews, ...localNews.filter((n) => !sanitySlugs.has(n.slug))];
 }
 
 
