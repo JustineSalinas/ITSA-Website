@@ -91,6 +91,7 @@ export const orgChart: OrgNode = {
                   name: "Aiderson Abapo",
                   position: "Documentation Officer",
                   section: "BSIT 4B",
+                  photoUrl: "/officers/ay2026/aiderson-abapo.jpg",
                   socials: {
                     instagram: "https://instagram.com/a.aiderson",
                   },
@@ -336,6 +337,7 @@ const shootPhotos: Record<string, string> = {
   "Nizon Jeorgie I. Pison II": "/officers/ay2026/nizon-jeorgie-i-pison-ii.jpg",
   "Ryan Carlo Cruzada": "/officers/ay2026/ryan-carlo-cruzada.png",
   "Rovann Acevedo": "/officers/ay2026/rovann-acevedo.png",
+  "Aiderson Abapo": "/officers/ay2026/aiderson-abapo.jpg",
 };
 
 function slugify(name: string): string {
