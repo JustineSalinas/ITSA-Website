@@ -22,6 +22,10 @@ export function OfficerCard({ officer }: { officer: Officer }) {
   const hasAnySocial =
     hasFacebook || hasLinkedIn || hasInstagram || hasGithub || hasPersonalLink;
 
+  const isSupervisor =
+    officer.name === "Robert A. Aguilar Jr." ||
+    officer.section?.toLowerCase() === "faculty";
+
   return (
     <motion.div
       whileHover={{ y: -4 }}
@@ -74,101 +78,103 @@ export function OfficerCard({ officer }: { officer: Officer }) {
           </div>
         </div>
 
-        {/* Bottom: Social and Personal Profile Links */}
-        <div className="mt-3.5 flex min-h-[38px] items-center justify-center gap-1.5 border-t border-border/60 pt-3">
-          {/* Facebook */}
-          {hasFacebook && (
-            <a
-              href={officer.socials.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${officer.name} on Facebook`}
-              title="Facebook Profile"
-              className="grid size-8 place-items-center rounded-lg border border-border bg-secondary/50 text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-foreground hover:bg-[#1877F2] hover:text-white hover:shadow-[2px_2px_0_0_var(--foreground)]"
-            >
-              <FacebookIcon className="size-3.5" />
-            </a>
-          )}
+        {/* Bottom: Social and Personal Profile Links (Omitted for Faculty Supervisor) */}
+        {!isSupervisor && (
+          <div className="mt-3.5 flex min-h-[38px] items-center justify-center gap-1.5 border-t border-border/60 pt-3">
+            {/* Facebook */}
+            {hasFacebook && (
+              <a
+                href={officer.socials.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${officer.name} on Facebook`}
+                title="Facebook Profile"
+                className="grid size-8 place-items-center rounded-lg border border-border bg-secondary/50 text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-foreground hover:bg-[#1877F2] hover:text-white hover:shadow-[2px_2px_0_0_var(--foreground)]"
+              >
+                <FacebookIcon className="size-3.5" />
+              </a>
+            )}
 
-          {/* LinkedIn */}
-          {hasLinkedIn && (
-            <a
-              href={officer.socials.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${officer.name} on LinkedIn`}
-              title="LinkedIn Profile"
-              className="grid size-8 place-items-center rounded-lg border border-border bg-secondary/50 text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-foreground hover:bg-[#0A66C2] hover:text-white hover:shadow-[2px_2px_0_0_var(--foreground)]"
-            >
-              <LinkedinIcon className="size-3.5" />
-            </a>
-          )}
-
-          {/* Instagram */}
-          {hasInstagram && (
-            <a
-              href={officer.socials.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${officer.name} on Instagram`}
-              title="Instagram Profile"
-              className="grid size-8 place-items-center rounded-lg border border-border bg-secondary/50 text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-foreground hover:bg-[#E4405F] hover:text-white hover:shadow-[2px_2px_0_0_var(--foreground)]"
-            >
-              <InstagramIcon className="size-3.5" />
-            </a>
-          )}
-
-          {/* GitHub */}
-          {hasGithub && (
-            <a
-              href={officer.socials.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${officer.name} on GitHub`}
-              title="GitHub Profile"
-              className="grid size-8 place-items-center rounded-lg border border-border bg-secondary/50 text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-foreground hover:bg-foreground hover:text-background hover:shadow-[2px_2px_0_0_var(--foreground)]"
-            >
-              <GithubIcon className="size-3.5" />
-            </a>
-          )}
-
-          {/* Personal Profile Link */}
-          {hasPersonalLink && (
-            <a
-              href={officer.socials.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${officer.name}'s Personal Profile`}
-              title="Personal Profile Link"
-              className="grid size-8 place-items-center rounded-lg border border-border bg-secondary/50 text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-foreground hover:bg-primary hover:text-primary-foreground hover:shadow-[2px_2px_0_0_var(--foreground)]"
-            >
-              <Globe className="size-3.5" />
-            </a>
-          )}
-
-          {!hasAnySocial && (
-            <>
-              <span
-                className="grid size-8 place-items-center rounded-lg border border-dashed border-border/50 text-muted-foreground/30 cursor-not-allowed"
-                title="LinkedIn not provided"
+            {/* LinkedIn */}
+            {hasLinkedIn && (
+              <a
+                href={officer.socials.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${officer.name} on LinkedIn`}
+                title="LinkedIn Profile"
+                className="grid size-8 place-items-center rounded-lg border border-border bg-secondary/50 text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-foreground hover:bg-[#0A66C2] hover:text-white hover:shadow-[2px_2px_0_0_var(--foreground)]"
               >
                 <LinkedinIcon className="size-3.5" />
-              </span>
-              <span
-                className="grid size-8 place-items-center rounded-lg border border-dashed border-border/50 text-muted-foreground/30 cursor-not-allowed"
-                title="Instagram not provided"
+              </a>
+            )}
+
+            {/* Instagram */}
+            {hasInstagram && (
+              <a
+                href={officer.socials.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${officer.name} on Instagram`}
+                title="Instagram Profile"
+                className="grid size-8 place-items-center rounded-lg border border-border bg-secondary/50 text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-foreground hover:bg-[#E4405F] hover:text-white hover:shadow-[2px_2px_0_0_var(--foreground)]"
               >
                 <InstagramIcon className="size-3.5" />
-              </span>
-              <span
-                className="grid size-8 place-items-center rounded-lg border border-dashed border-border/50 text-muted-foreground/30 cursor-not-allowed"
-                title="Personal profile not provided"
+              </a>
+            )}
+
+            {/* GitHub */}
+            {hasGithub && (
+              <a
+                href={officer.socials.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${officer.name} on GitHub`}
+                title="GitHub Profile"
+                className="grid size-8 place-items-center rounded-lg border border-border bg-secondary/50 text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-foreground hover:bg-foreground hover:text-background hover:shadow-[2px_2px_0_0_var(--foreground)]"
+              >
+                <GithubIcon className="size-3.5" />
+              </a>
+            )}
+
+            {/* Personal Profile Link */}
+            {hasPersonalLink && (
+              <a
+                href={officer.socials.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${officer.name}'s Personal Profile`}
+                title="Personal Profile Link"
+                className="grid size-8 place-items-center rounded-lg border border-border bg-secondary/50 text-foreground transition-all duration-150 hover:-translate-y-0.5 hover:border-foreground hover:bg-primary hover:text-primary-foreground hover:shadow-[2px_2px_0_0_var(--foreground)]"
               >
                 <Globe className="size-3.5" />
-              </span>
-            </>
-          )}
-        </div>
+              </a>
+            )}
+
+            {!hasAnySocial && (
+              <>
+                <span
+                  className="grid size-8 place-items-center rounded-lg border border-dashed border-border/50 text-muted-foreground/30 cursor-not-allowed"
+                  title="LinkedIn not provided"
+                >
+                  <LinkedinIcon className="size-3.5" />
+                </span>
+                <span
+                  className="grid size-8 place-items-center rounded-lg border border-dashed border-border/50 text-muted-foreground/30 cursor-not-allowed"
+                  title="Instagram not provided"
+                >
+                  <InstagramIcon className="size-3.5" />
+                </span>
+                <span
+                  className="grid size-8 place-items-center rounded-lg border border-dashed border-border/50 text-muted-foreground/30 cursor-not-allowed"
+                  title="Personal profile not provided"
+                >
+                  <Globe className="size-3.5" />
+                </span>
+              </>
+            )}
+          </div>
+        )}
       </div>
     </motion.div>
   );
