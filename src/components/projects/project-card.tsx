@@ -1,39 +1,52 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowRight, Code2, ExternalLink, User, Users, Trophy } from "lucide-react";
 import { GithubIcon } from "@/components/icons/social";
 import type { ProjectItem } from "@/data/projects";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 
+const MAX_CHIPS = 3;
+
+// Same visual family as the Project/Portfolio of the Month spotlights (ink
+// borders, hard offset shadow, browser-framed preview), deliberately scaled
+// down -- smaller radius, shorter shadow, no glow blobs -- so the spotlight
+// stays the loudest thing on /projects.
 export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isFeatured?: boolean }) {
-  const awardTag = isFeatured ? project.tags.find(tag => 
-    tag.toLowerCase().includes('winner') || 
+  const awardTag = isFeatured ? project.tags.find(tag =>
+    tag.toLowerCase().includes('winner') ||
     tag.toLowerCase().includes('award') ||
     tag.toLowerCase().includes('prize')
   ) : null;
 
+  const chips = project.techStack?.length ? project.techStack : project.tags;
+  const previewLabel = project.liveUrl?.replace(/^https?:\/\//, "").replace(/\/$/, "");
+
   return (
-    <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.2, ease: "easeOut" }}
-      className="h-full"
-    >
-      <Card className="group relative flex h-full flex-col overflow-hidden pt-0 border-border/80 bg-card transition-all duration-300 hover:border-primary/40 hover:shadow-md">
-        <Link href={`/projects/${project.slug}`} className="absolute inset-0 z-0">
-          <span className="sr-only">View project {project.title}</span>
-        </Link>
-        
-        <div className="relative z-10 aspect-[16/9] w-full overflow-hidden bg-gradient-to-br from-primary/80 to-primary pointer-events-none">
+    <article className="group relative flex h-full flex-col rounded-2xl border-2 border-foreground bg-card p-4 shadow-[3px_3px_0_0_var(--foreground)] transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[5px_5px_0_0_var(--foreground)] motion-reduce:transition-none motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0">
+      <Link href={`/projects/${project.slug}`} className="absolute inset-0 z-0 rounded-2xl">
+        <span className="sr-only">View project {project.title}</span>
+      </Link>
+
+      {/* Browser-framed preview */}
+      <div className="pointer-events-none relative z-10 overflow-hidden rounded-xl border-2 border-foreground bg-foreground">
+        <div className="flex items-center gap-1.5 border-b-2 border-foreground bg-muted px-3 py-2">
+          <span className="size-2 shrink-0 rounded-full border border-foreground bg-brand-red" />
+          <span className="size-2 shrink-0 rounded-full border border-foreground bg-brand-orange" />
+          <span className="size-2 shrink-0 rounded-full border border-foreground bg-brand-cyan" />
+          {previewLabel && (
+            <span className="ml-1.5 truncate rounded border border-foreground/20 bg-background/60 px-1.5 py-px text-[10px] leading-4 text-muted-foreground">
+              {previewLabel}
+            </span>
+          )}
+        </div>
+        <div className="relative aspect-[16/10] w-full bg-card">
           {isFeatured && (
-            <div className="group/trophy absolute top-3 right-3 z-20 flex items-center justify-center rounded-full bg-gold text-slate-950 p-2 shadow-sm pointer-events-auto cursor-default">
+            <div className="group/trophy pointer-events-auto absolute right-2.5 top-2.5 z-20 flex cursor-default items-center justify-center rounded-full bg-gold p-2 text-slate-950 shadow-sm">
               <Trophy className="size-4 fill-slate-950" />
-              
-              <div className="absolute right-0 top-full mt-2.5 opacity-0 invisible group-hover/trophy:opacity-100 group-hover/trophy:visible transition-all duration-200 whitespace-nowrap rounded-md bg-card px-2.5 py-1 text-xs font-medium text-foreground shadow-md border border-border pointer-events-none">
+
+              <div className="pointer-events-none invisible absolute right-0 top-full mt-2.5 whitespace-nowrap rounded-md border border-border bg-card px-2.5 py-1 text-xs font-medium text-foreground opacity-0 shadow-md transition-all duration-200 group-hover/trophy:visible group-hover/trophy:opacity-100">
                 {awardTag || "Award Winner"}
-                <div className="absolute -top-1 right-3 h-2 w-2 rotate-45 bg-card border-l border-t border-border"></div>
+                <div className="absolute -top-1 right-3 h-2 w-2 rotate-45 border-l border-t border-border bg-card"></div>
               </div>
             </div>
           )}
@@ -44,7 +57,7 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
               alt={project.title}
               loading="lazy"
               decoding="async"
-              className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="size-full object-cover object-top"
             />
           ) : (
             <div className="grid size-full place-items-center bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30">
@@ -52,70 +65,78 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
             </div>
           )}
         </div>
+      </div>
 
-        <CardContent className="relative z-10 flex flex-1 flex-col p-6 pointer-events-none">
-          <div className="flex items-center gap-1.5 font-mono text-xs text-primary font-medium">
-            {project.teamSize && project.teamSize > 1 ? (
-              <>
-                <Users className="size-3.5" />
-                {project.teamName || `Team of ${project.teamSize}`}
-              </>
-            ) : (
-              <>
-                <User className="size-3.5" />
-                {project.author}
-              </>
+      <div className="pointer-events-none relative z-10 flex flex-1 flex-col pt-5">
+        <div className="flex items-center gap-1.5 font-mono text-xs font-medium text-brand">
+          {project.teamSize && project.teamSize > 1 ? (
+            <>
+              <Users className="size-3.5" />
+              {project.teamName || `Team of ${project.teamSize}`}
+            </>
+          ) : (
+            <>
+              <User className="size-3.5" />
+              {project.author}
+            </>
+          )}
+        </div>
+
+        <h3 className="mt-2 font-heading text-xl font-extrabold leading-snug tracking-tight text-foreground">
+          {project.title}
+        </h3>
+
+        {isFeatured && project.awardName && (
+          <div className="mt-1.5 flex items-center gap-1.5 text-xs font-semibold text-brand-orange">
+            <Trophy className="size-3" />
+            {project.awardName}
+          </div>
+        )}
+
+        <p className="mt-2 line-clamp-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+          {project.description}
+        </p>
+
+        {chips.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {chips.slice(0, MAX_CHIPS).map(chip => (
+              <span
+                key={chip}
+                className="inline-flex items-center rounded-lg border border-border/80 bg-secondary/50 px-2.5 py-0.5 font-mono text-xs font-medium text-foreground"
+              >
+                {chip}
+              </span>
+            ))}
+            {chips.length > MAX_CHIPS && (
+              <span className="inline-flex items-center px-1 font-mono text-xs text-muted-foreground">
+                +{chips.length - MAX_CHIPS}
+              </span>
             )}
           </div>
+        )}
 
-          <h3 className="mt-3 font-heading text-lg font-bold leading-snug tracking-tight text-foreground sm:text-xl">
-            <span className="transition-colors group-hover:text-primary">
-              {project.title}
-            </span>
-          </h3>
+        <div className="mt-5 flex items-center justify-between border-t-2 border-foreground/10 pt-4">
+          <span className="inline-flex items-center gap-1.5 text-sm font-bold text-foreground transition-all group-hover:gap-2.5 group-hover:text-brand">
+            View project
+            <ArrowRight className="size-4" />
+          </span>
 
-          {isFeatured && project.awardName && (
-            <div className="mt-1.5 flex items-center gap-1.5 text-xs font-semibold text-brand-orange">
-              <Trophy className="size-3" />
-              {project.awardName}
-            </div>
-          )}
-
-          <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-muted-foreground">
-            {project.description}
-          </p>
-
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {project.tags.slice(0, 4).map(tag => (
-              <Badge key={tag} variant="secondary" className="rounded-full bg-muted/60 text-muted-foreground font-mono text-xs border-none">
-                {tag}
-              </Badge>
-            ))}
+          <div className="relative z-20 flex gap-1">
+            {project.githubUrl && (
+              <a href={project.githubUrl} target="_blank" rel="noreferrer" className="pointer-events-auto rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
+                <span className="sr-only">View source on GitHub</span>
+                <GithubIcon className="size-4" />
+              </a>
+            )}
+            {project.liveUrl && (
+              <a href={project.liveUrl} target="_blank" rel="noreferrer" className="pointer-events-auto rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
+                <span className="sr-only">Visit live site</span>
+                <ExternalLink className="size-4" />
+              </a>
+            )}
           </div>
-
-          <div className="mt-6 flex items-center justify-between border-t border-border/40 pt-4">
-            <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-all group-hover:gap-2">
-              View project
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-            </span>
-            
-            <div className="flex gap-2 relative z-20">
-              {project.githubUrl && (
-                <a href={project.githubUrl} target="_blank" rel="noreferrer" className="pointer-events-auto text-muted-foreground hover:text-foreground transition-colors p-1">
-                  <span className="sr-only">View source on GitHub</span>
-                  <GithubIcon className="size-4" />
-                </a>
-              )}
-              {project.liveUrl && (
-                <a href={project.liveUrl} target="_blank" rel="noreferrer" className="pointer-events-auto text-muted-foreground hover:text-foreground transition-colors p-1">
-                  <span className="sr-only">Visit live site</span>
-                  <ExternalLink className="size-4" />
-                </a>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </motion.div>
+        </div>
+      </div>
+    </article>
   );
 }
