@@ -30,16 +30,18 @@ Sanity Studio (`/studio`). Path alias `@/*` → `src/*`.
 
 ### Route structure (`src/app/`)
 - `(public)/` — the whole site (home, about, events, news, officers, projects, join). Wraps children in navbar/footer via `(public)/layout.tsx`.
-- `studio/` — Sanity Studio, the content-editing surface for officers/events/news/projects/partners/faq.
+- `studio/` — Sanity Studio, the content-editing surface for officers/events/news/partners/faq.
 - `api/` — route handlers: `health` (uptime-monitor endpoint).
 
 ### Firebase, two SDKs
 - `src/lib/firebase/client.ts` — browser SDK, gated by `isFirebaseConfigured`.
 - `src/lib/firebase/admin.ts` — server Admin SDK (`server-only`), gated by `isAdminConfigured`. Only used by `api/health`'s Firestore reachability check (`getAdminDb`) — there is no Admin Auth or Storage usage left in the app, and Firestore is no longer a content store at all (see below).
 
-### Content model — Sanity is the only source for events, news, and projects
-- `src/lib/data.ts` (`getEvents`, `getNews`) and `src/data/projects.ts` (`getProjects`) read from Sanity **only**. An empty Sanity result returns an empty array — there is no bundled/hardcoded fallback for any of these three, and there must not be one added back. The pages already render an honest empty state (`ProjectsClient`'s "No projects found", the events/news pages' own empty copy).
-- This replaced two different problems: `src/data/placeholder.ts` (events) was already dev-only-gated invented content; `src/data/projects.ts`'s old hardcoded array (`Gagambattle`, `Pharmatrack`, etc.) was **fully fabricated** — invented team members, `#` placeholder links — with **no dev-only gate**, so it was shown to real visitors whenever Sanity had no projects published. Both were deleted outright, not just gated further.
+### Content model — Sanity for events; news and projects have real local files
+- `getEvents` reads from Sanity **only**; an empty result returns an empty array and there must be no bundled/hardcoded fallback for it.
+- **News** is `src/data/news.ts` (real posts transcribed from ITSA's official Facebook, images in `public/images/news/`) merged with any Sanity news by `getNews`; a Sanity post with the same slug wins. Add new posts at the top of that array — only real, verifiable content.
+- **Projects are not in Sanity.** `src/data/projects.ts` holds the real project list (sourced from each project's live site/README), with cover images in `public/images/projects/`. Add new projects at the top of that array. Only real, verifiable content belongs there — never invented members, links, or metrics.
+- This replaced two different problems: `src/data/placeholder.ts` (events) was already dev-only-gated invented content; `src/data/projects.ts`'s old hardcoded array (`Gagambattle`, `Pharmatrack`, etc.) was **fully fabricated** — invented team members, `#` placeholder links — with **no dev-only gate**, so it was shown to real visitors. Both were deleted outright; the current projects array is real data, not that one.
 - **Officers are the one exception**: `src/data/officers.ts`'s `orgChart`/`realOfficers` are real content (the actual reconciled roster), not placeholder data, and the org-chart *tree structure* (`orgChart`, with its reporting-line nesting) has no Sanity equivalent at all — `src/app/(public)/officers/page.tsx` imports `orgChart` directly from this file, never through Sanity. `getOfficers()` in `data.ts` still checks Sanity first and falls back to `realOfficers` (the same tree, flattened) only for the flat `/officers` card grid.
 - If you need to re-seed real content into Sanity from code (a one-time migration, not a fallback), write a throwaway script using `scripts/sanity-client.mjs`'s `requireWriteClient()` (needs `SANITY_API_TOKEN` in `.env.local`, Editor permission) and delete it once the migration is verified — see git history for the news-migration script this pattern came from.
 
@@ -54,7 +56,7 @@ Sanity Studio (`/studio`). Path alias `@/*` → `src/*`.
 
 `DESIGN.md` is the authoritative brand/design spec ("The Connected Network" —
 committed brand blue, orange as an accent-only spark, no cream backgrounds,
-Bricolage Grotesque headings over Geist body). Consult it before UI work.
+Geist headings and body, Geist Mono for labels). Consult it before UI work.
 
 - **shadcn** with the `base-nova` style, built on **Base UI** (`@base-ui/react`) — *not* Radix. Components in `src/components/ui/`, config in `components.json`.
 - **Tailwind CSS v4** (PostCSS plugin, no `tailwind.config.js`); design tokens as CSS variables in `src/app/globals.css`.

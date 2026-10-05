@@ -91,7 +91,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const news = await getNews();
     newsRoutes = news.map((item) => ({
-      url: `${baseUrl}/news#${item.slug}`,
+      url: `${baseUrl}/news/${item.slug}`,
       lastModified: item.date ? new Date(item.date) : new Date(),
       changeFrequency: "monthly" as const,
       priority: 0.6,

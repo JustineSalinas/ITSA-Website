@@ -6,7 +6,6 @@ import { visionTool } from "@sanity/vision";
 import { apiVersion, dataset, projectId } from "@/sanity/env";
 import { newsType } from "@/sanity/schemas/news";
 import { eventType } from "@/sanity/schemas/event";
-import { projectType } from "@/sanity/schemas/project";
 import { officerType } from "@/sanity/schemas/officer";
 import { partnerType } from "@/sanity/schemas/partner";
 import { faqType } from "@/sanity/schemas/faq";
@@ -28,7 +27,7 @@ export default defineConfig({
   basePath: "/studio",
   projectId: projectId ?? "",
   dataset,
-  schema: { types: [newsType, eventType, projectType, officerType, partnerType, faqType] },
+  schema: { types: [newsType, eventType, officerType, partnerType, faqType] },
   plugins: [
     structureTool(),
     // GROQ playground. Useful while developing queries; harmless in production
