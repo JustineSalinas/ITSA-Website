@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ExternalLink, User, Users, Code2, Trophy } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ExternalLink, TrendingUp, User, Users, Code2, Trophy } from "lucide-react";
 import { GithubIcon } from "@/components/icons/social";
 import { getProjectBySlug, getProjects } from "@/data/projects";
 import { Badge } from "@/components/ui/badge";
+import { TechStack } from "@/components/projects/tech-stack";
 import { Button } from "@/components/ui/button";
 import { FadeIn } from "@/components/layout/fade-in";
 
@@ -47,6 +48,17 @@ export async function generateMetadata({
   };
 }
 
+// One heading style for every section so the page has a single, predictable
+// rhythm: mono numbered kicker, then the title.
+function SectionHeading({ index, children }: { index: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-2 text-center md:text-left">
+      <span className="font-mono text-xs font-semibold uppercase tracking-widest text-brand">{index}</span>
+      <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground break-words">{children}</h2>
+    </div>
+  );
+}
+
 export default async function ProjectDetailPage({
   params,
 }: {
@@ -61,6 +73,15 @@ export default async function ProjectDetailPage({
   const currentIndex = allProjects.findIndex(p => p.slug === slug);
   const prevProject = allProjects[(currentIndex - 1 + allProjects.length) % allProjects.length];
   const nextProject = allProjects[(currentIndex + 1) % allProjects.length];
+
+  const sectionKeys = [
+    project.content && "what",
+    project.features?.length && "features",
+    project.impact?.length && "impact",
+    project.techStack?.length && "tech",
+    project.teamMembers?.length && "team",
+  ].filter(Boolean) as string[];
+  const num = (key: string) => String(sectionKeys.indexOf(key) + 1).padStart(2, "0");
 
   return (
     <FadeIn as="article" className="pb-16 md:pb-24 lg:pb-32 pt-12 md:pt-20">
@@ -165,29 +186,62 @@ export default async function ProjectDetailPage({
 
       {/* Article Section */}
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 mt-16 md:mt-24 pb-12">
-        <p className="text-xl md:text-2xl font-light leading-relaxed text-muted-foreground mb-16 text-balance text-center">
-          {project.content}
-        </p>
-        {project.techStack && project.techStack.length > 0 && (
-          <div className="flex flex-col gap-6 mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground break-words text-center md:text-left">
-              Tech Stack
-            </h2>
-            <div className="flex flex-wrap justify-center md:justify-start gap-2">
-              {project.techStack.map(tech => (
-                <Badge key={tech} variant="outline" className="px-4 py-1.5 text-xs font-semibold uppercase tracking-widest bg-transparent border-primary/20 text-foreground/70 hover:bg-primary/5 hover:border-primary/40 transition-colors">
-                  {tech}
-                </Badge>
+        {project.content && (
+          <section className="flex flex-col gap-6 mb-20">
+            <SectionHeading index={num("what")}>What it does</SectionHeading>
+            <div className="flex flex-col gap-4">
+              {project.content.split("\n\n").map((paragraph, i) => (
+                <p key={i} className="text-xl md:text-2xl font-light leading-relaxed text-foreground/85 text-pretty">
+                  {paragraph}
+                </p>
               ))}
             </div>
-          </div>
+          </section>
+        )}
+
+        {project.features && project.features.length > 0 && (
+          <section className="flex flex-col gap-6 mb-20">
+            <SectionHeading index={num("features")}>Features</SectionHeading>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {project.features.map((feature) => (
+                <div key={feature.title} className="flex gap-4 p-5 rounded-xl bg-card border border-border/80 transition-all hover:border-primary/40 hover:shadow-md">
+                  <div className="mt-0.5 size-7 rounded-full bg-primary/10 text-primary grid place-items-center shrink-0">
+                    <Check className="size-4" />
+                  </div>
+                  <div className="flex flex-col gap-1">
+                    <h3 className="font-semibold text-foreground leading-snug">{feature.title}</h3>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{feature.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {project.impact && project.impact.length > 0 && (
+          <section className="flex flex-col gap-6 mb-20">
+            <SectionHeading index={num("impact")}>Impact</SectionHeading>
+            <ul className="flex flex-col gap-3">
+              {project.impact.map((item) => (
+                <li key={item} className="flex gap-4 p-5 rounded-xl border-2 border-foreground bg-card shadow-[3px_3px_0_0_var(--foreground)]">
+                  <TrendingUp className="mt-1 size-5 shrink-0 text-brand" />
+                  <span className="leading-relaxed text-foreground/85">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {project.techStack && project.techStack.length > 0 && (
+          <section className="flex flex-col gap-6 mb-20">
+            <SectionHeading index={num("tech")}>Tech Stack</SectionHeading>
+            <TechStack items={project.techStack} />
+          </section>
         )}
 
         {project.teamMembers && project.teamMembers.length > 0 && (
-          <div className="flex flex-col gap-6 mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground break-words text-center md:text-left">
-              Team Members
-            </h2>
+          <section className="flex flex-col gap-6 mb-20">
+            <SectionHeading index={num("team")}>Team</SectionHeading>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {project.teamMembers.map((member, index) => (
                 <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border/80 transition-all hover:border-primary/40 hover:shadow-md">
@@ -201,7 +255,7 @@ export default async function ProjectDetailPage({
                 </div>
               ))}
             </div>
-          </div>
+          </section>
         )}
 
         <div className="flex flex-col gap-6 text-lg leading-relaxed text-foreground/80">
