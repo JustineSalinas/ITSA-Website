@@ -43,6 +43,7 @@ export default async function AwardsPage() {
   return (
     <>
       <PageHeader
+        variant="awards"
         kicker={`${awardProjects.length} awarded ${awardProjects.length === 1 ? "project" : "projects"}`}
         title="Award-Winning Projects"
         description={`Celebrating the most exceptional and recognized work by IT students at ${siteConfig.school}.`}

@@ -41,6 +41,7 @@ export default async function JoinPage() {
   return (
     <>
       <PageHeader
+        variant="join"
         title="Grow your IT career with us."
         description="Advice, skills, and a community of IT students figuring it out together: no application required, just show up."
         kicker="9 career tracks, one community"

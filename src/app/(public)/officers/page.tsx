@@ -128,6 +128,7 @@ export default async function OfficersPage() {
   return (
     <>
       <PageHeader
+        variant="officers"
         kicker={`${officers.length} student ${officers.length === 1 ? "lead" : "leads"}`}
         title="Meet the ITSA Organization."
         description="Dedicated student leaders, mentors, and department chairs guiding our association this academic year."
