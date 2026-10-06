@@ -69,6 +69,7 @@ export default function AboutPage() {
   return (
     <>
       <PageHeader
+        variant="about"
         kicker="Official Student Organization · Est. 2026"
         title="Building the future of tech, together."
         description={`The ${siteConfig.fullName} is the official student organization for IT builders at ${siteConfig.school}.`}

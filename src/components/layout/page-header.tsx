@@ -2,7 +2,13 @@
 
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { HeaderMetaballs } from "@/components/layout/header-metaballs";
+import { GridBackground } from "@/components/layout/grid-background";
+import { HeaderCollage, type PageHeaderVariant } from "@/components/layout/header-collage/collages";
+
+export type { PageHeaderVariant };
+
+/** Fine paper grain (SVG fractal noise), so the header reads as a page, not a flat fill. */
+const PAPER_GRAIN = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`;
 
 interface PageHeaderProps {
   title: string;
@@ -15,9 +21,11 @@ interface PageHeaderProps {
   kicker?: string;
   className?: string;
   /**
-   * Whether to display the signature ITSA organic connected nodes artwork
-   * pinned to the right side of the header. Defaults to true.
+   * Which page's collage to pin beside the title (#121) -- real photos and
+   * paper ephemera specific to that page. Omit for a text-only header.
    */
+  variant?: PageHeaderVariant;
+  /** Set false to hide the collage while keeping the variant. Defaults to true. */
   showArtwork?: boolean;
 }
 
@@ -26,35 +34,33 @@ export function PageHeader({
   description,
   kicker,
   className,
+  variant,
   showArtwork = true,
 }: PageHeaderProps) {
+  const collage = showArtwork ? variant : undefined;
+
   return (
     <section
       className={cn(
-        "relative overflow-hidden border-b border-border/60 bg-gradient-to-b from-background via-muted/20 to-background py-16 sm:py-24",
+        "relative overflow-hidden border-b-2 border-foreground bg-background py-14 sm:py-20",
+        collage && "lg:py-14",
         className
       )}
     >
-      {/* Atmosphere Background overlay */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            backgroundImage: `linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)`,
-            backgroundSize: "36px 36px",
-            maskImage: "radial-gradient(ellipse 60% 50% at 50% 0%, black 20%, transparent 80%)",
-            WebkitMaskImage: "radial-gradient(ellipse 60% 50% at 50% 0%, black 20%, transparent 80%)",
-          }}
-        />
-        <div className="absolute -top-24 left-1/2 -translate-x-1/2 size-[600px] rounded-full bg-brand/10 blur-[130px]" />
-      </div>
+      {/* Graph-paper grid (same as the content sections) + paper grain */}
+      <GridBackground />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-multiply"
+        style={{ backgroundImage: PAPER_GRAIN }}
+      />
 
-      {/* Signature Right-Side Connected Nodes / Metaballs Artwork */}
-      {showArtwork && (
-        <HeaderMetaballs className="w-[300px] opacity-25 sm:w-[400px] sm:opacity-100 md:w-[480px] lg:w-[580px] xl:w-[680px]" />
-      )}
-
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div
+        className={cn(
+          "relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8",
+          collage && "lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,500px)] lg:items-center lg:gap-12"
+        )}
+      >
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -77,6 +83,13 @@ export function PageHeader({
             </p>
           )}
         </motion.div>
+
+        {/* Collage: beside the title on desktop, below it on phones (never behind the text) */}
+        {collage && (
+          <div className="mx-auto mt-10 w-full max-w-[440px] lg:mt-0 lg:max-w-none">
+            <HeaderCollage variant={collage} />
+          </div>
+        )}
       </div>
     </section>
   );
