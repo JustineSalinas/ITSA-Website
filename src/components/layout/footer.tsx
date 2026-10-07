@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { navLinks, siteConfig } from "@/data/site";
 import { Logo } from "@/components/layout/logo";
+import { FooterGlow } from "@/components/layout/footer-glow";
 import {
   FacebookIcon,
   GithubIcon,
@@ -15,33 +16,54 @@ const socialLinks = [
   { href: siteConfig.socials.github, label: "GitHub", Icon: GithubIcon },
 ].filter((s) => s.href);
 
+const resourceLinks = [
+  { href: "/news", label: "Latest News & Dispatches" },
+  { href: "/events", label: "Technical Workshops & CTFs" },
+  { href: "/officers", label: "Executive Hierarchy & Org Chart" },
+  { href: "/about", label: "Mission, Vision & Values" },
+  { href: "/projects", label: "Student Projects & Portfolios" },
+];
+
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-border/80 bg-slate-950 text-slate-100">
+    <footer className="relative mt-auto overflow-hidden border-t border-border/80 bg-slate-950 text-slate-100">
+      {/* Shimmering brand-gradient divider, standing in for the reference's
+          thin animated top line -- same blue/cyan/orange trio as the node
+          network elsewhere on the site, not a generic rainbow. */}
+      <div
+        aria-hidden="true"
+        className="animate-shimmer h-px w-full"
+        style={{
+          backgroundImage:
+            "linear-gradient(90deg, transparent 0%, var(--brand) 20%, var(--brand-cyan) 50%, var(--brand-orange) 80%, transparent 100%)",
+        }}
+      />
 
-      {/* Main 3-Column Corporate Footer */}
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Main Footer Grid */}
+      <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Col 1: Brand & Mission */}
-          <div className="space-y-4">
+          <div className="space-y-4 lg:pr-8">
             <Logo showSubtitle subtitleClassName="text-slate-400" />
-            <p className="text-xs leading-relaxed text-slate-400">
+            <p className="max-w-sm text-xs leading-relaxed text-slate-400">
               {siteConfig.fullName}, empowering Information Technology students through technical excellence, leadership, and community support.
             </p>
-            <div className="flex gap-2 pt-2">
-              {socialLinks.map(({ href, label, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={label}
-                  className="grid size-11 place-items-center rounded-lg border border-white/10 bg-slate-900/80 text-slate-400 transition-colors hover:border-primary hover:bg-primary hover:text-white"
-                >
-                  <Icon className="size-4" />
-                </a>
-              ))}
-            </div>
+            {socialLinks.length > 0 && (
+              <div className="flex gap-2 pt-2">
+                {socialLinks.map(({ href, label, Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={label}
+                    className="grid size-11 place-items-center rounded-lg border border-white/10 bg-slate-900/80 text-slate-400 transition-all duration-200 hover:-translate-y-0.5 hover:border-brand hover:bg-brand hover:text-white"
+                  >
+                    <Icon className="size-4" />
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Col 2: Association Quick Links */}
@@ -69,38 +91,52 @@ export function Footer() {
               Student Resources
             </h3>
             <ul className="mt-4.5 space-y-2.5 text-xs text-slate-400">
-              <li>
-                <Link href="/news" className="transition-colors hover:text-white">
-                  Latest News & Dispatches
-                </Link>
-              </li>
-              <li>
-                <Link href="/events" className="transition-colors hover:text-white">
-                  Technical Workshops & CTFs
-                </Link>
-              </li>
+              {resourceLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="transition-colors hover:text-white">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
+          {/* Col 4: Connect */}
+          <div>
+            <h3 className="font-mono text-xs font-bold uppercase tracking-widest text-white">
+              Connect
+            </h3>
+            <ul className="mt-4.5 space-y-2.5 text-xs text-slate-400">
               <li>
-                <Link href="/officers" className="transition-colors hover:text-white">
-                  Executive Hierarchy & Org Chart
-                </Link>
+                <a
+                  href={`mailto:${siteConfig.contactEmail}`}
+                  className="transition-colors hover:text-white"
+                >
+                  {siteConfig.contactEmail}
+                </a>
               </li>
-              <li>
-                <Link href="/about" className="transition-colors hover:text-white">
-                  Mission, Vision & Values
-                </Link>
-              </li>
-              <li>
-                <Link href="/projects" className="transition-colors hover:text-white">
-                  Student Projects & Portfolios
-                </Link>
-              </li>
+              <li className="leading-relaxed">{siteConfig.location}</li>
+              <li>{siteConfig.school}</li>
             </ul>
           </div>
         </div>
 
+        {/* Oversized Wordmark Band -- ambient pixel glow sits behind the
+            gradient-filled "ITSA" text, echoing the reference's giant
+            low-contrast brand name but tinted with our own palette instead
+            of flat monochrome. */}
+        <div className="relative mt-16 h-32 select-none overflow-hidden sm:h-40 lg:h-48">
+          <FooterGlow className="absolute inset-0 size-full" />
+          <h2
+            aria-hidden="true"
+            className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-slate-100/90 to-slate-100/10 bg-clip-text font-heading text-[4.5rem] font-extrabold tracking-tight text-transparent sm:text-[6.5rem] lg:text-[8.5rem]"
+          >
+            {siteConfig.name}
+          </h2>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-slate-400 sm:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-slate-400 sm:flex-row">
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.fullName} ({siteConfig.name}). All rights reserved.
           </p>

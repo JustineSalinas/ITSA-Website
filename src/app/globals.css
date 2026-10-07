@@ -183,6 +183,15 @@
   }
 }
 
+@keyframes itsa-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
 @layer utilities {
   .animate-node {
     transform-box: fill-box;
@@ -194,6 +203,10 @@
   }
   .animate-rise {
     animation: itsa-rise 0.7s var(--ease-out-expo) both;
+  }
+  .animate-shimmer {
+    background-size: 200% 100%;
+    animation: itsa-shimmer 6s linear infinite;
   }
 }
 
@@ -260,7 +273,8 @@
     scroll-behavior: auto !important;
   }
   .animate-node,
-  .animate-float {
+  .animate-float,
+  .animate-shimmer {
     animation: none !important;
   }
   .animate-rise {
