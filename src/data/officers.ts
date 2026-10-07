@@ -338,6 +338,7 @@ const shootPhotos: Record<string, string> = {
   "Ryan Carlo Cruzada": "/officers/ay2026/ryan-carlo-cruzada.png",
   "Rovann Acevedo": "/officers/ay2026/rovann-acevedo.png",
   "Aiderson Abapo": "/officers/ay2026/aiderson-abapo.jpg",
+  "Edrian Jed Fiesta": "/officers/ay2026/edrian-jed-fiesta.jpg",
 };
 
 function slugify(name: string): string {
