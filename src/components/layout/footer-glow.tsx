@@ -51,7 +51,7 @@ export function FooterGlow({ className }: { className?: string }) {
 
     function seedPixels() {
       pixels = [];
-      const count = Math.round((width * height) / 9000);
+      const count = Math.round((width * height) / 5500);
       for (let i = 0; i < count; i++) {
         pixels.push({
           x: Math.random() * width,
@@ -76,6 +76,11 @@ export function FooterGlow({ className }: { className?: string }) {
       canvas.style.height = `${height}px`;
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
       seedPixels();
+      // The ResizeObserver can fire again after the initial mount (layout
+      // settling, font swap, etc.). In the reduced-motion path nothing else
+      // ever calls drawFrame, so a resize without this would reseed the
+      // pixels and leave the canvas blank until the next real repaint.
+      if (prefersReducedMotion) drawFrame(0);
     }
 
     function drawFrame(time: number) {
@@ -98,9 +103,7 @@ export function FooterGlow({ className }: { className?: string }) {
     resizeObserver.observe(container);
     resize();
 
-    if (prefersReducedMotion) {
-      drawFrame(0);
-    } else {
+    if (!prefersReducedMotion) {
       animationFrameId = requestAnimationFrame(step);
     }
 

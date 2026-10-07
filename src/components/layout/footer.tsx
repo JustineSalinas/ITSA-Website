@@ -121,22 +121,28 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Oversized Wordmark Band -- ambient pixel glow sits behind the
-            gradient-filled "ITSA" text, echoing the reference's giant
-            low-contrast brand name but tinted with our own palette instead
-            of flat monochrome. */}
-        <div className="relative mt-16 h-32 select-none overflow-hidden sm:h-40 lg:h-48">
+        {/* Oversized Wordmark Band -- left-aligned to the column grid above
+            it (matching the brief's reference, where the giant wordmark
+            sits flush with the brand block rather than floating centered).
+            The letterforms are hollow, not solid-filled: FooterGlow's
+            twinkling node-colored pixels sit behind the band and show
+            straight through the open strokes, so the headline is built
+            from the same "connected network" material as the hero instead
+            of being a flat gradient-fade wordmark. */}
+        <div className="relative mt-20 h-40 max-w-xl select-none overflow-hidden sm:h-52 sm:max-w-2xl lg:h-60 lg:max-w-3xl">
           <FooterGlow className="absolute inset-0 size-full" />
           <h2
             aria-hidden="true"
-            className="absolute inset-0 flex items-center justify-center bg-gradient-to-b from-slate-100/90 to-slate-100/10 bg-clip-text font-heading text-[4.5rem] font-extrabold tracking-tight text-transparent sm:text-[6.5rem] lg:text-[8.5rem]"
+            className="absolute inset-0 flex flex-col justify-center leading-[0.92] font-heading text-[3rem] font-extrabold tracking-tight text-transparent sm:text-[4.5rem] lg:text-[5.5rem]"
+            style={{ WebkitTextStroke: "1.5px rgba(203, 213, 225, 0.55)" }}
           >
-            {siteConfig.name}
+            <span>Information</span>
+            <span>Technology</span>
           </h2>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-slate-400 sm:flex-row">
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-slate-400 sm:flex-row">
           <p>
             &copy; {new Date().getFullYear()} {siteConfig.fullName} ({siteConfig.name}). All rights reserved.
           </p>
