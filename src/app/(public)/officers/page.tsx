@@ -37,27 +37,15 @@ const departmentCategories = [
       o.position.includes("Supervisor") || o.name.includes("Aguilar"),
   },
   {
-    id: "president",
-    title: "President",
+    id: "executives",
+    title: "Executives",
     kicker: "Executive Leadership",
-    description: "Leading the student association, strategic vision, and campus representation.",
+    description: "Leading the student association, strategic vision, internal & external affairs, and secretariat records.",
     matcher: (o: { position: string }) =>
-      o.position === "Chairman" || o.position === "President",
-  },
-  {
-    id: "vice-chairmans",
-    title: "Vice Chairmans",
-    kicker: "Internal & External Affairs",
-    description: "Overseeing student welfare, university partnerships, and cross-organization collaborations.",
-    matcher: (o: { position: string }) =>
-      o.position.includes("Vice Chairman") || o.position.includes("Vice President"),
-  },
-  {
-    id: "secretaries",
-    title: "Secretaries",
-    kicker: "Secretariat & Records",
-    description: "Managing official communications, minutes, resolutions, and student records.",
-    matcher: (o: { position: string }) =>
+      o.position === "Chairman" ||
+      o.position === "President" ||
+      o.position.includes("Vice Chairman") ||
+      o.position.includes("Vice President") ||
       o.position.includes("Secretary"),
   },
   {
@@ -77,12 +65,17 @@ const departmentCategories = [
       o.position.includes("Cyber"),
   },
   {
-    id: "documentation",
-    title: "Documentation",
-    kicker: "Archives & Reports",
-    description: "Capturing association milestones, event reports, photography archives, and official documentation.",
+    id: "communications",
+    title: "Communications",
+    kicker: "Creatives, Documentation & Public Relations",
+    description: "Designing visual media, capturing photography archives, maintaining official documentation, and managing social channels.",
     matcher: (o: { position: string; section?: string }) =>
-      o.section === "Documentation" || o.position.includes("Documentation"),
+      o.section === "Communications" ||
+      o.section === "Creatives" ||
+      o.section === "Documentation" ||
+      o.position.includes("Communication") ||
+      o.position.includes("Creatives") ||
+      o.position.includes("Documentation"),
   },
   {
     id: "operations",
@@ -101,17 +94,6 @@ const departmentCategories = [
     description: "Ensuring fiscal responsibility, budget transparency, and sponsorship accounting.",
     matcher: (o: { position: string; section?: string }) =>
       o.section === "Finance" || o.position.includes("Finance"),
-  },
-  {
-    id: "communication",
-    title: "Communication",
-    kicker: "Creatives & Public Relations",
-    description: "Designing visual media, managing official dispatches, branding, and social channels.",
-    matcher: (o: { position: string; section?: string }) =>
-      o.section === "Communications" ||
-      o.section === "Creatives" ||
-      o.position.includes("Communication") ||
-      o.position.includes("Creatives"),
   },
 ];
 
@@ -151,16 +133,18 @@ export default async function OfficersPage() {
                 <span className="font-mono text-xs font-bold uppercase tracking-wider text-muted-foreground mr-2">
                   Jump to:
                 </span>
-                {categorized.map((cat) => (
-                  <a
-                    key={cat.id}
-                    href={`#${cat.id}`}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-border bg-secondary/50 px-3.5 py-1 text-xs font-semibold text-foreground transition-all hover:border-foreground hover:bg-primary hover:text-primary-foreground hover:shadow-[2px_2px_0_0_var(--foreground)]"
-                  >
-                    <span>{cat.title}</span>
-                    <span className="font-mono text-[10px] opacity-75">({cat.officers.length})</span>
-                  </a>
-                ))}
+                {categorized
+                  .filter((cat) => cat.id !== "supervisor")
+                  .map((cat) => (
+                    <a
+                      key={cat.id}
+                      href={`#${cat.id}`}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-border bg-secondary/50 px-3.5 py-1 text-xs font-semibold text-foreground transition-all hover:border-foreground hover:bg-primary hover:text-primary-foreground hover:shadow-[2px_2px_0_0_var(--foreground)]"
+                    >
+                      <span>{cat.title}</span>
+                      <span className="font-mono text-[10px] opacity-75">({cat.officers.length})</span>
+                    </a>
+                  ))}
               </div>
 
               {/* Categorized Departments */}
@@ -180,9 +164,11 @@ export default async function OfficersPage() {
                           {cat.description}
                         </p>
                       </div>
-                      <span className="rounded-full border-2 border-foreground bg-card px-3.5 py-1 font-mono text-xs font-bold text-foreground shadow-[2px_2px_0_0_var(--foreground)]">
-                        {cat.officers.length} {cat.officers.length === 1 ? "Officer" : "Officers"}
-                      </span>
+                      {cat.id !== "supervisor" && (
+                        <span className="rounded-full border-2 border-foreground bg-card px-3.5 py-1 font-mono text-xs font-bold text-foreground shadow-[2px_2px_0_0_var(--foreground)]">
+                          {cat.officers.length} {cat.officers.length === 1 ? "Officer" : "Officers"}
+                        </span>
+                      )}
                     </div>
 
                     {/* Officers Grid */}
