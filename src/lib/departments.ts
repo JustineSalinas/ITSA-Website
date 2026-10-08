@@ -1,59 +1,41 @@
 export interface DepartmentTheme {
-  name: string;
-  hex: string;
-  pastelHex: string;
-  deepHex: string;
-  roleColorClass: string;
+  pastel: string;
+  deep: string;
 }
 
-export const DEPARTMENT_COLORS: Record<string, {
-  name: string;
-  hex: string;
-  pastelHex: string;
-  deepHex: string;
-  roleColorClass: string;
-}> = {
+// Every department shares one formula -- a near-white tint (L 0.95, C 0.035)
+// over a legible mid-tone (L 0.47, C 0.15-0.17) -- at a hue drawn from
+// DESIGN.md's brand family (globals.css's --brand/--brand-cyan/--brand-orange/
+// --brand-red hue angles) instead of six unrelated named swatches. That's
+// what makes this read as one designed system rather than a generic
+// category-tag palette: every card's colors are a tint/shade pair of the
+// same ITSA hues used in the hero and footer, just rotated per department.
+// Finance's green has no existing brand token to match, so it extends the
+// same formula to a new hue rather than reaching for a stock swatch.
+export const DEPARTMENT_COLORS: Record<string, DepartmentTheme> = {
   executives: {
-    name: "Executive",
-    hex: "#E9D5FF",      // Pastel Lilac / Violet
-    pastelHex: "#E9D5FF",
-    deepHex: "#5B21B6",  // Deep Purple
-    roleColorClass: "text-[#5B21B6]",
+    pastel: "oklch(0.95 0.035 254)", // brand blue, tinted
+    deep: "oklch(0.47 0.17 254)",
   },
   technology: {
-    name: "Technology",
-    hex: "#BAE6FD",      // Pastel Sky / Cyan Blue
-    pastelHex: "#BAE6FD",
-    deepHex: "#1D4ED8",  // Deep Cobalt Blue
-    roleColorClass: "text-[#1D4ED8]",
+    pastel: "oklch(0.95 0.035 232)", // brand cyan, tinted
+    deep: "oklch(0.47 0.15 232)",
   },
   communications: {
-    name: "Communication",
-    hex: "#FED7AA",      // Pastel Peach / Warm Coral
-    pastelHex: "#FED7AA",
-    deepHex: "#C2410C",  // Deep Coral / Orange
-    roleColorClass: "text-[#C2410C]",
-  },
-  finance: {
-    name: "Finance",
-    hex: "#A7F3D0",      // Pastel Mint / Emerald
-    pastelHex: "#A7F3D0",
-    deepHex: "#047857",  // Deep Emerald Green
-    roleColorClass: "text-[#047857]",
+    pastel: "oklch(0.95 0.035 52)", // brand orange, tinted
+    deep: "oklch(0.47 0.17 52)",
   },
   operations: {
-    name: "Operation",
-    hex: "#F6C5BC",      // Pastel Brick Red / Warm Terracotta
-    pastelHex: "#F6C5BC",
-    deepHex: "#B23B2A",  // Deep Brick Red
-    roleColorClass: "text-[#B23B2A]",
+    pastel: "oklch(0.95 0.035 30)", // brand red, tinted
+    deep: "oklch(0.47 0.18 30)",
+  },
+  finance: {
+    pastel: "oklch(0.95 0.035 150)", // green, same formula, new hue
+    deep: "oklch(0.47 0.15 150)",
   },
   supervisor: {
-    name: "Supervisor",
-    hex: "#E2E8F0",      // Pastel Slate
-    pastelHex: "#E2E8F0",
-    deepHex: "#1F2937",  // Deep Charcoal
-    roleColorClass: "text-[#1F2937]",
+    pastel: "oklch(0.95 0.01 255)", // near-neutral: faculty sits outside the department system
+    deep: "oklch(0.35 0.02 255)",
   },
 };
 

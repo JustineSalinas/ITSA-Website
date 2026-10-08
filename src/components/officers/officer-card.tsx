@@ -43,7 +43,7 @@ export function OfficerCard({
     >
       <div
         className="group relative flex h-full flex-col justify-between overflow-hidden rounded-2xl border-2 border-foreground p-4 sm:p-5 shadow-[4px_4px_0_0_var(--foreground)] transition-all duration-300 hover:shadow-[6px_6px_0_0_var(--foreground)]"
-        style={{ backgroundColor: theme.pastelHex }}
+        style={{ backgroundColor: theme.pastel }}
       >
         {/* Top: Square Portrait Headshot with Reasonable Size */}
         <div className="flex flex-col items-center">
@@ -83,7 +83,7 @@ export function OfficerCard({
             {/* Role / Position */}
             <p
               className="mt-0.5 text-xs sm:text-sm font-bold line-clamp-1"
-              style={{ color: theme.deepHex }}
+              style={{ color: theme.deep }}
             >
               {officer.position}
             </p>

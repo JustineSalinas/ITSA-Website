@@ -146,7 +146,7 @@ export default async function OfficersPage() {
                       >
                         <span
                           className="size-2.5 rounded-full border border-foreground/30 shrink-0"
-                          style={{ backgroundColor: theme.deepHex }}
+                          style={{ backgroundColor: theme.deep }}
                         />
                         <span>{cat.title}</span>
                         <span className="font-mono text-[10px] opacity-75">({cat.officers.length})</span>
@@ -167,11 +167,11 @@ export default async function OfficersPage() {
                           <div className="flex items-center gap-2">
                             <span
                               className="size-2.5 rounded-full shrink-0"
-                              style={{ backgroundColor: theme.deepHex }}
+                              style={{ backgroundColor: theme.deep }}
                             />
                             <span
                               className="font-mono text-xs font-bold uppercase tracking-[0.2em]"
-                              style={{ color: theme.deepHex }}
+                              style={{ color: theme.deep }}
                             >
                               {cat.kicker}
                             </span>
@@ -186,7 +186,7 @@ export default async function OfficersPage() {
                         {cat.id !== "supervisor" && (
                           <span
                             className="rounded-full border-2 border-foreground px-3.5 py-1 font-mono text-xs font-bold text-foreground shadow-[2px_2px_0_0_var(--foreground)]"
-                            style={{ backgroundColor: theme.pastelHex }}
+                            style={{ backgroundColor: theme.pastel }}
                           >
                             {cat.officers.length} {cat.officers.length === 1 ? "Officer" : "Officers"}
                           </span>
