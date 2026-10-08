@@ -3,8 +3,8 @@ export interface DepartmentTheme {
   deep: string;
 }
 
-// Every department shares one formula -- a near-white tint (L 0.95, C 0.035)
-// over a legible mid-tone (L 0.47, C 0.15-0.17) -- at a hue drawn from
+// Every department shares one formula -- a near-white tint (L 0.95, C 0.045)
+// over a legible mid-tone (L 0.47, C 0.16-0.19) -- at a hue drawn from
 // DESIGN.md's brand family (globals.css's --brand/--brand-cyan/--brand-orange/
 // --brand-red hue angles) instead of six unrelated named swatches. That's
 // what makes this read as one designed system rather than a generic
@@ -12,25 +12,32 @@ export interface DepartmentTheme {
 // same ITSA hues used in the hero and footer, just rotated per department.
 // Finance's green has no existing brand token to match, so it extends the
 // same formula to a new hue rather than reaching for a stock swatch.
+//
+// The brand tokens' literal hue angles (blue 254, cyan 232) sit only 22
+// degrees apart, which nearly disappears at this low a chroma -- blue and
+// cyan read as the same color at a glance. Technology and operations are
+// pulled further around the wheel (toward true cyan and true red) than
+// their source tokens so all six stay visually distinct, not just
+// numerically distinct.
 export const DEPARTMENT_COLORS: Record<string, DepartmentTheme> = {
   executives: {
-    pastel: "oklch(0.95 0.035 254)", // brand blue, tinted
-    deep: "oklch(0.47 0.17 254)",
+    pastel: "oklch(0.95 0.045 254)", // brand blue, tinted
+    deep: "oklch(0.47 0.18 254)",
   },
   technology: {
-    pastel: "oklch(0.95 0.035 232)", // brand cyan, tinted
-    deep: "oklch(0.47 0.15 232)",
+    pastel: "oklch(0.95 0.045 196)", // true cyan, pulled well clear of blue
+    deep: "oklch(0.47 0.15 196)",
   },
   communications: {
-    pastel: "oklch(0.95 0.035 52)", // brand orange, tinted
-    deep: "oklch(0.47 0.17 52)",
+    pastel: "oklch(0.95 0.045 58)", // brand orange, tinted
+    deep: "oklch(0.47 0.17 58)",
   },
   operations: {
-    pastel: "oklch(0.95 0.035 30)", // brand red, tinted
-    deep: "oklch(0.47 0.18 30)",
+    pastel: "oklch(0.95 0.045 18)", // true red, pulled clear of orange
+    deep: "oklch(0.47 0.19 18)",
   },
   finance: {
-    pastel: "oklch(0.95 0.035 150)", // green, same formula, new hue
+    pastel: "oklch(0.95 0.045 150)", // green, same formula, new hue
     deep: "oklch(0.47 0.15 150)",
   },
   supervisor: {
