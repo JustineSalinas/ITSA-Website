@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { navLinks, siteConfig } from "@/data/site";
 import { Logo } from "@/components/layout/logo";
-import { FooterGlow } from "@/components/layout/footer-glow";
 import {
   FacebookIcon,
   GithubIcon,
@@ -121,24 +120,27 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Oversized Wordmark Band -- left-aligned to the column grid above
-            it (matching the brief's reference, where the giant wordmark
-            sits flush with the brand block rather than floating centered).
-            The letterforms are hollow, not solid-filled: FooterGlow's
-            twinkling node-colored pixels sit behind the band and show
-            straight through the open strokes, so the headline is built
-            from the same "connected network" material as the hero instead
-            of being a flat gradient-fade wordmark. */}
-        <div className="relative mt-20 h-40 max-w-xl select-none overflow-hidden sm:h-52 sm:max-w-2xl lg:h-60 lg:max-w-3xl">
-          <FooterGlow className="absolute inset-0 size-full" />
-          <h2
-            aria-hidden="true"
-            className="absolute inset-0 flex flex-col justify-center leading-[0.92] font-heading text-[3rem] font-extrabold tracking-tight text-transparent sm:text-[4.5rem] lg:text-[5.5rem]"
-            style={{ WebkitTextStroke: "1.5px rgba(203, 213, 225, 0.55)" }}
+        {/* Oversized Wordmark Band -- matching reference:
+            Oversized geometric "ITSA" with solid letters that softly fade out
+            toward the bottom via a vertical gradient mask. */}
+        <div className="relative mt-14 select-none sm:mt-18 lg:mt-24">
+          <div
+            className="flex w-full items-end justify-center overflow-hidden pb-2"
+            style={{
+              maskImage:
+                "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 32%, rgba(0,0,0,0.35) 70%, rgba(0,0,0,0) 98%)",
+              WebkitMaskImage:
+                "linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 32%, rgba(0,0,0,0.35) 70%, rgba(0,0,0,0) 98%)",
+            }}
           >
-            <span>Information</span>
-            <span>Technology</span>
-          </h2>
+            <div
+              role="img"
+              aria-label="ITSA — Information Technology Student Association"
+              className="select-none font-heading text-[clamp(7.5rem,26vw,21rem)] font-black leading-[0.88] tracking-tight sm:tracking-normal text-white/35 transition-colors duration-300 hover:text-white/50"
+            >
+              ITSA
+            </div>
+          </div>
         </div>
 
         {/* Bottom Bar */}
