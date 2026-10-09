@@ -1,16 +1,22 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ChevronDown, Globe, Link2, Newspaper } from "lucide-react";
+import {
+  CheckCircle2,
+  Globe,
+  Heart,
+  MessageCircle,
+  Newspaper,
+  Share2,
+  ThumbsUp,
+} from "lucide-react";
 import { toast } from "sonner";
 import type { NewsItem } from "@/lib/types";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/data/site";
 import { formatNewsDate } from "@/lib/format";
-import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 /** Entries shown before the visitor asks for more. */
 const PAGE_SIZE = 10;
@@ -24,19 +30,124 @@ function monthLabel(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", { month: "long", year: "numeric" });
 }
 
+type ReactionType = "like" | "love" | "care" | "haha" | "wow" | "sad" | "angry";
+
+interface ReactionDef {
+  id: ReactionType;
+  label: string;
+  emoji: string;
+  renderIcon: () => React.ReactNode;
+}
+
+const REACTIONS: ReactionDef[] = [
+  {
+    id: "like",
+    label: "Like",
+    emoji: "👍",
+    renderIcon: () => (
+      <span className="grid size-8 sm:size-9 place-items-center rounded-full bg-[#1877F2] text-white shadow-md">
+        <ThumbsUp className="size-4 sm:size-4.5 fill-white text-white" />
+      </span>
+    ),
+  },
+  {
+    id: "love",
+    label: "Love",
+    emoji: "❤️",
+    renderIcon: () => (
+      <span className="grid size-8 sm:size-9 place-items-center rounded-full bg-[#FA3E3E] text-white shadow-md">
+        <Heart className="size-4 sm:size-4.5 fill-white text-white" />
+      </span>
+    ),
+  },
+  {
+    id: "care",
+    label: "Care",
+    emoji: "🥰",
+    renderIcon: () => (
+      <span className="grid size-8 sm:size-9 place-items-center rounded-full bg-[#F7B125] text-xl sm:text-2xl leading-none select-none shadow-md">
+        🥰
+      </span>
+    ),
+  },
+  {
+    id: "haha",
+    label: "Haha",
+    emoji: "😆",
+    renderIcon: () => (
+      <span className="grid size-8 sm:size-9 place-items-center rounded-full bg-[#F7B125] text-xl sm:text-2xl leading-none select-none shadow-md">
+        😆
+      </span>
+    ),
+  },
+  {
+    id: "wow",
+    label: "Wow",
+    emoji: "😮",
+    renderIcon: () => (
+      <span className="grid size-8 sm:size-9 place-items-center rounded-full bg-[#F7B125] text-xl sm:text-2xl leading-none select-none shadow-md">
+        😮
+      </span>
+    ),
+  },
+  {
+    id: "sad",
+    label: "Sad",
+    emoji: "😢",
+    renderIcon: () => (
+      <span className="grid size-8 sm:size-9 place-items-center rounded-full bg-[#F7B125] text-xl sm:text-2xl leading-none select-none shadow-md">
+        😢
+      </span>
+    ),
+  },
+  {
+    id: "angry",
+    label: "Angry",
+    emoji: "😡",
+    renderIcon: () => (
+      <span className="grid size-8 sm:size-9 place-items-center rounded-full bg-[#E9710F] text-xl sm:text-2xl leading-none select-none shadow-md">
+        😡
+      </span>
+    ),
+  },
+];
+
+function renderActiveReactionIcon(reaction?: ReactionType) {
+  switch (reaction) {
+    case "like":
+      return <ThumbsUp className="size-4 sm:size-[18px] fill-[#1877F2] text-[#1877F2] scale-110 transition-transform" />;
+    case "love":
+      return <Heart className="size-4 sm:size-[18px] fill-[#FA3E3E] text-[#FA3E3E] scale-110 transition-transform" />;
+    case "care":
+      return <span className="text-base sm:text-lg leading-none scale-110 transition-transform select-none">🥰</span>;
+    case "haha":
+      return <span className="text-base sm:text-lg leading-none scale-110 transition-transform select-none">😆</span>;
+    case "wow":
+      return <span className="text-base sm:text-lg leading-none scale-110 transition-transform select-none">😮</span>;
+    case "sad":
+      return <span className="text-base sm:text-lg leading-none scale-110 transition-transform select-none">😢</span>;
+    case "angry":
+      return <span className="text-base sm:text-lg leading-none scale-110 transition-transform select-none">😡</span>;
+    default:
+      return <ThumbsUp className="size-4 sm:size-[18px] text-muted-foreground transition-transform" />;
+  }
+}
+
 async function copyLink(slug: string) {
   const url = `${window.location.origin}/news/${slug}`;
   try {
     await navigator.clipboard.writeText(url);
-    toast.success("Link copied");
+    toast.success("Link copied to clipboard");
   } catch {
     toast.error("Couldn't copy the link");
   }
 }
 
 export function NewsTimeline({ news }: { news: NewsItem[] }) {
-  const prefersReducedMotion = useReducedMotion();
   const [openIds, setOpenIds] = useState<Set<string>>(new Set());
+  const [userReactions, setUserReactions] = useState<Record<string, ReactionType>>({});
+  const [hoveredPickerId, setHoveredPickerId] = useState<string | null>(null);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [category, setCategory] = useState<string>("all");
 
@@ -51,14 +162,6 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
     [news],
   );
 
-  // An article linked from elsewhere (/news#slug) has to be on screen and
-  // already open, however deep in the list it sits.
-  //
-  // This runs after mount, not during render: location.hash exists only in the
-  // browser, so opening the entry while hydrating would make the client's first
-  // render disagree with the server HTML. The eslint rule below guards against
-  // cascading renders, which is not what this is -- it fires once, from a value
-  // that cannot be read on the server.
   useEffect(() => {
     const slug = window.location.hash.slice(1);
     if (!slug) return;
@@ -67,8 +170,6 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpenIds(new Set([sorted[position].id]));
     if (position >= PAGE_SIZE) setVisibleCount(position + 1);
-    // The browser jumps to the anchor before the entry exists, so re-aim once
-    // it is on screen.
     document.getElementById(slug)?.scrollIntoView({ block: "start" });
   }, [sorted]);
 
@@ -89,6 +190,38 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
     setVisibleCount(PAGE_SIZE);
   }
 
+  const showPicker = (id: string) => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setHoveredPickerId(id);
+  };
+
+  const hidePicker = () => {
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredPickerId(null);
+    }, 350);
+  };
+
+  function selectReaction(id: string, reaction: ReactionType) {
+    setUserReactions((prev) => ({ ...prev, [id]: reaction }));
+    setHoveredPickerId(null);
+  }
+
+  function toggleReaction(id: string) {
+    setUserReactions((prev) => {
+      const next = { ...prev };
+      if (next[id]) {
+        delete next[id];
+      } else {
+        next[id] = "like";
+      }
+      return next;
+    });
+  }
+
+  async function handleShare(item: NewsItem) {
+    await copyLink(item.slug);
+  }
+
   if (news.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-border/80 bg-card/40 p-16 text-center backdrop-blur-md">
@@ -101,10 +234,6 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
     );
   }
 
-  // Month headings are worked out up front rather than tracked while
-  // rendering: an entry shows one when its month differs from the entry above.
-  // They stay inside the single list so a screen reader hears every article in
-  // date order.
   const entries = visible.map((item, i) => ({
     item,
     showHeading: i === 0 || monthKey(item.date) !== monthKey(visible[i - 1].date),
@@ -147,6 +276,7 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
         <ol className="relative space-y-4 border-l border-border/70 pl-6 sm:pl-8">
           {entries.map(({ item, showHeading }) => {
             const isOpen = openIds.has(item.id);
+            const currentReaction = userReactions[item.id];
             const panelId = `news-panel-${item.id}`;
 
             return (
@@ -164,64 +294,87 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
                     className="absolute top-8 -left-[1.85rem] size-3 rounded-full border-2 border-background bg-primary sm:-left-[2.35rem]"
                   />
 
-                  {/* Styled as a social post: page header, caption, media, actions. */}
+                  {/* Styled as a social post: profile, date, caption, pic, reacts, comments, share, and emoji */}
                   <article className="overflow-hidden rounded-2xl border-2 border-foreground bg-card shadow-[4px_4px_0_0_var(--foreground)] transition-all duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_var(--foreground)] motion-reduce:transition-none motion-reduce:hover:translate-x-0 motion-reduce:hover:translate-y-0">
-                    {/* Post header */}
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 px-4 pt-4 sm:flex-nowrap sm:px-5">
-                      <span className="relative size-11 shrink-0 overflow-hidden rounded-full border-2 border-foreground bg-white">
-                        <Image src="/logo.png" alt="" aria-hidden="true" fill sizes="44px" className="object-contain p-1" />
-                      </span>
-                      <div className="min-w-0 flex-1 basis-40">
-                        <p className="text-sm font-bold leading-tight text-foreground sm:truncate">
-                          {siteConfig.fullName}
-                        </p>
-                        <p className="mt-0.5 flex items-center gap-1.5 whitespace-nowrap font-mono text-xs text-muted-foreground">
-                          <time dateTime={item.date}>{formatNewsDate(item.date)}</time>
-                          <span aria-hidden="true">·</span>
-                          <Globe className="size-3" aria-label="Public" />
-                        </p>
+                    {/* Post header: Profile avatar, name, verified badge, date */}
+                    <div className="flex items-center justify-between gap-3 px-4 pt-4 sm:px-5">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <span className="relative size-10 sm:size-11 shrink-0 overflow-hidden rounded-full border-2 border-foreground bg-white shadow-[1px_1px_0_0_var(--foreground)]">
+                          <Image
+                            src="/logo.png"
+                            alt=""
+                            aria-hidden="true"
+                            fill
+                            sizes="44px"
+                            className="object-contain p-1"
+                          />
+                        </span>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-1.5 leading-tight">
+                            <span className="text-sm sm:text-[15px] font-bold text-foreground truncate">
+                              {siteConfig.fullName}
+                            </span>
+                            <span className="inline-flex items-center text-[#1877F2]" title="Verified Page">
+                              <CheckCircle2 className="size-3.5 fill-[#1877F2] text-white" />
+                            </span>
+                          </div>
+                          <p className="mt-0.5 flex items-center gap-1.5 whitespace-nowrap font-mono text-xs text-muted-foreground">
+                            <time dateTime={item.date}>{formatNewsDate(item.date)}</time>
+                            <span aria-hidden="true">·</span>
+                            <Globe className="size-3" aria-label="Public" />
+                          </p>
+                        </div>
                       </div>
-                      {item.category && (
-                        <Badge
-                          variant="outline"
-                          className="shrink-0 border-primary/20 bg-primary/10 font-mono text-xs font-semibold text-primary"
-                        >
-                          {item.category}
-                        </Badge>
-                      )}
                     </div>
 
-                    {/* Caption */}
-                    <div className="px-4 pt-4 sm:px-5">
+                    {/* Caption: Title, body text, see more */}
+                    <div className="px-4 pt-3.5 pb-2 sm:px-5">
                       <h3 className="font-heading text-xl font-extrabold leading-snug tracking-tight text-foreground sm:text-2xl">
-                        <Link href={`/news/${item.slug}`} className="hover:text-brand">
+                        <Link href={`/news/${item.slug}`} className="transition-colors hover:text-brand">
                           {item.title}
                         </Link>
                       </h3>
+
                       {isOpen ? (
-                        <div id={panelId} className="mt-3 space-y-3 text-base leading-relaxed text-foreground/90">
+                        <div id={panelId} className="mt-2.5 space-y-3 text-sm sm:text-base leading-relaxed text-foreground/90">
                           {item.content.split("\n\n").map((paragraph, pIdx) => (
                             <p key={pIdx}>{paragraph}</p>
                           ))}
                           {item.tags && item.tags.length > 0 && (
-                            <p className="flex flex-wrap gap-x-3 font-semibold text-brand">
+                            <p className="flex flex-wrap gap-x-2.5 gap-y-1 font-semibold text-brand text-xs sm:text-sm">
                               {item.tags.map((tag) => (
                                 <span key={tag}>#{tag}</span>
                               ))}
                             </p>
                           )}
+                          <div className="pt-1">
+                            <button
+                              type="button"
+                              onClick={() => toggle(item.id)}
+                              className="text-xs sm:text-sm font-semibold text-muted-foreground hover:text-foreground hover:underline cursor-pointer"
+                            >
+                              See less
+                            </button>
+                          </div>
                         </div>
                       ) : (
-                        <p id={panelId} className="mt-2 line-clamp-3 text-base leading-relaxed text-foreground/80">
-                          {item.excerpt}
+                        <p id={panelId} className="mt-2 text-sm sm:text-base leading-relaxed text-foreground/80">
+                          {item.excerpt}{" "}
+                          <button
+                            type="button"
+                            onClick={() => toggle(item.id)}
+                            className="font-semibold text-foreground hover:underline cursor-pointer"
+                          >
+                            ... See more
+                          </button>
                         </p>
                       )}
                     </div>
 
-                    {/* Media: up to two tiles, "+N" on the last when there are more */}
+                    {/* Media: Image / gallery full width across card */}
                     {item.images && item.images.length > 0 && (
                       <div
-                        className={`mt-4 grid gap-0.5 border-y-2 border-foreground bg-foreground ${
+                        className={`mt-2.5 grid gap-0.5 border-y-2 border-foreground bg-foreground ${
                           item.images.length === 1 ? "grid-cols-1" : "grid-cols-2"
                         }`}
                       >
@@ -240,11 +393,11 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
                               src={src}
                               alt={imgIdx === 0 ? item.title : ""}
                               fill
-                              sizes="(max-width: 768px) 100vw, 480px"
-                              className="object-cover transition-transform duration-500 group-hover/media:scale-[1.03]"
+                              sizes="(max-width: 768px) 100vw, 680px"
+                              className="object-cover transition-transform duration-500 group-hover/media:scale-[1.02]"
                             />
                             {imgIdx === 1 && item.images!.length > 2 && (
-                              <span className="absolute inset-0 grid place-items-center bg-foreground/55 text-3xl font-bold text-white">
+                              <span className="absolute inset-0 grid place-items-center bg-foreground/60 text-3xl font-bold text-white backdrop-blur-[2px]">
                                 +{item.images!.length - 2}
                               </span>
                             )}
@@ -253,36 +406,106 @@ export function NewsTimeline({ news }: { news: NewsItem[] }) {
                       </div>
                     )}
 
-                    {/* Actions */}
-                    <div className="flex flex-wrap items-center gap-1 px-2 py-2 sm:px-3">
+                    {/* Engagement bar: reacts with floating emoji picker, comments, share, and emoji cluster on right */}
+                    <div className="flex items-center justify-between border-t border-border/70 bg-card px-3 py-2 sm:px-4">
+                      {/* Left: Reacts (with Floating Picker), Comments, Share */}
+                      <div className="flex items-center gap-1 sm:gap-1.5">
+                        {/* React Container with Floating Picker */}
+                        <div
+                          className="relative"
+                          onMouseEnter={() => showPicker(item.id)}
+                          onMouseLeave={hidePicker}
+                        >
+                          {/* Floating Reaction Picker Bar */}
+                          {hoveredPickerId === item.id && (
+                            <div
+                              className="absolute bottom-full left-0 mb-2 z-50 flex items-center gap-1 sm:gap-1.5 rounded-full bg-[#18191a] p-1.5 shadow-2xl border border-white/10 backdrop-blur-md animate-in fade-in zoom-in-95 duration-150"
+                              role="toolbar"
+                              aria-label="Choose a reaction"
+                            >
+                              {REACTIONS.map((r) => (
+                                <button
+                                  key={r.id}
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    selectReaction(item.id, r.id);
+                                  }}
+                                  className="group/emoji relative grid place-items-center p-0.5 transition-transform duration-150 hover:scale-130 hover:-translate-y-1.5 active:scale-110 cursor-pointer"
+                                >
+                                  {/* Tooltip badge */}
+                                  <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 rounded-full bg-black/90 px-2 py-0.5 text-[10px] font-bold text-white opacity-0 transition-opacity duration-150 group-hover/emoji:opacity-100 shadow-md whitespace-nowrap">
+                                    {r.label}
+                                  </span>
+                                  {r.renderIcon()}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* React Button */}
+                          <button
+                            type="button"
+                            onClick={() => toggleReaction(item.id)}
+                            aria-label="React"
+                            title={currentReaction ? `Reacted: ${currentReaction}` : "React"}
+                            className={`inline-flex items-center justify-center rounded-lg p-2 text-muted-foreground transition-all hover:bg-secondary hover:text-foreground active:scale-95 cursor-pointer ${
+                              currentReaction ? "bg-secondary/60" : ""
+                            }`}
+                          >
+                            {renderActiveReactionIcon(currentReaction)}
+                          </button>
+                        </div>
+
+                        {/* Comments (clickable button without function) */}
+                        <button
+                          type="button"
+                          aria-label="Comments"
+                          title="Comments"
+                          className="inline-flex items-center justify-center rounded-lg p-2 text-muted-foreground transition-all hover:bg-secondary hover:text-foreground active:scale-95 cursor-pointer"
+                        >
+                          <MessageCircle className="size-4 sm:size-[18px]" />
+                        </button>
+
+                        {/* Share */}
+                        <button
+                          type="button"
+                          onClick={() => handleShare(item)}
+                          aria-label="Share"
+                          title="Share"
+                          className="inline-flex items-center justify-center rounded-lg p-2 text-muted-foreground transition-all hover:bg-secondary hover:text-foreground active:scale-95 cursor-pointer"
+                        >
+                          <Share2 className="size-4 sm:size-[18px]" />
+                        </button>
+                      </div>
+
+                      {/* Right: Emoji reactions cluster (clicking also opens picker) */}
                       <button
                         type="button"
-                        onClick={() => toggle(item.id)}
-                        aria-expanded={isOpen}
-                        aria-controls={panelId}
-                        className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-muted-foreground outline-none transition-colors hover:bg-secondary hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+                        onClick={() => showPicker(item.id)}
+                        className="flex items-center -space-x-1 sm:-space-x-1.5 cursor-pointer py-1 transition-transform hover:scale-105 active:scale-95"
+                        title="Choose reaction"
+                        aria-label="Reactions: Love, Like, Wow"
                       >
-                        <ChevronDown
-                          aria-hidden="true"
-                          className={`size-4 ${prefersReducedMotion ? "" : "transition-transform duration-200"} ${isOpen ? "rotate-180" : ""}`}
-                        />
-                        {isOpen ? "Show less" : "Read more"}
+                        <span
+                          className="relative z-30 flex size-5.5 sm:size-6 items-center justify-center rounded-full bg-[#FA3E3E] text-white shadow-xs ring-2 ring-card text-[11px] sm:text-[12px] leading-none transition-transform hover:scale-125"
+                          title="Love"
+                        >
+                          <Heart className="size-2.5 sm:size-3 fill-white text-white" />
+                        </span>
+                        <span
+                          className="relative z-20 flex size-5.5 sm:size-6 items-center justify-center rounded-full bg-[#1877F2] text-white shadow-xs ring-2 ring-card text-[11px] sm:text-[12px] leading-none transition-transform hover:scale-125"
+                          title="Like"
+                        >
+                          <ThumbsUp className="size-2.5 sm:size-3 fill-white text-white" />
+                        </span>
+                        <span
+                          className="relative z-10 flex size-5.5 sm:size-6 items-center justify-center rounded-full bg-[#F7B125] text-white shadow-xs ring-2 ring-card text-[12px] sm:text-[13px] leading-none transition-transform hover:scale-125"
+                          title="Wow"
+                        >
+                          😮
+                        </span>
                       </button>
-                      <button
-                        type="button"
-                        onClick={() => copyLink(item.slug)}
-                        className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-muted-foreground outline-none transition-colors hover:bg-secondary hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
-                      >
-                        <Link2 aria-hidden="true" className="size-4" />
-                        Copy link
-                      </button>
-                      <Link
-                        href={`/news/${item.slug}`}
-                        className="ml-auto inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3 text-sm font-bold text-foreground transition-all hover:gap-2.5 hover:text-brand"
-                      >
-                        Full article
-                        <ArrowRight className="size-4" aria-hidden="true" />
-                      </Link>
                     </div>
                   </article>
                 </div>
