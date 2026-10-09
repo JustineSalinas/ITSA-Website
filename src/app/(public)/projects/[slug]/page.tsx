@@ -204,8 +204,8 @@ export default async function ProjectDetailPage({
             <SectionHeading index={num("features")}>Features</SectionHeading>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {project.features.map((feature) => (
-                <div key={feature.title} className="flex gap-4 p-5 rounded-xl bg-card border border-border/80 transition-all hover:border-primary/40 hover:shadow-md">
-                  <div className="mt-0.5 size-7 rounded-full bg-primary/10 text-primary grid place-items-center shrink-0">
+                <div key={feature.title} className="flex gap-4 p-5 rounded-xl bg-card border-2 border-foreground shadow-[3px_3px_0_0_var(--foreground)] transition-all">
+                  <div className="mt-0.5 size-7 rounded-full border border-foreground bg-primary/10 text-primary grid place-items-center shrink-0">
                     <Check className="size-4" />
                   </div>
                   <div className="flex flex-col gap-1">
@@ -244,8 +244,8 @@ export default async function ProjectDetailPage({
             <SectionHeading index={num("team")}>Team</SectionHeading>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {project.teamMembers.map((member, index) => (
-                <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border/80 transition-all hover:border-primary/40 hover:shadow-md">
-                  <div className="size-10 rounded-full bg-primary/10 text-primary grid place-items-center shrink-0">
+                <div key={index} className="flex items-center gap-4 p-4 rounded-xl bg-card border-2 border-foreground shadow-[3px_3px_0_0_var(--foreground)] transition-all">
+                  <div className="size-10 rounded-full border border-foreground bg-primary/10 text-primary grid place-items-center shrink-0">
                     <User className="size-5" />
                   </div>
                   <div className="flex flex-col">

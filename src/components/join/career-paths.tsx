@@ -110,7 +110,7 @@ export function CareerPaths() {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <div className="rounded-3xl border border-border/80 bg-card p-4 sm:p-6">
+    <div className="rounded-3xl border-2 border-foreground bg-card p-5 sm:p-7 shadow-[6px_6px_0_0_var(--foreground)]">
       {/* Role picker */}
       <div className="flex flex-wrap items-center gap-2 pb-2">
         {paths.map((path) => {
@@ -123,10 +123,10 @@ export function CareerPaths() {
               onClick={() => setActiveId(path.id)}
               aria-current={isActive}
               className={cn(
-                "flex min-h-10 items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium outline-none transition-all focus-visible:ring-3 focus-visible:ring-ring/50",
+                "flex min-h-10 items-center gap-2 rounded-full border-2 border-foreground px-4 py-2 text-sm font-semibold outline-none transition-all duration-150 focus-visible:ring-3 focus-visible:ring-ring/50",
                 isActive
-                  ? "border-brand bg-brand text-brand-foreground shadow-xs"
-                  : "border-border/80 bg-secondary/40 text-muted-foreground hover:border-brand/40 hover:text-foreground"
+                  ? "bg-brand text-white shadow-[2px_2px_0_0_var(--foreground)] -translate-x-0.5 -translate-y-0.5"
+                  : "bg-white text-foreground hover:bg-secondary/70 hover:shadow-[2px_2px_0_0_var(--foreground)] hover:-translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0"
               )}
             >
               <Icon className="size-4" aria-hidden="true" />
@@ -144,17 +144,17 @@ export function CareerPaths() {
           animate={{ opacity: 1, y: 0 }}
           exit={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
-          className="mt-6 rounded-2xl border border-border/60 bg-muted/20 p-5 sm:p-6"
+          className="mt-6 rounded-2xl border-2 border-foreground bg-muted/30 p-5 sm:p-6"
         >
           <div className="flex items-center gap-3.5">
-            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-brand/10 text-brand">
+            <span className="grid size-11 shrink-0 place-items-center rounded-xl border-2 border-foreground bg-brand/10 text-brand">
               <active.icon className="size-5" aria-hidden="true" />
             </span>
             <h3 className="font-heading text-lg font-bold tracking-tight text-foreground sm:text-xl">
               {active.title}
             </h3>
           </div>
-          <p className="mt-3.5 max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+          <p className="mt-3.5 max-w-3xl text-sm leading-relaxed text-foreground/80 sm:text-base">
             {active.blurb}
           </p>
         </motion.div>

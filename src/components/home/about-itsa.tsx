@@ -88,15 +88,15 @@ export function AboutItsa() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
-                className="rounded-xl border border-border/80 bg-card p-6 sm:p-8 transition-all duration-300 hover:border-primary/40 hover:shadow-md"
+                className="rounded-2xl border-2 border-foreground bg-card p-6 sm:p-8 shadow-[4px_4px_0_0_var(--foreground)] transition-all duration-300 hover:shadow-[6px_6px_0_0_var(--foreground)] hover:-translate-x-0.5 hover:-translate-y-0.5"
               >
-                <div className="flex items-center gap-3">
-                  <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                <div className="flex items-center gap-3.5">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-xl border-2 border-foreground bg-primary/10 text-primary shadow-[2px_2px_0_0_var(--foreground)]">
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
-                  <h3 className="text-xl font-bold tracking-tight">{item.title}</h3>
+                  <h3 className="text-xl font-bold tracking-tight text-foreground">{item.title}</h3>
                 </div>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-base">
                   {item.body}
                 </p>
               </motion.div>
