@@ -126,23 +126,23 @@ export default async function JoinPage() {
             </div>
 
             {/* Channels Feature Bar */}
-            <div className="relative z-10 mt-6 flex flex-wrap items-center gap-2 border-t border-border/70 pt-4 text-xs">
+            <div className="relative z-10 mt-6 flex flex-wrap items-center gap-2 border-t-2 border-foreground/15 pt-4 text-xs">
               <span className="font-mono text-xs font-semibold uppercase tracking-wider text-muted-foreground mr-1">
                 Channels:
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-secondary/50 px-2.5 py-1 font-medium text-foreground">
+              <span className="inline-flex items-center gap-1.5 rounded-lg border-2 border-foreground bg-secondary/50 px-2.5 py-1 font-semibold text-foreground shadow-[2px_2px_0_0_var(--foreground)]">
                 💬 #general-chat
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-secondary/50 px-2.5 py-1 font-medium text-foreground">
+              <span className="inline-flex items-center gap-1.5 rounded-lg border-2 border-foreground bg-secondary/50 px-2.5 py-1 font-semibold text-foreground shadow-[2px_2px_0_0_var(--foreground)]">
                 📢 #announcements
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-secondary/50 px-2.5 py-1 font-medium text-foreground">
+              <span className="inline-flex items-center gap-1.5 rounded-lg border-2 border-foreground bg-secondary/50 px-2.5 py-1 font-semibold text-foreground shadow-[2px_2px_0_0_var(--foreground)]">
                 💻 #dev-collab
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-secondary/50 px-2.5 py-1 font-medium text-foreground">
+              <span className="inline-flex items-center gap-1.5 rounded-lg border-2 border-foreground bg-secondary/50 px-2.5 py-1 font-semibold text-foreground shadow-[2px_2px_0_0_var(--foreground)]">
                 📚 #study-groups
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-secondary/50 px-2.5 py-1 font-medium text-foreground">
+              <span className="inline-flex items-center gap-1.5 rounded-lg border-2 border-foreground bg-secondary/50 px-2.5 py-1 font-semibold text-foreground shadow-[2px_2px_0_0_var(--foreground)]">
                 🎮 #game-nights
               </span>
             </div>
@@ -184,7 +184,7 @@ export default async function JoinPage() {
             {chips.map((chip) => (
               <li
                 key={chip.label}
-                className="flex items-center gap-2 rounded-full border border-border/80 bg-secondary/50 px-4 py-2 text-sm font-medium"
+                className="flex items-center gap-2 rounded-full border-2 border-foreground bg-card px-4 py-2 text-sm font-semibold text-foreground shadow-[2px_2px_0_0_var(--foreground)]"
               >
                 <chip.icon className="size-4 text-brand" aria-hidden="true" />
                 {chip.label}
