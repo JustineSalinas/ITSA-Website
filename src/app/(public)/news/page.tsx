@@ -47,7 +47,7 @@ export default async function NewsPage() {
 
         <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           {/* Back to Home button */}
-          <div className="mb-8 flex items-center justify-between">
+          <div className="mb-8 flex items-center">
             <Button
               variant="outline"
               size="sm"
@@ -57,10 +57,6 @@ export default async function NewsPage() {
               <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" />
               Back to Homepage
             </Button>
-
-            <span className="font-mono text-xs text-muted-foreground">
-              {news.length} {news.length === 1 ? "Article" : "Articles"} Published
-            </span>
           </div>
 
           <NewsTimeline news={news} />

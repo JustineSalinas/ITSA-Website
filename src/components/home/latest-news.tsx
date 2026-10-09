@@ -58,7 +58,7 @@ export function LatestNews({ news }: LatestNewsProps) {
               whileHover={{ y: -4 }}
               className="h-full"
             >
-              <Card className="group flex h-full flex-col justify-between overflow-hidden border-border/80 bg-card p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-md">
+              <Card className="group flex h-full flex-col justify-between overflow-hidden border-black bg-card p-6 transition-all duration-300 hover:border-black hover:shadow-md">
                 <div>
                   {/* Photo / Slideshow Media */}
                   {item.images && item.images.length > 0 && (
