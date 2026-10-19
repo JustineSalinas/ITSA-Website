@@ -50,7 +50,7 @@ const projects: ProjectItem[] = [
     title: "Marine-AI",
     description:
       "A retrofittable IoT sensor gateway and AI bridge display for maritime vessels. Three parallel AI modules converge on a single captain display showing live waypoint routes, optimal throttle settings, and predictive maintenance alerts. 1st Runner-Up at the National AI Hackathon 2026.",
-    author: "Adrian Justin Salinas",
+    author: "Team Solmate",
     role: "AI/ML Engineer",
     teamName: "SOLMATE",
     awardName: "1st Runner-Up",
@@ -72,12 +72,12 @@ const projects: ProjectItem[] = [
     sections: [],
   },
   {
-    id: "solmate",
-    slug: "solmate",
-    title: "Solmate",
+    id: "e-ferry",
+    slug: "e-ferry",
+    title: "E-Ferry",
     description:
       "Clean & smart maritime solutions: electric ferry retrofits plus a green fintech platform unlocking institutional ESG capital for vessel electrification. 1st Runner-Up at the National Hackathon Nexus Philippines.",
-    author: "Adrian Justin Salinas",
+    author: "Team Solmate",
     role: "Full Stack Developer",
     teamName: "SOLMATE",
     awardName: "1st Runner-Up",
