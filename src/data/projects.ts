@@ -1,3 +1,5 @@
+import "server-only";
+
 export interface ProjectSection {
   title?: string;
   content?: string;
@@ -42,6 +44,58 @@ export interface ProjectItem {
 }
 
 const projects: ProjectItem[] = [
+  {
+    id: "marine-ai",
+    slug: "marine-ai",
+    title: "Marine-AI",
+    description:
+      "A retrofittable IoT sensor gateway and AI bridge display for maritime vessels. Three parallel AI modules converge on a single captain display showing live waypoint routes, optimal throttle settings, and predictive maintenance alerts. 1st Runner-Up at the National AI Hackathon 2026.",
+    author: "Adrian Justin Salinas",
+    role: "AI/ML Engineer",
+    teamName: "SOLMATE",
+    awardName: "1st Runner-Up",
+    awardHost: "National AI Hackathon 2026",
+    tags: ["Hackathon", "Award", "AI", "IoT", "Maritime"],
+    techStack: ["XGBoost", "Gradient-boosted forecasting", "PCA anomaly detection"],
+    liveUrl: "https://e-ferry.vercel.app/",
+    content:
+      "Marine-AI is Team SOLMATE's advisory system for ship captains: a retrofittable IoT sensor gateway paired with an AI bridge display. Built by teaming up with SOLMATE, a startup backed by CPUGAD TBI, with 3 Mechanical Engineering members from Central Philippine University. 1st Runner-Up at the National AI Hackathon 2026 (AI Fest 2026 Finale).",
+    features: [
+      { title: "Speed & throttle optimizer", description: "An XGBoost hydrodynamic model recommends the optimal throttle setting in real time." },
+      { title: "Geodesic route planner", description: "Gradient-boosted sea-state, wind, wave, and current forecasting plots the live waypoint route." },
+      { title: "Predictive maintenance", description: "A PCA linear autoencoder and robust z-score anomaly detector flags developing faults before they fail." },
+      { title: "One captain display", description: "All three modules converge on a single bridge display -- the captain stays in full command." },
+    ],
+    impact: [
+      "1st Runner-Up, National AI Hackathon 2026 (AI Fest 2026 Finale).",
+    ],
+    sections: [],
+  },
+  {
+    id: "solmate",
+    slug: "solmate",
+    title: "Solmate",
+    description:
+      "Clean & smart maritime solutions: electric ferry retrofits plus a green fintech platform unlocking institutional ESG capital for vessel electrification. 1st Runner-Up at the National Hackathon Nexus Philippines.",
+    author: "Adrian Justin Salinas",
+    role: "Full Stack Developer",
+    teamName: "SOLMATE",
+    awardName: "1st Runner-Up",
+    awardHost: "National Hackathon Nexus Philippines",
+    tags: ["Hackathon", "Award", "Fintech", "IoT", "Maritime"],
+    liveUrl: "https://e-ferry.vercel.app/",
+    content:
+      "Solmate unifies modular electric ferry retrofits with institutional green finance. Built by teaming up with SOLMATE, a startup backed by CPUGAD TBI, with 3 Mechanical Engineering members from Central Philippine University. 1st Runner-Up at the National Hackathon Nexus Philippines, National Clean Energy Track.",
+    features: [
+      { title: "E-Ferry retrofit", description: "Converts diesel passenger boats to electric with no hull reconstruction needed, using liquid-cooled LFP battery packs and digital throttle control." },
+      { title: "Green Fintech Platform", description: "Unlocking institutional ESG capital for maritime vessel electrification. Converts tamper-proof IoT telemetry into bankable loan structures, tokenized green bonds, and automated carbon credit monetization." },
+      { title: "Pay-As-You-Save", description: "A $0-upfront financing option, alongside battery leasing and green bond issuance." },
+    ],
+    impact: [
+      "1st Runner-Up, National Hackathon Nexus Philippines, National Clean Energy Track.",
+    ],
+    sections: [],
+  },
   {
     id: "gilayon",
     slug: "gilayon",
@@ -108,11 +162,22 @@ const projects: ProjectItem[] = [
 ];
 
 // Real, sourced from each project's own live site or README -- no invented
-// content. Listed newest first; add new projects at the top.
+// content. These are the seed/offline-fallback projects now; the live list
+// is edited through the /admin CMS (Firestore). Listed newest first.
 export async function getProjects(): Promise<ProjectItem[]> {
-  return projects;
+  const { isAdminConfigured } = await import("@/lib/firebase/admin");
+  if (!isAdminConfigured) return projects;
+  try {
+    const { listProjectDocs } = await import("@/lib/admin/content");
+    const items = await listProjectDocs();
+    return items.length ? items : projects;
+  } catch (error) {
+    console.error("[data] Firestore projects fetch failed:", error);
+    return projects;
+  }
 }
 
 export async function getProjectBySlug(slug: string): Promise<ProjectItem | undefined> {
-  return projects.find((p) => p.slug === slug);
+  const all = await getProjects();
+  return all.find((p) => p.slug === slug);
 }

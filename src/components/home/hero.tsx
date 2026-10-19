@@ -172,7 +172,7 @@ export function Hero() {
                   })}
                 </div>
                 
-                {/* Portfolio of the Month Quick Link */}
+                {/* Project of the Month Quick Link */}
                 <div className="mt-8 flex justify-center">
                   <Button
                     variant="secondary"
@@ -181,7 +181,7 @@ export function Hero() {
                     render={<Link href="/projects" />}
                   >
                     <span className="mr-2 inline-block size-1.5 rounded-full bg-brand animate-pulse" />
-                    Portfolio of the Month
+                    Project of the Month
                     <ArrowUpRight className="ml-1.5 size-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                   </Button>
                 </div>
