@@ -47,10 +47,10 @@ jobs:
       # --audit-level is critical, not high: GHSA-vfj7-8cjw-p6xm (braces
       # stack-exhaustion DoS) has no patched release upstream as of this
       # writing (first_patched_version is null on the advisory) and every
-      # path to it in our tree is dev/build-time tooling (Sanity's codegen
-      # CLI's own pinned chokidar/braces, not anything in the deployed
-      # Next.js app) -- there is nothing left to fix, and "high" would fail
-      # every build until Sanity or micromatch/braces ships a release. If a
+      # path to it in our tree is dev/build-time tooling (shadcn CLI's own
+      # pinned ts-morph/fast-glob/micromatch/braces chain, not anything in
+      # the deployed Next.js app) -- there is nothing left to fix, and
+      # "high" would fail every build until that chain ships a release. If a
       # future high-severity finding shows up in a package that actually
       # ships to users, raise this back to `high` rather than adding to the
       # exception.

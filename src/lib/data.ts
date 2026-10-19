@@ -1,32 +1,19 @@
 import "server-only";
 import { realOfficers } from "@/data/officers";
 import { localNews } from "@/data/news";
-import { getSanityNews } from "@/sanity/lib/news";
-import { getSanityOfficers } from "@/sanity/lib/officers";
-import { getSanityEvents } from "@/sanity/lib/events";
+import { localEvents } from "@/data/events";
 import type { EventItem, Officer, NewsItem } from "@/lib/types";
 
-// Officers still fall back to the real, reconciled org chart in
-// src/data/officers.ts -- that isn't placeholder content, it's the actual
-// roster, and the org chart tree itself has no Sanity equivalent (see
-// CLAUDE.md). Events have no bundled fallback: Sanity is their only source. News and
-// projects also have real local content (src/data/news.ts, src/data/projects.ts).
+// Officers, events, and news are all local, real content now (no CMS) --
+// src/data/officers.ts, src/data/events.ts, src/data/news.ts respectively.
+// The org chart tree in officers.ts in particular has no flat-list
+// equivalent; src/app/(public)/officers/page.tsx imports it directly.
 export async function getOfficers(): Promise<Officer[]> {
-  const sanityOfficers = await getSanityOfficers();
-  if (sanityOfficers && sanityOfficers.length) return sanityOfficers;
   return realOfficers;
 }
 
 export async function getEvents(): Promise<EventItem[]> {
-  const sanityEvents = await getSanityEvents();
-  if (sanityEvents) return sanityEvents;
-
-  if (process.env.NODE_ENV === "production") {
-    console.error(
-      "[data] Sanity returned no events. Check the Sanity connection and that events are published.",
-    );
-  }
-  return [];
+  return localEvents;
 }
 
 export async function getEventBySlug(slug: string): Promise<EventItem | null> {
@@ -45,12 +32,6 @@ export function splitEvents(events: EventItem[]) {
   return { upcoming, past };
 }
 
-// Local, real announcements plus anything published in Sanity. A Sanity post
-// with the same slug as a local one wins, so editing it there overrides.
 export async function getNews(): Promise<NewsItem[]> {
-  const sanityNews = (await getSanityNews()) ?? [];
-  const sanitySlugs = new Set(sanityNews.map((n) => n.slug));
-  return [...sanityNews, ...localNews.filter((n) => !sanitySlugs.has(n.slug))];
+  return localNews;
 }
-
-

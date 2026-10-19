@@ -37,23 +37,6 @@ const csp = [
   ...(isDev ? [] : ["upgrade-insecure-requests"]),
 ].join("; ");
 
-// The Sanity Studio embedded at /studio is its own SPA with a much wider set
-// of hosts (asset CDN, live API, realtime websocket) and is protected by
-// Sanity's own account auth, not by this app -- so it gets a separate,
-// deliberately permissive policy rather than inheriting the public site's
-// strict one and breaking content editing.
-const studioCsp = [
-  "default-src 'self'",
-  "base-uri 'self'",
-  "object-src 'none'",
-  "form-action 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https:",
-  "style-src 'self' 'unsafe-inline' https:",
-  "img-src 'self' data: blob: https:",
-  "font-src 'self' data: https:",
-  "connect-src 'self' https: wss:",
-].join("; ");
-
 const securityHeaders = [
   { key: "X-Frame-Options", value: "DENY" },
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -86,16 +69,7 @@ const nextConfig: NextConfig = {
   },
 
   async headers() {
-    return [
-      { source: "/:path*", headers: securityHeaders },
-      {
-        // Overrides the strict public CSP above with the permissive Studio
-        // one -- Next applies header blocks in order, so a matching key
-        // defined later wins for routes under /studio.
-        source: "/studio/:path*",
-        headers: [{ key: "Content-Security-Policy", value: studioCsp }],
-      },
-    ];
+    return [{ source: "/:path*", headers: securityHeaders }];
   },
 };
 

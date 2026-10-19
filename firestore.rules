@@ -5,9 +5,9 @@ service cloud.firestore {
 
     // Nothing in this app authenticates as anyone -- the officer admin
     // dashboard, the contact form, and the Ask ITSA tally were all removed,
-    // and content now lives in Sanity -- so there is no client read/write
-    // path left at all. The Admin SDK (api/health's Firestore check) bypasses
-    // these rules entirely.
+    // and content lives in local data files (src/data/) now -- so there is
+    // no client read/write path left at all. The Admin SDK (api/health's
+    // Firestore check) bypasses these rules entirely.
     match /{document=**} {
       allow read, write: if false;
     }

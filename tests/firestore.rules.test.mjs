@@ -4,8 +4,9 @@
 //
 // The app has no client read/write path left at all -- the officer admin
 // dashboard, the contact form, and the Ask ITSA tally were all removed, and
-// content now lives in Sanity. This asserts no client, signed in or not, can
-// read or write anything; the Admin SDK (api/health) bypasses these rules.
+// content lives in local data files (src/data/) now. This asserts no
+// client, signed in or not, can read or write anything; the Admin SDK
+// (api/health) bypasses these rules.
 import { test, before, after, beforeEach, describe } from "node:test";
 import { readFileSync } from "node:fs";
 import {

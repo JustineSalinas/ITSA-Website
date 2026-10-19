@@ -1,7 +1,6 @@
 import "server-only";
 import { NextResponse } from "next/server";
 import { isAdminConfigured, getAdminDb } from "@/lib/firebase/admin";
-import { getSanityClient } from "@/sanity/lib/client";
 
 /**
  * Health check for external uptime monitoring (H1).
@@ -39,29 +38,15 @@ async function checkFirestore(): Promise<CheckResult> {
   }
 }
 
-async function checkSanity(): Promise<CheckResult> {
-  const client = getSanityClient();
-  if (!client) {
-    return { ok: true, detail: "not configured" };
-  }
-  try {
-    await client.fetch('*[_type == "news"][0]._id');
-    return { ok: true };
-  } catch (error) {
-    console.error("[health] Sanity check failed:", error);
-    return { ok: false, detail: "unavailable" };
-  }
-}
-
 export async function GET() {
-  const [firestore, sanity] = await Promise.all([checkFirestore(), checkSanity()]);
-  const healthy = firestore.ok && sanity.ok;
+  const firestore = await checkFirestore();
+  const healthy = firestore.ok;
 
   return NextResponse.json(
     {
       status: healthy ? "ok" : "degraded",
       timestamp: new Date().toISOString(),
-      checks: { firestore, sanity },
+      checks: { firestore },
     },
     { status: healthy ? 200 : 503 },
   );
