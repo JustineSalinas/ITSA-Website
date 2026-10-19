@@ -24,32 +24,40 @@ emulator on port **8571**, project `itsa-rules-test`).
 
 ## Architecture
 
-Next.js 16 App Router + Firebase. Public marketing site for IT students.
-There is no admin login/dashboard and no CMS — all content lives in local
-TypeScript data files under `src/data/`, edited directly in code. Path
-alias `@/*` → `src/*`.
+Next.js 16 App Router + Firebase. Public marketing site for IT students,
+with an in-house admin CMS at `/admin` for officers (News, Events,
+Projects). Path alias `@/*` → `src/*`.
 
 ### Route structure (`src/app/`)
 - `(public)/` — the whole site (home, about, events, news, officers, projects, join). Wraps children in navbar/footer via `(public)/layout.tsx`.
-- `api/` — route handlers: `health` (uptime-monitor endpoint).
+- `admin/login/` — sign-in page, deliberately **outside** the auth-gated layout (see below for why).
+- `admin/(protected)/` — the CMS itself (dashboard, News/Events/Projects list+create+edit). Route group, doesn't affect the URL (`/admin`, `/admin/news`, etc.) — its `layout.tsx` is what actually gates on a session.
+- `api/` — route handlers: `health` (uptime-monitor endpoint), `admin/session` (exchanges a Firebase ID token for the admin session cookie).
 
 ### Firebase, two SDKs
-- `src/lib/firebase/client.ts` — browser SDK, gated by `isFirebaseConfigured`.
-- `src/lib/firebase/admin.ts` — server Admin SDK (`server-only`), gated by `isAdminConfigured`. Only used by `api/health`'s Firestore reachability check (`getAdminDb`) — there is no Admin Auth or Storage usage left in the app, and Firestore is not a content store at all (see below).
+- `src/lib/firebase/client.ts` — browser SDK, gated by `isFirebaseConfigured`. Used by `/admin/login` (sign-in) and nothing else — the CMS's actual reads/writes never touch Firestore from the client.
+- `src/lib/firebase/admin.ts` — server Admin SDK (`server-only`), gated by `isAdminConfigured`. Backs `api/health`'s Firestore check, and — since the CMS — `getAdminAuth()` (session cookie verification) and `getAdminStorage()` (image uploads), on top of `getAdminDb()`.
 
-### Content model — all local, no CMS
-Sanity was removed (it never had real content for events or officers, and
-its only real news posts have been folded into the local files below).
-Adding or editing content now means editing these files directly and
-opening a PR/commit — there is no non-technical editing surface.
-- **Events**: `src/data/events.ts`. Empty until there's a real event — the events page renders an honest empty state, never placeholder events.
-- **News**: `src/data/news.ts` (real posts transcribed from ITSA's official Facebook, images in `public/images/news/`). Add new posts at the top of the array.
-- **Projects**: `src/data/projects.ts` (sourced from each project's live site/README), cover images in `public/images/projects/`. Add new projects at the top of the array.
-- **Officers**: `src/data/officers.ts`'s `orgChart`/`realOfficers` are the actual reconciled roster. `src/app/(public)/officers/page.tsx` imports `orgChart` directly for the tree view; `getOfficers()` in `data.ts` returns the flattened `realOfficers` for the flat `/officers` card grid.
-- Only real, verifiable content belongs in any of these — never invented members, links, dates, or metrics. `src/data/projects.ts` once held a fully fabricated array (`Gagambattle`, `Pharmatrack`, etc. — invented team members, `#` placeholder links, shown to real visitors with no dev-only gate); that was deleted outright, and the bar it violated still applies to everything in `src/data/`.
+### Content model — CMS-first, local files as seed/fallback
+News, Events, and Projects are edited through `/admin`, stored in
+Firestore (`cms_news`/`cms_events`/`cms_projects`, doc ID = slug), written
+only via Server Actions through the Admin SDK — never from the client.
+`src/lib/data.ts`'s `getNews`/`getEvents` and `src/data/projects.ts`'s
+`getProjects` read Firestore first and fall back to the local arrays only
+if Firestore is unreachable, unconfigured, or genuinely empty.
+- **Events**: `src/data/events.ts` is the fallback/seed, empty until there's a real event — never placeholder events.
+- **News**: `src/data/news.ts` is the fallback/seed (real posts transcribed from ITSA's official Facebook, images in `public/images/news/`). "Announcements" are a News category, not a separate content type.
+- **Projects**: `src/data/projects.ts` is the fallback/seed (sourced from each project's own live site/README), cover images in `public/images/projects/`.
+- **Officers**: unaffected by the CMS — `src/data/officers.ts`'s `orgChart`/`realOfficers` are still the only source, edited directly in code. The org-chart tree has no CMS equivalent; `src/app/(public)/officers/page.tsx` imports `orgChart` directly for the tree view, and `getOfficers()` in `data.ts` returns the flattened `realOfficers` for the flat `/officers` card grid.
+- Only real, verifiable content belongs in any of these — never invented members, links, dates, or metrics. `src/data/projects.ts` once held a fully fabricated array (`Gagambattle`, `Pharmatrack`, etc. — invented team members, `#` placeholder links, shown to real visitors with no dev-only gate); that was deleted outright, and the bar it violated still applies everywhere, CMS-entered content included.
+
+### `/admin` auth
+- Firebase Auth (email/password) + a hardcoded allowlist in `src/lib/admin/allowlist.ts` (`ADMIN_EMAIL_ALLOWLIST`) is the actual authorization boundary — a Firebase account on the project isn't sufficient on its own. One-time setup per new officer: create their account in the Firebase console (Email/Password provider must be enabled there first) and add their email to the allowlist.
+- Session: client signs in, exchanges the ID token for an HttpOnly session cookie via `POST /api/admin/session` (`createSessionCookie`). `src/lib/admin/session.ts`'s `getAdminSession()`/`requireAdminSession()` is the DAL — every admin page and Server Action calls it; there is no other check to keep in sync.
+- Images: `src/lib/admin/upload-image.ts`, capped at 4MB (Vercel's function body limit), normalized with `sharp` (auto-rotated, resized to 1600px, WebP) before landing in Firebase Storage. Always via a Server Action, never a direct client upload.
 
 ### Firestore security rules
-- `firestore.rules` denies every read and write from a client, signed in or not — there is no client read/write path left at all (the officer admin dashboard, the contact form, the Ask ITSA tally, and the Sanity CMS integration were all removed). Only the Admin SDK, which bypasses rules, touches Firestore (`api/health`'s check).
+- `firestore.rules` denies every read and write from a client, signed in or not — there is no client read/write path at all, including for the CMS: the public site reads via the Admin SDK server-side, and the CMS writes via Server Actions using the Admin SDK. The rules being "deny everything" is still literally true. (The officer admin dashboard being described as a deliberate removal in this file's history predates the CMS above — it's back, but rebuilt server-first rather than reopening the old client-Firestore surface.)
 - `firestore.rules` is covered by `tests/firestore.rules.test.mjs`; run `npm run test:rules` after editing rules.
 
 ### Notable subsystems
