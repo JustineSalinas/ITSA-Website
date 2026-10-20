@@ -131,7 +131,7 @@ export default async function NewsArticlePage({
       {lead && (
         <div className="mx-auto mt-10 max-w-4xl px-4 sm:px-6 lg:px-8">
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border-2 border-foreground bg-muted shadow-[6px_6px_0_0_var(--foreground)] sm:aspect-[16/9]">
-            <Image src={lead} alt={item.title} fill priority sizes="(max-width: 1024px) 100vw, 896px" className="object-cover object-center" />
+            <Image src={lead} alt={item.title} fill priority quality={90} sizes="(max-width: 1024px) 100vw, 896px" className="object-cover object-center" />
           </div>
         </div>
       )}
@@ -165,7 +165,7 @@ export default async function NewsArticlePage({
                 key={src}
                 className="relative aspect-[4/3] overflow-hidden rounded-2xl border-2 border-foreground bg-muted shadow-[3px_3px_0_0_var(--foreground)] first:sm:col-span-2 first:sm:aspect-[16/9]"
               >
-                <Image src={src} alt={`${item.title}, additional photo`} fill sizes="(max-width: 1024px) 100vw, 768px" className="object-cover object-center" />
+                <Image src={src} alt={`${item.title}, additional photo`} fill quality={90} sizes="(max-width: 1024px) 100vw, 768px" className="object-cover object-center" />
               </div>
             ))}
           </div>

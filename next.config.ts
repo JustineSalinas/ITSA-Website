@@ -66,6 +66,11 @@ const nextConfig: NextConfig = {
         pathname: bucket ? `/v0/b/${bucket}/o/**` : "/v0/b/**",
       },
     ],
+    // Next 16 defaults images.qualities to [75] only -- any other `quality`
+    // prop is silently coerced to the nearest allowed value. News/event
+    // photo quality={90} calls need 90 actually listed here or they'd
+    // quietly do nothing.
+    qualities: [75, 90],
   },
 
   async headers() {
