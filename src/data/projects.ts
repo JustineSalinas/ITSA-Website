@@ -61,6 +61,7 @@ const projects: ProjectItem[] = [
     teamName: "SOLMATE",
     awardName: "1st Runner-Up",
     awardHost: "National AI Hackathon 2026",
+    awardDate: "Aug 3–5, 2026",
     tags: ["National Hackathon", "Award", "AI", "IoT", "Maritime"],
     techStack: ["XGBoost", "Gradient-boosted forecasting", "PCA anomaly detection"],
     liveUrl: "https://e-ferry.vercel.app/",
@@ -89,6 +90,7 @@ const projects: ProjectItem[] = [
     teamName: "SOLMATE",
     awardName: "1st Runner-Up",
     awardHost: "Ready, Spark, Charge Hackathon 2026",
+    awardDate: "May 21–23, 2026",
     tags: ["National Hackathon", "Award", "Fintech", "IoT", "Maritime"],
     liveUrl: "https://e-ferry.vercel.app/",
     imageUrl: "/images/projects/e-ferry.webp",
@@ -114,6 +116,7 @@ const projects: ProjectItem[] = [
     tags: ["Web App", "Healthcare", "Hackathon", "Award"],
     awardName: "Top 10 Finalist",
     awardHost: "HackIloilo Philippine Startup",
+    awardDate: "Oct 16–18, 2026",
     awardPending: true,
     content:
       "Gilayon is Team KasCoders' entry to Hack Iloilo 2026: a working records system for an HMO clinic. It covers the HMO-Clinic flow from the concept document -- verified check-in through to the daily report -- including digitizing the clinic's existing paper archive.",
