@@ -34,6 +34,8 @@ export interface ProjectItem {
   githubUrl?: string;
   liveUrl?: string;
   imageUrl?: string;
+  /** Card thumbnail crop anchor. Defaults to "top" (flattering for people photos). */
+  imagePosition?: "top" | "center";
   /** "What it does": plain paragraphs separated by a blank line. */
   content: string;
   /** "Features": short title + one-line description each. */
@@ -144,6 +146,7 @@ const projects: ProjectItem[] = [
     techStack: ["ESP32", "LoRa", "ESP-NOW", "FreeRTOS", "HMAC-SHA256"],
     liveUrl: "https://horizontx.netlify.app",
     imageUrl: "/images/projects/horizon.webp",
+    imagePosition: "center",
     content:
       "Horizon is an offline LoRa mesh emergency communication ecosystem for disaster-prone communities in the Philippines. When internet and cell towers fail, its handheld communicators, solar relay and alarm system keep responders and residents connected, with no infrastructure needed.",
     features: [

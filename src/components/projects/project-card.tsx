@@ -57,7 +57,9 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
               alt={project.title}
               loading="lazy"
               decoding="async"
-              className="size-full object-cover object-top"
+              className={`size-full object-cover ${
+                project.imagePosition === "center" ? "object-center" : "object-top"
+              }`}
             />
           ) : (
             <div className="grid size-full place-items-center bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30">
@@ -87,9 +89,16 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
         </h3>
 
         {isFeatured && project.awardName && (
-          <div className="mt-1.5 flex items-center gap-1.5 text-xs font-semibold text-brand-orange">
-            <Trophy className="size-3" />
-            {project.awardName}
+          <div className="mt-1.5 flex items-center justify-between gap-2">
+            <span className="flex items-center gap-1.5 text-xs font-semibold text-brand-orange">
+              <Trophy className="size-3" />
+              {project.awardName}
+            </span>
+            {project.tags.includes("National Hackathon") && (
+              <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand/10 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-brand">
+                National Hackathon
+              </span>
+            )}
           </div>
         )}
 
