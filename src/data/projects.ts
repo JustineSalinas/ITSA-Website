@@ -38,6 +38,8 @@ export interface ProjectItem {
   imageUrl?: string;
   /** Card thumbnail crop anchor. Defaults to "top" (flattering for people photos). */
   imagePosition?: "top" | "center";
+  /** "contain" shows the whole image instead of cropping it to fill the box -- for wide graphics/screenshots where cropping would cut off or over-emphasize part of the composition. Defaults to "cover". */
+  imageFit?: "cover" | "contain";
   /** "What it does": plain paragraphs separated by a blank line. */
   content: string;
   /** "Features": short title + one-line description each. */
@@ -53,18 +55,18 @@ const projects: ProjectItem[] = [
     slug: "marine-ai",
     title: "Marine-AI",
     description:
-      "A retrofittable IoT sensor gateway and AI bridge display for maritime vessels. Three parallel AI modules converge on a single captain display showing live waypoint routes, optimal throttle settings, and predictive maintenance alerts. 1st Runner-Up at AI Hackathon Fest 2026.",
+      "A retrofittable IoT sensor gateway and AI bridge display for maritime vessels. Three parallel AI modules converge on a single captain display showing live waypoint routes, optimal throttle settings, and predictive maintenance alerts. 1st Runner-Up at the National AI Hackathon 2026.",
     author: "Team Solmate",
     role: "AI/ML Engineer",
     teamName: "SOLMATE",
     awardName: "1st Runner-Up",
-    awardHost: "AI Hackathon Fest 2026",
+    awardHost: "National AI Hackathon 2026",
     tags: ["National Hackathon", "Award", "AI", "IoT", "Maritime"],
     techStack: ["XGBoost", "Gradient-boosted forecasting", "PCA anomaly detection"],
     liveUrl: "https://e-ferry.vercel.app/",
     imageUrl: "/images/projects/marine-ai.webp",
     content:
-      "Marine-AI is Team SOLMATE's advisory system for ship captains: a retrofittable IoT sensor gateway paired with an AI bridge display. Built by teaming up with SOLMATE, a startup backed by CPUGAD TBI, with 3 Mechanical Engineering members from Central Philippine University. 1st Runner-Up at AI Hackathon Fest 2026.",
+      "Marine-AI is Team SOLMATE's advisory system for ship captains: a retrofittable IoT sensor gateway paired with an AI bridge display. Built by teaming up with SOLMATE, a startup backed by CPUGAD TBI, with 3 Mechanical Engineering members from Central Philippine University. 1st Runner-Up at the National AI Hackathon 2026, competing against 24 teams in the Open Professional Category.",
     features: [
       { title: "Speed & throttle optimizer", description: "An XGBoost hydrodynamic model recommends the optimal throttle setting in real time." },
       { title: "Geodesic route planner", description: "Gradient-boosted sea-state, wind, wave, and current forecasting plots the live waypoint route." },
@@ -72,7 +74,7 @@ const projects: ProjectItem[] = [
       { title: "One captain display", description: "All three modules converge on a single bridge display -- the captain stays in full command." },
     ],
     impact: [
-      "1st Runner-Up, AI Hackathon Fest 2026.",
+      "1st Runner-Up, National AI Hackathon 2026, Open Professional Category -- 24 teams nationwide.",
     ],
     sections: [],
   },
@@ -81,24 +83,24 @@ const projects: ProjectItem[] = [
     slug: "e-ferry",
     title: "E-Ferry",
     description:
-      "Clean & smart maritime solutions: electric ferry retrofits plus a green fintech platform unlocking institutional ESG capital for vessel electrification. 1st Runner-Up at the Philippine Nexus Hackathon.",
+      "Clean & smart maritime solutions: electric ferry retrofits plus a green fintech platform unlocking institutional ESG capital for vessel electrification. 1st Runner-Up at the National Ready, Spark, Charge Hackathon 2026.",
     author: "Team Solmate",
     role: "Full Stack Developer",
     teamName: "SOLMATE",
     awardName: "1st Runner-Up",
-    awardHost: "Philippine Nexus Hackathon",
+    awardHost: "Ready, Spark, Charge Hackathon 2026",
     tags: ["National Hackathon", "Award", "Fintech", "IoT", "Maritime"],
     liveUrl: "https://e-ferry.vercel.app/",
     imageUrl: "/images/projects/e-ferry.webp",
     content:
-      "Solmate unifies modular electric ferry retrofits with institutional green finance. Built by teaming up with SOLMATE, a startup backed by CPUGAD TBI, with 3 Mechanical Engineering members from Central Philippine University. 1st Runner-Up at the Philippine Nexus Hackathon, National Clean Energy Track.",
+      "Solmate unifies modular electric ferry retrofits with institutional green finance. Built by teaming up with SOLMATE, a startup backed by CPUGAD TBI, with 3 Mechanical Engineering members from Central Philippine University. 1st Runner-Up at the National Ready, Spark, Charge Hackathon 2026, National Clean Energy Track, competing against 17 teams nationwide.",
     features: [
       { title: "E-Ferry retrofit", description: "Converts diesel passenger boats to electric with no hull reconstruction needed, using liquid-cooled LFP battery packs and digital throttle control." },
       { title: "Green Fintech Platform", description: "Unlocking institutional ESG capital for maritime vessel electrification. Converts tamper-proof IoT telemetry into bankable loan structures, tokenized green bonds, and automated carbon credit monetization." },
       { title: "Pay-As-You-Save", description: "A $0-upfront financing option, alongside battery leasing and green bond issuance." },
     ],
     impact: [
-      "1st Runner-Up, Philippine Nexus Hackathon, National Clean Energy Track.",
+      "1st Runner-Up, National Ready, Spark, Charge Hackathon 2026, National Clean Energy Track -- 17 teams nationwide.",
     ],
     sections: [],
   },
@@ -150,6 +152,7 @@ const projects: ProjectItem[] = [
     liveUrl: "https://horizontx.netlify.app",
     imageUrl: "/images/projects/horizon.webp",
     imagePosition: "center",
+    imageFit: "contain",
     content:
       "Horizon is an offline LoRa mesh emergency communication ecosystem for disaster-prone communities in the Philippines. When internet and cell towers fail, its handheld communicators, solar relay and alarm system keep responders and residents connected, with no infrastructure needed.",
     features: [

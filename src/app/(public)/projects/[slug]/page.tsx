@@ -181,7 +181,11 @@ export default async function ProjectDetailPage({
         <div className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-slate-800 to-brand/30 border border-border/50 shadow-2xl">
           {project.imageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={project.imageUrl} alt={project.title} className="size-full object-cover" />
+            <img
+              src={project.imageUrl}
+              alt={project.title}
+              className={`size-full ${project.imageFit === "contain" ? "object-contain" : "object-cover"}`}
+            />
           ) : (
             <div className="grid size-full place-items-center">
               <Code2 className="size-20 text-primary-foreground/30" />

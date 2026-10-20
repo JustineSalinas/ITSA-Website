@@ -39,7 +39,7 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
             </span>
           )}
         </div>
-        <div className="relative aspect-[16/10] w-full bg-card">
+        <div className={`relative aspect-[16/10] w-full ${project.imageFit === "contain" ? "bg-slate-950" : "bg-card"}`}>
           {isFeatured && (
             <div className="group/trophy pointer-events-auto absolute right-2.5 top-2.5 z-20 flex cursor-default items-center justify-center rounded-full bg-gold p-2 text-slate-950 shadow-sm">
               <Trophy className="size-4 fill-slate-950" />
@@ -57,7 +57,7 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
               alt={project.title}
               loading="lazy"
               decoding="async"
-              className={`size-full object-cover ${
+              className={`size-full ${project.imageFit === "contain" ? "object-contain" : "object-cover"} ${
                 project.imagePosition === "center" ? "object-center" : "object-top"
               }`}
             />
