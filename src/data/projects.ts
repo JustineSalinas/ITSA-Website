@@ -55,9 +55,10 @@ const projects: ProjectItem[] = [
     teamName: "SOLMATE",
     awardName: "1st Runner-Up",
     awardHost: "National AI Hackathon 2026",
-    tags: ["Hackathon", "Award", "AI", "IoT", "Maritime"],
+    tags: ["National Hackathon", "Award", "AI", "IoT", "Maritime"],
     techStack: ["XGBoost", "Gradient-boosted forecasting", "PCA anomaly detection"],
     liveUrl: "https://e-ferry.vercel.app/",
+    imageUrl: "/images/projects/marine-ai.webp",
     content:
       "Marine-AI is Team SOLMATE's advisory system for ship captains: a retrofittable IoT sensor gateway paired with an AI bridge display. Built by teaming up with SOLMATE, a startup backed by CPUGAD TBI, with 3 Mechanical Engineering members from Central Philippine University. 1st Runner-Up at the National AI Hackathon 2026 (AI Fest 2026 Finale).",
     features: [
@@ -82,8 +83,9 @@ const projects: ProjectItem[] = [
     teamName: "SOLMATE",
     awardName: "1st Runner-Up",
     awardHost: "National Hackathon Nexus Philippines",
-    tags: ["Hackathon", "Award", "Fintech", "IoT", "Maritime"],
+    tags: ["National Hackathon", "Award", "Fintech", "IoT", "Maritime"],
     liveUrl: "https://e-ferry.vercel.app/",
+    imageUrl: "/images/projects/e-ferry.webp",
     content:
       "Solmate unifies modular electric ferry retrofits with institutional green finance. Built by teaming up with SOLMATE, a startup backed by CPUGAD TBI, with 3 Mechanical Engineering members from Central Philippine University. 1st Runner-Up at the National Hackathon Nexus Philippines, National Clean Energy Track.",
     features: [
