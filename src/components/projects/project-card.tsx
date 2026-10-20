@@ -89,15 +89,11 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
         </h3>
 
         {isFeatured && project.awardName && (
-          <div className="mt-1.5 flex items-center justify-between gap-2">
-            <span className="flex items-center gap-1.5 text-xs font-semibold text-brand-orange">
-              <Trophy className="size-3" />
-              {project.awardName}
-            </span>
+          <div className="mt-1.5 flex items-center gap-1.5 text-xs font-semibold text-brand-orange">
+            <Trophy className="size-3" />
+            {project.awardName}
             {project.tags.includes("National Hackathon") && (
-              <span className="inline-flex items-center rounded-full border border-brand/30 bg-brand/10 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide text-brand">
-                National Hackathon
-              </span>
+              <span className="text-muted-foreground">· National Hackathon</span>
             )}
           </div>
         )}
