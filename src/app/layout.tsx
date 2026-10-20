@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
@@ -52,6 +52,9 @@ export const metadata: Metadata = {
     icon: [{ url: "/favicon-32.png", type: "image/png", sizes: "32x32" }],
     apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
   },
+  // Only 32px and 180px source icons exist today -- a real PWA install
+  // icon (192px/512px, ideally maskable) is a follow-up, not invented here.
+  manifest: "/site.webmanifest",
   openGraph: {
     title: `${siteConfig.name} — ${siteConfig.fullName}`,
     description: siteConfig.description,
@@ -73,7 +76,6 @@ export const metadata: Metadata = {
     title: `${siteConfig.name} — ${siteConfig.fullName}`,
     description: siteConfig.description,
     images: ["/og-image.png"],
-    creator: "@itsa_usa",
   },
   robots: {
     index: true,
@@ -86,6 +88,10 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#2f56d6",
 };
 
 const organizationJsonLd = {

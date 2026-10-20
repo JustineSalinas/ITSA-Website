@@ -5,9 +5,11 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, CalendarDays, Clock, MapPin, CheckCircle2, Ticket, Building2 } from "lucide-react";
 import { getEventBySlug, getEvents } from "@/lib/data";
 import { formatEventDate, formatEventTime, isUpcoming } from "@/lib/format";
+import { safeJsonLd } from "@/lib/json-ld";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LogoMark } from "@/components/layout/logo";
+import { siteConfig } from "@/data/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -45,8 +47,32 @@ export default async function EventDetailPage({ params }: Props) {
 
   const upcoming = isUpcoming(event.eventDate);
 
+  const eventJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: event.title,
+    description: event.description,
+    startDate: event.eventDate,
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+    location: {
+      "@type": "Place",
+      name: event.location,
+    },
+    image: event.imageUrl ? [event.imageUrl] : undefined,
+    organizer: {
+      "@type": "Organization",
+      name: siteConfig.fullName,
+      url: siteConfig.url,
+    },
+  };
+
   return (
     <article className="min-h-screen bg-muted/20 pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(eventJsonLd) }}
+      />
       {/* Top Breadcrumb & Control Bar */}
       <div className="border-b border-border/60 bg-card py-4">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">

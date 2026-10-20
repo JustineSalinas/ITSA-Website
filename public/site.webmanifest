@@ -1,0 +1,13 @@
+{
+  "name": "Information Technology Student Association",
+  "short_name": "ITSA",
+  "description": "The official student organization of Information Technology students at the University of San Agustin.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2f56d6",
+  "icons": [
+    { "src": "/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/apple-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

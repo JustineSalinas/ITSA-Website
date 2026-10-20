@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getNews } from "@/lib/data";
 import { formatNewsDate } from "@/lib/format";
+import { safeJsonLd } from "@/lib/json-ld";
 import { siteConfig } from "@/data/site";
 
 export async function generateStaticParams() {
@@ -26,7 +27,10 @@ export async function generateMetadata({
   return {
     title: item.title,
     description: item.excerpt.slice(0, 160),
-    openGraph: { title: item.title, description: item.excerpt.slice(0, 160), type: "article", images: image ? [image] : undefined },
+    alternates: {
+      canonical: `/news/${slug}`,
+    },
+    openGraph: { title: item.title, description: item.excerpt.slice(0, 160), url: `/news/${slug}`, type: "article", images: image ? [image] : undefined },
     twitter: { card: "summary_large_image", title: item.title, description: item.excerpt.slice(0, 160), images: image ? [image] : undefined },
   };
 }
@@ -48,9 +52,40 @@ export default async function NewsArticlePage({
   const [lead, ...rest] = item.images ?? [];
   const authorName = item.author?.name ?? siteConfig.fullName;
   const authorRole = item.author?.role;
+  const articleImage = item.imageUrl ?? item.images?.[0];
+
+  const newsJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: item.title,
+    description: item.excerpt,
+    image: articleImage ? [articleImage] : undefined,
+    datePublished: item.date,
+    dateModified: item.date,
+    author: {
+      "@type": item.author ? "Person" : "Organization",
+      name: authorName,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.fullName,
+      logo: {
+        "@type": "ImageObject",
+        url: `${siteConfig.url}/logo.png`,
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${siteConfig.url}/news/${slug}`,
+    },
+  };
 
   return (
     <article className="pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(newsJsonLd) }}
+      />
       <div className="mx-auto max-w-3xl px-4 pt-10 sm:px-6 lg:px-8">
         <Button variant="outline" size="sm" className="group" render={<Link href="/news" />}>
           <ArrowLeft className="size-3.5 transition-transform group-hover:-translate-x-1" />
