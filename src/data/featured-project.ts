@@ -7,6 +7,9 @@ export interface FeaturedProject {
   org?: string;
   techStack?: string[];
   screenshotUrl: string;
+  /** Optional real team photo, shown as a small polaroid beside the site screenshot. */
+  teamPhotoUrl?: string;
+  teamPhotoCaption?: string;
   liveUrl?: string;
   githubUrl?: string;
 }
@@ -23,5 +26,7 @@ export const currentFeaturedProject: FeaturedProject | null = {
   org: "University of San Agustin, Pharmacy Department",
   techStack: ["Next.js"],
   screenshotUrl: "/images/projects/pharmatrack.png",
+  teamPhotoUrl: "/images/projects/pharmatrack-team.webp",
+  teamPhotoCaption: "the PharmaTrack team",
   liveUrl: "https://lsgph-pharmatrack.com/",
 };

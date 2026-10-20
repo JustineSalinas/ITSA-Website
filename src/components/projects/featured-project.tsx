@@ -1,11 +1,18 @@
 "use client";
 
 import Image from "next/image";
+import { Caveat } from "next/font/google";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { GithubIcon } from "@/components/icons/social";
 import { Button } from "@/components/ui/button";
 import type { FeaturedProject } from "@/data/featured-project";
+
+// Same handwritten-caption treatment as the real-photo pieces elsewhere on
+// the site (About intro, header collages): thick white border, ink shadow,
+// Caveat caption -- not the cqw-sized collage Polaroid, which assumes a
+// container-query ancestor this card doesn't have.
+const hand = Caveat({ subsets: ["latin"], weight: ["600"], display: "swap" });
 
 // Shares its visual treatment with FeaturedPortfolioCard so the two spotlights
 // read as one family on /projects.
@@ -115,7 +122,7 @@ export function FeaturedProjectCard({ data }: { data: FeaturedProject }) {
         {/* Preview */}
         <motion.div
           whileHover={reduceMotion ? undefined : { y: -5 }}
-          className="relative w-full max-w-2xl lg:w-[44%] shrink-0 mx-auto"
+          className="relative w-full max-w-2xl lg:w-[48%] shrink-0 mx-auto pb-6 pr-6 sm:pb-10 sm:pr-10"
         >
           <div className="overflow-hidden rounded-xl sm:rounded-2xl border-2 border-foreground bg-foreground">
             {/* Browser Header */}
@@ -142,6 +149,35 @@ export function FeaturedProjectCard({ data }: { data: FeaturedProject }) {
               />
             </div>
           </div>
+
+          {/* Team photo: a real-photo polaroid pinned over the screenshot's
+              bottom-right corner, the same "paper pinned onto the ink-bordered
+              card" composition as the About intro and header collages --
+              a second block of equal size would compete with the screenshot
+              instead of reading as a candid aside. */}
+          {data.teamPhotoUrl && (
+            <figure
+              className="absolute bottom-0 right-0 w-[38%] min-w-[108px] max-w-[190px] rotate-[3deg] border-2 border-foreground bg-white p-1.5 pb-0 shadow-[4px_4px_0_0_var(--foreground)] transition-transform duration-300 hover:rotate-0"
+              aria-hidden={!data.teamPhotoCaption}
+            >
+              <div className="relative aspect-[4/3] w-full overflow-hidden border border-foreground/20 bg-muted">
+                <Image
+                  src={data.teamPhotoUrl}
+                  alt={data.teamPhotoCaption ?? `${data.title} team`}
+                  fill
+                  className="object-cover"
+                  sizes="190px"
+                />
+              </div>
+              {data.teamPhotoCaption && (
+                <figcaption
+                  className={`${hand.className} truncate px-1 py-1 text-center text-sm leading-none text-foreground`}
+                >
+                  {data.teamPhotoCaption}
+                </figcaption>
+              )}
+            </figure>
+          )}
         </motion.div>
       </div>
     </motion.div>

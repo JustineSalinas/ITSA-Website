@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Code2, ExternalLink, User, Users, Trophy } from "lucide-react";
+import { ArrowRight, Clock, Code2, ExternalLink, User, Users, Trophy } from "lucide-react";
 import { GithubIcon } from "@/components/icons/social";
 import type { ProjectItem } from "@/data/projects";
 
@@ -95,6 +95,13 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
             {project.tags.includes("National Hackathon") && (
               <span className="text-muted-foreground">· National Hackathon</span>
             )}
+          </div>
+        )}
+
+        {isFeatured && project.awardPending && (
+          <div className="mt-1 flex items-center gap-1 text-[11px] font-medium text-muted-foreground">
+            <Clock className="size-3" />
+            Results pending
           </div>
         )}
 

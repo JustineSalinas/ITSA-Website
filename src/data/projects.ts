@@ -29,6 +29,8 @@ export interface ProjectItem {
   awardName?: string;
   awardDate?: string;
   awardHost?: string;
+  /** True while the competition is still running and awardName (e.g. "Top 10 Finalist") isn't the final result yet. */
+  awardPending?: boolean;
   tags: string[];
   techStack?: string[];
   githubUrl?: string;
@@ -51,18 +53,18 @@ const projects: ProjectItem[] = [
     slug: "marine-ai",
     title: "Marine-AI",
     description:
-      "A retrofittable IoT sensor gateway and AI bridge display for maritime vessels. Three parallel AI modules converge on a single captain display showing live waypoint routes, optimal throttle settings, and predictive maintenance alerts. 1st Runner-Up at the National AI Hackathon 2026.",
+      "A retrofittable IoT sensor gateway and AI bridge display for maritime vessels. Three parallel AI modules converge on a single captain display showing live waypoint routes, optimal throttle settings, and predictive maintenance alerts. 1st Runner-Up at AI Hackathon Fest 2026.",
     author: "Team Solmate",
     role: "AI/ML Engineer",
     teamName: "SOLMATE",
     awardName: "1st Runner-Up",
-    awardHost: "National AI Hackathon 2026",
+    awardHost: "AI Hackathon Fest 2026",
     tags: ["National Hackathon", "Award", "AI", "IoT", "Maritime"],
     techStack: ["XGBoost", "Gradient-boosted forecasting", "PCA anomaly detection"],
     liveUrl: "https://e-ferry.vercel.app/",
     imageUrl: "/images/projects/marine-ai.webp",
     content:
-      "Marine-AI is Team SOLMATE's advisory system for ship captains: a retrofittable IoT sensor gateway paired with an AI bridge display. Built by teaming up with SOLMATE, a startup backed by CPUGAD TBI, with 3 Mechanical Engineering members from Central Philippine University. 1st Runner-Up at the National AI Hackathon 2026 (AI Fest 2026 Finale).",
+      "Marine-AI is Team SOLMATE's advisory system for ship captains: a retrofittable IoT sensor gateway paired with an AI bridge display. Built by teaming up with SOLMATE, a startup backed by CPUGAD TBI, with 3 Mechanical Engineering members from Central Philippine University. 1st Runner-Up at AI Hackathon Fest 2026.",
     features: [
       { title: "Speed & throttle optimizer", description: "An XGBoost hydrodynamic model recommends the optimal throttle setting in real time." },
       { title: "Geodesic route planner", description: "Gradient-boosted sea-state, wind, wave, and current forecasting plots the live waypoint route." },
@@ -70,7 +72,7 @@ const projects: ProjectItem[] = [
       { title: "One captain display", description: "All three modules converge on a single bridge display -- the captain stays in full command." },
     ],
     impact: [
-      "1st Runner-Up, National AI Hackathon 2026 (AI Fest 2026 Finale).",
+      "1st Runner-Up, AI Hackathon Fest 2026.",
     ],
     sections: [],
   },
@@ -79,24 +81,24 @@ const projects: ProjectItem[] = [
     slug: "e-ferry",
     title: "E-Ferry",
     description:
-      "Clean & smart maritime solutions: electric ferry retrofits plus a green fintech platform unlocking institutional ESG capital for vessel electrification. 1st Runner-Up at the National Hackathon Nexus Philippines.",
+      "Clean & smart maritime solutions: electric ferry retrofits plus a green fintech platform unlocking institutional ESG capital for vessel electrification. 1st Runner-Up at the Philippine Nexus Hackathon.",
     author: "Team Solmate",
     role: "Full Stack Developer",
     teamName: "SOLMATE",
     awardName: "1st Runner-Up",
-    awardHost: "National Hackathon Nexus Philippines",
+    awardHost: "Philippine Nexus Hackathon",
     tags: ["National Hackathon", "Award", "Fintech", "IoT", "Maritime"],
     liveUrl: "https://e-ferry.vercel.app/",
     imageUrl: "/images/projects/e-ferry.webp",
     content:
-      "Solmate unifies modular electric ferry retrofits with institutional green finance. Built by teaming up with SOLMATE, a startup backed by CPUGAD TBI, with 3 Mechanical Engineering members from Central Philippine University. 1st Runner-Up at the National Hackathon Nexus Philippines, National Clean Energy Track.",
+      "Solmate unifies modular electric ferry retrofits with institutional green finance. Built by teaming up with SOLMATE, a startup backed by CPUGAD TBI, with 3 Mechanical Engineering members from Central Philippine University. 1st Runner-Up at the Philippine Nexus Hackathon, National Clean Energy Track.",
     features: [
       { title: "E-Ferry retrofit", description: "Converts diesel passenger boats to electric with no hull reconstruction needed, using liquid-cooled LFP battery packs and digital throttle control." },
       { title: "Green Fintech Platform", description: "Unlocking institutional ESG capital for maritime vessel electrification. Converts tamper-proof IoT telemetry into bankable loan structures, tokenized green bonds, and automated carbon credit monetization." },
       { title: "Pay-As-You-Save", description: "A $0-upfront financing option, alongside battery leasing and green bond issuance." },
     ],
     impact: [
-      "1st Runner-Up, National Hackathon Nexus Philippines, National Clean Energy Track.",
+      "1st Runner-Up, Philippine Nexus Hackathon, National Clean Energy Track.",
     ],
     sections: [],
   },
@@ -110,6 +112,7 @@ const projects: ProjectItem[] = [
     tags: ["Web App", "Healthcare", "Hackathon", "Award"],
     awardName: "Top 10 Finalist",
     awardHost: "HackIloilo Philippine Startup",
+    awardPending: true,
     content:
       "Gilayon is Team KasCoders' entry to Hack Iloilo 2026: a working records system for an HMO clinic. It covers the HMO-Clinic flow from the concept document -- verified check-in through to the daily report -- including digitizing the clinic's existing paper archive.",
     features: [
@@ -169,7 +172,7 @@ const projects: ProjectItem[] = [
     slug: "klyxen-technology",
     title: "Klyxen Technology",
     description:
-      "Student hardware venture behind Horizon's offline LoRa mesh emergency communication systems. Top 10 Finalist at the DICT Philippine Startup Challenge.",
+      "Student hardware venture behind Horizon's offline LoRa mesh emergency communication systems. Top 10 Finalist at DICT: Philippine Startup Challenge.",
     author: "John Kyle R. Amarante",
     role: "Founder",
     teamName: "Klyxen Technology",
@@ -179,13 +182,14 @@ const projects: ProjectItem[] = [
       { name: "James Melliza", role: "Developer" },
       { name: "Antonio Edward Labios", role: "Developer" },
     ],
-    tags: ["Hardware", "IoT", "Startup", "Award"],
+    tags: ["National Hackathon", "Hardware", "IoT", "Startup", "Award"],
     awardName: "Top 10 Finalist",
-    awardHost: "DICT Philippine Startup Challenge",
+    awardHost: "DICT: Philippine Startup Challenge",
+    awardPending: true,
     content:
-      "Klyxen Technology is the student hardware venture behind Horizon, an offline LoRa mesh emergency communication ecosystem for disaster-prone communities in the Philippines. The team was recognised as a Top 10 Finalist at the DICT Philippine Startup Challenge.",
+      "Klyxen Technology is the student hardware venture behind Horizon, an offline LoRa mesh emergency communication ecosystem for disaster-prone communities in the Philippines. The team was recognised as a Top 10 Finalist at DICT: Philippine Startup Challenge.",
     impact: [
-      "Top 10 Finalist, DICT Philippine Startup Challenge.",
+      "Top 10 Finalist, DICT: Philippine Startup Challenge.",
     ],
     sections: [],
   },

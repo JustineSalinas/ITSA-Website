@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Check, ExternalLink, TrendingUp, User, Users, Code2, Trophy } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Clock, ExternalLink, TrendingUp, User, Users, Code2, Trophy } from "lucide-react";
 import { GithubIcon } from "@/components/icons/social";
 import { getProjectBySlug, getProjects } from "@/data/projects";
 import { Badge } from "@/components/ui/badge";
@@ -88,7 +88,7 @@ export default async function ProjectDetailPage({
       {/* Premium Centered Header */}
       <header className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center mb-16 md:mb-24">
 
-        <div className="mb-10">
+        <div className="mb-10 self-start">
           <Button variant="outline" size="sm" className="gap-2 font-mono text-xs font-semibold" render={<Link href="/projects" />}>
             <ArrowLeft className="size-3.5" /> BACK TO PROJECTS
           </Button>
@@ -138,6 +138,12 @@ export default async function ProjectDetailPage({
                 {(project.awardDate || project.awardHost) && (
                   <span className="text-sm text-muted-foreground leading-tight">
                     {[project.awardDate, project.awardHost].filter(Boolean).join(' · ')}
+                  </span>
+                )}
+                {project.awardPending && (
+                  <span className="mt-0.5 flex items-center gap-1 text-xs font-medium text-muted-foreground">
+                    <Clock className="size-3" />
+                    Results pending
                   </span>
                 )}
               </div>
