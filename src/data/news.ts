@@ -50,6 +50,11 @@ export const localNews: NewsItem[] = [
     ].join("\n\n"),
     date: "2026-08-28",
     category: "Event",
+    images: [
+      "/images/news/digital-bayan-2-0-ai-for-all.webp",
+      "/images/news/digital-bayan-2-0-ai-for-all-2.webp",
+    ],
+    imageUrl: "/images/news/digital-bayan-2-0-ai-for-all.webp",
   },
   {
     id: "news-migrated-techconnect-what-a-ride",
@@ -65,6 +70,12 @@ export const localNews: NewsItem[] = [
     ].join("\n\n"),
     date: "2026-07-18",
     category: "Event",
+    images: [
+      "/images/news/techconnect-what-a-ride.webp",
+      "/images/news/techconnect-what-a-ride-2.webp",
+      "/images/news/techconnect-what-a-ride-3.webp",
+    ],
+    imageUrl: "/images/news/techconnect-what-a-ride.webp",
   },
   {
     id: "news-migrated-frosh-week-2026-itsa-booth",
