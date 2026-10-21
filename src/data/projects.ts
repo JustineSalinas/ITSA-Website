@@ -192,6 +192,7 @@ const projects: ProjectItem[] = [
     awardName: "3rd Place",
     awardHost: "Philippine Startup Challenge XI (PSC XI) Regional Pitching Competition",
     imageUrl: "/images/projects/klyxen.webp",
+    imageFit: "contain",
     content:
       "Klyxen Technology is the student hardware venture behind Horizon, an offline LoRa mesh emergency communication ecosystem for disaster-prone communities in the Philippines. Composed of Information Technology students John Kyle R. Amarante, James Andrew Falloriña, and Mauricio Nathaniel F. Ordinado, the team secured 3rd Place in the Philippine Startup Challenge XI (PSC XI) Regional Pitching Competition, held at Seda Hotel, Iloilo City. They were guided by mentors John Mark Balingcong and Rovilyn Osalla.",
     impact: [
