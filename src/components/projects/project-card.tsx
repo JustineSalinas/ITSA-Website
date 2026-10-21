@@ -92,9 +92,11 @@ export function ProjectCard({ project, isFeatured }: { project: ProjectItem; isF
           <div className="mt-1.5 flex items-center gap-1.5 text-xs font-semibold text-brand-orange">
             <Trophy className="size-3" />
             {project.awardName}
-            {project.tags.includes("National Hackathon") && (
-              <span className="text-muted-foreground">· National Hackathon</span>
-            )}
+            {["National Hackathon", "Regional Pitching Competition"]
+              .filter((label) => project.tags.includes(label))
+              .map((label) => (
+                <span key={label} className="text-muted-foreground">· {label}</span>
+              ))}
           </div>
         )}
 

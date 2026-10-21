@@ -4,6 +4,23 @@ import type { NewsItem } from "@/lib/types";
 // Facebook posts. Newest first; add new posts at the top.
 export const localNews: NewsItem[] = [
   {
+    id: "klyxen-technology-psc-xi-3rd-place",
+    slug: "klyxen-technology-psc-xi-3rd-place",
+    title: "Celebrating Innovation and Excellence!",
+    excerpt:
+      "Congratulations to Klyxen Technology for securing 3rd Place in the Philippine Startup Challenge XI (PSC XI) Regional Pitching Competition.",
+    content: [
+      "Congratulations to Klyxen Technology, composed of Information Technology students John Kyle R. Amarante, James Andrew Falloriña, and Mauricio Nathaniel F. Ordinado, for securing 3rd Place in the Philippine Startup Challenge XI (PSC XI) Regional Pitching Competition!",
+      "With the guidance of their mentors, John Mark Balingcong and Rovilyn Osalla, the team demonstrated their creativity, dedication, and innovative thinking at the competition held at Seda Hotel, Iloilo City.",
+      "Their achievement highlights the potential of Information Technology students to develop innovative ideas and contribute to the growing technology and startup community. ITSA-USA proudly celebrates their accomplishment and wishes them continued success in their future endeavors!",
+    ].join("\n\n"),
+    date: "2026-10-21",
+    category: "Achievement",
+    images: ["/images/news/klyxen-psc-xi.webp"],
+    imageUrl: "/images/news/klyxen-psc-xi.webp",
+    tags: ["ITSASPOTLIGHT"],
+  },
+  {
     id: "itsa-recognized",
     slug: "itsa-recognized",
     title: "ITSA Recognized",
