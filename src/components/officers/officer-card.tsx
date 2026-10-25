@@ -29,9 +29,7 @@ export function OfficerCard({
   const hasAnySocial =
     hasFacebook || hasLinkedIn || hasInstagram || hasGithub || hasPersonalLink;
 
-  const isSupervisor =
-    officer.name === "Robert A. Aguilar Jr." ||
-    officer.section?.toLowerCase() === "faculty";
+  const isSupervisor = officer.section?.toLowerCase() === "faculty";
 
   const theme = getDepartmentTheme(departmentId ?? officer);
 

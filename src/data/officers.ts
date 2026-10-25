@@ -9,10 +9,9 @@ import type { Officer, OrgNode } from "@/lib/types";
 // (Secretary + four department Officers) are shown as direct reports of the
 // Chairman. Each department carries its own leads.
 export const orgChart: OrgNode = {
-  name: "Robert A. Aguilar Jr.",
+  name: "Rovilyn S. Osalla",
   position: "IT Academic Supervisor",
   section: "Faculty",
-  photoUrl: "/officers/2x2/robert-aguilar.jpg",
   children: [
     {
       name: "Gabriel Ferrera",

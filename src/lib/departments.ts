@@ -79,7 +79,6 @@ export function resolveOfficerDepartment(officer: {
 }): string {
   if (
     officer.position.includes("Supervisor") ||
-    (officer.name && officer.name.includes("Aguilar")) ||
     officer.section?.toLowerCase() === "faculty"
   ) {
     return "supervisor";

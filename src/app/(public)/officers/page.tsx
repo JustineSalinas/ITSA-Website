@@ -35,7 +35,7 @@ const departmentCategories = [
     kicker: "Academic Leadership",
     description: "Guiding ITSA with faculty academic supervision and institutional direction.",
     matcher: (o: { position: string; name: string }) =>
-      o.position.includes("Supervisor") || o.name.includes("Aguilar"),
+      o.position.includes("Supervisor"),
   },
   {
     id: "executives",

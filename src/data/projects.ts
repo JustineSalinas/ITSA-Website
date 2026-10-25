@@ -111,13 +111,12 @@ const projects: ProjectItem[] = [
     slug: "gilayon",
     title: "Gilayon",
     description:
-      "HMO-clinic digitalization of records: verified check-in, a priority queue, patient registry, e-signed prescriptions and medical certificates, and offline mode. Top 10 at HackIloilo Philippine Startup.",
+      "HMO-clinic digitalization of records: verified check-in, a priority queue, patient registry, e-signed prescriptions and medical certificates, and offline mode. Top 8 Finalist at HackIloilo Philippine Startup, among 45 team entries.",
     author: "Team KasCoders",
     tags: ["Web App", "Healthcare", "Hackathon", "Award"],
-    awardName: "Top 10 Finalist",
+    awardName: "Top 8 Finalist",
     awardHost: "HackIloilo Philippine Startup",
     awardDate: "Oct 16–18, 2026",
-    awardPending: true,
     content:
       "Gilayon is Team KasCoders' entry to Hack Iloilo 2026: a working records system for an HMO clinic. It covers the HMO-Clinic flow from the concept document -- verified check-in through to the daily report -- including digitizing the clinic's existing paper archive.",
     features: [
@@ -131,7 +130,7 @@ const projects: ProjectItem[] = [
       { title: "Offline mode", description: "The clinic workflow keeps working without a live connection." },
     ],
     impact: [
-      "Top 10 at HackIloilo Philippine Startup.",
+      "Top 8 Finalist at HackIloilo Philippine Startup, among 45 team entries.",
     ],
     sections: [],
   },
