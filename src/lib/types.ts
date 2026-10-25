@@ -27,6 +27,12 @@ export type OrgNode = {
   children?: OrgNode[];
 };
 
+export type EventHighlight = {
+  icon: string;
+  title: string;
+  description: string;
+};
+
 export type EventItem = {
   id: string;
   title: string;
@@ -35,7 +41,16 @@ export type EventItem = {
   /** ISO 8601 string */
   eventDate: string;
   location: string;
-  imageUrl: string;
+  imageUrl?: string;
+  /** e.g. "40 Senior High School Students". Free text since turnout/audience phrasing varies per event. */
+  attendees?: string;
+  projectLead?: string;
+  /** ITSA's specific role in this event, e.g. "Organizer and Robotics Programming Mentors". */
+  itsaRole?: string;
+  partners?: string[];
+  sdgs?: string[];
+  /** "Key Highlights & Takeaways" -- only ever rendered when an event actually has real ones provided. */
+  highlights?: EventHighlight[];
 };
 
 export type NewsItem = {

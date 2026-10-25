@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, CalendarDays, Clock, MapPin, CheckCircle2, Ticket, Building2 } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CalendarDays, Clock, MapPin, CheckCircle2, Ticket, Building2, Users } from "lucide-react";
 import { getEventBySlug, getEvents } from "@/lib/data";
-import { formatEventDate, formatEventTime, isUpcoming } from "@/lib/format";
+import { formatEventDate, formatEventTime, hasExplicitTime, isUpcoming } from "@/lib/format";
 import { safeJsonLd } from "@/lib/json-ld";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -129,10 +129,12 @@ export default async function EventDetailPage({ params }: Props) {
                 <CalendarDays className="size-4 text-brand-orange" />
                 {formatEventDate(event.eventDate)}
               </span>
-              <span className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-1.5 backdrop-blur-md">
-                <Clock className="size-4 text-brand-cyan" />
-                {formatEventTime(event.eventDate)}
-              </span>
+              {hasExplicitTime(event.eventDate) && (
+                <span className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-1.5 backdrop-blur-md">
+                  <Clock className="size-4 text-brand-cyan" />
+                  {formatEventTime(event.eventDate)}
+                </span>
+              )}
               <span className="inline-flex items-center gap-2 rounded-lg bg-white/10 px-3 py-1.5 backdrop-blur-md">
                 <MapPin className="size-4 text-white" />
                 {event.location}
@@ -171,45 +173,55 @@ export default async function EventDetailPage({ params }: Props) {
               </div>
             </div>
 
-            {/* Event Highlights & Value Delivery Card */}
-            <div className="rounded-xl border border-border/80 bg-card p-6 sm:p-8">
-              <h3 className="text-xl font-bold tracking-tight text-foreground border-b border-border/60 pb-3">
-                Key Highlights & Takeaways
-              </h3>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-muted/30 p-4">
-                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" />
-                  <div>
-                    <h4 className="text-sm font-bold">Practical Tech Knowledge</h4>
-                    <p className="mt-1 text-xs text-muted-foreground">Gain actionable skills taught by student leads and industry speakers.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-muted/30 p-4">
-                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" />
-                  <div>
-                    <h4 className="text-sm font-bold">Networking & Peer Connections</h4>
-                    <p className="mt-1 text-xs text-muted-foreground">Connect with fellow IT builders, alumni, and tech mentors.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-muted/30 p-4">
-                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" />
-                  <div>
-                    <h4 className="text-sm font-bold">Certificates & Recognition</h4>
-                    <p className="mt-1 text-xs text-muted-foreground">Receive official attendance verification for your academic portfolio.</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 rounded-xl border border-border/60 bg-muted/30 p-4">
-                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" />
-                  <div>
-                    <h4 className="text-sm font-bold">Open to All IT Students</h4>
-                    <p className="mt-1 text-xs text-muted-foreground">Free admission for all registered Information Technology students.</p>
-                  </div>
+            {/* Key Highlights & Takeaways -- only ever shown when the event
+                actually has real ones; no generic/invented filler. */}
+            {event.highlights && event.highlights.length > 0 && (
+              <div className="rounded-xl border border-border/80 bg-card p-6 sm:p-8">
+                <h3 className="text-xl font-bold tracking-tight text-foreground border-b border-border/60 pb-3">
+                  Key Highlights & Takeaways
+                </h3>
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  {event.highlights.map((h) => (
+                    <div key={h.title} className="flex items-start gap-3 rounded-xl border border-border/60 bg-muted/30 p-4">
+                      <span className="mt-0.5 shrink-0 text-xl leading-none" aria-hidden="true">{h.icon}</span>
+                      <div>
+                        <h4 className="text-sm font-bold">{h.title}</h4>
+                        <p className="mt-1 text-xs text-muted-foreground">{h.description}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
+            )}
+
+            {/* Partners & SDGs */}
+            {((event.partners && event.partners.length > 0) || (event.sdgs && event.sdgs.length > 0)) && (
+              <div className="rounded-xl border border-border/80 bg-card p-6 sm:p-8">
+                {event.partners && event.partners.length > 0 && (
+                  <div>
+                    <h3 className="text-xl font-bold tracking-tight text-foreground border-b border-border/60 pb-3">
+                      Partner Organizations
+                    </h3>
+                    <p className="mt-4 text-sm text-foreground/90">{event.partners.join(", ")}</p>
+                  </div>
+                )}
+                {event.sdgs && event.sdgs.length > 0 && (
+                  <div className={event.partners && event.partners.length > 0 ? "mt-6" : ""}>
+                    <h3 className="text-xl font-bold tracking-tight text-foreground border-b border-border/60 pb-3">
+                      Sustainable Development Goals
+                    </h3>
+                    <ul className="mt-4 space-y-1.5 text-sm text-foreground/90">
+                      {event.sdgs.map((sdg) => (
+                        <li key={sdg} className="flex items-start gap-2">
+                          <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-primary" />
+                          {sdg}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Sticky Sidebar Passport Card (4 Columns) */}
@@ -236,15 +248,17 @@ export default async function EventDetailPage({ params }: Props) {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3.5">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
-                    <Clock className="size-5" />
-                  </span>
-                  <div>
-                    <span className="block font-mono text-xs uppercase text-muted-foreground">Time</span>
-                    <span className="text-base font-bold text-foreground">{formatEventTime(event.eventDate)}</span>
+                {hasExplicitTime(event.eventDate) && (
+                  <div className="flex items-start gap-3.5">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                      <Clock className="size-5" />
+                    </span>
+                    <div>
+                      <span className="block font-mono text-xs uppercase text-muted-foreground">Time</span>
+                      <span className="text-base font-bold text-foreground">{formatEventTime(event.eventDate)}</span>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div className="flex items-start gap-3.5">
                   <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-brand-orange/15 text-brand-orange">
@@ -256,13 +270,37 @@ export default async function EventDetailPage({ params }: Props) {
                   </div>
                 </div>
 
+                {event.attendees && (
+                  <div className="flex items-start gap-3.5">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                      <Users className="size-5" />
+                    </span>
+                    <div>
+                      <span className="block font-mono text-xs uppercase text-muted-foreground">Participants</span>
+                      <span className="text-base font-bold text-foreground">{event.attendees}</span>
+                    </div>
+                  </div>
+                )}
+
+                {event.projectLead && (
+                  <div className="flex items-start gap-3.5">
+                    <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+                      <Building2 className="size-5" />
+                    </span>
+                    <div>
+                      <span className="block font-mono text-xs uppercase text-muted-foreground">Project Lead</span>
+                      <span className="text-base font-bold text-foreground">{event.projectLead}</span>
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex items-start gap-3.5">
                   <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
                     <Building2 className="size-5" />
                   </span>
                   <div>
-                    <span className="block font-mono text-xs uppercase text-muted-foreground">Organizer</span>
-                    <span className="text-base font-bold text-foreground">ITSA Executive Directorate</span>
+                    <span className="block font-mono text-xs uppercase text-muted-foreground">ITSA Role</span>
+                    <span className="text-base font-bold text-foreground">{event.itsaRole ?? "Organizer"}</span>
                   </div>
                 </div>
               </div>

@@ -16,6 +16,12 @@ export function formatEventTime(iso: string): string {
   });
 }
 
+/** A date-only ISO string ("2026-11-06") has no real time of day -- don't
+ * format/display one, since that would show a fabricated midnight time. */
+export function hasExplicitTime(iso: string): boolean {
+  return /T\d{2}:\d{2}/.test(iso);
+}
+
 export function initials(name: string): string {
   return name
     .split(" ")

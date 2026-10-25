@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import type { EventItem } from "@/lib/types";
-import { formatEventDate, formatEventTime, isUpcoming } from "@/lib/format";
+import { formatEventDate, formatEventTime, hasExplicitTime, isUpcoming } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -47,7 +47,8 @@ export function EventCard({ event }: { event: EventItem }) {
           <div className="flex min-h-[2.25rem] flex-wrap content-start items-center gap-x-4 gap-y-1 font-mono text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1.5">
               <CalendarDays className="size-3.5 text-brand" />
-              {formatEventDate(event.eventDate)} · {formatEventTime(event.eventDate)}
+              {formatEventDate(event.eventDate)}
+              {hasExplicitTime(event.eventDate) && ` · ${formatEventTime(event.eventDate)}`}
             </span>
             <span className="inline-flex items-center gap-1.5">
               <MapPin className="size-3.5 text-brand-orange" />
