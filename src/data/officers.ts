@@ -12,6 +12,7 @@ export const orgChart: OrgNode = {
   name: "Rovilyn S. Osalla",
   position: "IT Academic Supervisor",
   section: "Faculty",
+  photoUrl: "/officers/2x2/rovilyn-osalla.jpg",
   children: [
     {
       name: "Gabriel Ferrera",

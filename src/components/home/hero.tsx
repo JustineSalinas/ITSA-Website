@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { LogoMark } from "@/components/layout/logo";
 import { HeroNetwork } from "@/components/home/hero-network";
 import { GridBackground } from "@/components/layout/grid-background";
-import { Doodle } from "@/components/layout/header-collage/pieces";
 import { siteConfig } from "@/data/site";
 import { partners } from "@/data/partners";
 
@@ -175,8 +174,29 @@ export function Hero() {
                 
                 {/* Project of the Month Quick Link */}
                 <div className="relative mt-8 flex justify-center">
-                  <Doodle kind="arrow" tone="blue" x={-14} y={-68} w={16} rotate={-30} order={0} />
-                  <Doodle kind="arrow" tone="orange" x={98} y={-68} w={16} rotate={210} flip order={1} />
+                  {/* Hand-drawn callout arrows flanking the pill, each curving
+                      inward with a clear chevron tip right at its edge --
+                      deliberately tighter/more direct than the collage's
+                      decorative Doodle arrow, which reads as too loose a
+                      hook to parse as "pointing at X" at this small size. */}
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 60 60"
+                    fill="none"
+                    className="pointer-events-none absolute right-full top-1/2 mr-1 h-10 w-10 -translate-y-1/2 text-brand sm:mr-2 sm:h-12 sm:w-12"
+                  >
+                    <path d="M6,30 C20,10 35,15 46,28" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+                    <path d="M34,20 L46,28 L36,38" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 60 60"
+                    fill="none"
+                    className="pointer-events-none absolute left-full top-1/2 ml-1 h-10 w-10 -translate-y-1/2 text-brand-orange sm:ml-2 sm:h-12 sm:w-12"
+                  >
+                    <path d="M54,30 C40,10 25,15 14,28" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+                    <path d="M26,20 L14,28 L24,38" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                   <Button
                     variant="secondary"
                     size="sm"
