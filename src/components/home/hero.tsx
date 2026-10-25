@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { LogoMark } from "@/components/layout/logo";
 import { HeroNetwork } from "@/components/home/hero-network";
 import { GridBackground } from "@/components/layout/grid-background";
+import { Doodle } from "@/components/layout/header-collage/pieces";
 import { siteConfig } from "@/data/site";
 import { partners } from "@/data/partners";
 
@@ -173,7 +174,9 @@ export function Hero() {
                 </div>
                 
                 {/* Project of the Month Quick Link */}
-                <div className="mt-8 flex justify-center">
+                <div className="relative mt-8 flex justify-center">
+                  <Doodle kind="arrow" tone="blue" x={-14} y={-68} w={16} rotate={-30} order={0} />
+                  <Doodle kind="arrow" tone="orange" x={98} y={-68} w={16} rotate={210} flip order={1} />
                   <Button
                     variant="secondary"
                     size="sm"
