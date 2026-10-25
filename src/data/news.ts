@@ -4,6 +4,24 @@ import type { NewsItem } from "@/lib/types";
 // Facebook posts. Newest first; add new posts at the top.
 export const localNews: NewsItem[] = [
   {
+    id: "gilayon-top-8-hackiloilo",
+    slug: "gilayon-top-8-hackiloilo",
+    title: "Gilayon Lands Top 8 at HackIloilo Philippine Startup!",
+    excerpt:
+      "Team KasCoders' Gilayon placed Top 8 Finalist among 45 team entries at HackIloilo Philippine Startup.",
+    content: [
+      "Congratulations to Team KasCoders for placing Top 8 Finalist among 45 team entries at HackIloilo Philippine Startup!",
+      "The team built Gilayon, an HMO-clinic digitalization system covering verified check-in, a priority queue, patient registry, e-signed prescriptions and medical certificates, and offline mode.",
+      "Team KasCoders: Adrian Justin J. Salinas (BSIT 3-C), Matthew P. Tabat (BSIT 3-C), Alexander S. Tolosa (BSIT 3-C), Aziel G. Misola (BSIT 3-C), and Theodore Samuel M. Navarro (BSIT 3-C).",
+      "ITSA-USA proudly celebrates this achievement and wishes the team continued success in their future endeavors!",
+    ].join("\n\n"),
+    date: "2026-10-25",
+    category: "Achievement",
+    images: ["/images/news/gilayon-top-8-hackiloilo.webp"],
+    imageUrl: "/images/news/gilayon-top-8-hackiloilo.webp",
+    tags: ["ITSASPOTLIGHT"],
+  },
+  {
     id: "klyxen-technology-psc-xi-3rd-place",
     slug: "klyxen-technology-psc-xi-3rd-place",
     title: "Celebrating Innovation and Excellence!",
